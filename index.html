@@ -3,116 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Live Center | WEB kết quả thể thao</title>
+    <title>F1 Hub | Tin tức & Kết quả tối giản</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0a0a0a; color: #ececec; font-family: ui-sans-serif, system-ui, sans-serif; }
-        .f1-accent { color: #e10600; }
-        .f1-border { border-left: 4px solid #e10600; }
-        .table-row-hover:hover { background-color: #1f2937; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; }
+        .f1-red { color: #e10600; }
+        .bg-f1-red { background-color: #e10600; }
+        /* Tùy chỉnh thanh cuộn siêu mỏng cho phong cách minimalist */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-    <!-- Header -->
-    <header class="bg-black p-4 flex justify-between items-center border-b border-gray-800 sticky top-0 z-50">
-        <h1 class="text-xl md:text-2xl font-black italic tracking-wider f1-accent">RACE<span class="text-white">HUB</span></h1>
-        <div class="text-xs md:text-sm bg-gray-800 px-3 py-1.5 rounded-full border border-gray-700">
-            📊 Lượt truy cập: <span id="visitor-count" class="font-bold text-white tracking-widest">--</span>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- Navbar Tối giản -->
+    <header class="border-b border-gray-900 bg-[#0a0a0a] sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+            <h1 class="text-2xl font-extrabold tracking-tighter">
+                F1<span class="f1-red">HUB</span>
+            </h1>
+            <nav class="text-sm font-medium text-gray-400 gap-6 hidden md:flex">
+                <a href="#" class="hover:text-white transition">Tin tức</a>
+                <a href="#" class="hover:text-white transition">Bảng xếp hạng</a>
+                <a href="#" class="hover:text-white transition">Lịch thi đấu</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Main Layout -->
-    <main class="flex-grow p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full">
-        <!-- Live Timing Board -->
-        <section class="lg:col-span-2 bg-gray-900 rounded-xl shadow-lg border border-gray-800 overflow-hidden">
-            <div class="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-950">
-                <h2 class="text-lg font-bold f1-border pl-3 uppercase">Live Timing</h2>
-                <span class="flex h-3 w-3"><span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span></span>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm md:text-base whitespace-nowrap">
-                    <thead class="bg-gray-800 text-gray-400 text-xs uppercase font-semibold">
-                        <tr>
-                            <th class="px-4 py-3">Pos</th>
-                            <th class="px-4 py-3">Driver</th>
-                            <th class="px-4 py-3">Team</th>
-                            <th class="px-4 py-3">Pts / Gap</th>
-                        </tr>
-                    </thead>
-                    <tbody id="live-board" class="divide-y divide-gray-800">
-                        <tr><td colspan="4" class="text-center py-8 text-gray-500">Đang đồng bộ dữ liệu F1...</td></tr>
-                    </tbody>
-                </table>
+    <!-- Nội dung chính -->
+    <main class="flex-grow max-w-6xl mx-auto px-6 py-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Cột Trái: Tin tức F1 (Lấy từ RSS sang JSON miễn phí) -->
+        <section class="lg:col-span-8">
+            <h2 class="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-6">Tiêu điểm hôm nay</h2>
+            <div id="news-feed" class="space-y-8">
+                <!-- Skeleton Loading -->
+                <div class="animate-pulse flex flex-col gap-3">
+                    <div class="h-48 bg-gray-900 rounded-md"></div>
+                    <div class="h-4 bg-gray-900 rounded w-3/4"></div>
+                    <div class="h-4 bg-gray-900 rounded w-1/2"></div>
+                </div>
             </div>
         </section>
 
-        <!-- Sidebar: Ads & Schedule -->
-        <aside class="space-y-6">
-            <!-- Dynamic Banner -->
-            <div class="bg-gray-900 p-4 rounded-xl border border-gray-800">
-                <h2 class="text-sm font-bold text-gray-400 uppercase mb-3">Tài trợ</h2>
-                <a id="ad-link" href="#" target="_blank" class="block overflow-hidden rounded-lg transition-transform hover:scale-[1.02]">
-                    <img id="ad-banner" src="https://via.placeholder.com/300x250/111/444?text=Banner+Loading..." alt="Ads" class="w-full object-cover">
+        <!-- Cột Phải: Quảng cáo & Dữ liệu -->
+        <aside class="lg:col-span-4 space-y-10">
+            
+            <!-- Banner Quảng Cáo (Mặc định ẨN - Chỉ hiện khi có data từ Sheet) -->
+            <div id="ad-container" class="hidden flex flex-col gap-2">
+                <span class="text-[10px] text-gray-600 uppercase tracking-widest text-right">Tài trợ</span>
+                <a id="ad-link" href="#" target="_blank" class="block overflow-hidden rounded-sm opacity-90 hover:opacity-100 transition-opacity">
+                    <img id="ad-banner" src="" alt="Advertisement" class="w-full object-cover">
                 </a>
             </div>
+
+            <!-- Bảng xếp hạng Tối giản -->
+            <div>
+                <h2 class="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-4 flex items-center justify-between">
+                    Top Tay Đua
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                    </span>
+                </h2>
+                <div class="bg-[#0a0a0a] border border-gray-900 rounded-md p-4">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <tbody id="standings-board" class="divide-y divide-gray-900/50">
+                            <tr><td class="py-4 text-gray-600 text-center">Đang tải dữ liệu...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </aside>
+
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-black text-center p-6 text-gray-600 text-xs border-t border-gray-900 mt-auto">
-        <p>© 2026 WEB kết quả thể thao. Vận hành 100% bằng Open API & Google Sheets.</p>
+    <footer class="border-t border-gray-900 py-8 text-center text-xs text-gray-600">
+        &copy; 2026 F1 Hub Minimalist. Thiết kế phi lợi nhuận.
     </footer>
 
     <script>
-        // --- 1. CẤU HÌNH API ---
-        const GAS_WEB_APP_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; 
-        const F1_API_URL = 'https://api.jolpi.ca/ergast/f1/current/driverStandings.json';
+        // CẤU HÌNH API
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGJfMLmxZ9KO-9wIqfqBUMAa7ZNXSaw30aTAtAvW1YQQ5TRSJQh6jZXyzmo6k3OyVN/exec'; 
+        const F1_STANDINGS_API = 'https://api.jolpi.ca/ergast/f1/current/driverStandings.json';
+        // Dùng rss2json để chuyển đổi RSS tin tức F1 mở thành JSON (Miễn phí, không cần Auth)
+        const F1_NEWS_API = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.motorsport.com/rss/f1/news/';
 
-        // --- 2. LOGIC GOOGLE SHEETS (CMS & Tracking) ---
-        async function fetchSheetData() {
+        // 1. KẾT NỐI GOOGLE SHEETS (Đếm truy cập ngầm & Tải quảng cáo)
+        async function fetchConfigAndTrack() {
             try {
-                // Thay bằng lệnh fetch(GAS_WEB_APP_URL) thực tế khi đã có link Web App
-                const mockData = { 
-                    visitors: 14250, 
-                    adUrl: "https://shopee.vn/", 
-                    bannerImg: "https://via.placeholder.com/300x250/222/e10600?text=Shop+F1+Merchandise" 
-                };
+                // Gửi request tới Google Script. Web App sẽ tự động +1 vào file Sheet (ẩn hoàn toàn với UI)
+                const res = await fetch(GAS_WEB_APP_URL);
+                const data = await res.json();
                 
-                document.getElementById('visitor-count').innerText = mockData.visitors.toLocaleString();
-                document.getElementById('ad-banner').src = mockData.bannerImg;
-                document.getElementById('ad-link').href = mockData.adUrl;
+                // Logic xử lý Banner: Chỉ hiển thị khi có link ảnh từ Sheet
+                if (data.bannerImg && data.bannerImg.trim() !== '') {
+                    const adContainer = document.getElementById('ad-container');
+                    const adBanner = document.getElementById('ad-banner');
+                    const adLink = document.getElementById('ad-link');
+
+                    adBanner.src = data.bannerImg;
+                    adLink.href = data.adUrl || '#';
+                    
+                    // Xóa class 'hidden' để hiển thị banner
+                    adContainer.classList.remove('hidden');
+                }
             } catch (error) {
-                console.error("Lỗi tải cấu hình CMS:", error);
+                console.error("Tracking/Config Error - Silent Fail");
             }
         }
 
-        // --- 3. LOGIC LẤY DỮ LIỆU F1 ---
-        async function fetchF1Data() {
+        // 2. LẤY TIN TỨC F1 (Hiển thị thẻ tin tức Minimalist)
+        async function fetchNews() {
             try {
-                const res = await fetch(F1_API_URL);
+                const res = await fetch(F1_NEWS_API);
                 const data = await res.json();
-                const drivers = data.MRData.StandingsTable.StandingsLists[0].DriverStandings.slice(0, 10); 
+                const articles = data.items.slice(0, 5); // Lấy 5 tin mới nhất
                 
-                const board = document.getElementById('live-board');
-                board.innerHTML = drivers.map(d => `
-                    <tr class="table-row-hover transition-colors">
-                        <td class="px-4 py-3 font-bold ${d.position === '1' ? 'text-yellow-500' : 'text-gray-300'}">${d.position}</td>
-                        <td class="px-4 py-3 font-semibold uppercase tracking-wide">${d.Driver.code || d.Driver.familyName.substring(0,3)}</td>
-                        <td class="px-4 py-3 text-gray-400 text-sm">${d.Constructors[0].name}</td>
-                        <td class="px-4 py-3 font-mono">${d.points} <span class="text-xs text-gray-500 ml-1">pts</span></td>
+                const newsFeed = document.getElementById('news-feed');
+                newsFeed.innerHTML = articles.map(article => `
+                    <article class="group cursor-pointer">
+                        ${article.enclosure && article.enclosure.link ? 
+                            `<div class="overflow-hidden rounded-sm mb-4"><img src="${article.enclosure.link}" class="w-full h-48 md:h-64 object-cover transform group-hover:scale-105 transition duration-500 ease-in-out" alt="news"></div>` : ''}
+                        <p class="text-[10px] text-gray-500 uppercase tracking-wider mb-2">${article.pubDate.split(' ')[0]}</p>
+                        <h3 class="text-xl md:text-2xl font-semibold leading-tight group-hover:text-[#e10600] transition-colors">${article.title}</h3>
+                        <a href="${article.link}" target="_blank" class="text-xs font-medium text-gray-400 mt-3 inline-block group-hover:text-white transition">ĐỌC TIẾP &rarr;</a>
+                    </article>
+                    <hr class="border-gray-900 my-8 border-dashed">
+                `).join('');
+            } catch (error) {
+                document.getElementById('news-feed').innerHTML = '<p class="text-gray-600">Không thể tải tin tức lúc này.</p>';
+            }
+        }
+
+        // 3. LẤY BẢNG XẾP HẠNG TAY ĐUA
+        async function fetchStandings() {
+            try {
+                const res = await fetch(F1_STANDINGS_API);
+                const data = await res.json();
+                const drivers = data.MRData.StandingsTable.StandingsLists[0].DriverStandings.slice(0, 10);
+                
+                const board = document.getElementById('standings-board');
+                board.innerHTML = drivers.map((d, index) => `
+                    <tr class="hover:bg-gray-900 transition-colors">
+                        <td class="py-3 px-2 w-8 text-gray-500 font-mono text-xs">${d.position}</td>
+                        <td class="py-3 px-2">
+                            <div class="font-medium ${index === 0 ? 'text-white' : 'text-gray-300'}">${d.Driver.givenName} ${d.Driver.familyName}</div>
+                            <div class="text-[10px] text-gray-600 uppercase">${d.Constructors[0].name}</div>
+                        </td>
+                        <td class="py-3 px-2 text-right font-mono text-sm text-gray-400">${d.points}</td>
                     </tr>
                 `).join('');
             } catch (error) {
-                document.getElementById('live-board').innerHTML = `<tr><td colspan="4" class="text-center py-4 text-red-500">Mất kết nối API. Đang thử lại...</td></tr>`;
+                document.getElementById('standings-board').innerHTML = `<tr><td class="py-4 text-center text-red-900 text-xs">Lỗi kết nối API</td></tr>`;
             }
         }
 
-        // --- 4. KHỞI CHẠY HỆ THỐNG ---
+        // 4. KHỞI CHẠY
         document.addEventListener('DOMContentLoaded', () => {
-            fetchSheetData();
-            fetchF1Data();
-            // Polling cập nhật bảng xếp hạng mỗi 10 giây (Tối ưu cho lúc đua Live)
-            setInterval(fetchF1Data, 10000); 
+            fetchConfigAndTrack(); // Vừa tải config, vừa track truy cập ngầm
+            fetchNews();
+            fetchStandings();
         });
     </script>
 </body>
