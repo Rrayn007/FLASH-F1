@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Live Center | WEB kết quả thể thao</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0a0a0a; color: #ececec; font-family: ui-sans-serif, system-ui, sans-serif; }
+        .f1-accent { color: #e10600; }
+        .f1-border { border-left: 4px solid #e10600; }
+        .table-row-hover:hover { background-color: #1f2937; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-black p-4 flex justify-between items-center border-b border-gray-800 sticky top-0 z-50">
+        <h1 class="text-xl md:text-2xl font-black italic tracking-wider f1-accent">RACE<span class="text-white">HUB</span></h1>
+        <div class="text-xs md:text-sm bg-gray-800 px-3 py-1.5 rounded-full border border-gray-700">
+            📊 Lượt truy cập: <span id="visitor-count" class="font-bold text-white tracking-widest">--</span>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="flex-grow p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full">
+        <!-- Live Timing Board -->
+        <section class="lg:col-span-2 bg-gray-900 rounded-xl shadow-lg border border-gray-800 overflow-hidden">
+            <div class="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-950">
+                <h2 class="text-lg font-bold f1-border pl-3 uppercase">Live Timing</h2>
+                <span class="flex h-3 w-3"><span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span></span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm md:text-base whitespace-nowrap">
+                    <thead class="bg-gray-800 text-gray-400 text-xs uppercase font-semibold">
+                        <tr>
+                            <th class="px-4 py-3">Pos</th>
+                            <th class="px-4 py-3">Driver</th>
+                            <th class="px-4 py-3">Team</th>
+                            <th class="px-4 py-3">Pts / Gap</th>
+                        </tr>
+                    </thead>
+                    <tbody id="live-board" class="divide-y divide-gray-800">
+                        <tr><td colspan="4" class="text-center py-8 text-gray-500">Đang đồng bộ dữ liệu F1...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sidebar: Ads & Schedule -->
+        <aside class="space-y-6">
+            <!-- Dynamic Banner -->
+            <div class="bg-gray-900 p-4 rounded-xl border border-gray-800">
+                <h2 class="text-sm font-bold text-gray-400 uppercase mb-3">Tài trợ</h2>
+                <a id="ad-link" href="#" target="_blank" class="block overflow-hidden rounded-lg transition-transform hover:scale-[1.02]">
+                    <img id="ad-banner" src="https://via.placeholder.com/300x250/111/444?text=Banner+Loading..." alt="Ads" class="w-full object-cover">
+                </a>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center p-6 text-gray-600 text-xs border-t border-gray-900 mt-auto">
+        <p>© 2026 WEB kết quả thể thao. Vận hành 100% bằng Open API & Google Sheets.</p>
+    </footer>
+
+    <script>
+        // --- 1. CẤU HÌNH API ---
+        const GAS_WEB_APP_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; 
+        const F1_API_URL = 'https://api.jolpi.ca/ergast/f1/current/driverStandings.json';
+
+        // --- 2. LOGIC GOOGLE SHEETS (CMS & Tracking) ---
+        async function fetchSheetData() {
+            try {
+                // Thay bằng lệnh fetch(GAS_WEB_APP_URL) thực tế khi đã có link Web App
+                const mockData = { 
+                    visitors: 14250, 
+                    adUrl: "https://shopee.vn/", 
+                    bannerImg: "https://via.placeholder.com/300x250/222/e10600?text=Shop+F1+Merchandise" 
+                };
+                
+                document.getElementById('visitor-count').innerText = mockData.visitors.toLocaleString();
+                document.getElementById('ad-banner').src = mockData.bannerImg;
+                document.getElementById('ad-link').href = mockData.adUrl;
+            } catch (error) {
+                console.error("Lỗi tải cấu hình CMS:", error);
+            }
+        }
+
+        // --- 3. LOGIC LẤY DỮ LIỆU F1 ---
+        async function fetchF1Data() {
+            try {
+                const res = await fetch(F1_API_URL);
+                const data = await res.json();
+                const drivers = data.MRData.StandingsTable.StandingsLists[0].DriverStandings.slice(0, 10); 
+                
+                const board = document.getElementById('live-board');
+                board.innerHTML = drivers.map(d => `
+                    <tr class="table-row-hover transition-colors">
+                        <td class="px-4 py-3 font-bold ${d.position === '1' ? 'text-yellow-500' : 'text-gray-300'}">${d.position}</td>
+                        <td class="px-4 py-3 font-semibold uppercase tracking-wide">${d.Driver.code || d.Driver.familyName.substring(0,3)}</td>
+                        <td class="px-4 py-3 text-gray-400 text-sm">${d.Constructors[0].name}</td>
+                        <td class="px-4 py-3 font-mono">${d.points} <span class="text-xs text-gray-500 ml-1">pts</span></td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                document.getElementById('live-board').innerHTML = `<tr><td colspan="4" class="text-center py-4 text-red-500">Mất kết nối API. Đang thử lại...</td></tr>`;
+            }
+        }
+
+        // --- 4. KHỞI CHẠY HỆ THỐNG ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSheetData();
+            fetchF1Data();
+            // Polling cập nhật bảng xếp hạng mỗi 10 giây (Tối ưu cho lúc đua Live)
+            setInterval(fetchF1Data, 10000); 
+        });
+    </script>
+</body>
+</html>
