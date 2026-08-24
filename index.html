@@ -1,171 +1,2006 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Hub | Tin tức & Kết quả tối giản</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; }
-        .f1-red { color: #e10600; }
-        .bg-f1-red { background-color: #e10600; }
-        /* Tùy chỉnh thanh cuộn siêu mỏng cho phong cách minimalist */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>F1 HUB — Formula 1 News & Championship</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --red:#e10600;
+    --red2:#ff1e17;
+    --bg:#050505;
+    --panel:#0b0b0b;
+    --panel2:#101010;
+    --border:#1b1b1b;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:
+        radial-gradient(circle at 80% -10%,rgba(225,6,0,.10),transparent 30%),
+        #050505;
+    color:#eee;
+}
+
+::-webkit-scrollbar{
+    width:5px;
+}
+
+::-webkit-scrollbar-track{
+    background:#050505;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#333;
+    border-radius:10px;
+}
+
+.f1-red{
+    color:var(--red);
+}
+
+.bg-f1-red{
+    background:var(--red);
+}
+
+.border-f1{
+    border-color:rgba(225,6,0,.35);
+}
+
+.glass{
+    background:rgba(10,10,10,.78);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+}
+
+.hero-grid{
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:50px 50px;
+}
+
+.hero-glow{
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle,rgba(225,6,0,.22),transparent 70%);
+    filter:blur(20px);
+    pointer-events:none;
+}
+
+.card{
+    background:#0a0a0a;
+    border:1px solid var(--border);
+    transition:.3s ease;
+}
+
+.card:hover{
+    border-color:#303030;
+    transform:translateY(-2px);
+}
+
+.news-card img{
+    transition:transform .6s ease;
+}
+
+.news-card:hover img{
+    transform:scale(1.04);
+}
+
+.red-line{
+    position:relative;
+}
+
+.red-line:before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:3px;
+    height:100%;
+    background:var(--red);
+}
+
+.count-number{
+    font-variant-numeric:tabular-nums;
+}
+
+.race-track{
+    background:
+        linear-gradient(90deg,#161616 1px,transparent 1px),
+        linear-gradient(#161616 1px,transparent 1px);
+    background-size:20px 20px;
+}
+
+.driver-row{
+    transition:.2s ease;
+}
+
+.driver-row:hover{
+    background:#111;
+}
+
+.nav-link{
+    position:relative;
+}
+
+.nav-link:after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-9px;
+    width:0;
+    height:2px;
+    background:var(--red);
+    transition:.25s;
+}
+
+.nav-link:hover:after{
+    width:100%;
+}
+
+.skeleton{
+    background:
+        linear-gradient(
+            90deg,
+            #0d0d0d 25%,
+            #171717 37%,
+            #0d0d0d 63%
+        );
+    background-size:400% 100%;
+    animation:skeleton 1.4s infinite;
+}
+
+@keyframes skeleton{
+    0%{background-position:100% 0}
+    100%{background-position:-100% 0}
+}
+
+.modal{
+    animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.98);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.live-dot{
+    box-shadow:0 0 0 0 rgba(225,6,0,.7);
+    animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse{
+    70%{
+        box-shadow:0 0 0 8px rgba(225,6,0,0);
+    }
+    100%{
+        box-shadow:0 0 0 0 rgba(225,6,0,0);
+    }
+}
+
+@media(max-width:768px){
+
+    .hero-title{
+        font-size:3rem;
+        line-height:.95;
+    }
+
+    .mobile-scroll{
+        overflow-x:auto;
+        scrollbar-width:none;
+    }
+
+    .mobile-scroll::-webkit-scrollbar{
+        display:none;
+    }
+}
+
+</style>
 </head>
-<body class="min-h-screen flex flex-col antialiased">
 
-    <!-- Navbar Tối giản -->
-    <header class="border-b border-gray-900 bg-[#0a0a0a] sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
-            <h1 class="text-2xl font-extrabold tracking-tighter">
-                F1<span class="f1-red">HUB</span>
-            </h1>
-            <nav class="text-sm font-medium text-gray-400 gap-6 hidden md:flex">
-                <a href="#" class="hover:text-white transition">Tin tức</a>
-                <a href="#" class="hover:text-white transition">Bảng xếp hạng</a>
-                <a href="#" class="hover:text-white transition">Lịch thi đấu</a>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Nội dung chính -->
-    <main class="flex-grow max-w-6xl mx-auto px-6 py-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12">
-        
-        <!-- Cột Trái: Tin tức F1 (Lấy từ RSS sang JSON miễn phí) -->
-        <section class="lg:col-span-8">
-            <h2 class="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-6">Tiêu điểm hôm nay</h2>
-            <div id="news-feed" class="space-y-8">
-                <!-- Skeleton Loading -->
-                <div class="animate-pulse flex flex-col gap-3">
-                    <div class="h-48 bg-gray-900 rounded-md"></div>
-                    <div class="h-4 bg-gray-900 rounded w-3/4"></div>
-                    <div class="h-4 bg-gray-900 rounded w-1/2"></div>
+<body>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="sticky top-0 z-50 border-b border-[#171717] glass">
+
+<div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+<div class="h-20 flex items-center justify-between">
+
+<a href="#" class="flex items-center gap-2">
+
+<div class="text-2xl font-black tracking-tighter">
+F1<span class="f1-red">HUB</span>
+</div>
+
+<div class="hidden sm:block text-[9px] uppercase tracking-[.25em] text-gray-600 border-l border-gray-800 pl-3">
+Formula 1
+</div>
+
+</a>
+
+
+<nav class="hidden lg:flex items-center gap-8 text-xs font-semibold text-gray-400">
+
+<a class="nav-link hover:text-white" href="#news">
+TIN TỨC
+</a>
+
+<a class="nav-link hover:text-white" href="#standings">
+BXH
+</a>
+
+<a class="nav-link hover:text-white" href="#calendar">
+LỊCH ĐUA
+</a>
+
+<a class="nav-link hover:text-white" href="#drivers">
+TAY ĐUA
+</a>
+
+<a class="nav-link hover:text-white" href="#teams">
+ĐỘI ĐUA
+</a>
+
+</nav>
+
+
+<div class="flex items-center gap-4">
+
+<div class="hidden md:flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider">
+
+<span class="w-2 h-2 rounded-full bg-red-600 live-dot"></span>
+
+F1 LIVE
+
+</div>
+
+
+<button
+onclick="toggleSearch()"
+class="w-9 h-9 rounded-full border border-gray-800 flex items-center justify-center hover:bg-white hover:text-black transition"
+>
+
+⌕
+
+</button>
+
+<button
+onclick="toggleMobileMenu()"
+class="lg:hidden text-xl"
+>
+
+☰
+
+</button>
+
+</div>
+
+</div>
+
+
+<div id="mobile-menu" class="hidden lg:hidden pb-5 border-t border-gray-900">
+
+<div class="grid grid-cols-2 gap-3 pt-5 text-xs">
+
+<a href="#news" class="p-3 bg-[#101010] rounded">
+TIN TỨC
+</a>
+
+<a href="#standings" class="p-3 bg-[#101010] rounded">
+BXH
+</a>
+
+<a href="#calendar" class="p-3 bg-[#101010] rounded">
+LỊCH ĐUA
+</a>
+
+<a href="#drivers" class="p-3 bg-[#101010] rounded">
+TAY ĐUA
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+
+
+<!-- =========================================================
+     SEARCH
+========================================================= -->
+
+<div id="search-panel"
+class="hidden fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl">
+
+<div class="max-w-3xl mx-auto px-6 pt-32">
+
+<div class="flex justify-between items-center mb-8">
+
+<span class="text-xs uppercase tracking-[.3em] text-gray-500">
+Tìm kiếm F1
+</span>
+
+<button onclick="toggleSearch()" class="text-2xl">
+×
+</button>
+
+</div>
+
+
+<input
+id="search-input"
+oninput="searchNews()"
+type="text"
+placeholder="Tìm tay đua, đội đua, tin tức..."
+class="w-full bg-transparent border-b border-gray-700 py-5 text-2xl outline-none focus:border-red-600"
+/>
+
+<div id="search-results" class="mt-8 space-y-3"></div>
+
+</div>
+
+</div>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="relative overflow-hidden border-b border-[#151515] hero-grid">
+
+<div class="hero-glow right-0 top-0"></div>
+
+<div class="max-w-7xl mx-auto px-5 lg:px-8 py-20 lg:py-28">
+
+<div class="grid lg:grid-cols-12 gap-12 items-center">
+
+
+<div class="lg:col-span-7">
+
+<div class="flex items-center gap-3 mb-6">
+
+<span class="px-3 py-1 bg-red-600 text-[9px] font-bold tracking-widest rounded-sm">
+2026 SEASON
+</span>
+
+<span class="text-[10px] uppercase tracking-[.25em] text-gray-600">
+Formula 1 Championship
+</span>
+
+</div>
+
+
+<h1 class="hero-title text-6xl md:text-8xl font-black tracking-[-.07em] leading-[.88]">
+
+THE
+<span class="f1-red">RACE</span><br>
+
+NEVER
+<br class="hidden md:block">
+
+STOPS.
+
+</h1>
+
+
+<p class="mt-7 max-w-xl text-gray-500 leading-relaxed">
+
+Tin tức, lịch thi đấu, bảng xếp hạng và dữ liệu Formula 1
+được cập nhật liên tục trong một giao diện tối giản dành cho người hâm mộ.
+
+</p>
+
+
+<div class="flex flex-wrap gap-3 mt-8">
+
+<a
+href="#news"
+class="px-6 py-3 bg-white text-black text-xs font-bold rounded hover:bg-gray-200 transition"
+>
+
+XEM TIN MỚI
+
+</a>
+
+
+<a
+href="#calendar"
+class="px-6 py-3 border border-gray-700 text-xs font-bold rounded hover:border-white transition"
+>
+
+LỊCH ĐUA 2026
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- NEXT RACE -->
+
+<div class="lg:col-span-5">
+
+<div class="card rounded-xl overflow-hidden">
+
+<div class="p-5 border-b border-gray-900 flex justify-between">
+
+<div>
+
+<p class="text-[9px] uppercase tracking-[.25em] text-gray-600">
+NEXT RACE
+</p>
+
+<h2 id="next-race-name" class="font-bold text-lg mt-1">
+Đang tải...
+</h2>
+
+</div>
+
+<span
+id="next-race-round"
+class="text-xs text-gray-600"
+>
+ROUND --
+</span>
+
+</div>
+
+
+<div class="race-track p-6">
+
+<div class="text-[10px] text-gray-600 uppercase mb-3">
+Countdown
+</div>
+
+
+<div class="grid grid-cols-4 gap-2 text-center">
+
+<div>
+<div id="days" class="count-number text-3xl font-black">
+--
+</div>
+<div class="text-[8px] text-gray-600 uppercase">
+Days
+</div>
+</div>
+
+<div>
+<div id="hours" class="count-number text-3xl font-black">
+--
+</div>
+<div class="text-[8px] text-gray-600 uppercase">
+Hours
+</div>
+</div>
+
+<div>
+<div id="minutes" class="count-number text-3xl font-black">
+--
+</div>
+<div class="text-[8px] text-gray-600 uppercase">
+Minutes
+</div>
+</div>
+
+<div>
+<div id="seconds" class="count-number text-3xl font-black f1-red">
+--
+</div>
+<div class="text-[8px] text-gray-600 uppercase">
+Seconds
+</div>
+</div>
+
+</div>
+
+
+<div class="mt-8 flex justify-between items-end">
+
+<div>
+
+<div class="text-[9px] text-gray-600 uppercase">
+Circuit
+</div>
+
+<div id="next-circuit" class="font-semibold mt-1">
+--
+</div>
+
+</div>
+
+
+<div class="text-right">
+
+<div class="text-[9px] text-gray-600 uppercase">
+Date
+</div>
+
+<div id="next-date" class="font-semibold mt-1">
+--
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SEASON STATS
+========================================================= -->
+
+<section class="border-b border-[#151515]">
+
+<div class="max-w-7xl mx-auto px-5 lg:px-8">
+
+<div class="grid grid-cols-2 md:grid-cols-4">
+
+<div class="p-6 border-r border-[#151515]">
+
+<div class="text-[9px] uppercase tracking-widest text-gray-600">
+Races
+</div>
+
+<div id="stat-races" class="text-3xl font-black mt-2">
+--
+</div>
+
+</div>
+
+
+<div class="p-6 md:border-r border-[#151515]">
+
+<div class="text-[9px] uppercase tracking-widest text-gray-600">
+Drivers
+</div>
+
+<div class="text-3xl font-black mt-2">
+20
+</div>
+
+</div>
+
+
+<div class="p-6 border-r border-[#151515]">
+
+<div class="text-[9px] uppercase tracking-widest text-gray-600">
+Teams
+</div>
+
+<div class="text-3xl font-black mt-2">
+10
+</div>
+
+</div>
+
+
+<div class="p-6">
+
+<div class="text-[9px] uppercase tracking-widest text-gray-600">
+Season
+</div>
+
+<div class="text-3xl font-black mt-2">
+2026
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="max-w-7xl mx-auto px-5 lg:px-8 py-16">
+
+<div class="grid lg:grid-cols-12 gap-12">
+
+
+<!-- =====================================================
+     NEWS
+===================================================== -->
+
+<section id="news" class="lg:col-span-8">
+
+<div class="flex justify-between items-end mb-8">
+
+<div>
+
+<p class="text-[9px] tracking-[.3em] uppercase text-gray-600">
+LATEST
+</p>
+
+<h2 class="text-3xl font-black tracking-tight mt-2">
+Tin tức F1
+</h2>
+
+</div>
+
+<span class="text-[10px] text-gray-600">
+Cập nhật tự động
+</span>
+
+</div>
+
+
+<div id="news-featured"></div>
+
+
+<div
+id="news-feed"
+class="grid md:grid-cols-2 gap-6 mt-8"
+>
+
+<!-- skeleton -->
+
+<div class="skeleton h-72 rounded"></div>
+
+<div class="skeleton h-72 rounded"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="lg:col-span-4 space-y-10">
+
+
+<!-- AD -->
+
+<div id="ad-container" class="hidden">
+
+<div class="flex justify-between mb-2">
+
+<span class="text-[8px] uppercase tracking-widest text-gray-700">
+Sponsored
+</span>
+
+</div>
+
+<a id="ad-link" target="_blank">
+
+<img
+id="ad-banner"
+class="w-full rounded object-cover"
+/>
+
+</a>
+
+</div>
+
+
+
+<!-- TOP DRIVER -->
+
+<div id="standings">
+
+<div class="flex justify-between items-center mb-5">
+
+<h2 class="text-xs font-bold tracking-widest uppercase text-gray-500">
+Drivers Championship
+</h2>
+
+<span class="text-[9px] text-red-600">
+2026
+</span>
+
+</div>
+
+
+<div class="card rounded-lg overflow-hidden">
+
+<div
+id="standings-board"
+class="divide-y divide-gray-900"
+>
+
+<div class="p-6 text-center text-gray-600 text-xs">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- CONSTRUCTORS -->
+
+<div id="constructors">
+
+<div class="flex justify-between items-center mb-5">
+
+<h2 class="text-xs font-bold tracking-widest uppercase text-gray-500">
+Constructors
+</h2>
+
+</div>
+
+
+<div class="card rounded-lg">
+
+<div id="constructors-board">
+
+<div class="p-6 text-gray-600 text-xs">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+</aside>
+
+</div>
+
+
+
+<!-- =========================================================
+     CALENDAR
+========================================================= -->
+
+<section id="calendar" class="mt-24">
+
+<div class="flex justify-between items-end mb-8">
+
+<div>
+
+<p class="text-[9px] tracking-[.3em] uppercase text-gray-600">
+2026 CHAMPIONSHIP
+</p>
+
+<h2 class="text-3xl font-black mt-2">
+Lịch thi đấu
+</h2>
+
+</div>
+
+<div class="text-xs text-gray-600">
+Click race để xem chi tiết
+</div>
+
+</div>
+
+
+<div
+id="calendar-grid"
+class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     DRIVERS
+========================================================= -->
+
+<section id="drivers" class="mt-24">
+
+<div class="mb-8">
+
+<p class="text-[9px] tracking-[.3em] uppercase text-gray-600">
+GRID
+</p>
+
+<h2 class="text-3xl font-black mt-2">
+Tay đua
+</h2>
+
+</div>
+
+
+<div
+id="drivers-grid"
+class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4"
+>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     TEAMS
+========================================================= -->
+
+<section id="teams" class="mt-24">
+
+<div class="mb-8">
+
+<p class="text-[9px] tracking-[.3em] uppercase text-gray-600">
+CONSTRUCTORS
+</p>
+
+<h2 class="text-3xl font-black mt-2">
+Đội đua
+</h2>
+
+</div>
+
+
+<div
+id="teams-grid"
+class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+>
+
+</div>
+
+</section>
+
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="border-t border-gray-900 mt-20">
+
+<div class="max-w-7xl mx-auto px-5 lg:px-8 py-12">
+
+<div class="grid md:grid-cols-3 gap-10">
+
+<div>
+
+<div class="text-2xl font-black">
+F1<span class="f1-red">HUB</span>
+</div>
+
+<p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">
+
+Nền tảng tổng hợp tin tức và dữ liệu Formula 1
+với giao diện tối giản dành cho người hâm mộ.
+
+</p>
+
+</div>
+
+
+<div>
+
+<div class="text-[9px] uppercase tracking-widest text-gray-600 mb-4">
+Navigation
+</div>
+
+<div class="grid grid-cols-2 gap-3 text-xs text-gray-500">
+
+<a href="#news">Tin tức</a>
+<a href="#standings">BXH</a>
+<a href="#calendar">Lịch đua</a>
+<a href="#drivers">Tay đua</a>
+
+</div>
+
+</div>
+
+
+<div>
+
+<div class="text-[9px] uppercase tracking-widest text-gray-600 mb-4">
+Data
+</div>
+
+<p class="text-xs text-gray-600 leading-relaxed">
+
+Dữ liệu được lấy từ các nguồn API công khai.
+F1 HUB không phải website chính thức của Formula 1.
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="border-t border-gray-900 mt-10 pt-6 text-[10px] text-gray-700 flex justify-between">
+
+<span>
+© 2026 F1 HUB
+</span>
+
+<span>
+Built for F1 fans
+</span>
+
+</div>
+
+</div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     RACE MODAL
+========================================================= -->
+
+<div
+id="race-modal"
+class="hidden fixed inset-0 z-[200] bg-black/80 backdrop-blur-sm p-5 flex items-center justify-center"
+>
+
+<div class="modal max-w-lg w-full bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
+
+<div class="p-6 border-b border-gray-900 flex justify-between">
+
+<div>
+
+<div class="text-[9px] uppercase tracking-widest text-gray-600">
+Race Weekend
+</div>
+
+<h2 id="modal-race-name" class="text-2xl font-black mt-2">
+--
+</h2>
+
+</div>
+
+<button
+onclick="closeRaceModal()"
+class="text-gray-500 hover:text-white text-xl"
+>
+×
+</button>
+
+</div>
+
+
+<div class="p-6 space-y-5">
+
+<div class="grid grid-cols-2 gap-4">
+
+<div class="bg-[#111] p-4 rounded">
+
+<div class="text-[8px] text-gray-600 uppercase">
+Circuit
+</div>
+
+<div id="modal-circuit" class="font-semibold mt-2">
+--
+</div>
+
+</div>
+
+
+<div class="bg-[#111] p-4 rounded">
+
+<div class="text-[8px] text-gray-600 uppercase">
+Date
+</div>
+
+<div id="modal-date" class="font-semibold mt-2">
+--
+</div>
+
+</div>
+
+</div>
+
+
+<div>
+
+<div class="text-[9px] uppercase tracking-widest text-gray-600 mb-3">
+Sessions
+</div>
+
+<div id="modal-sessions" class="space-y-2">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const GAS_WEB_APP_URL =
+'https://script.google.com/macros/s/AKfycbwGJfMLmxZ9KO-9wIqfqBUMAa7ZNXSaw30aTAtAvW1YQQ5TRSJQh6jZXyzmo6k3OyVN/exec';
+
+const F1_API =
+'https://api.jolpi.ca/ergast/f1';
+
+const F1_NEWS_API =
+'https://api.rss2json.com/v1/api.json?rss_url=https://www.motorsport.com/rss/f1/news/';
+
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let races = [];
+let newsArticles = [];
+let standings = [];
+
+
+/* =========================================================
+   UTILITY
+========================================================= */
+
+function escapeHTML(str=''){
+
+    return str
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+
+}
+
+
+function formatDate(date){
+
+    return new Intl.DateTimeFormat('vi-VN',{
+        day:'2-digit',
+        month:'2-digit',
+        year:'numeric'
+    }).format(new Date(date));
+
+}
+
+
+/* =========================================================
+   GOOGLE SHEETS
+========================================================= */
+
+async function fetchConfigAndTrack(){
+
+    try{
+
+        const res = await fetch(GAS_WEB_APP_URL);
+
+        const data = await res.json();
+
+        if(
+            data.bannerImg &&
+            data.bannerImg.trim() !== ''
+        ){
+
+            document
+                .getElementById('ad-container')
+                .classList.remove('hidden');
+
+            document
+                .getElementById('ad-banner')
+                .src = data.bannerImg;
+
+            document
+                .getElementById('ad-link')
+                .href = data.adUrl || '#';
+
+        }
+
+    }catch(error){
+
+        console.warn('GAS unavailable');
+
+    }
+
+}
+
+
+/* =========================================================
+   NEWS
+========================================================= */
+
+async function fetchNews(){
+
+    try{
+
+        const res =
+            await fetch(F1_NEWS_API);
+
+        const data =
+            await res.json();
+
+        newsArticles =
+            data.items?.slice(0,9) || [];
+
+        renderNews();
+
+    }catch(error){
+
+        document.getElementById('news-feed').innerHTML = `
+            <div class="col-span-full py-16 text-center text-gray-600 text-sm">
+                Không thể tải tin tức.
+            </div>
+        `;
+
+    }
+
+}
+
+
+function renderNews(){
+
+    if(!newsArticles.length) return;
+
+
+    const featured =
+        newsArticles[0];
+
+    document.getElementById('news-featured').innerHTML = `
+
+        <article
+        class="news-card card rounded-xl overflow-hidden group cursor-pointer"
+        onclick="window.open('${featured.link}','_blank')"
+        >
+
+            ${
+                featured.enclosure?.link
+                ?
+                `
+                <div class="overflow-hidden h-72 md:h-[420px]">
+
+                    <img
+                    src="${featured.enclosure.link}"
+                    class="w-full h-full object-cover"
+                    >
+
                 </div>
-            </div>
-        </section>
+                `
+                :
+                ''
+            }
 
-        <!-- Cột Phải: Quảng cáo & Dữ liệu -->
-        <aside class="lg:col-span-4 space-y-10">
-            
-            <!-- Banner Quảng Cáo (Mặc định ẨN - Chỉ hiện khi có data từ Sheet) -->
-            <div id="ad-container" class="hidden flex flex-col gap-2">
-                <span class="text-[10px] text-gray-600 uppercase tracking-widest text-right">Tài trợ</span>
-                <a id="ad-link" href="#" target="_blank" class="block overflow-hidden rounded-sm opacity-90 hover:opacity-100 transition-opacity">
-                    <img id="ad-banner" src="" alt="Advertisement" class="w-full object-cover">
-                </a>
-            </div>
+            <div class="p-6">
 
-            <!-- Bảng xếp hạng Tối giản -->
-            <div>
-                <h2 class="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-4 flex items-center justify-between">
-                    Top Tay Đua
-                    <span class="flex h-2 w-2 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                <div class="flex items-center gap-3 mb-3">
+
+                    <span class="text-[9px] uppercase tracking-widest text-red-600">
+                        FEATURED
                     </span>
-                </h2>
-                <div class="bg-[#0a0a0a] border border-gray-900 rounded-md p-4">
-                    <table class="w-full text-left text-sm whitespace-nowrap">
-                        <tbody id="standings-board" class="divide-y divide-gray-900/50">
-                            <tr><td class="py-4 text-gray-600 text-center">Đang tải dữ liệu...</td></tr>
-                        </tbody>
-                    </table>
+
+                    <span class="text-[9px] text-gray-600">
+                        ${formatDate(featured.pubDate)}
+                    </span>
+
                 </div>
+
+                <h3 class="text-2xl md:text-3xl font-bold leading-tight group-hover:text-red-500 transition">
+
+                    ${escapeHTML(featured.title)}
+
+                </h3>
+
+                <div class="text-xs text-gray-500 mt-5">
+                    ĐỌC BÀI VIẾT →
+                </div>
+
             </div>
-        </aside>
 
-    </main>
+        </article>
 
-    <footer class="border-t border-gray-900 py-8 text-center text-xs text-gray-600">
-        &copy; 2026 F1 Hub Minimalist. Thiết kế phi lợi nhuận.
-    </footer>
+    `;
 
-    <script>
-        // CẤU HÌNH API
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwGJfMLmxZ9KO-9wIqfqBUMAa7ZNXSaw30aTAtAvW1YQQ5TRSJQh6jZXyzmo6k3OyVN/exec'; 
-        const F1_STANDINGS_API = 'https://api.jolpi.ca/ergast/f1/current/driverStandings.json';
-        // Dùng rss2json để chuyển đổi RSS tin tức F1 mở thành JSON (Miễn phí, không cần Auth)
-        const F1_NEWS_API = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.motorsport.com/rss/f1/news/';
 
-        // 1. KẾT NỐI GOOGLE SHEETS (Đếm truy cập ngầm & Tải quảng cáo)
-        async function fetchConfigAndTrack() {
-            try {
-                // Gửi request tới Google Script. Web App sẽ tự động +1 vào file Sheet (ẩn hoàn toàn với UI)
-                const res = await fetch(GAS_WEB_APP_URL);
-                const data = await res.json();
-                
-                // Logic xử lý Banner: Chỉ hiển thị khi có link ảnh từ Sheet
-                if (data.bannerImg && data.bannerImg.trim() !== '') {
-                    const adContainer = document.getElementById('ad-container');
-                    const adBanner = document.getElementById('ad-banner');
-                    const adLink = document.getElementById('ad-link');
+    const rest =
+        newsArticles.slice(1);
 
-                    adBanner.src = data.bannerImg;
-                    adLink.href = data.adUrl || '#';
-                    
-                    // Xóa class 'hidden' để hiển thị banner
-                    adContainer.classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error("Tracking/Config Error - Silent Fail");
+
+    document.getElementById('news-feed').innerHTML =
+        rest.map(article => `
+
+        <article
+        class="news-card card rounded-lg overflow-hidden group cursor-pointer"
+        onclick="window.open('${article.link}','_blank')"
+        >
+
+            ${
+                article.enclosure?.link
+                ?
+                `
+                <div class="overflow-hidden h-44">
+
+                    <img
+                    src="${article.enclosure.link}"
+                    class="w-full h-full object-cover"
+                    >
+
+                </div>
+                `
+                :
+                ''
             }
+
+            <div class="p-5">
+
+                <div class="text-[9px] uppercase tracking-widest text-gray-600 mb-3">
+
+                    ${formatDate(article.pubDate)}
+
+                </div>
+
+                <h3 class="font-semibold leading-snug group-hover:text-red-500 transition">
+
+                    ${escapeHTML(article.title)}
+
+                </h3>
+
+                <div class="text-[9px] text-gray-600 uppercase tracking-widest mt-5">
+
+                    Read more →
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `).join('');
+
+}
+
+
+/* =========================================================
+   F1 SCHEDULE
+========================================================= */
+
+async function fetchSchedule(){
+
+    try{
+
+        const res =
+            await fetch(`${F1_API}/2026.json`);
+
+        const data =
+            await res.json();
+
+        races =
+            data.MRData.RaceTable.Races || [];
+
+        document.getElementById('stat-races').textContent =
+            races.length;
+
+        renderCalendar();
+
+        setNextRace();
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   NEXT RACE
+========================================================= */
+
+function setNextRace(){
+
+    const now =
+        new Date();
+
+    const next =
+        races.find(r =>
+            new Date(r.date + 'T' + (r.time || '12:00:00Z')) > now
+        );
+
+    if(!next) return;
+
+    window.nextRace =
+        next;
+
+    document.getElementById('next-race-name')
+        .textContent = next.raceName;
+
+    document.getElementById('next-race-round')
+        .textContent = `ROUND ${next.round}`;
+
+    document.getElementById('next-circuit')
+        .textContent =
+        next.Circuit.circuitName;
+
+    document.getElementById('next-date')
+        .textContent =
+        formatDate(next.date);
+
+    updateCountdown();
+
+    setInterval(updateCountdown,1000);
+
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+function updateCountdown(){
+
+    if(!window.nextRace) return;
+
+    const race =
+        window.nextRace;
+
+    const target =
+        new Date(
+            race.date + 'T' +
+            (race.time || '12:00:00Z')
+        );
+
+    const diff =
+        target - new Date();
+
+    if(diff <= 0){
+
+        ['days','hours','minutes','seconds']
+        .forEach(id =>
+            document.getElementById(id).textContent='00'
+        );
+
+        return;
+
+    }
+
+    const days =
+        Math.floor(diff / 86400000);
+
+    const hours =
+        Math.floor(diff / 3600000) % 24;
+
+    const minutes =
+        Math.floor(diff / 60000) % 60;
+
+    const seconds =
+        Math.floor(diff / 1000) % 60;
+
+
+    document.getElementById('days')
+        .textContent =
+        String(days).padStart(2,'0');
+
+    document.getElementById('hours')
+        .textContent =
+        String(hours).padStart(2,'0');
+
+    document.getElementById('minutes')
+        .textContent =
+        String(minutes).padStart(2,'0');
+
+    document.getElementById('seconds')
+        .textContent =
+        String(seconds).padStart(2,'0');
+
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+function renderCalendar(){
+
+    const grid =
+        document.getElementById('calendar-grid');
+
+    grid.innerHTML =
+        races.map((race,index) => {
+
+            const isNext =
+                window.nextRace &&
+                race.round === window.nextRace.round;
+
+            return `
+
+            <article
+            onclick="openRaceModal(${index})"
+            class="
+                card rounded-lg p-5 cursor-pointer
+                ${isNext ? 'border-red-600/50' : ''}
+            "
+            >
+
+                <div class="flex justify-between">
+
+                    <span class="
+                    text-[9px]
+                    font-bold
+                    ${isNext ? 'text-red-500' : 'text-gray-600'}
+                    ">
+
+                        ROUND ${race.round}
+
+                    </span>
+
+                    ${
+                        isNext
+                        ?
+                        `<span class="text-[8px] bg-red-600 px-2 py-1 rounded-sm">
+                            NEXT
+                        </span>`
+                        :
+                        ''
+                    }
+
+                </div>
+
+
+                <h3 class="font-bold text-lg mt-5">
+
+                    ${escapeHTML(race.raceName)}
+
+                </h3>
+
+
+                <div class="mt-6 flex justify-between items-end">
+
+                    <div>
+
+                        <div class="text-[8px] uppercase text-gray-600">
+                            Circuit
+                        </div>
+
+                        <div class="text-xs text-gray-400 mt-1">
+                            ${escapeHTML(race.Circuit.circuitName)}
+                        </div>
+
+                    </div>
+
+
+                    <div class="text-right">
+
+                        <div class="text-xs font-bold">
+                            ${formatDate(race.date)}
+                        </div>
+
+                        <div class="text-[9px] text-gray-600 mt-1">
+                            ${race.Circuit.Location.locality},
+                            ${race.Circuit.Location.country}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            `;
+
+        }).join('');
+
+}
+
+
+/* =========================================================
+   RACE MODAL
+========================================================= */
+
+function openRaceModal(index){
+
+    const race =
+        races[index];
+
+    document.getElementById('modal-race-name')
+        .textContent =
+        race.raceName;
+
+    document.getElementById('modal-circuit')
+        .textContent =
+        race.Circuit.circuitName;
+
+    document.getElementById('modal-date')
+        .textContent =
+        formatDate(race.date);
+
+
+    let sessions = [];
+
+    if(race.FirstPractice)
+        sessions.push(['Practice 1',race.FirstPractice]);
+
+    if(race.SecondPractice)
+        sessions.push(['Practice 2',race.SecondPractice]);
+
+    if(race.ThirdPractice)
+        sessions.push(['Practice 3',race.ThirdPractice]);
+
+    if(race.Sprint)
+        sessions.push(['Sprint',race.Sprint]);
+
+    if(race.Qualifying)
+        sessions.push(['Qualifying',race.Qualifying]);
+
+    sessions.push(['Race',{
+        date:race.date,
+        time:race.time
+    }]);
+
+
+    document.getElementById('modal-sessions').innerHTML =
+        sessions.map(([name,s]) => `
+
+            <div class="flex justify-between bg-[#111] p-3 rounded">
+
+                <span class="text-xs font-medium">
+                    ${name}
+                </span>
+
+                <span class="text-xs text-gray-500">
+                    ${formatDate(s.date)}
+                    ${s.time ? s.time.slice(0,5) : ''}
+                </span>
+
+            </div>
+
+        `).join('');
+
+
+    document
+        .getElementById('race-modal')
+        .classList.remove('hidden');
+
+}
+
+
+function closeRaceModal(){
+
+    document
+        .getElementById('race-modal')
+        .classList.add('hidden');
+
+}
+
+
+/* =========================================================
+   STANDINGS
+========================================================= */
+
+async function fetchStandings(){
+
+    try{
+
+        const res =
+            await fetch(
+                `${F1_API}/current/driverStandings.json`
+            );
+
+        const data =
+            await res.json();
+
+        standings =
+            data.MRData.StandingsTable
+            .StandingsLists[0]
+            .DriverStandings;
+
+        renderStandings();
+
+        renderDrivers();
+
+        renderTeams();
+
+    }catch(error){
+
+        document.getElementById('standings-board')
+            .innerHTML =
+            `<div class="p-6 text-center text-red-700 text-xs">
+                API Error
+            </div>`;
+
+    }
+
+}
+
+
+/* =========================================================
+   DRIVER STANDINGS
+========================================================= */
+
+function renderStandings(){
+
+    const drivers =
+        standings.slice(0,10);
+
+    document.getElementById('standings-board')
+        .innerHTML =
+        drivers.map((d,index) => `
+
+            <div
+            class="driver-row flex items-center gap-3 px-4 py-4"
+            >
+
+                <div
+                class="
+                w-5
+                text-center
+                text-[10px]
+                font-mono
+                ${index===0?'text-red-500':'text-gray-600'}
+                "
+                >
+
+                    ${d.position}
+
+                </div>
+
+
+                <div class="flex-1">
+
+                    <div class="
+                    text-sm
+                    ${index===0?'font-bold text-white':'text-gray-300'}
+                    ">
+
+                        ${escapeHTML(d.Driver.givenName)}
+                        ${escapeHTML(d.Driver.familyName)}
+
+                    </div>
+
+                    <div class="text-[8px] uppercase text-gray-600 mt-1">
+
+                        ${escapeHTML(d.Constructors[0].name)}
+
+                    </div>
+
+                </div>
+
+
+                <div class="font-mono text-xs text-gray-400">
+
+                    ${d.points}
+
+                </div>
+
+            </div>
+
+        `).join('');
+
+}
+
+
+/* =========================================================
+   DRIVERS GRID
+========================================================= */
+
+function renderDrivers(){
+
+    const drivers =
+        standings.slice(0,20);
+
+    document.getElementById('drivers-grid')
+        .innerHTML =
+        drivers.map((d,index) => `
+
+        <article class="card rounded-lg p-5">
+
+            <div class="flex justify-between items-start">
+
+                <span class="text-[9px] font-mono text-gray-600">
+                    #${d.Driver.permanentNumber || '--'}
+                </span>
+
+                <span class="text-[9px] text-gray-600">
+                    P${d.position}
+                </span>
+
+            </div>
+
+
+            <div class="mt-12">
+
+                <div class="text-xs text-gray-500">
+                    ${escapeHTML(d.Driver.givenName)}
+                </div>
+
+                <div class="text-lg font-black uppercase">
+                    ${escapeHTML(d.Driver.familyName)}
+                </div>
+
+            </div>
+
+
+            <div class="border-t border-gray-900 mt-5 pt-4 flex justify-between">
+
+                <span class="text-[8px] uppercase text-gray-600">
+                    Points
+                </span>
+
+                <span class="font-mono text-xs">
+                    ${d.points}
+                </span>
+
+            </div>
+
+        </article>
+
+        `).join('');
+
+}
+
+
+/* =========================================================
+   TEAMS
+========================================================= */
+
+function renderTeams(){
+
+    const teams = {};
+
+    standings.forEach(d => {
+
+        const constructor =
+            d.Constructors[0];
+
+        if(!teams[constructor.constructorId]){
+
+            teams[constructor.constructorId] = {
+                name:constructor.name,
+                points:0,
+                drivers:0
+            };
+
         }
 
-        // 2. LẤY TIN TỨC F1 (Hiển thị thẻ tin tức Minimalist)
-        async function fetchNews() {
-            try {
-                const res = await fetch(F1_NEWS_API);
-                const data = await res.json();
-                const articles = data.items.slice(0, 5); // Lấy 5 tin mới nhất
-                
-                const newsFeed = document.getElementById('news-feed');
-                newsFeed.innerHTML = articles.map(article => `
-                    <article class="group cursor-pointer">
-                        ${article.enclosure && article.enclosure.link ? 
-                            `<div class="overflow-hidden rounded-sm mb-4"><img src="${article.enclosure.link}" class="w-full h-48 md:h-64 object-cover transform group-hover:scale-105 transition duration-500 ease-in-out" alt="news"></div>` : ''}
-                        <p class="text-[10px] text-gray-500 uppercase tracking-wider mb-2">${article.pubDate.split(' ')[0]}</p>
-                        <h3 class="text-xl md:text-2xl font-semibold leading-tight group-hover:text-[#e10600] transition-colors">${article.title}</h3>
-                        <a href="${article.link}" target="_blank" class="text-xs font-medium text-gray-400 mt-3 inline-block group-hover:text-white transition">ĐỌC TIẾP &rarr;</a>
-                    </article>
-                    <hr class="border-gray-900 my-8 border-dashed">
-                `).join('');
-            } catch (error) {
-                document.getElementById('news-feed').innerHTML = '<p class="text-gray-600">Không thể tải tin tức lúc này.</p>';
-            }
-        }
+        teams[constructor.constructorId].points +=
+            Number(d.points);
 
-        // 3. LẤY BẢNG XẾP HẠNG TAY ĐUA
-        async function fetchStandings() {
-            try {
-                const res = await fetch(F1_STANDINGS_API);
-                const data = await res.json();
-                const drivers = data.MRData.StandingsTable.StandingsLists[0].DriverStandings.slice(0, 10);
-                
-                const board = document.getElementById('standings-board');
-                board.innerHTML = drivers.map((d, index) => `
-                    <tr class="hover:bg-gray-900 transition-colors">
-                        <td class="py-3 px-2 w-8 text-gray-500 font-mono text-xs">${d.position}</td>
-                        <td class="py-3 px-2">
-                            <div class="font-medium ${index === 0 ? 'text-white' : 'text-gray-300'}">${d.Driver.givenName} ${d.Driver.familyName}</div>
-                            <div class="text-[10px] text-gray-600 uppercase">${d.Constructors[0].name}</div>
-                        </td>
-                        <td class="py-3 px-2 text-right font-mono text-sm text-gray-400">${d.points}</td>
-                    </tr>
-                `).join('');
-            } catch (error) {
-                document.getElementById('standings-board').innerHTML = `<tr><td class="py-4 text-center text-red-900 text-xs">Lỗi kết nối API</td></tr>`;
-            }
-        }
+        teams[constructor.constructorId].drivers++;
 
-        // 4. KHỞI CHẠY
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchConfigAndTrack(); // Vừa tải config, vừa track truy cập ngầm
-            fetchNews();
-            fetchStandings();
-        });
-    </script>
+    });
+
+
+    const list =
+        Object.values(teams)
+        .sort((a,b)=>b.points-a.points);
+
+
+    document.getElementById('constructors-board')
+        .innerHTML =
+        list.slice(0,10).map((team,index)=>`
+
+            <div class="flex items-center gap-4 px-5 py-4 border-b border-gray-900">
+
+                <div class="text-[10px] text-gray-600 font-mono">
+                    ${index+1}
+                </div>
+
+                <div class="flex-1">
+
+                    <div class="text-sm font-semibold">
+                        ${escapeHTML(team.name)}
+                    </div>
+
+                    <div class="text-[8px] text-gray-600 mt-1">
+                        ${team.drivers} DRIVERS
+                    </div>
+
+                </div>
+
+                <div class="font-mono text-xs">
+                    ${team.points}
+                </div>
+
+            </div>
+
+        `).join('');
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function toggleSearch(){
+
+    const panel =
+        document.getElementById('search-panel');
+
+    panel.classList.toggle('hidden');
+
+    if(!panel.classList.contains('hidden')){
+
+        setTimeout(()=>{
+            document.getElementById('search-input').focus();
+        },100);
+
+    }
+
+}
+
+
+function searchNews(){
+
+    const query =
+        document
+        .getElementById('search-input')
+        .value
+        .toLowerCase()
+        .trim();
+
+    const result =
+        document.getElementById('search-results');
+
+    if(!query){
+
+        result.innerHTML='';
+
+        return;
+
+    }
+
+
+    const matches =
+        newsArticles.filter(article =>
+            article.title
+            .toLowerCase()
+            .includes(query)
+        );
+
+
+    if(!matches.length){
+
+        result.innerHTML =
+            `<div class="text-gray-600 text-sm">
+                Không tìm thấy kết quả.
+            </div>`;
+
+        return;
+
+    }
+
+
+    result.innerHTML =
+        matches.map(article=>`
+
+            <a
+            href="${article.link}"
+            target="_blank"
+            class="block p-4 bg-[#0d0d0d] border border-gray-900 rounded hover:border-gray-700"
+            >
+
+                <div class="text-sm font-medium">
+                    ${escapeHTML(article.title)}
+                </div>
+
+                <div class="text-[9px] text-gray-600 mt-2">
+                    ${formatDate(article.pubDate)}
+                </div>
+
+            </a>
+
+        `).join('');
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+function toggleMobileMenu(){
+
+    document
+        .getElementById('mobile-menu')
+        .classList.toggle('hidden');
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL OUTSIDE
+========================================================= */
+
+document
+.getElementById('race-modal')
+.addEventListener('click',function(e){
+
+    if(e.target === this){
+
+        closeRaceModal();
+
+    }
+
+});
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    ()=>{
+
+        fetchConfigAndTrack();
+
+        fetchNews();
+
+        fetchSchedule();
+
+        fetchStandings();
+
+    }
+);
+
+</script>
+
 </body>
 </html>
