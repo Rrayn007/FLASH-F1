@@ -43,14 +43,16 @@ button{font-family:inherit}
 .news-card{overflow:hidden}
 .news-featured-image{height:285px}
 .news-feed-card img{height:145px;object-fit:cover}
-.f1-sidebar{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 112px);overflow:auto;padding-right:2px;scrollbar-width:thin}
-.sidebar-standings{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:10px;align-items:start}.sidebar-standings>.flex{grid-column:1/-1}.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:1/-1}
-.sidebar-standing-card{background:#0b0b0d;border:1px solid #202023;border-radius:10px;overflow:hidden}
-.sidebar-standing-card .standing-head{padding:13px 14px 10px}
+.f1-sidebar{position:sticky;top:92px;align-self:start;max-height:none;overflow:visible;padding-right:0;scrollbar-width:none}
+.f1-sidebar::-webkit-scrollbar{display:none}
+.sidebar-standings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}.sidebar-standings>.flex{grid-column:1/-1}.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:1/-1}
+.sidebar-standing-card{background:#0b0b0d;border:1px solid #202023;border-radius:10px;overflow:hidden;height:560px;display:flex;flex-direction:column}
+.sidebar-standing-card .standing-head{padding:13px 14px 10px;min-height:47px;flex:0 0 auto}
 .sidebar-standing-card .standing-head h3{font-size:9px}
 .sidebar-standing-card .standing-head span{font-size:7px}
-.sidebar-standing-card .standings-scroll{height:min(660px,calc(100vh - 270px));overflow:auto}
-.sidebar-standing-card.constructors .standings-scroll{height:min(660px,calc(100vh - 270px))}
+.sidebar-standing-card .standings-scroll{height:auto;flex:1;min-height:0;overflow:auto;scrollbar-width:none}
+.sidebar-standing-card .standings-scroll::-webkit-scrollbar{display:none}
+.sidebar-standing-card.constructors .standings-scroll{height:auto}
 .sidebar-standing-card .standing-row{grid-template-columns:22px minmax(0,1fr) auto;gap:6px;min-height:39px;padding:6px 8px}
 .sidebar-standing-card .standing-name{font-size:10px}
 .sidebar-standing-card .standing-sub{font-size:6px;margin-top:2px}
@@ -78,26 +80,28 @@ button{font-family:inherit}
 .completed-card{background:linear-gradient(145deg,#0d0d0f,#111113)}
 .completed-card:hover{background:#151517}
 .result-podium{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-.result-podium-item{background:#151517;border:1px solid #252529;border-radius:5px;padding:7px;text-align:center}
-.result-podium-item.gold{border-color:#79652d}
-.result-podium-item.silver{border-color:#555}
-.result-podium-item.bronze{border-color:#61472e}
-.result-position{font-size:8px;color:#666;font-weight:900}
-.result-driver{font-size:9px;font-weight:800;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.result-team{font-size:6px;color:#555;text-transform:uppercase;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pole-chip{display:flex;align-items:center;justify-content:space-between;background:#181319;border:1px solid #33233b;border-radius:5px;padding:8px}
-.pole-chip span:first-child{font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#a66bc4}
-.pole-chip span:last-child{font-size:10px;font-weight:800}
-.car-visual{position:relative;height:130px;margin-top:18px;overflow:hidden;background:radial-gradient(circle at 60% 55%,rgba(255,255,255,.055),transparent 55%)}
-.car-visual:after{content:"";position:absolute;left:5%;right:5%;bottom:20px;height:1px;background:rgba(255,255,255,.06)}
+.result-podium-item{background:#19191c;border:1px solid #303035;border-radius:6px;padding:8px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+.result-podium-item.gold{border-color:#a78b3b;background:#211d14}
+.result-podium-item.silver{border-color:#707070;background:#1c1c1e}
+.result-podium-item.bronze{border-color:#805d3d;background:#201915}
+.result-position{font-size:8px;color:#85858b;font-weight:900}
+.result-driver{font-size:10px;font-weight:850;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f2f2f2}
+.result-team{font-size:6px;color:#777;text-transform:uppercase;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pole-chip{display:flex;align-items:center;justify-content:space-between;background:#211624;border:1px solid #5b3d69;border-radius:6px;padding:9px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.pole-chip span:first-child{font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#d08af4}
+.pole-chip span:last-child{font-size:11px;font-weight:850;color:#fff}
+.car-visual{position:relative;height:150px;margin-top:18px;overflow:hidden;background:radial-gradient(circle at 60% 55%,rgba(255,255,255,.065),transparent 58%)}
+.car-visual:after{content:"";position:absolute;left:5%;right:5%;bottom:18px;height:1px;background:rgba(255,255,255,.055)}
 .car-svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .45s ease;transform-origin:center}
 .team-card:hover .car-svg{transform:translateX(8px) scale(1.03)}
-.driver-photo-wrap{position:absolute;right:4px;bottom:0;width:52%;height:185px;display:flex;justify-content:flex-end;align-items:flex-end;pointer-events:none}
-.driver-photo{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:bottom right;filter:drop-shadow(0 12px 15px rgba(0,0,0,.45));transition:transform .35s ease}
+.car-visual img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));image-rendering:auto}
+.driver-photo-wrap{position:absolute;right:0;bottom:0;width:58%;height:215px;display:flex;justify-content:flex-end;align-items:flex-end;pointer-events:none;z-index:1}
+.driver-photo{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:bottom right;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));transition:transform .35s ease;image-rendering:auto}
 .driver-card:hover .driver-photo{transform:translateY(-4px) scale(1.025)}
 .img-fallback{opacity:.92}
 .driver-content{position:relative;z-index:2}
-.driver-gradient{position:absolute;inset:auto 0 0 0;height:145px;background:linear-gradient(0deg,#0b0b0d 10%,rgba(11,11,13,.88) 42%,transparent 100%);pointer-events:none}
+.driver-gradient{position:absolute;inset:auto 0 0 0;height:155px;background:linear-gradient(0deg,#0b0b0d 12%,rgba(11,11,13,.9) 44%,transparent 100%);pointer-events:none;z-index:2}
+.driver-stats-row{position:relative}
 .modal-backdrop{animation:fadeIn .18s ease}
 .modal-box{animation:modalIn .22s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -135,7 +139,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #news{scroll-margin-top:96px}
 @media(max-width:1100px){.sidebar-standings{grid-template-columns:1fr 1fr;gap:10px}.standing-row{padding-left:10px;padding-right:10px}}
 @media(max-width:1100px){.f1-sidebar{position:static;max-height:none;overflow:visible;padding-right:0}}
-@media(max-width:900px){.sidebar-standings{grid-template-columns:1fr}.sidebar-standings>.flex,.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:auto}.sidebar-standing-card .standings-scroll,.sidebar-standing-card.constructors .standings-scroll{height:auto;max-height:none}.news-featured-image{height:270px}.news-feed-card img{height:150px}}
+@media(max-width:900px){.sidebar-standings{grid-template-columns:1fr}.sidebar-standings>.flex,.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:auto}.sidebar-standing-card{height:auto;min-height:0}.sidebar-standing-card .standings-scroll,.sidebar-standing-card.constructors .standings-scroll{height:auto;max-height:360px}.news-featured-image{height:270px}.news-feed-card img{height:150px}}
 @media(max-width:640px){.news-featured-image{height:220px}}
 
 
@@ -1034,7 +1038,7 @@ const id=(d.Driver?.driverId||'').toLowerCase();
 const m=F1_DRIVER_ASSET_META[id];
 if(!m)return'';
 const [letter,folder,file]=m;
-return `https://www.formula1.com/content/dam/fom-website/drivers/${letter}/${folder}/${file}.png.transform/2col/image.png`;
+return `https://www.formula1.com/content/dam/fom-website/drivers/${letter}/${folder}/${file}.png.transform/4col/image.png`;
 }
 async function fetchDriverImages(){
 try{
@@ -1055,8 +1059,9 @@ const code=d.Driver?.code?.toLowerCase()||'';
 const family=d.Driver?.familyName?.toLowerCase()||'';
 const given=d.Driver?.givenName?.toLowerCase()||'';
 const candidates=[code,family,given,Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId)];
-for(const c of candidates){if(c&&driverImages[c])return driverImages[c];}
-return official||driverWikiImages[id]||driverImageFallback(d.Driver);
+// Current F1 Media is the primary source so the grid always prefers 2026 driver assets.
+// OpenF1/Wikimedia are fallbacks only when the official asset is unavailable.
+return official||candidates.map(c=>c&&driverImages[c]).find(Boolean)||driverWikiImages[id]||driverImageFallback(d.Driver);
 }
 
 // Official F1 Media is preferred for current driver headshots. OpenF1 commonly returns the same F1 media headshots; Wikimedia is only a fallback.
@@ -1128,30 +1133,14 @@ const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIA
 const image=getDriverImage(d);
 return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
 <div class="driver-gradient"></div>
-<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(driverImages[(d.Driver?.code||'').toLowerCase()]||driverWikiImages[(d.Driver?.driverId||'').toLowerCase()]||driverImageFallback(d.Driver))};this.classList.add('img-fallback')"></div>
+<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(officialDriverMediaImage(d)||driverImages[(d.Driver?.code||'').toLowerCase()]||driverWikiImages[(d.Driver?.driverId||'').toLowerCase()]||driverImageFallback(d.Driver))};this.classList.add('img-fallback')"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
 <div class="driver-content">
 <div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-700 mt-1">2026 DRIVER</div></div></div><div class="text-[10px] font-mono text-gray-600">P${escapeHTML(d.position||index+1)}</div></div>
 <div class="relative mt-20"><div class="driver-firstname">${escapeHTML(firstName)}</div><div class="driver-lastname">${escapeHTML(lastName)}</div></div>
-<div class="relative mt-8 pt-4 border-t border-gray-900 grid grid-cols-2"><div><div class="timing-label">Points</div><div class="timing-value text-sm mt-1">${escapeHTML(d.points||0)}</div></div><div class="text-right"><div class="timing-label">Number</div><div class="timing-value text-sm mt-1">#${escapeHTML(number)}</div></div></div>
+<div class="driver-stats-row relative mt-8 pt-4 grid grid-cols-2"><div><div class="timing-label">Points</div><div class="timing-value text-sm mt-1">${escapeHTML(d.points||0)}</div></div><div class="text-right"><div class="timing-label">Number</div><div class="timing-value text-sm mt-1">#${escapeHTML(number)}</div></div></div>
 </div></article>`;
 }).join('');
-}
-
-function carSvg(color){
-return`
-<svg class="car-svg" viewBox="0 0 700 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-<path d="M85 126C125 121 166 111 205 98L263 75L341 70L394 79L474 98L574 104L632 119L650 136H603L582 126H493L474 139H237L215 126H142L124 139H67L85 126Z" fill="${color}" opacity=".95"/>
-<path d="M263 75L302 48L375 49L411 78L394 86L338 73L286 88L263 75Z" fill="#111114"/>
-<path d="M304 49L338 31L376 35L397 52L374 59L331 57L304 49Z" fill="#202024"/>
-<path d="M64 137H151L164 148H72L64 137Z" fill="#050505"/>
-<path d="M541 137H651L640 148H554L541 137Z" fill="#050505"/>
-<circle cx="111" cy="145" r="24" fill="#050505" stroke="#333" stroke-width="6"/>
-<circle cx="602" cy="145" r="24" fill="#050505" stroke="#333" stroke-width="6"/>
-<path d="M180 121H505" stroke="white" stroke-opacity=".18" stroke-width="3"/>
-<path d="M235 99H451" stroke="${color}" stroke-width="5"/>
-<path d="M462 96L548 107" stroke="${color}" stroke-width="5"/>
-</svg>`;
 }
 
 const F1_CAR_MEDIA={
@@ -1169,7 +1158,8 @@ cadillac:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/c
 };
 function getCarImage(team){
 const id=teamKey(team.id);
-return teamCarImages[id]||teamCarImages[team.name]||carWikiImages[id]||F1_CAR_MEDIA[id]||'';
+// Prefer the current official 2026 F1 Media asset over configurable/wiki fallbacks.
+return F1_CAR_MEDIA[id]||teamCarImages[id]||teamCarImages[team.name]||carWikiImages[id]||'';
 }
 
 function renderTeams(){
@@ -1191,7 +1181,7 @@ return`
 </div>
 
 <div class="car-visual">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-4" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${escapeHTML(carWikiImages[teamKey(team.id)]||'')}'">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE</div>`}
+${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${escapeHTML(carWikiImages[teamKey(team.id)]||'')}'">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE</div>`}
 <div class="absolute left-3 bottom-3 z-10 text-[8px] tracking-[.2em] uppercase text-gray-600">${escapeHTML(meta.chassis)}</div>
 </div>
 
@@ -1287,7 +1277,7 @@ document.getElementById('team-profile-car').innerHTML=`
 <a href="${escapeHTML(safeUrl(meta.url))}" target="_blank" rel="noopener" class="text-[8px] uppercase tracking-widest text-gray-600 hover:text-white">F1.COM →</a>
 </div>
 <div class="car-visual mt-3">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-4" alt="${escapeHTML(team.name)} 2026 car" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(carWikiImages[teamKey(team.id)]||'')}">`:carSvg(meta.color)}
+${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(carWikiImages[teamKey(team.id)]||'')}">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>`}
 </div>
 </div>`;
 
