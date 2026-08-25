@@ -43,7 +43,55 @@ button{font-family:inherit}
  .news-card{overflow:hidden}
 .news-featured-image{height:300px}
 .news-feed-card img{height:118px;object-fit:cover}
+
+/* ===== PRO LAYOUT ===== */
 .f1-sidebar{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 112px);overflow:visible;padding-right:0}
+@media(min-width:1200px){main>.grid{grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start}.news-featured-image{height:330px}.news-feed-card img{height:112px}}
+.sidebar-standings{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:start}
+.sidebar-standing-card .standing-head{height:54px;padding:0 13px}
+.sidebar-standing-card .standing-head h3{font-size:8px;letter-spacing:.13em}
+.sidebar-standing-card .standing-head span{font-size:6px}
+.sidebar-standing-card .standings-scroll{height:min(535px,calc(100vh - 300px));overflow:auto;scrollbar-width:thin;scrollbar-color:#2b2b30 #0b0b0d}
+.sidebar-standing-card .standing-row{grid-template-columns:20px minmax(0,1fr) 38px;gap:7px;height:48px;min-height:48px;padding:6px 10px}
+.sidebar-standing-card .standing-name{font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-standing-card .standing-sub{font-size:5.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-standing-card .standing-points{font-size:10px;min-width:38px}
+.sidebar-standing-card .team-logo{width:28px!important;height:22px!important}
+
+/* Race cards: spacious broadcast-style layout like the original concept */
+#calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.calendar-card{min-height:410px;padding:26px 24px!important;position:relative;overflow:hidden}
+.calendar-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,#333)}
+.calendar-card h3{font-size:24px!important;line-height:1.08;margin-top:28px!important;letter-spacing:-.03em}
+.calendar-card .pole-chip{margin-top:22px!important}
+.calendar-card .result-podium{margin-top:10px}
+.calendar-card .calendar-footer{position:absolute;left:24px;right:24px;bottom:22px}
+.calendar-card.completed-card{background:linear-gradient(145deg,#0b0b0d,#0d0d0f)}
+.calendar-card .status-badge{padding:7px 9px}
+.result-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.result-podium-item{min-height:58px;border:1px solid #242428;border-radius:6px;background:#111114;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7px 4px}
+.result-podium-item .result-position{font-size:7px;color:#777;letter-spacing:.08em}
+.result-podium-item .result-driver{font-size:9px;font-weight:800;margin-top:4px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.result-podium-item .result-team{font-size:5px;color:#555;margin-top:3px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+
+/* Driver image system: real F1 asset, consistent crop, no broken image icon */
+.driver-photo-wrap{width:46%;height:205px;right:2px;z-index:1;display:flex;align-items:flex-end;justify-content:center}
+.driver-photo{width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 16px rgba(0,0,0,.5));image-rendering:auto}
+.driver-gradient{z-index:2;width:54%;height:145px}
+.driver-content{z-index:4}
+.driver-info-divider{position:relative;z-index:5}
+.modal-driver-image{z-index:1;object-fit:contain;object-position:center bottom}
+.modal-driver-divider{position:relative;z-index:5}
+
+/* Dark, slim scrollbars everywhere */
+html{scrollbar-color:#2b2b30 #070708;scrollbar-width:thin}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:#070708}
+::-webkit-scrollbar-thumb{background:#2b2b30;border:1px solid #070708;border-radius:999px}
+::-webkit-scrollbar-thumb:hover{background:#3b3b42}
+@media(max-width:900px){#calendar-grid{grid-template-columns:1fr}.calendar-card{min-height:390px}.f1-sidebar{position:static;max-height:none}.sidebar-standings{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.sidebar-standings{grid-template-columns:1fr}.calendar-card{min-height:360px;padding:22px 20px!important}.calendar-card .calendar-footer{left:20px;right:20px}}
+
 .sidebar-standings{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}
 .sidebar-standings>.flex{grid-column:1/-1}
 .sidebar-standing-card{background:#0b0b0d;border:1px solid #202023;border-radius:10px;overflow:hidden;min-width:0}
@@ -74,7 +122,7 @@ button{font-family:inherit}
 .driver-card:hover .driver-photo{transform:translateY(-4px) scale(1.02)}
 .driver-content{position:relative;z-index:3;width:58%;min-height:245px}
 .driver-gradient{position:absolute;right:0;bottom:0;width:60%;height:170px;background:linear-gradient(0deg,#0b0b0d 8%,rgba(11,11,13,.82) 38%,transparent 100%);pointer-events:none;z-index:2}
-.driver-info-divider{height:1px;background:#1b1b1e;margin-top:24px;width:100%}
+.driver-info-divider{height:1px;background:#1b1b1e;margin-top:24px;width:100%;position:relative;z-index:6}
 .car-visual{position:relative;height:190px;margin-top:18px;overflow:hidden;background:radial-gradient(circle at 60% 55%,rgba(255,255,255,.055),transparent 55%)}
 .car-visual:after{content:"";position:absolute;left:5%;right:5%;bottom:20px;height:1px;background:rgba(255,255,255,.06)}
 .car-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10px 22px;z-index:1;filter:drop-shadow(0 14px 16px rgba(0,0,0,.35))}
@@ -82,7 +130,7 @@ button{font-family:inherit}
 .modal-driver-hero{position:relative;min-height:360px;background:linear-gradient(145deg,#0f0f11,#080808);overflow:hidden;border-radius:12px}
 .modal-driver-image{position:absolute;right:0;bottom:0;width:min(48%,360px);height:100%;object-fit:contain;object-position:bottom right;z-index:1;filter:drop-shadow(0 18px 25px rgba(0,0,0,.5))}
 .modal-driver-copy{position:relative;z-index:3;width:58%;padding:34px}
-.modal-driver-divider{width:72%;height:1px;background:#1b1b1e;margin-top:30px}
+.modal-driver-divider{width:58%;height:1px;background:#1b1b1e;margin-top:30px}
 .modal-driver-number{position:absolute;right:18px;bottom:-24px;font-size:150px;line-height:1;font-weight:900;color:rgba(255,255,255,.035);z-index:0}
 @media(max-width:1100px){.sidebar-standings{grid-template-columns:1fr 1fr;gap:10px}.sidebar-standing-card .standing-row{padding-left:9px;padding-right:9px}.sidebar-standing-card .standing-name{font-size:9px}}
 @media(max-width:900px){.f1-sidebar{position:static;max-height:none}.sidebar-standings{grid-template-columns:1fr 1fr}.sidebar-standing-card .standings-scroll,.sidebar-standing-card.constructors .standings-scroll{height:520px}.news-featured-image{height:270px}.news-feed-card img{height:150px}.driver-content{width:62%}}
@@ -145,6 +193,13 @@ section[id],aside[id]{scroll-margin-top:100px}
 #search-panel{padding-top:0}
 #profile-driver-image{max-width:100%;max-height:100%;object-fit:contain;object-position:bottom center}
 @media(min-width:1200px){main>.grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}}
+
+/* ===== FINAL OVERRIDES ===== */
+@media(min-width:1200px){main>.grid{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}}
+.sidebar-standing-card .standings-scroll::-webkit-scrollbar{width:5px}
+.sidebar-standing-card .standings-scroll::-webkit-scrollbar-track{background:#09090b}
+.sidebar-standing-card .standings-scroll::-webkit-scrollbar-thumb{background:#29292d;border:1px solid #09090b;border-radius:999px}
+.sidebar-standing-card .standings-scroll::-webkit-scrollbar-thumb:hover{background:#3b3b40}
 </style>
 </head>
 
@@ -827,39 +882,22 @@ const podium=getPodium(race.round);
 const officialSummary=OFFICIAL_RACE_SUMMARY[String(race.round)];
 const completed=!!result||!!officialSummary||(raceStart(race)<=new Date());
 const isNext=nextRace&&String(race.round)===String(nextRace.round);
-const accent=completed?'#555':isNext?'#e10600':'#333';
+const accent=completed?'#444':isNext?'#e10600':'#2a2a2d';
 return`
-<article class="calendar-card card ${completed?'completed-card':''} rounded-lg p-5 cursor-pointer hover:-translate-y-1" style="--accent:${accent}" onclick="openRaceModal(${index})">
+<article class="calendar-card card ${completed?'completed-card':''} rounded-xl cursor-pointer hover:-translate-y-1" style="--accent:${accent}" onclick="openRaceModal(${index})">
 <div class="flex justify-between items-start">
-<span class="text-[9px] font-black ${completed?'text-gray-500':isNext?'text-red-500':'text-gray-600'}">ROUND ${race.round}</span>
-${completed?'<span class="status-badge status-complete">COMPLETED</span>':isNext?'<span class="status-badge status-next">NEXT</span>':'<span class="status-badge status-upcoming">UPCOMING</span>'}
+<div><div class="text-[9px] font-black ${completed?'text-gray-500':isNext?'text-red-500':'text-gray-600'}">ROUND ${escapeHTML(race.round)}</div></div>
+${completed?'<span class="status-badge status-complete">COMPLETED</span>':isNext?'<span class="status-badge status-next">UPCOMING</span>':'<span class="status-badge status-upcoming">UPCOMING</span>'}
 </div>
-<h3 class="font-black text-lg mt-5">${escapeHTML(race.raceName)}</h3>
-<div class="mt-6 flex justify-between items-end">
-<div>
-<div class="text-[8px] uppercase tracking-widest text-gray-600">Circuit</div>
-<div class="text-xs text-gray-400 mt-2">${escapeHTML(race.Circuit.circuitName)}</div>
+<h3>${escapeHTML(race.raceName)}</h3>
+<div class="mt-7 flex justify-between items-end gap-6">
+<div class="min-w-0"><div class="text-[8px] uppercase tracking-widest text-gray-600">Circuit</div><div class="text-sm text-gray-300 mt-2 truncate">${escapeHTML(race.Circuit.circuitName)}</div></div>
+<div class="text-right shrink-0"><div class="text-sm font-black">${formatDate(race.date)}</div><div class="text-[8px] text-gray-600 mt-1">${escapeHTML(race.Circuit.Location.locality)}, ${escapeHTML(race.Circuit.Location.country)}</div></div>
 </div>
-<div class="text-right">
-<div class="text-xs font-black">${formatDate(race.date)}</div>
-<div class="text-[8px] text-gray-600 mt-1">${escapeHTML(race.Circuit.Location.locality)}, ${escapeHTML(race.Circuit.Location.country)}</div>
-</div>
-</div>
-${completed&&pole?`
-<div class="mt-5">
-<div class="pole-chip">
-<span>POLE</span>
-<span>${escapeHTML(pole.Driver.familyName)}</span>
-</div>
-</div>`:''}
-${completed&&podium.length?`
-<div class="mt-4">
-<div class="text-[7px] uppercase tracking-widest text-gray-600 mb-2">PODIUM</div>
-${renderPodium(podium)}
-</div>`:''}
-<div class="mt-5 pt-3 border-t border-gray-900 flex justify-between">
-<span class="text-[8px] uppercase tracking-widest text-gray-700">${completed?'RACE RESULT':'RACE WEEKEND'}</span>
-<span class="text-[8px] text-gray-500">VIEW →</span>
+${completed&&pole?`<div class="mt-6"><div class="text-[7px] uppercase tracking-widest text-gray-600 mb-2">POLE POSITION</div><div class="pole-chip"><span>POLE</span><span>${escapeHTML(pole.Driver.familyName)}</span></div></div>`:''}
+${completed&&podium.length?`<div class="mt-5"><div class="text-[7px] uppercase tracking-widest text-gray-600 mb-2">PODIUM</div>${renderPodium(podium)}</div>`:''}
+<div class="calendar-footer pt-4 border-t border-gray-900 flex justify-between">
+<span class="text-[8px] uppercase tracking-widest text-gray-700">${completed?'RACE RESULT':'RACE WEEKEND'}</span><span class="text-[8px] text-gray-500">VIEW →</span>
 </div>
 </article>`;
 }).join('');
@@ -970,17 +1008,28 @@ const F1_DRIVER_ASSET_META={
 georuss:['G','GEORUS01_George_Russell','georus01'],antkin:['A','ANDANT01_Andrea_Kimi_Antonelli','andant01'],leclerc:['C','CHALEC01_Charles_Leclerc','chalec01'],hamilton:['L','LEWHAM01_Lewis_Hamilton','lewham01'],norris:['L','LANNOR01_Lando_Norris','lannor01'],piastri:['O','OSCPIA01_Oscar_Piastri','oscpia01'],max_verstappen:['M','MAXVER01_Max_Verstappen','maxver01'],hadjar:['I','ISAHAD01_Isack_Hadjar','isahad01'],lawson:['L','LIALAW01_Liam_Lawson','lialaw01'],lindblad:['A','ARVLIN01_Arvid_Lindblad','arvlin01'],gasly:['P','PIEGAS01_Pierre_Gasly','piegas01'],colapinto:['F','FRACOL01_Franco_Colapinto','fracol01'],ocon:['E','ESTOCO01_Esteban_Ocon','estoco01'],bearman:['O','OLIBEA01_Oliver_Bearman','olibea01'],hulkenberg:['N','NICHUL01_Nico_Hulkenberg','nichul01'],bortoleto:['G','GABBOR01_Gabriel_Bortoleto','gabbor01'],sainz:['C','CARSAI01_Carlos_Sainz','carsai01'],albon:['A','ALEALB01_Alexander_Albon','alealb01'],alonso:['F','FERALO01_Fernando_Alonso','feralo01'],stroll:['L','LANSTR01_Lance_Stroll','lanstr01'],perez:['S','SERPER01_Sergio_Perez','serper01'],bottas:['V','VALBOT01_Valtteri_Bottas','valbot01']
 };
 
+function resolveDriverAssetId(id){
+const key=String(id||'').toLowerCase();
+if(F1_DRIVER_ASSET_META[key])return key;
+const found=Object.keys(DRIVER_ALIASES).find(k=>String(DRIVER_ALIASES[k]).toLowerCase()===key);
+return found||key;
+}
+
 function officialDriverMediaCandidates(d){
-const id=(d.Driver?.driverId||'').toLowerCase();
+const rawId=(d.Driver?.driverId||'').toLowerCase();
+const id=resolveDriverAssetId(rawId);
 const m=F1_DRIVER_ASSET_META[id];
 if(!m)return[];
 const [letter,folder,file]=m;
-const path=`content/dam/fom-website/drivers/${letter}/${folder}/${file}.png`;
-return [
-`https://media.formula1.com/d_driver_fallback_image.png/${path}`,
-`https://www.formula1.com/${path}`,
-`https://media.formula1.com/${path}`
-];
+const base=`content/dam/fom-website/drivers/${letter}/${folder}/${file}.png`;
+const direct=`https://www.formula1.com/${base}`;
+const media=`https://media.formula1.com/${base}`;
+const transformed=`${direct}.transform/2col/image.png`;
+const transformedMedia=`${media}.transform/2col/image.png`;
+const legacyMedia=`https://media.formula1.com/d_driver_fallback_image.png/${base}`;
+const legacyTransformed=`https://media.formula1.com/d_driver_fallback_image.png/${base}.transform/2col/image.png`;
+const proxy=`https://images.weserv.nl/?url=${encodeURIComponent(transformedMedia)}`;
+return [transformedMedia,transformed,legacyTransformed,legacyMedia,media,direct,proxy];
 }
 
 function driverImageFallback(driver){
@@ -990,9 +1039,9 @@ return officialDriverMediaCandidates({Driver:driver})[0]||'';
 function driverImageCandidates(d){
 const id=(d.Driver?.driverId||'').toLowerCase();
 const config=siteConfig.driverImages||{};
-const configured=config[id]||config[d.Driver?.code?.toLowerCase?.()]||'';
+const configured=config[id]||config[resolveDriverAssetId(id)]||config[d.Driver?.code?.toLowerCase?.()]||'';
 const official=officialDriverMediaCandidates(d);
-return [...new Set([configured,...official].filter(Boolean))];
+return [...new Set([...official,configured].filter(Boolean))];
 }
 
 function getDriverImage(d){return driverImageCandidates(d)[0]||''}
@@ -1020,7 +1069,7 @@ const r=await fetch(u,{headers:{Accept:'application/json'}}); if(!r.ok)throw 0;
 const d=await r.json();
 const pages=Object.values(d.query?.pages||{});
 const ql=query.toLowerCase();
-const scored=pages.map(x=>{const title=(x.title||'').toLowerCase(); let score=0; if(title.includes('2026'))score+=4; if(ql.split(' ').some(term=>term.length>3&&title.includes(term)))score+=2; return {title,url:x.imageinfo?.[0]?.url||'',score};}).filter(x=>x.url).sort((a,b)=>b.score-a.score);
+const scored=pages.map(x=>{const title=(x.title||'').toLowerCase(); let score=0; if(title.includes('2026'))score+=12; if(title.includes('2025'))score-=12; if(title.includes('sf-26')||title.includes('mcl40')||title.includes('w17')||title.includes('rb22')||title.includes('vcarb 03')||title.includes('amr26')||title.includes('a526')||title.includes('vf-26')||title.includes('r26')||title.includes('fw48')||title.includes('mac-26'))score+=8; if(ql.split(' ').some(term=>term.length>3&&title.includes(term)))score+=2; return {title,url:x.imageinfo?.[0]?.url||'',score};}).filter(x=>x.url).sort((a,b)=>b.score-a.score);
 const img=scored[0]?.url||'';
 if(img)try{sessionStorage.setItem(key,img)}catch{}
 return img;
@@ -1099,10 +1148,11 @@ const meta=getTeamMeta(constructor?.constructorId);
 const firstName=d.Driver.givenName||'';
 const lastName=d.Driver.familyName||'';
 const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver.driverId)]||'--';
-const image=getDriverImage(d);
+const candidates=driverImageCandidates(d);
+const image=candidates[0]||'';
 return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
 <div class="driver-gradient"></div>
-<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" referrerpolicy="no-referrer" onerror="advanceImageFallback(this)"></div>
+<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" data-fallbacks='${escapeHTML(JSON.stringify(candidates))}' data-fallback-index="0" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" referrerpolicy="no-referrer" onerror="advanceImageFallback(this)"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
 <div class="driver-content">
 <div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-700 mt-1">2026 DRIVER</div></div></div><div class="text-[10px] font-mono text-gray-600">P${escapeHTML(d.position||index+1)}</div></div>
@@ -1116,7 +1166,8 @@ return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.c
 function getCarImage(team){
 const id=teamKey(team.id);
 const configured=teamCarImages[id]||teamCarImages[team.name]||'';
-return configured||carWikiImages[id]||'';
+// Prefer the freshly resolved 2026 chassis image; do not silently reuse a stale 2025 team image.
+return carWikiImages[id]||configured||'';
 }
 
 function renderTeams(){
