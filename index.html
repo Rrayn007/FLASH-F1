@@ -75,10 +75,18 @@ button{font-family:inherit}
 .timing-value{font-family:monospace;font-weight:700}
 .driver-row{transition:.2s}
 .driver-row:hover{background:#111}
-.calendar-card{position:relative;overflow:hidden}
-.calendar-card:before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--accent,#333)}
-.completed-card{background:linear-gradient(145deg,#0d0d0f,#111113)}
-.completed-card:hover{background:#151517}
+.calendar-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#0b0b0d,#101013);border-color:color-mix(in srgb,var(--accent,#333) 24%,#222225);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background .25s ease}
+.calendar-card:before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--accent,#333);box-shadow:0 0 18px color-mix(in srgb,var(--accent,#333) 70%,transparent)}
+.calendar-card:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 0%,color-mix(in srgb,var(--accent,#333) 13%,transparent),transparent 42%);pointer-events:none}
+.calendar-card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent,#333) 58%,#333);box-shadow:0 12px 32px color-mix(in srgb,var(--accent,#333) 12%,transparent)}
+.calendar-card > *{position:relative;z-index:1}
+.calendar-race-title{color:var(--accent,#eee);text-shadow:0 0 18px color-mix(in srgb,var(--accent,#333) 18%,transparent);letter-spacing:-.035em}
+.calendar-round{color:color-mix(in srgb,var(--accent,#333) 72%,#aaa)}
+.calendar-circuit{color:#8b8b92}
+.calendar-date{color:#eee}
+.calendar-status{border-color:color-mix(in srgb,var(--accent,#333) 45%,#333);color:color-mix(in srgb,var(--accent,#333) 80%,#fff)}
+.completed-card{background:linear-gradient(145deg,color-mix(in srgb,var(--accent,#333) 5%,#0d0d0f),#111113)}
+.completed-card:hover{background:linear-gradient(145deg,color-mix(in srgb,var(--accent,#333) 9%,#111113),#151517)}
 .result-podium{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .result-podium-item{background:#19191c;border:1px solid #303035;border-radius:6px;padding:8px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
 .result-podium-item.gold{border-color:#a78b3b;background:#211d14}
@@ -834,6 +842,14 @@ await Promise.all(jobs);
 renderCalendar();
 }
 
+const RACE_BRAND_COLORS={
+'australia':'#d8b11e','china':'#e10600','japan':'#e60012','miami':'#00d9ff','canada':'#e10600','monaco':'#e10600','barcelona':'#e10600','catalunya':'#e10600','austria':'#e10600','great britain':'#6fa8dc','britain':'#6fa8dc','belgium':'#f4c400','hungary':'#55a630','dutch':'#ff6b00','netherlands':'#ff6b00','italy':'#008c45','spain':'#e10600','azerbaijan':'#35a7ff','singapore':'#d946ef','malaysia':'#00a651','united states':'#4ea5ff','mexico':'#16a34a','são paulo':'#009c3b','sao paulo':'#009c3b','brazil':'#009c3b','las vegas':'#c026d3','qatar':'#8b5cf6','abu dhabi':'#00b8d9','saudi':'#00a8a8','bahrain':'#d71920'};
+function getRaceBrandColor(race){
+const name=`${race?.raceName||''} ${race?.Circuit?.circuitName||''}`.toLowerCase();
+const key=Object.keys(RACE_BRAND_COLORS).find(k=>name.includes(k));
+return key?RACE_BRAND_COLORS[key]:'#e10600';
+}
+
 function renderCalendar(){
 if(!races.length)return;
 document.getElementById('calendar-grid').innerHTML=races.map((race,index)=>{
@@ -843,21 +859,21 @@ const podium=getPodium(race.round);
 const officialSummary=OFFICIAL_RACE_SUMMARY[String(race.round)];
 const completed=!!result||!!officialSummary;
 const isNext=nextRace&&String(race.round)===String(nextRace.round);
-const accent=completed?'#555':isNext?'#e10600':'#333';
+const accent=getRaceBrandColor(race);
 return`
-<article class="calendar-card card ${completed?'completed-card':''} rounded-lg p-5 cursor-pointer hover:-translate-y-1" style="--accent:${accent}" onclick="openRaceModal(${index})">
+<article class="calendar-card card ${completed?'completed-card':''} rounded-lg p-5 cursor-pointer" style="--accent:${accent}" onclick="openRaceModal(${index})">
 <div class="flex justify-between items-start">
-<span class="text-[9px] font-black ${completed?'text-gray-500':isNext?'text-red-500':'text-gray-600'}">ROUND ${race.round}</span>
-${completed?'<span class="status-badge status-complete">COMPLETED</span>':isNext?'<span class="status-badge status-next">NEXT</span>':'<span class="status-badge status-upcoming">UPCOMING</span>'}
+<span class="calendar-round text-[9px] font-black">ROUND ${race.round}</span>
+${completed?'<span class="status-badge calendar-status status-complete">COMPLETED</span>':isNext?'<span class="status-badge calendar-status status-next">NEXT</span>':'<span class="status-badge calendar-status status-upcoming">UPCOMING</span>'}
 </div>
-<h3 class="font-black text-lg mt-5">${escapeHTML(race.raceName)}</h3>
+<h3 class="calendar-race-title font-black text-lg mt-5">${escapeHTML(race.raceName)}</h3>
 <div class="mt-6 flex justify-between items-end">
 <div>
 <div class="text-[8px] uppercase tracking-widest text-gray-600">Circuit</div>
-<div class="text-xs text-gray-400 mt-2">${escapeHTML(race.Circuit.circuitName)}</div>
+<div class="calendar-circuit text-xs mt-2">${escapeHTML(race.Circuit.circuitName)}</div>
 </div>
 <div class="text-right">
-<div class="text-xs font-black">${formatDate(race.date)}</div>
+<div class="calendar-date text-xs font-black">${formatDate(race.date)}</div>
 <div class="text-[8px] text-gray-600 mt-1">${escapeHTML(race.Circuit.Location.locality)}, ${escapeHTML(race.Circuit.Location.country)}</div>
 </div>
 </div>
