@@ -243,6 +243,27 @@ html{scrollbar-width:thin;scrollbar-color:#29292d #070708}
   #calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 @media(max-width:640px){#calendar-grid{grid-template-columns:1fr!important}.calendar-card{padding:18px 16px!important}}
+
+/* FINAL LAYOUT OVERRIDES — preserve the original F1 HUB composition */
+@media(min-width:1200px){
+  main>.grid{grid-template-columns:minmax(0,6fr) minmax(0,4fr)!important;align-items:start!important;gap:28px!important}
+  .f1-sidebar{position:sticky!important;top:92px!important;align-self:start!important}
+}
+@media(min-width:901px){
+  #calendar-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+  .calendar-card{min-height:0!important;height:auto!important;padding:18px 18px!important}
+  .calendar-card h3{font-size:19px!important;margin-top:20px!important}
+}
+@media(max-width:900px){
+  main>.grid{grid-template-columns:1fr!important}
+  .f1-sidebar{position:static!important;max-height:none!important}
+}
+/* Keep the page itself from ever showing a browser-default bright scrollbar. */
+html{scrollbar-width:thin;scrollbar-color:#29292d #080809}
+html::-webkit-scrollbar{width:6px}
+html::-webkit-scrollbar-track{background:#080809}
+html::-webkit-scrollbar-thumb{background:#29292d;border-radius:999px}
+html::-webkit-scrollbar-thumb:hover{background:#3b3b40}
 </style>
 </head>
 
@@ -1452,23 +1473,40 @@ document.getElementById('search-panel').classList.add('hidden');
 });
 
 
+function getAnchorOffset(){
+  const header=document.querySelector('header');
+  return (header?.getBoundingClientRect().height||80)+16;
+}
+
+function scrollToHash(behavior='smooth'){
+  const id=decodeURIComponent(location.hash||'');
+  if(!id || id==='#') return;
+  const target=document.querySelector(id);
+  if(!target) return;
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      const y=target.getBoundingClientRect().top+window.scrollY-getAnchorOffset();
+      window.scrollTo({top:Math.max(0,y),behavior});
+    });
+  });
+}
+
 function setupAnchorNavigation(){
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-a.addEventListener('click',function(e){
-const id=this.getAttribute('href');
-if(!id||id==='#')return;
-const target=document.querySelector(id);
-if(!target)return;
-e.preventDefault();
-const header=document.querySelector('header');
-const offset=(header?.getBoundingClientRect().height||80)+12;
-const y=target.getBoundingClientRect().top+window.scrollY-offset;
-window.history.replaceState(null,'',id);
-window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
-const menu=document.getElementById('mobile-menu');
-if(menu&&!menu.classList.contains('hidden'))menu.classList.add('hidden');
-});
-});
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',function(e){
+      const id=this.getAttribute('href');
+      if(!id||id==='#')return;
+      const target=document.querySelector(id);
+      if(!target)return;
+      e.preventDefault();
+      history.pushState(null,'',id);
+      scrollToHash('smooth');
+      const menu=document.getElementById('mobile-menu');
+      if(menu&&!menu.classList.contains('hidden'))menu.classList.add('hidden');
+    });
+  });
+  window.addEventListener('hashchange',()=>scrollToHash('smooth'));
+  window.addEventListener('pageshow',()=>scrollToHash('auto'));
 }
 
 document.addEventListener('DOMContentLoaded',async()=>{
@@ -1478,6 +1516,11 @@ await Promise.all([fetchNews(),fetchSchedule(),fetchResults(),fetchStandings()])
 await Promise.all([fetchDriverWikiFallbacks(),fetchCarImages()]);
 renderDrivers();
 renderTeams();
+// Dynamic news/standings/calendar content changes the page height after the browser's
+// initial hash jump. Re-align once everything has rendered so #calendar/#drivers/#teams
+// never land halfway through the previous section.
+setTimeout(()=>scrollToHash('auto'),80);
+setTimeout(()=>scrollToHash('auto'),450);
 });
 </script>
 
