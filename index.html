@@ -94,25 +94,29 @@ button{font-family:inherit}
 .status-complete{background:#181818;color:#777;border:1px solid #282828}
 .status-next{background:#e10600;color:white}
 .status-upcoming{background:#171717;color:#555;border:1px solid #252525}
-.standings-duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.standings-duo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:18px;align-items:start}
 .standings-panel{min-width:0}
-.standings-scroll{max-height:690px;overflow:auto}
-.standing-row{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid #1b1b1d;transition:.16s}
+.standings-scroll{overflow:hidden}
+.standing-row{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:14px;min-height:52px;padding:10px 18px;border-bottom:1px solid #1b1b1d;transition:.16s}
 .standing-row:hover{background:#121214}
 .standing-row:last-child{border-bottom:0}
-.standing-rank{font:900 10px/1 ui-monospace,SFMono-Regular,monospace;color:#555;text-align:center}
+.standing-rank{font:900 11px/1 ui-monospace,SFMono-Regular,monospace;color:#555;text-align:center}
 .standing-rank.top{color:var(--red)}
 .standing-main{min-width:0}
-.standing-name{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.standing-sub{font-size:7px;color:#555;text-transform:uppercase;letter-spacing:.08em;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.standing-points{font:900 12px/1 ui-monospace,SFMono-Regular,monospace}
-.standing-head{display:flex;justify-content:space-between;align-items:center;padding:15px 15px 11px;border-bottom:1px solid #222}
-.standing-head h3{margin:0;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:#888}
+.standing-name{font-size:13px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f2f2f2}
+.standing-sub{font-size:8px;color:#777;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.standing-points{font:900 14px/1 ui-monospace,SFMono-Regular,monospace;color:#fff;min-width:42px;text-align:right}
+.standing-head{display:flex;justify-content:space-between;align-items:center;padding:17px 18px 13px;border-bottom:1px solid #252529}
+.standing-head h3{margin:0;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#aaa}
 .standing-head span{font-size:8px;color:#555}
+.standings-panel .card{box-shadow:0 18px 45px rgba(0,0,0,.18)}
 .data-note{font-size:8px;color:#4d4d50;line-height:1.5}
 .official-source{display:inline-flex;align-items:center;gap:5px;color:#777}
 .official-source:hover{color:#fff}
+section[id],div[id="standings"],aside[id]{scroll-margin-top:104px}
+@media(max-width:1100px){.standings-duo{grid-template-columns:1fr 1fr;gap:12px}.standing-row{padding-left:14px;padding-right:14px}}
 @media(max-width:900px){.standings-duo{grid-template-columns:1fr}}
+
 
 .team-logo{width:44px;height:32px;object-fit:contain;object-position:center}
 .driver-mini-image{width:35px;height:35px;object-fit:contain;object-position:bottom center}
@@ -263,19 +267,45 @@ button{font-family:inherit}
 </a>
 </div>
 
-<div id="standings" class="standings-duo">
+<div class="card rounded-xl p-5">
+<div class="flex items-center justify-between">
+<div>
+<div class="sponsor-label">QUICK LOOK</div>
+<div class="text-sm font-black mt-1">2026 SEASON</div>
+</div>
+<div class="text-[9px] uppercase tracking-widest text-gray-600">Live Data</div>
+</div>
+<div class="mt-5 grid grid-cols-2 gap-2">
+<div class="bg-[#111114] border border-[#202023] rounded p-3"><div class="timing-label">Drivers</div><div class="text-2xl font-black mt-1">22</div></div>
+<div class="bg-[#111114] border border-[#202023] rounded p-3"><div class="timing-label">Teams</div><div class="text-2xl font-black mt-1">11</div></div>
+</div>
+</div>
+
+</aside>
+</div>
+
+<section id="standings" class="mt-24">
+<div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+<div>
+<p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p>
+<h2 class="text-3xl font-black mt-2">Bảng xếp hạng</h2>
+</div>
+<div class="text-[9px] uppercase tracking-widest text-gray-600">FULL GRID • 22 DRIVERS • 11 TEAMS</div>
+</div>
+
+<div class="standings-duo">
 <div class="standings-panel">
-<div class="standing-head"><h3>Drivers Championship</h3><span>2026 • FULL GRID</span></div>
+<div class="standing-head"><h3>Drivers Championship</h3><span>22 DRIVERS</span></div>
 <div class="card rounded-lg overflow-hidden standings-scroll"><div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div></div>
 </div>
+
 <div class="standings-panel">
-<div class="standing-head"><h3>Constructors Championship</h3><span>2026 • 11 TEAMS</span></div>
+<div class="standing-head"><h3>Constructors Championship</h3><span>11 TEAMS</span></div>
 <div class="card rounded-lg overflow-hidden standings-scroll"><div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div></div>
 </div>
 </div>
-<div class="mt-3 data-note">Dữ liệu championship được hợp nhất từ nguồn kết quả mùa giải; hình ảnh và thông tin đội/tay đua ưu tiên F1 Media chính thức, có fallback tự động khi nguồn ảnh không phản hồi.</div>
-</aside>
-</div>
+<div class="mt-3 data-note">Hai bảng dùng cùng một chiều rộng lớn của trang thay vì nhét vào sidebar, nên tên tay đua/đội và điểm số không bị cắt. Trên màn hình nhỏ, hai bảng tự chuyển thành một cột.</div>
+</section>
 
 <section id="calendar" class="mt-24">
 <div class="flex justify-between items-end mb-8">
@@ -902,6 +932,65 @@ document.getElementById('standings-board').innerHTML='<div class="p-6 text-cente
 }
 }
 
+
+const driverWikiImages={};
+const carWikiImages={};
+const CAR_WIKI_PAGES={
+mclaren:'McLaren_MCL40',
+mercedes:'Mercedes_W17',
+ferrari:'Ferrari_SF-26',
+red_bull:'Red_Bull_RB22',
+rb:'Racing_Bulls_VCARB_03',
+alpine:'Alpine_A526',
+haas:'Haas_VF-26',
+audi:'Audi_R26',
+williams:'Williams_FW48',
+aston_martin:'Aston_Martin_AMR26',
+cadillac:'Cadillac_MAC-26'
+};
+const DRIVER_MEDIA_SLUGS={
+georuss:'russell',antkin:'antonelli',leclerc:'leclerc',hamilton:'hamilton',norris:'norris',piastri:'piastri',
+max_verstappen:'verstappen',hadjar:'hadjar',lawson:'lawson',lindblad:'lindblad',gasly:'gasly',colapinto:'colapinto',
+ocon:'ocon',bearman:'bearman',hulkenberg:'hulkenberg',bortoleto:'bortoleto',sainz:'sainz',albon:'albon',
+alonso:'alonso',stroll:'stroll',perez:'perez',bottas:'bottas'
+};
+async function fetchWikipediaSummaryImage(page){
+try{
+const key='f1hub_wiki_'+page;
+const cached=sessionStorage.getItem(key);
+if(cached)return cached;
+const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(page)}`);
+if(!r.ok)throw 0;
+const d=await r.json();
+const img=d.originalimage?.source||d.thumbnail?.source||'';
+if(img)try{sessionStorage.setItem(key,img)}catch{}
+return img;
+}catch{return''}
+}
+async function fetchDriverWikiFallbacks(){
+const jobs=standings.map(async d=>{
+const id=d.Driver?.driverId;
+if(!id)return;
+const page=(d.Driver?.givenName+'_'+d.Driver?.familyName).replaceAll(' ','_');
+driverWikiImages[id]=await fetchWikipediaSummaryImage(page);
+});
+await Promise.all(jobs);
+}
+async function fetchCarImages(){
+try{
+await Promise.all(Object.entries(CAR_WIKI_PAGES).map(async([id,page])=>{
+carWikiImages[id]=await fetchWikipediaSummaryImage(page);
+}));
+renderTeams();
+}catch(e){console.warn('Car image fallbacks unavailable')}
+}
+function officialDriverMediaImage(d){
+const id=(d.Driver?.driverId||'').toLowerCase();
+const slug=DRIVER_MEDIA_SLUGS[id];
+if(!slug)return'';
+const firstYear=id==='lindblad'?'2026':'2025';
+return `https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/drivers/${firstYear}Drivers/${slug}`;
+}
 async function fetchDriverImages(){
 try{
 const data=await fetchJSON(`${OPENF1_API}/drivers?session_key=latest`,'f1hub_driver_images',86400000);
@@ -915,23 +1004,19 @@ console.warn('OpenF1 images unavailable');
 }
 
 function getDriverImage(d){
+const id=(d.Driver?.driverId||'').toLowerCase();
+const official=officialDriverMediaImage(d);
 const code=d.Driver?.code?.toLowerCase()||'';
 const family=d.Driver?.familyName?.toLowerCase()||'';
 const given=d.Driver?.givenName?.toLowerCase()||'';
 const candidates=[code,family,given,Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId)];
 for(const c of candidates){if(c&&driverImages[c])return driverImages[c];}
-return driverImageFallback(d.Driver);
+return official||driverWikiImages[id]||driverImageFallback(d.Driver);
 }
 
 // Official F1 Media is preferred for current driver headshots. OpenF1 commonly returns the same F1 media headshots; Wikimedia is only a fallback.
 function officialDriverImageCandidates(d){
-const id=(d.Driver?.driverId||'').toLowerCase();
-const first=(d.Driver?.givenName||'').replace(/[^A-Za-z]/g,'');
-const last=(d.Driver?.familyName||'').replace(/[^A-Za-z]/g,'');
-return [
-`https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/1col/image.png`,
-getDriverImage(d)
-].filter(Boolean);
+return [officialDriverMediaImage(d),getDriverImage(d),driverWikiImages[(d.Driver?.driverId||'').toLowerCase()],driverImageFallback(d.Driver)].filter(Boolean);
 }
 
 function renderStandings(){
@@ -941,7 +1026,7 @@ const constructor=d.Constructors?.[0];
 const meta=getTeamMeta(constructor?.constructorId);
 return `<div class="standing-row cursor-pointer" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
 <div class="standing-rank ${index<3?'top':''}">${escapeHTML(d.position||index+1)}</div>
-<div class="standing-main"><div class="standing-name">${escapeHTML(d.Driver.givenName)} ${escapeHTML(d.Driver.familyName)}</div><div class="standing-sub" style="color:${meta.color}">${escapeHTML(constructor?.name||meta.name)}</div></div>
+<div class="standing-main"><div class="standing-name">${escapeHTML(d.Driver.givenName)} ${escapeHTML(d.Driver.familyName)}</div><div class="standing-sub" style="color:${meta.color}">${escapeHTML(constructor?.name||meta.name)} · ${escapeHTML(d.Driver.nationality||'')}</div></div>
 <div class="standing-points">${escapeHTML(d.points||0)}</div>
 </div>`;
 }).join('');
@@ -980,7 +1065,7 @@ board.innerHTML=teams.map((team,index)=>{
 const meta=getTeamMeta(team.id);
 return `<div class="standing-row cursor-pointer" onclick="openTeamProfile('${escapeHTML(team.id)}')">
 <div class="standing-rank ${index<3?'top':''}">${index+1}</div>
-<div class="standing-main"><div class="flex items-center gap-2"><img src="${escapeHTML(meta.logo)}" class="team-logo" style="width:28px;height:20px" alt="" loading="lazy"><div class="standing-name">${escapeHTML(team.name)}</div></div><div class="standing-sub" style="color:${meta.color}">${team.drivers.map(d=>escapeHTML(d.Driver.familyName)).join(' / ')}</div></div>
+<div class="standing-main"><div class="flex items-center gap-3 min-w-0"><img src="${escapeHTML(meta.logo)}" class="team-logo shrink-0" style="width:34px;height:24px" alt="" loading="lazy"><div class="standing-name">${escapeHTML(team.name)}</div></div><div class="standing-sub" style="color:${meta.color}">${team.drivers.map(d=>escapeHTML(d.Driver.familyName)).join(' / ')}</div></div>
 <div class="standing-points">${team.points}</div>
 </div>`;
 }).join('');
@@ -1026,7 +1111,7 @@ return`
 
 function getCarImage(team){
 const id=teamKey(team.id);
-return teamCarImages[id]||teamCarImages[team.name]||'';
+return teamCarImages[id]||teamCarImages[team.name]||carWikiImages[id]||'';
 }
 
 function renderTeams(){
@@ -1259,13 +1344,35 @@ document.getElementById('search-panel').classList.add('hidden');
 }
 });
 
+
+function setupAnchorNavigation(){
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+a.addEventListener('click',function(e){
+const id=this.getAttribute('href');
+if(!id||id==='#')return;
+const target=document.querySelector(id);
+if(!target)return;
+e.preventDefault();
+const header=document.querySelector('header');
+const offset=(header?.getBoundingClientRect().height||80)+18;
+const y=target.getBoundingClientRect().top+window.scrollY-offset;
+window.history.replaceState(null,'',id);
+window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+const menu=document.getElementById('mobile-menu');
+if(menu&&!menu.classList.contains('hidden'))menu.classList.add('hidden');
+});
+});
+}
+
 document.addEventListener('DOMContentLoaded',async()=>{
+setupAnchorNavigation();
 fetchConfigAndTrack();
 fetchNews();
 fetchSchedule();
 fetchResults();
 fetchStandings();
-fetchDriverImages();
+fetchDriverImages().then(fetchDriverWikiFallbacks).then(()=>renderDrivers());
+fetchCarImages();
 });
 </script>
 
