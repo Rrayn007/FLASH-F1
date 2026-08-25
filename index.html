@@ -41,21 +41,21 @@ button{font-family:inherit}
 .skeleton{background:linear-gradient(90deg,#0d0d0d 25%,#181818 37%,#0d0d0d 63%);background-size:400% 100%;animation:skeleton 1.4s infinite}
 @keyframes skeleton{0%{background-position:100% 0}100%{background-position:-100% 0}}
 .news-card{overflow:hidden}
-.news-featured-image{height:330px}
-.news-feed-card img{height:170px;object-fit:cover}
+.news-featured-image{height:285px}
+.news-feed-card img{height:145px;object-fit:cover}
 .f1-sidebar{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 112px);overflow:auto;padding-right:2px;scrollbar-width:thin}
-.sidebar-standings{display:flex;flex-direction:column;gap:14px}
+.sidebar-standings{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:10px;align-items:start}.sidebar-standings>.flex{grid-column:1/-1}.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:1/-1}
 .sidebar-standing-card{background:#0b0b0d;border:1px solid #202023;border-radius:10px;overflow:hidden}
 .sidebar-standing-card .standing-head{padding:13px 14px 10px}
 .sidebar-standing-card .standing-head h3{font-size:9px}
 .sidebar-standing-card .standing-head span{font-size:7px}
-.sidebar-standing-card .standings-scroll{max-height:440px;overflow:auto}
-.sidebar-standing-card.constructors .standings-scroll{max-height:330px}
-.sidebar-standing-card .standing-row{grid-template-columns:28px minmax(0,1fr) auto;gap:9px;min-height:42px;padding:7px 12px}
-.sidebar-standing-card .standing-name{font-size:11px}
-.sidebar-standing-card .standing-sub{font-size:7px;margin-top:2px}
-.sidebar-standing-card .standing-points{font-size:12px;min-width:32px}
-.sidebar-standing-card .standing-rank{font-size:9px}
+.sidebar-standing-card .standings-scroll{height:min(660px,calc(100vh - 270px));overflow:auto}
+.sidebar-standing-card.constructors .standings-scroll{height:min(660px,calc(100vh - 270px))}
+.sidebar-standing-card .standing-row{grid-template-columns:22px minmax(0,1fr) auto;gap:6px;min-height:39px;padding:6px 8px}
+.sidebar-standing-card .standing-name{font-size:10px}
+.sidebar-standing-card .standing-sub{font-size:6px;margin-top:2px}
+.sidebar-standing-card .standing-points{font-size:11px;min-width:28px}
+.sidebar-standing-card .standing-rank{font-size:8px}
 
 .news-card img{transition:transform .6s ease}
 .news-card:hover img{transform:scale(1.04)}
@@ -95,6 +95,7 @@ button{font-family:inherit}
 .driver-photo-wrap{position:absolute;right:4px;bottom:0;width:52%;height:185px;display:flex;justify-content:flex-end;align-items:flex-end;pointer-events:none}
 .driver-photo{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:bottom right;filter:drop-shadow(0 12px 15px rgba(0,0,0,.45));transition:transform .35s ease}
 .driver-card:hover .driver-photo{transform:translateY(-4px) scale(1.025)}
+.img-fallback{opacity:.92}
 .driver-content{position:relative;z-index:2}
 .driver-gradient{position:absolute;inset:auto 0 0 0;height:145px;background:linear-gradient(0deg,#0b0b0d 10%,rgba(11,11,13,.88) 42%,transparent 100%);pointer-events:none}
 .modal-backdrop{animation:fadeIn .18s ease}
@@ -103,13 +104,14 @@ button{font-family:inherit}
 @keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
 .profile-number{font-size:110px;line-height:.75;font-weight:900;color:rgba(255,255,255,.035)}
 .fastest-label{background:#7d22b8}
-.share-btn{width:34px;height:34px;border:1px solid #29292d;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.2s}
+.share-btn{width:38px;height:38px;border:1px solid #29292d;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.2s}
 .share-btn:hover{border-color:#fff;background:#fff;color:#000}
 .sponsor-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#444}
 .status-badge{font-size:7px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;padding:5px 7px;border-radius:3px}
 .status-complete{background:#181818;color:#777;border:1px solid #282828}
 .status-next{background:#e10600;color:white}
 .status-upcoming{background:#171717;color:#555;border:1px solid #252525}
+.icon-btn{width:38px;height:38px;border:1px solid #25252a;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;line-height:0;color:#aaa;transition:.2s ease;flex:none}.icon-btn:hover{border-color:#fff;background:#fff;color:#000}.icon-btn svg{width:15px;height:15px;display:block}
 .standings-duo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:18px;align-items:start}
 .standings-panel{min-width:0}
 .standings-scroll{overflow:hidden}
@@ -131,10 +133,10 @@ button{font-family:inherit}
 .official-source:hover{color:#fff}
 section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #news{scroll-margin-top:96px}
-@media(max-width:1100px){.standings-duo{grid-template-columns:1fr 1fr;gap:12px}.standing-row{padding-left:14px;padding-right:14px}}
+@media(max-width:1100px){.sidebar-standings{grid-template-columns:1fr 1fr;gap:10px}.standing-row{padding-left:10px;padding-right:10px}}
 @media(max-width:1100px){.f1-sidebar{position:static;max-height:none;overflow:visible;padding-right:0}}
-@media(max-width:900px){.standings-duo{grid-template-columns:1fr}.news-featured-image{height:270px}.news-feed-card img{height:150px}}
-@media(max-width:640px){.news-featured-image{height:220px}.sidebar-standing-card .standings-scroll,.sidebar-standing-card.constructors .standings-scroll{max-height:none}}
+@media(max-width:900px){.sidebar-standings{grid-template-columns:1fr}.sidebar-standings>.flex,.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:auto}.sidebar-standing-card .standings-scroll,.sidebar-standing-card.constructors .standings-scroll{height:auto;max-height:none}.news-featured-image{height:270px}.news-feed-card img{height:150px}}
+@media(max-width:640px){.news-featured-image{height:220px}}
 
 
 .team-logo{width:44px;height:32px;object-fit:contain;object-position:center}
@@ -171,7 +173,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="flex items-center gap-3">
 <div class="hidden md:flex items-center gap-2 text-[9px] uppercase tracking-widest text-gray-500"><span class="w-2 h-2 rounded-full bg-red-600 live-dot"></span>F1 LIVE</div>
 <button onclick="sharePage()" class="share-btn text-xs" title="Chia sẻ">↗</button>
-<button onclick="toggleSearch()" class="w-9 h-9 rounded-full border border-gray-800 flex items-center justify-center hover:bg-white hover:text-black transition text-lg">⌕</button>
+<button onclick="toggleSearch()" class="icon-btn" title="Tìm kiếm" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></button>
 <button onclick="toggleMobileMenu()" class="lg:hidden text-xl">☰</button>
 </div>
 </div>
@@ -262,7 +264,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <main class="max-w-7xl mx-auto px-5 lg:px-8 py-14">
 <div class="grid lg:grid-cols-12 gap-8 xl:gap-10">
 
-<section id="news" class="lg:col-span-8">
+<section id="news" class="lg:col-span-7">
 <div class="flex justify-between items-end mb-6">
 <div>
 <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">LATEST</p>
@@ -276,7 +278,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 </section>
 
-<aside id="standings" class="lg:col-span-4 f1-sidebar">
+<aside id="standings" class="lg:col-span-5 f1-sidebar">
 <div class="sidebar-standings">
 <div class="flex items-end justify-between px-1">
 <div><p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p><h2 class="text-xl font-black mt-1">Bảng xếp hạng</h2></div>
@@ -312,7 +314,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p>
 <h2 class="text-3xl font-black mt-2">Lịch thi đấu</h2>
 </div>
-<span class="hidden md:block text-[9px] uppercase tracking-widest text-gray-600">Completed races include pole & podium</span>
+<span class="hidden md:block text-[9px] uppercase tracking-widest text-gray-600">Pole · Podium · Fastest Lap · Live Data</span>
 </div>
 <div id="calendar-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </section>
@@ -600,7 +602,7 @@ const map={
 hadjar:'https://media.formula1.com/image/upload/c_fit,w_876,h_742/q_auto/v1740000000/common/f1/2025/racingbulls/isahad01/2025racingbullsisahad01numberwhitefrless.webp'
 };
 if(map[id])return map[id];
-return `https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/1col/image.png`;
+return `https://www.formula1.com/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/2col/image.png`;
 }
 
 async function fetchJSON(url,cacheKey='',ttl=300000){
@@ -700,7 +702,7 @@ ${image?`<div class="overflow-hidden h-44"><img src="${escapeHTML(safeUrl(image)
 
 async function fetchSchedule(){
 try{
-const data=await fetchJSON(`${F1_API}/${SEASON}.json`,'f1hub_schedule',86400000);
+const data=await fetchJSON(`${F1_API}/${SEASON}.json?ts=${Date.now()}`,'f1hub_schedule',300000);
 races=data.MRData.RaceTable.Races||[];
 document.getElementById('stat-races').textContent=races.length;
 findNextRace();
@@ -748,8 +750,8 @@ document.getElementById('seconds').textContent=String(seconds).padStart(2,'0');
 async function fetchResults(){
 try{
 const [resultData,qualData]=await Promise.all([
-fetchJSON(`${F1_API}/${SEASON}/results.json?limit=1000`,'f1hub_results',120000),
-fetchJSON(`${F1_API}/${SEASON}/qualifying.json?limit=1000`,'f1hub_qualifying',120000)
+fetchJSON(`${F1_API}/${SEASON}/results.json?limit=1000&ts=${Date.now()}`,'f1hub_results',300000),
+fetchJSON(`${F1_API}/${SEASON}/qualifying.json?limit=1000&ts=${Date.now()}`,'f1hub_qualifying',300000)
 ]);
 seasonResults=resultData.MRData.RaceTable.Races||[];
 qualifyingResults=qualData.MRData.RaceTable.Races||[];
@@ -760,6 +762,27 @@ console.warn('Results API unavailable',error);
 }
 }
 
+const OFFICIAL_RACE_SUMMARY={
+'1':{pole:'russell',podium:['russell','antonelli','leclerc']},
+'2':{pole:'antonelli',podium:['antonelli','russell','hamilton']},
+'3':{pole:'antonelli',podium:['antonelli','piastri','leclerc']},
+'4':{pole:'antonelli',podium:['antonelli','norris','piastri']},
+'5':{pole:'russell',podium:['antonelli','hamilton','max_verstappen']},
+'6':{pole:'antonelli',podium:['antonelli','hamilton','gasly']},
+'7':{pole:'russell',podium:['hamilton','russell','norris']},
+'8':{pole:'russell',podium:['russell','max_verstappen','antonelli']},
+'9':{pole:'antonelli',podium:['leclerc','russell','hamilton']},
+'10':{pole:'antonelli',podium:['antonelli','leclerc','max_verstappen']},
+'11':{pole:'norris',podium:['norris','max_verstappen','antonelli']},
+'12':{pole:'norris',podium:['norris','antonelli','russell']}
+};
+const DRIVER_DISPLAY={
+russell:['George','Russell','Mercedes'],antonelli:['Kimi','Antonelli','Mercedes'],leclerc:['Charles','Leclerc','Ferrari'],hamilton:['Lewis','Hamilton','Ferrari'],norris:['Lando','Norris','McLaren'],piastri:['Oscar','Piastri','McLaren'],max_verstappen:['Max','Verstappen','Red Bull Racing'],gasly:['Pierre','Gasly','Alpine']
+};
+function summaryDriver(id){
+const d=DRIVER_DISPLAY[id]||[id,'',''];
+return {Driver:{givenName:d[0],familyName:d[1],driverId:id},Constructor:{name:d[2]}};
+}
 function getRaceResult(round){
 return seasonResults.find(r=>String(r.round)===String(round))||null;
 }
@@ -770,12 +793,17 @@ return qualifyingResults.find(r=>String(r.round)===String(round))||null;
 
 function getPole(round){
 const q=getQualifyingResult(round);
-return q?.QualifyingResults?.[0]||null;
+if(q?.QualifyingResults?.[0])return q.QualifyingResults[0];
+const s=OFFICIAL_RACE_SUMMARY[String(round)];
+return s?{Driver:summaryDriver(s.pole).Driver,Constructor:summaryDriver(s.pole).Constructor}:null;
 }
 
 function getPodium(round){
 const r=getRaceResult(round);
-return r?.Results?.filter(x=>['1','2','3'].includes(String(x.position))).sort((a,b)=>Number(a.position)-Number(b.position))||[];
+const live=r?.Results?.filter(x=>['1','2','3'].includes(String(x.position))).sort((a,b)=>Number(a.position)-Number(b.position))||[];
+if(live.length===3)return live;
+const s=OFFICIAL_RACE_SUMMARY[String(round)];
+return s?s.podium.map((id,i)=>{const d=summaryDriver(id);return {...d,position:String(i+1)}}):[];
 }
 
 function renderPodium(podium,compact=false){
@@ -795,8 +823,8 @@ if(!races.length)return;
 const completed=races.filter(r=>raceStart(r)<=new Date());
 const jobs=[];
 for(const race of completed){
-if(!getRaceResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/results.json?limit=100`,'f1hub_r_'+race.round,120000).then(x=>{const rr=x.MRData.RaceTable.Races?.[0];if(rr)seasonResults.push(rr)}).catch(()=>{}));
-if(!getQualifyingResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/qualifying.json?limit=100`,'f1hub_q_'+race.round,120000).then(x=>{const qr=x.MRData.RaceTable.Races?.[0];if(qr)qualifyingResults.push(qr)}).catch(()=>{}));
+if(!getRaceResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/results.json?limit=100&ts=${Date.now()}`,'f1hub_r_'+race.round,120000).then(x=>{const rr=x.MRData.RaceTable.Races?.[0];if(rr)seasonResults.push(rr)}).catch(()=>{}));
+if(!getQualifyingResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/qualifying.json?limit=100&ts=${Date.now()}`,'f1hub_q_'+race.round,120000).then(x=>{const qr=x.MRData.RaceTable.Races?.[0];if(qr)qualifyingResults.push(qr)}).catch(()=>{}));
 }
 await Promise.all(jobs);
 renderCalendar();
@@ -808,7 +836,8 @@ document.getElementById('calendar-grid').innerHTML=races.map((race,index)=>{
 const result=getRaceResult(race.round);
 const pole=getPole(race.round);
 const podium=getPodium(race.round);
-const completed=!!result;
+const officialSummary=OFFICIAL_RACE_SUMMARY[String(race.round)];
+const completed=!!result||!!officialSummary;
 const isNext=nextRace&&String(race.round)===String(nextRace.round);
 const accent=completed?'#555':isNext?'#e10600':'#333';
 return`
@@ -966,6 +995,18 @@ if(img)try{sessionStorage.setItem(key,img)}catch{}
 return img;
 }catch{return''}
 }
+async function fetchWikipediaImageSearch(query){
+try{
+const key='f1hub_wiki_search_'+query.toLowerCase().replace(/\W+/g,'_');
+const cached=sessionStorage.getItem(key); if(cached)return cached;
+const u=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=3&prop=pageimages&piprop=original&format=json&origin=*`;
+const r=await fetch(u); if(!r.ok)throw 0; const d=await r.json();
+const pages=Object.values(d.query?.pages||{});
+const img=pages.map(x=>x.original?.source).find(Boolean)||'';
+if(img)try{sessionStorage.setItem(key,img)}catch{}
+return img;
+}catch{return''}
+}
 async function fetchDriverWikiFallbacks(){
 const jobs=standings.map(async d=>{
 const id=d.Driver?.driverId;
@@ -978,20 +1019,22 @@ await Promise.all(jobs);
 async function fetchCarImages(){
 try{
 await Promise.all(Object.entries(CAR_WIKI_PAGES).map(async([id,page])=>{
-carWikiImages[id]=await fetchWikipediaSummaryImage(page);
+let img=await fetchWikipediaSummaryImage(page);
+if(!img)img=await fetchWikipediaImageSearch(`${getTeamMeta(id).chassis} Formula 1 2026`);
+carWikiImages[id]=img;
 }));
 renderTeams();
 }catch(e){console.warn('Car image fallbacks unavailable')}
 }
 const F1_DRIVER_ASSET_META={
-georuss:['G','GEORUS01_George_Russell','georus01'],antkin:['A','ANTKIN01_Andrea_Kimi_Antonelli','antkin01'],leclerc:['C','CHALEC01_Charles_Leclerc','chalec01'],hamilton:['L','LEWHAM01_Lewis_Hamilton','lewham01'],norris:['L','LANNOR01_Lando_Norris','lannor01'],piastri:['O','OSCPIA01_Oscar_Piastri','oscpia01'],max_verstappen:['M','MAXVER01_Max_Verstappen','maxver01'],hadjar:['I','ISAHAD01_Isack_Hadjar','isahad01'],lawson:['L','LIALAW01_Liam_Lawson','lialaw01'],lindblad:['A','ARVLIN01_Arvid_Lindblad','arvlin01'],gasly:['P','PIEGAS01_Pierre_Gasly','piegas01'],colapinto:['F','FRACOL01_Franco_Colapinto','fracol01'],ocon:['E','ESTOCO01_Esteban_Ocon','estoco01'],bearman:['O','OLIBEA01_Oliver_Bearman','olibea01'],hulkenberg:['N','NICHUL01_Nico_Hulkenberg','nichul01'],bortoleto:['G','GABBOR01_Gabriel_Bortoleto','gabbor01'],sainz:['C','CARSAI01_Carlos_Sainz','carsai01'],albon:['A','ALEALB01_Alexander_Albon','alealb01'],alonso:['F','FERALO01_Fernando_Alonso','feralo01'],stroll:['L','LANSTR01_Lance_Stroll','lanstr01'],perez:['S','SERPER01_Sergio_Perez','serper01'],bottas:['V','VALBOT01_Valtteri_Bottas','valbot01']
+georuss:['G','GEORUS01_George_Russell','georus01'],antkin:['A','ANDANT01_Andrea_Kimi_Antonelli','andant01'],leclerc:['C','CHALEC01_Charles_Leclerc','chalec01'],hamilton:['L','LEWHAM01_Lewis_Hamilton','lewham01'],norris:['L','LANNOR01_Lando_Norris','lannor01'],piastri:['O','OSCPIA01_Oscar_Piastri','oscpia01'],max_verstappen:['M','MAXVER01_Max_Verstappen','maxver01'],hadjar:['I','ISAHAD01_Isack_Hadjar','isahad01'],lawson:['L','LIALAW01_Liam_Lawson','lialaw01'],lindblad:['A','ARVLIN01_Arvid_Lindblad','arvlin01'],gasly:['P','PIEGAS01_Pierre_Gasly','piegas01'],colapinto:['F','FRACOL01_Franco_Colapinto','fracol01'],ocon:['E','ESTOCO01_Esteban_Ocon','estoco01'],bearman:['O','OLIBEA01_Oliver_Bearman','olibea01'],hulkenberg:['N','NICHUL01_Nico_Hulkenberg','nichul01'],bortoleto:['G','GABBOR01_Gabriel_Bortoleto','gabbor01'],sainz:['C','CARSAI01_Carlos_Sainz','carsai01'],albon:['A','ALEALB01_Alexander_Albon','alealb01'],alonso:['F','FERALO01_Fernando_Alonso','feralo01'],stroll:['L','LANSTR01_Lance_Stroll','lanstr01'],perez:['S','SERPER01_Sergio_Perez','serper01'],bottas:['V','VALBOT01_Valtteri_Bottas','valbot01']
 };
 function officialDriverMediaImage(d){
 const id=(d.Driver?.driverId||'').toLowerCase();
 const m=F1_DRIVER_ASSET_META[id];
 if(!m)return'';
 const [letter,folder,file]=m;
-return `https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/${letter}/${folder}/${file}.png?=img`;
+return `https://www.formula1.com/content/dam/fom-website/drivers/${letter}/${folder}/${file}.png.transform/2col/image.png`;
 }
 async function fetchDriverImages(){
 try{
@@ -1085,7 +1128,7 @@ const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIA
 const image=getDriverImage(d);
 return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
 <div class="driver-gradient"></div>
-<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(driverWikiImages[(d.Driver?.driverId||'').toLowerCase()]||driverImageFallback(d.Driver))}"></div>
+<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(driverImages[(d.Driver?.code||'').toLowerCase()]||driverWikiImages[(d.Driver?.driverId||'').toLowerCase()]||driverImageFallback(d.Driver))};this.classList.add('img-fallback')"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
 <div class="driver-content">
 <div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-700 mt-1">2026 DRIVER</div></div></div><div class="text-[10px] font-mono text-gray-600">P${escapeHTML(d.position||index+1)}</div></div>
@@ -1126,7 +1169,7 @@ cadillac:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/c
 };
 function getCarImage(team){
 const id=teamKey(team.id);
-return teamCarImages[id]||teamCarImages[team.name]||F1_CAR_MEDIA[id]||carWikiImages[id]||'';
+return teamCarImages[id]||teamCarImages[team.name]||carWikiImages[id]||F1_CAR_MEDIA[id]||'';
 }
 
 function renderTeams(){
@@ -1244,7 +1287,7 @@ document.getElementById('team-profile-car').innerHTML=`
 <a href="${escapeHTML(safeUrl(meta.url))}" target="_blank" rel="noopener" class="text-[8px] uppercase tracking-widest text-gray-600 hover:text-white">F1.COM →</a>
 </div>
 <div class="car-visual mt-3">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-4" alt="" loading="lazy">`:carSvg(meta.color)}
+${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-4" alt="${escapeHTML(team.name)} 2026 car" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(carWikiImages[teamKey(team.id)]||'')}">`:carSvg(meta.color)}
 </div>
 </div>`;
 
@@ -1369,7 +1412,7 @@ const target=document.querySelector(id);
 if(!target)return;
 e.preventDefault();
 const header=document.querySelector('header');
-const offset=(header?.getBoundingClientRect().height||72)+8;
+const offset=(header?.getBoundingClientRect().height||80)+10;
 const y=target.getBoundingClientRect().top+window.scrollY-offset;
 window.history.replaceState(null,'',id);
 window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
