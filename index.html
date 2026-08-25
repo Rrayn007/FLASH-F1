@@ -94,6 +94,26 @@ button{font-family:inherit}
 .status-complete{background:#181818;color:#777;border:1px solid #282828}
 .status-next{background:#e10600;color:white}
 .status-upcoming{background:#171717;color:#555;border:1px solid #252525}
+.standings-duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.standings-panel{min-width:0}
+.standings-scroll{max-height:690px;overflow:auto}
+.standing-row{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid #1b1b1d;transition:.16s}
+.standing-row:hover{background:#121214}
+.standing-row:last-child{border-bottom:0}
+.standing-rank{font:900 10px/1 ui-monospace,SFMono-Regular,monospace;color:#555;text-align:center}
+.standing-rank.top{color:var(--red)}
+.standing-main{min-width:0}
+.standing-name{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.standing-sub{font-size:7px;color:#555;text-transform:uppercase;letter-spacing:.08em;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.standing-points{font:900 12px/1 ui-monospace,SFMono-Regular,monospace}
+.standing-head{display:flex;justify-content:space-between;align-items:center;padding:15px 15px 11px;border-bottom:1px solid #222}
+.standing-head h3{margin:0;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:#888}
+.standing-head span{font-size:8px;color:#555}
+.data-note{font-size:8px;color:#4d4d50;line-height:1.5}
+.official-source{display:inline-flex;align-items:center;gap:5px;color:#777}
+.official-source:hover{color:#fff}
+@media(max-width:900px){.standings-duo{grid-template-columns:1fr}}
+
 .team-logo{width:44px;height:32px;object-fit:contain;object-position:center}
 .driver-mini-image{width:35px;height:35px;object-fit:contain;object-position:bottom center}
 @media(max-width:768px){
@@ -243,26 +263,17 @@ button{font-family:inherit}
 </a>
 </div>
 
-<div id="standings">
-<div class="flex justify-between items-center mb-5">
-<h2 class="text-[10px] font-black tracking-widest uppercase text-gray-500">Drivers Championship</h2>
-<span class="text-[9px] text-red-600">2026</span>
+<div id="standings" class="standings-duo">
+<div class="standings-panel">
+<div class="standing-head"><h3>Drivers Championship</h3><span>2026 • FULL GRID</span></div>
+<div class="card rounded-lg overflow-hidden standings-scroll"><div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div></div>
 </div>
-<div class="card rounded-lg overflow-hidden">
-<div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
-</div>
-</div>
-
-<div>
-<div class="flex justify-between items-center mb-5">
-<h2 class="text-[10px] font-black tracking-widest uppercase text-gray-500">Constructors</h2>
-<a href="#teams" class="text-[8px] text-gray-600 hover:text-white">VIEW ALL →</a>
-</div>
-<div class="card rounded-lg overflow-hidden">
-<div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
+<div class="standings-panel">
+<div class="standing-head"><h3>Constructors Championship</h3><span>2026 • 11 TEAMS</span></div>
+<div class="card rounded-lg overflow-hidden standings-scroll"><div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div></div>
 </div>
 </div>
-
+<div class="mt-3 data-note">Dữ liệu championship được hợp nhất từ nguồn kết quả mùa giải; hình ảnh và thông tin đội/tay đua ưu tiên F1 Media chính thức, có fallback tự động khi nguồn ảnh không phản hồi.</div>
 </aside>
 </div>
 
@@ -275,6 +286,13 @@ button{font-family:inherit}
 <span class="hidden md:block text-[9px] uppercase tracking-widest text-gray-600">Completed races include pole & podium</span>
 </div>
 <div id="calendar-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+</section>
+
+<section id="sponsor-slot" class="mt-16">
+<div class="card rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 justify-between">
+<div><div class="sponsor-label">Sponsored / Affiliate</div><div class="text-sm font-black mt-1">F1 HUB PICKS</div><div class="data-note mt-1">Khu vực dành cho banner quảng cáo hoặc link affiliate. Mặc định ẩn nếu chưa cấu hình.</div></div>
+<a id="inline-ad-link" class="hidden px-5 py-3 bg-white text-black text-[9px] font-black rounded" target="_blank" rel="sponsored noopener">XEM ƯU ĐÃI →</a>
+</div>
 </section>
 
 <section id="drivers" class="mt-24">
@@ -319,7 +337,7 @@ button{font-family:inherit}
 </div>
 <div>
 <div class="text-[9px] uppercase tracking-widest text-gray-600 mb-4">Data</div>
-<p class="text-xs text-gray-600 leading-relaxed">F1 HUB là website fan-made, không phải website chính thức của Formula 1, FOM hoặc FIA.</p>
+<p class="text-xs text-gray-600 leading-relaxed">F1 HUB là website fan-made, không phải website chính thức của Formula 1, FOM hoặc FIA. Dữ liệu được hợp nhất từ API công khai; hình ảnh ưu tiên F1 Media và fallback tự động.</p>
 </div>
 </div>
 <div class="border-t border-gray-900 mt-10 pt-6 text-[10px] text-gray-700 flex justify-between">
@@ -596,6 +614,9 @@ document.getElementById('ad-container').classList.remove('hidden');
 document.getElementById('ad-banner').src=safeUrl(data.bannerImg);
 document.getElementById('ad-link').href=safeUrl(data.adUrl||'#');
 }
+if(data.affiliateUrl&&String(data.affiliateUrl).trim()){
+const a=document.getElementById('inline-ad-link'); a.href=safeUrl(data.affiliateUrl); a.classList.remove('hidden');
+}
 if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
 }catch(error){
 console.warn('GAS config unavailable');
@@ -704,6 +725,7 @@ fetchJSON(`${F1_API}/${SEASON}/qualifying.json?limit=1000`,'f1hub_qualifying',12
 seasonResults=resultData.MRData.RaceTable.Races||[];
 qualifyingResults=qualData.MRData.RaceTable.Races||[];
 renderCalendar();
+await ensureRaceData();
 }catch(error){
 console.warn('Results API unavailable',error);
 }
@@ -736,6 +758,19 @@ return `<div class="result-podium">${podium.map((p,i)=>`
 <div class="result-driver">${escapeHTML(p.Driver.familyName)}</div>
 <div class="result-team">${escapeHTML(p.Constructor?.name||'')}</div>
 </div>`).join('')}</div>`;
+}
+
+async function ensureRaceData(){
+// Fill missing race/qualifying records per round. This prevents one incomplete bulk response from hiding Pole/Podium.
+if(!races.length)return;
+const completed=races.filter(r=>raceStart(r)<=new Date());
+const jobs=[];
+for(const race of completed){
+if(!getRaceResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/results.json?limit=100`,'f1hub_r_'+race.round,120000).then(x=>{const rr=x.MRData.RaceTable.Races?.[0];if(rr)seasonResults.push(rr)}).catch(()=>{}));
+if(!getQualifyingResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/qualifying.json?limit=100`,'f1hub_q_'+race.round,120000).then(x=>{const qr=x.MRData.RaceTable.Races?.[0];if(qr)qualifyingResults.push(qr)}).catch(()=>{}));
+}
+await Promise.all(jobs);
+renderCalendar();
 }
 
 function renderCalendar(){
@@ -845,15 +880,17 @@ document.getElementById('race-modal').classList.add('hidden');
 async function fetchStandings(){
 try{
 const [driverData,constructorData]=await Promise.all([
-fetchJSON(`${F1_API}/current/driverStandings.json`,'f1hub_driver_standings',60000),
-fetchJSON(`${F1_API}/current/constructorStandings.json`,'f1hub_constructor_standings',60000)
+fetchJSON(`${F1_API}/${SEASON}/driverStandings.json`,'f1hub_driver_standings',60000),
+fetchJSON(`${F1_API}/${SEASON}/constructorStandings.json`,'f1hub_constructor_standings',60000)
 ]);
 const rawDrivers=driverData.MRData.StandingsTable.StandingsLists?.[0]?.DriverStandings||[];
-standings=rawDrivers.filter(d=>{
-const id=d.Driver?.driverId||'';
-const num=d.Driver?.permanentNumber||'';
-return OFFICIAL_DRIVERS.includes(id)||OFFICIAL_DRIVERS.some(x=>DRIVER_ALIASES[x]===id)||OFFICIAL_DRIVERS.some(x=>DRIVER_NUMBER_MAP[x]===num);
-});
+// Main grid = official 22-driver 2026 lineup. Substitute appearances such as Tsunoda remain in race results but do not replace a contracted driver in the grid.
+standings=OFFICIAL_DRIVERS.map((officialId,index)=>{
+const aliases=[officialId,DRIVER_ALIASES[officialId],DRIVER_NUMBER_MAP[officialId]].filter(Boolean);
+return rawDrivers.find(d=>aliases.includes(d.Driver?.driverId)||aliases.includes(d.Driver?.permanentNumber))||null;
+}).filter(Boolean);
+// Preserve championship ordering from the API, then append any official driver that has no points yet.
+standings.sort((a,b)=>Number(a.position||999)-Number(b.position||999));
 constructorStandings=constructorData.MRData.StandingsTable.StandingsLists?.[0]?.ConstructorStandings||[];
 renderStandings();
 renderDrivers();
@@ -881,32 +918,31 @@ function getDriverImage(d){
 const code=d.Driver?.code?.toLowerCase()||'';
 const family=d.Driver?.familyName?.toLowerCase()||'';
 const given=d.Driver?.givenName?.toLowerCase()||'';
-const candidates=[
-code,
-family,
-given,
-Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId)
-];
-for(const c of candidates){
-if(c&&driverImages[c])return driverImages[c];
-}
-if(d.Driver?.driverId==='hadjar')return driverImageFallback(d.Driver);
+const candidates=[code,family,given,Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId)];
+for(const c of candidates){if(c&&driverImages[c])return driverImages[c];}
 return driverImageFallback(d.Driver);
 }
 
+// Official F1 Media is preferred for current driver headshots. OpenF1 commonly returns the same F1 media headshots; Wikimedia is only a fallback.
+function officialDriverImageCandidates(d){
+const id=(d.Driver?.driverId||'').toLowerCase();
+const first=(d.Driver?.givenName||'').replace(/[^A-Za-z]/g,'');
+const last=(d.Driver?.familyName||'').replace(/[^A-Za-z]/g,'');
+return [
+`https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/1col/image.png`,
+getDriverImage(d)
+].filter(Boolean);
+}
+
 function renderStandings(){
-document.getElementById('standings-board').innerHTML=standings.slice(0,10).map((d,index)=>{
+const board=document.getElementById('standings-board');
+board.innerHTML=standings.map((d,index)=>{
 const constructor=d.Constructors?.[0];
 const meta=getTeamMeta(constructor?.constructorId);
-return`
-<div class="driver-row flex items-center gap-3 px-4 py-3 cursor-pointer" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
-<div class="w-5 text-center text-[10px] font-mono ${index===0?'text-red-500':'text-gray-600'}">${escapeHTML(d.position)}</div>
-<div class="w-1 h-6" style="background:${meta.color}"></div>
-<div class="flex-1 min-w-0">
-<div class="text-xs ${index===0?'font-black text-white':'font-semibold text-gray-300'} truncate">${escapeHTML(d.Driver.familyName)}</div>
-<div class="text-[7px] uppercase text-gray-600 mt-1 truncate">${escapeHTML(constructor?.name||'')}</div>
-</div>
-<div class="font-mono text-xs text-gray-400">${escapeHTML(d.points)}</div>
+return `<div class="standing-row cursor-pointer" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
+<div class="standing-rank ${index<3?'top':''}">${escapeHTML(d.position||index+1)}</div>
+<div class="standing-main"><div class="standing-name">${escapeHTML(d.Driver.givenName)} ${escapeHTML(d.Driver.familyName)}</div><div class="standing-sub" style="color:${meta.color}">${escapeHTML(constructor?.name||meta.name)}</div></div>
+<div class="standing-points">${escapeHTML(d.points||0)}</div>
 </div>`;
 }).join('');
 }
@@ -939,69 +975,36 @@ return Object.values(teams).sort((a,b)=>b.points-a.points);
 
 function renderConstructorsSidebar(){
 const teams=getTeams();
-document.getElementById('constructors-board').innerHTML=teams.slice(0,6).map((team,index)=>{
+const board=document.getElementById('constructors-board');
+board.innerHTML=teams.map((team,index)=>{
 const meta=getTeamMeta(team.id);
-return`
-<div class="driver-row flex items-center gap-3 px-4 py-4 cursor-pointer" onclick="openTeamProfile('${escapeHTML(team.id)}')">
-<div class="w-5 text-center text-[10px] font-mono ${index===0?'text-red-500':'text-gray-600'}">${index+1}</div>
-<div class="w-1 h-7" style="background:${meta.color}"></div>
-<div class="flex-1">
-<div class="flex items-center gap-2">
-<img src="${escapeHTML(meta.logo)}" class="team-logo" style="width:30px;height:22px" alt="" loading="lazy">
-<div class="text-xs font-bold">${escapeHTML(team.name)}</div>
-</div>
-<div class="text-[7px] uppercase text-gray-600 mt-1">${team.drivers.map(d=>escapeHTML(d.Driver.familyName)).join(' / ')}</div>
-</div>
-<div class="font-mono text-xs">${team.points}</div>
+return `<div class="standing-row cursor-pointer" onclick="openTeamProfile('${escapeHTML(team.id)}')">
+<div class="standing-rank ${index<3?'top':''}">${index+1}</div>
+<div class="standing-main"><div class="flex items-center gap-2"><img src="${escapeHTML(meta.logo)}" class="team-logo" style="width:28px;height:20px" alt="" loading="lazy"><div class="standing-name">${escapeHTML(team.name)}</div></div><div class="standing-sub" style="color:${meta.color}">${team.drivers.map(d=>escapeHTML(d.Driver.familyName)).join(' / ')}</div></div>
+<div class="standing-points">${team.points}</div>
 </div>`;
 }).join('');
 }
 
 function renderDrivers(){
 if(!standings.length)return;
-const sorted=[...standings].sort((a,b)=>Number(a.position)-Number(b.position));
+const sorted=[...standings].sort((a,b)=>Number(a.position||999)-Number(b.position||999));
 document.getElementById('drivers-grid').innerHTML=sorted.map((d,index)=>{
 const constructor=d.Constructors?.[0];
 const meta=getTeamMeta(constructor?.constructorId);
 const firstName=d.Driver.givenName||'';
 const lastName=d.Driver.familyName||'';
-const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver.driverId)]||index+1;
+const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver.driverId)]||'--';
 const image=getDriverImage(d);
-return`
-<article class="driver-card rounded-lg p-5" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
+return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
 <div class="driver-gradient"></div>
-<div class="driver-photo-wrap">
-<img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">
-</div>
+<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=driverImageFallback(${JSON.stringify(d.Driver)})"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
 <div class="driver-content">
-<div class="flex justify-between items-start">
-<div class="flex items-center gap-3">
-<div class="team-stripe" style="background:${meta.color}"></div>
-<div>
-<div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div>
-<div class="text-[7px] text-gray-700 mt-1">2026 DRIVER</div>
-</div>
-</div>
-<div class="text-[10px] font-mono text-gray-600">P${escapeHTML(d.position)}</div>
-</div>
-<div class="relative mt-20">
-<div class="driver-firstname">${escapeHTML(firstName)}</div>
-<div class="driver-lastname">${escapeHTML(lastName)}</div>
-</div>
-<div class="relative mt-8 pt-4 border-t border-gray-900 grid grid-cols-2">
-<div>
-<div class="timing-label">Points</div>
-<div class="timing-value text-sm mt-1">${escapeHTML(d.points)}</div>
-</div>
-<div class="text-right">
-<div class="timing-label">Number</div>
-<div class="timing-value text-sm mt-1">#${escapeHTML(number)}</div>
-</div>
-</div>
-<div class="absolute right-4 bottom-4 text-[10px] text-gray-700">↗</div>
-</div>
-</article>`;
+<div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-700 mt-1">2026 DRIVER</div></div></div><div class="text-[10px] font-mono text-gray-600">P${escapeHTML(d.position||index+1)}</div></div>
+<div class="relative mt-20"><div class="driver-firstname">${escapeHTML(firstName)}</div><div class="driver-lastname">${escapeHTML(lastName)}</div></div>
+<div class="relative mt-8 pt-4 border-t border-gray-900 grid grid-cols-2"><div><div class="timing-label">Points</div><div class="timing-value text-sm mt-1">${escapeHTML(d.points||0)}</div></div><div class="text-right"><div class="timing-label">Number</div><div class="timing-value text-sm mt-1">#${escapeHTML(number)}</div></div></div>
+</div></article>`;
 }).join('');
 }
 
