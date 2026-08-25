@@ -75,16 +75,16 @@ button{font-family:inherit}
 .timing-value{font-family:monospace;font-weight:700}
 .driver-row{transition:.2s}
 .driver-row:hover{background:#111}
-.calendar-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#0b0b0d,#101013);border-color:color-mix(in srgb,var(--accent,#333) 24%,#222225);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background .25s ease}
-.calendar-card:before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--accent,#333);box-shadow:0 0 18px color-mix(in srgb,var(--accent,#333) 70%,transparent)}
-.calendar-card:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 0%,color-mix(in srgb,var(--accent,#333) 13%,transparent),transparent 42%);pointer-events:none}
-.calendar-card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent,#333) 58%,#333);box-shadow:0 12px 32px color-mix(in srgb,var(--accent,#333) 12%,transparent)}
+.calendar-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#0b0b0d,#101013);border-color:color-mix(in srgb,var(--accent,#333) 15%,#222225);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background .25s ease}
+.calendar-card:before{content:"";position:absolute;left:0;top:0;width:2px;height:100%;background:color-mix(in srgb,var(--accent,#333) 72%,#777);box-shadow:0 0 9px color-mix(in srgb,var(--accent,#333) 25%,transparent)}
+.calendar-card:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 0%,color-mix(in srgb,var(--accent,#333) 5%,transparent),transparent 40%);pointer-events:none}
+.calendar-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent,#333) 32%,#333);box-shadow:0 10px 24px color-mix(in srgb,var(--accent,#333) 6%,transparent)}
 .calendar-card > *{position:relative;z-index:1}
-.calendar-race-title{color:var(--accent,#eee);text-shadow:0 0 18px color-mix(in srgb,var(--accent,#333) 18%,transparent);letter-spacing:-.035em}
-.calendar-round{color:color-mix(in srgb,var(--accent,#333) 72%,#aaa)}
-.calendar-circuit{color:#8b8b92}
-.calendar-date{color:#eee}
-.calendar-status{border-color:color-mix(in srgb,var(--accent,#333) 45%,#333);color:color-mix(in srgb,var(--accent,#333) 80%,#fff)}
+.calendar-race-title{color:color-mix(in srgb,var(--accent,#eee) 78%,#d5d5d8);text-shadow:none;letter-spacing:-.035em}
+.calendar-round{color:color-mix(in srgb,var(--accent,#333) 48%,#999)}
+.calendar-circuit{color:#85858b}
+.calendar-date{color:#d2d2d5}
+.calendar-status{border-color:color-mix(in srgb,var(--accent,#333) 28%,#333);color:color-mix(in srgb,var(--accent,#333) 58%,#ddd)}
 .completed-card{background:linear-gradient(145deg,color-mix(in srgb,var(--accent,#333) 5%,#0d0d0f),#111113)}
 .completed-card:hover{background:linear-gradient(145deg,color-mix(in srgb,var(--accent,#333) 9%,#111113),#151517)}
 .result-podium{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
@@ -842,8 +842,7 @@ await Promise.all(jobs);
 renderCalendar();
 }
 
-const RACE_BRAND_COLORS={
-'australia':'#d8b11e','china':'#e10600','japan':'#e60012','miami':'#00d9ff','canada':'#e10600','monaco':'#e10600','barcelona':'#e10600','catalunya':'#e10600','austria':'#e10600','great britain':'#6fa8dc','britain':'#6fa8dc','belgium':'#f4c400','hungary':'#55a630','dutch':'#ff6b00','netherlands':'#ff6b00','italy':'#008c45','spain':'#e10600','azerbaijan':'#35a7ff','singapore':'#d946ef','malaysia':'#00a651','united states':'#4ea5ff','mexico':'#16a34a','são paulo':'#009c3b','sao paulo':'#009c3b','brazil':'#009c3b','las vegas':'#c026d3','qatar':'#8b5cf6','abu dhabi':'#00b8d9','saudi':'#00a8a8','bahrain':'#d71920'};
+const RACE_BRAND_COLORS={'australia':'#a99432','china':'#a93636','japan':'#b63f49','miami':'#4ba9b8','canada':'#a93636','monaco':'#a93636','barcelona':'#a93636','catalunya':'#a93636','austria':'#a93636','great britain':'#6686a3','britain':'#6686a3','belgium':'#a58d36','hungary':'#64834c','dutch':'#a66f3d','netherlands':'#a66f3d','italy':'#4e8666','spain':'#a45a5a','azerbaijan':'#5f91ad','singapore':'#99659a','malaysia':'#4e8668','united states':'#6388a8','mexico':'#5f8755','são paulo':'#4f8062','sao paulo':'#4f8062','brazil':'#4f8062','las vegas':'#895f91','qatar':'#75638f','abu dhabi':'#4d8997','saudi':'#4e8784','bahrain':'#a24b4d'};
 function getRaceBrandColor(race){
 const name=`${race?.raceName||''} ${race?.Circuit?.circuitName||''}`.toLowerCase();
 const key=Object.keys(RACE_BRAND_COLORS).find(k=>name.includes(k));
