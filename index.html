@@ -200,6 +200,49 @@ section[id],aside[id]{scroll-margin-top:100px}
 .sidebar-standing-card .standings-scroll::-webkit-scrollbar-track{background:#09090b}
 .sidebar-standing-card .standings-scroll::-webkit-scrollbar-thumb{background:#29292d;border:1px solid #09090b;border-radius:999px}
 .sidebar-standing-card .standings-scroll::-webkit-scrollbar-thumb:hover{background:#3b3b40}
+
+/* ===== USER REQUEST: ORIGINAL COMPACT LAYOUT ===== */
+@media(min-width:1200px){
+  main>.grid{grid-template-columns:minmax(0,6fr) minmax(0,4fr)!important;align-items:start;gap:28px!important}
+  .news-featured-image{height:300px!important}
+  .news-feed-card img{height:105px!important}
+}
+/* Standings: equal-width pair inside the 40% sidebar */
+.sidebar-standings{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important}
+.sidebar-standing-card{min-width:0}
+.sidebar-standing-card .standing-head{height:50px!important;padding:0 12px!important}
+.sidebar-standing-card .standing-head h3{font-size:8px!important;letter-spacing:.11em!important;white-space:normal!important;line-height:1.15!important}
+.sidebar-standing-card .standing-head span{font-size:6px!important;flex:0 0 auto}
+.sidebar-standing-card .standings-scroll{height:min(525px,calc(100vh - 300px))!important}
+.sidebar-standing-card .standing-row{grid-template-columns:20px minmax(0,1fr) 38px!important;gap:7px!important;height:48px!important;min-height:48px!important;padding:6px 9px!important}
+.sidebar-standing-card .standing-name{font-size:9px!important}
+.sidebar-standing-card .standing-sub{font-size:5.5px!important}
+.sidebar-standing-card .standing-points{font-size:10px!important;min-width:38px!important}
+/* Slim dark browser scrollbar; never the bright white default */
+html{scrollbar-width:thin;scrollbar-color:#29292d #070708}
+::-webkit-scrollbar{width:5px!important;height:5px!important}
+::-webkit-scrollbar-track{background:#070708!important}
+::-webkit-scrollbar-thumb{background:#29292d!important;border:1px solid #070708!important;border-radius:999px!important}
+::-webkit-scrollbar-thumb:hover{background:#3a3a40!important}
+/* Race calendar: restore the compact original card form */
+#calendar-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+.calendar-card{min-height:0!important;height:auto!important;padding:20px 18px!important;border-radius:10px!important}
+.calendar-card:before{width:2px!important}
+.calendar-card h3{font-size:20px!important;line-height:1.12!important;margin-top:22px!important;letter-spacing:-.025em!important}
+.calendar-card .pole-chip{margin-top:16px!important}
+.calendar-card .result-podium{margin-top:8px!important}
+.calendar-card .calendar-footer{position:static!important;margin-top:18px!important;padding-top:14px;border-top:1px solid #1d1d20}
+.result-podium{gap:5px!important}
+.result-podium-item{min-height:54px!important;padding:6px 3px!important}
+.result-podium-item .result-driver{font-size:8px!important}
+.result-podium-item .result-team{font-size:5px!important}
+@media(max-width:1199px) and (min-width:768px){#calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.calendar-card{min-height:0!important}}
+@media(max-width:900px){
+  main>.grid{grid-template-columns:1fr!important}
+  .f1-sidebar{position:static!important;max-height:none!important}
+  #calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:640px){#calendar-grid{grid-template-columns:1fr!important}.calendar-card{padding:18px 16px!important}}
 </style>
 </head>
 
