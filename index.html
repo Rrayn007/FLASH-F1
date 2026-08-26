@@ -353,41 +353,115 @@ button{font-family:inherit}
 .profile-constructor-box{min-height:194px;position:relative;z-index:2}
 .profile-constructor-info{min-height:145px;display:flex;align-items:center}
 .profile-team-logo{width:84px;height:64px;object-fit:contain;object-position:center;opacity:.96;flex:none}
-/* DRIVER PROFILE VISUAL — head-to-waist crop + editorial effects */
-#driver-profile-content{position:relative;min-height:540px;overflow:hidden;isolation:isolate}
+/* DRIVER PROFILE — clean editorial two-column system */
+#driver-profile-content{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,56%) minmax(360px,44%);
+  grid-template-rows:auto auto auto;
+  column-gap:18px;
+  row-gap:14px;
+  min-height:560px;
+  padding:0;
+  overflow:hidden;
+  isolation:isolate;
+}
+#driver-profile-content > .grid:first-of-type{grid-column:1;grid-row:1;display:grid;grid-template-columns:34% 66%;gap:14px;width:100%;margin:0;align-self:start}
+#driver-stats{grid-column:1;grid-row:2;width:100%;margin:0!important}
+#driver-profile-content > .grid:last-child{grid-column:1;grid-row:3;width:100%;margin:0!important}
+.profile-constructor-box{min-height:172px;position:relative;z-index:2;background:linear-gradient(145deg,#111113 0%,#0e0e10 100%);border:1px solid #1c1e23;overflow:hidden}
+.profile-constructor-info{min-height:120px;display:flex;align-items:center}
+.profile-team-logo{
+  width:92px;height:72px;object-fit:contain;object-position:center;
+  opacity:1;flex:none;display:block;
+  image-rendering:auto;
+  filter:brightness(1.08) contrast(1.08) drop-shadow(0 4px 8px rgba(0,0,0,.35));
+}
+.profile-number-box{
+  min-height:172px!important;
+  border-bottom-width:3px!important;
+  background:linear-gradient(145deg,#111113,#0d0d0f)!important;
+}
+.profile-number{
+  position:absolute;
+  right:12px!important;
+  bottom:8px!important;
+  font-size:92px!important;
+  line-height:.9!important;
+  font-weight:950!important;
+  letter-spacing:-.08em;
+  color:rgba(255,255,255,.045)!important;
+  white-space:nowrap;
+  pointer-events:none;
+}
+#profile-number{font-size:76px!important;line-height:.9!important;position:relative;z-index:2;white-space:nowrap}
 .profile-driver-visual{
-  position:absolute;z-index:2;right:-2%;top:6px;width:48%;height:570px;
-  overflow:hidden;pointer-events:none;
-  background:radial-gradient(ellipse at 48% 46%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 64%);
+  grid-column:2;grid-row:1 / span 3;
+  position:relative;z-index:2;width:100%;height:560px;
+  overflow:hidden;pointer-events:none;isolation:isolate;
+  background:
+    radial-gradient(ellipse at 52% 48%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 62%),
+    linear-gradient(90deg,rgba(9,9,10,.96) 0%,rgba(9,9,10,.28) 42%,transparent 72%);
+  border-left:1px solid rgba(255,255,255,.025);
 }
 .profile-driver-visual:before{
   content:"";position:absolute;inset:0;z-index:0;
-  background:radial-gradient(ellipse at 34% 76%,color-mix(in srgb,var(--team-color,#00d7c4) 22%,transparent),transparent 58%),
-             linear-gradient(90deg,rgba(9,10,12,.98) 0%,rgba(9,10,12,.46) 25%,transparent 62%);
+  background:
+    radial-gradient(ellipse at 28% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 58%),
+    linear-gradient(90deg,rgba(9,9,10,.82),rgba(9,9,10,.16) 48%,transparent 82%);
 }
-.profile-driver-grid{position:absolute;inset:0;z-index:1;opacity:.34;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(90deg,black,transparent 78%)}
-.profile-driver-dots{position:absolute;z-index:2;left:0;bottom:8%;width:56%;height:46%;opacity:.68;background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 72%,transparent) 1px,transparent 1.5px);background-size:8px 8px;mask-image:linear-gradient(90deg,black,transparent 90%)}
-.profile-driver-glow{position:absolute;z-index:1;left:8%;bottom:4%;width:74%;height:54%;background:radial-gradient(ellipse,color-mix(in srgb,var(--team-color,#00d7c4) 22%,transparent),transparent 70%);filter:blur(24px);opacity:.72}
-.profile-driver-ghost{position:absolute;z-index:1;right:8%;top:4%;font:900 130px/.8 Inter,Arial,sans-serif;letter-spacing:-.08em;color:rgba(255,255,255,.035)}
-.profile-driver-visual:after{content:"";position:absolute;z-index:6;left:0;right:0;bottom:0;height:34%;background:linear-gradient(to bottom,transparent 0%,rgba(9,9,10,.06) 25%,rgba(9,9,10,.52) 70%,#090909 100%)}
-#profile-driver-image{position:absolute;right:1%;top:-4%;width:96%;height:112%;object-fit:contain;object-position:center top;z-index:5;filter:drop-shadow(0 16px 24px rgba(0,0,0,.62));display:block;pointer-events:none;transform:scale(1.34);transform-origin:center top;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 62%,rgba(0,0,0,.96) 70%,rgba(0,0,0,.62) 82%,rgba(0,0,0,.18) 94%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 62%,rgba(0,0,0,.96) 70%,rgba(0,0,0,.62) 82%,rgba(0,0,0,.18) 94%,transparent 100%)}
-#driver-profile-content>.grid,#driver-stats{position:relative;z-index:10;width:58%}
-#driver-profile-content>.grid{margin-right:auto}
-
-#driver-stats,#driver-profile-content > .grid:last-child{width:100%}
-#driver-profile-content > .grid:first-child{width:100%}
-.profile-image-fallback{display:block!important;opacity:.98}
-.race-result-empty{background:#111;border:1px solid #202023;border-radius:8px;padding:14px;color:#777;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
-@media(max-width:768px){
-  #driver-profile-content{padding-right:0;min-height:0}
-  .profile-constructor-box{min-height:160px}
-  .profile-constructor-info{min-height:110px}
-  .profile-team-logo{width:62px;height:46px}
-  #driver-profile-content{min-height:0;padding-bottom:0}
-  .profile-driver-visual{position:relative;right:auto;top:auto;width:100%;height:390px;margin:4px 0 -20px}
-  #profile-driver-image{right:-4%;top:-2%;width:108%;height:112%;transform:scale(1.22);object-position:center top}
-  #driver-profile-content>.grid,#driver-stats{width:100%}
-  #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
+.profile-driver-grid{
+  position:absolute;inset:0;z-index:1;opacity:.26;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:28px 28px;
+  mask-image:linear-gradient(90deg,black,transparent 82%);
+}
+.profile-driver-dots{
+  position:absolute;z-index:2;left:0;bottom:8%;width:68%;height:45%;opacity:.66;
+  background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 78%,transparent) 1px,transparent 1.6px);
+  background-size:8px 8px;mask-image:linear-gradient(90deg,black,transparent 92%);
+}
+.profile-driver-glow{
+  position:absolute;z-index:1;left:2%;bottom:4%;width:82%;height:58%;
+  background:radial-gradient(ellipse,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 70%);
+  filter:blur(24px);opacity:.68;
+}
+.profile-driver-ghost{
+  position:absolute;z-index:2;right:7%;top:4%;
+  font:950 150px/.78 Inter,Arial,sans-serif;letter-spacing:-.09em;
+  color:rgba(255,255,255,.035);white-space:nowrap;
+}
+.profile-driver-visual:after{
+  content:"";position:absolute;z-index:6;left:0;right:0;bottom:0;height:31%;
+  background:linear-gradient(to bottom,transparent 0%,rgba(9,9,10,.05) 18%,rgba(9,9,10,.42) 60%,#090909 100%);
+}
+#profile-driver-image{
+  position:absolute;right:-2%;top:0;width:100%;height:100%;
+  object-fit:contain;object-position:center top;
+  z-index:5;display:block;pointer-events:none;
+  filter:drop-shadow(0 18px 26px rgba(0,0,0,.68));
+  transform:scale(1.12);transform-origin:center top;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 66%,rgba(0,0,0,.98) 73%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.38) 92%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 66%,rgba(0,0,0,.98) 73%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.38) 92%,transparent 100%);
+}
+#driver-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#202020;border:1px solid #202020;border-radius:8px;overflow:hidden}
+#driver-stats>div{background:#101010;min-height:82px;padding:18px 16px!important}
+#driver-stats .text-xl{font-size:22px!important;line-height:1;font-weight:900}
+#driver-profile-content > .grid:last-child>div{min-height:112px;padding:18px 20px!important;background:linear-gradient(145deg,#111113,#0e0e10)!important;border:1px solid #1c1e23}
+#profile-position,#profile-points{font-size:40px!important;line-height:1!important;font-weight:950}
+@media(max-width:900px){
+  #driver-profile-content{grid-template-columns:1fr;min-height:0;overflow:visible}
+  #driver-profile-content > .grid:first-of-type{grid-column:1;grid-row:2;grid-template-columns:34% 66%}
+  .profile-driver-visual{grid-column:1;grid-row:1;height:360px;border-left:0;border-bottom:1px solid rgba(255,255,255,.04)}
+  #driver-stats{grid-column:1;grid-row:3}
+  #driver-profile-content > .grid:last-child{grid-column:1;grid-row:4}
+}
+@media(max-width:560px){
+  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr}
+  #driver-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .profile-driver-visual{height:330px}
+  .profile-team-logo{width:72px;height:58px}
+  #profile-number{font-size:62px!important}
 }
 
 .fastest-label{background:#7d22b8}
@@ -592,36 +666,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   mask-image:none!important;
 }
 .team-driver-mini:hover .driver-mini-image{transform:scale(1.07)!important;}
-
-/* Driver profile: preserve the head and let the lower suit dissolve naturally. */
-#profile-driver-image{
-  right:0!important;
-  top:0!important;
-  width:90%!important;
-  height:108%!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  transform:scale(1.12)!important;
-  transform-origin:center top!important;
-  -webkit-mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 68%,
-    rgba(0,0,0,.98) 75%,
-    rgba(0,0,0,.72) 84%,
-    rgba(0,0,0,.32) 94%,
-    transparent 100%
-  )!important;
-  mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 68%,
-    rgba(0,0,0,.98) 75%,
-    rgba(0,0,0,.72) 84%,
-    rgba(0,0,0,.32) 94%,
-    transparent 100%
-  )!important;
-}
 
 </style>
 
@@ -910,7 +954,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 <div class="grid md:grid-cols-3 gap-4">
 <div id="profile-number-box" class="md:col-span-1 bg-[#101010] rounded-lg p-6 relative overflow-hidden">
-<div class="absolute right-[-10px] bottom-[-25px] profile-number">1</div>
+<div id="profile-ghost-number" class="profile-number">1</div>
 <div class="text-[8px] uppercase tracking-widest text-gray-600 relative">Car Number</div>
 <div id="profile-number" class="text-7xl font-black leading-none mt-5 relative">--</div>
 </div>
@@ -1017,16 +1061,16 @@ bottas:'bottas'
 
 const TEAM_META={
 mclaren:{name:'McLaren',color:'#F47600',chassis:'MCL40',logo:'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000000/common/f1/2025/mclaren/2025mclarenlogowhite.webp',url:'https://www.formula1.com/en/teams/mclaren'},
-mercedes:{name:'Mercedes',color:'#00D7B6',chassis:'W17',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2025/mercedes/2025mercedeslogowhite.webp',url:'https://www.formula1.com/en/teams/mercedes'},
-ferrari:{name:'Ferrari',color:'#ED1131',chassis:'SF-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2025/ferrari/2025ferrarilogowhite.webp',url:'https://www.formula1.com/en/teams/ferrari'},
-red_bull:{name:'Red Bull Racing',color:'#4781D7',chassis:'RB22',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2025/redbullracing/2025redbullracinglogowhite.webp',url:'https://www.formula1.com/en/teams/red-bull-racing'},
-aston_martin:{name:'Aston Martin',color:'#229971',chassis:'AMR26',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2025/astonmartin/2025astonmartinlogowhite.webp',url:'https://www.formula1.com/en/teams/aston-martin'},
-alpine:{name:'Alpine',color:'#00A1E8',chassis:'A526',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/alpine/2026alpinelogowhite.webp',url:'https://www.formula1.com/en/teams/alpine'},
-williams:{name:'Williams',color:'#1868DB',chassis:'FW48',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/williams/2026williamslogowhite.webp',url:'https://www.formula1.com/en/teams/williams'},
-rb:{name:'Racing Bulls',color:'#6C98FF',chassis:'VCARB 03',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2025/racingbulls/2025racingbullslogowhite.webp',url:'https://www.formula1.com/en/teams/racing-bulls'},
-haas:{name:'Haas F1 Team',color:'#9C9FA2',chassis:'VF-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/haasf1team/2026haasf1teamlogowhite.webp',url:'https://www.formula1.com/en/teams/haas'},
-audi:{name:'Audi',color:'#F50537',chassis:'R26',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/audi/2026audilogowhite.webp',url:'https://www.formula1.com/en/teams/audi'},
-cadillac:{name:'Cadillac',color:'#909090',chassis:'MAC-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/cadillac/2026cadillaclogowhite.webp',url:'https://www.formula1.com/en/teams/cadillac'}
+mercedes:{name:'Mercedes',color:'#00D7B6',chassis:'W17',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/mercedes/2025mercedeslogowhite.webp',url:'https://www.formula1.com/en/teams/mercedes'},
+ferrari:{name:'Ferrari',color:'#ED1131',chassis:'SF-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/ferrari/2025ferrarilogowhite.webp',url:'https://www.formula1.com/en/teams/ferrari'},
+red_bull:{name:'Red Bull Racing',color:'#4781D7',chassis:'RB22',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/redbullracing/2025redbullracinglogowhite.webp',url:'https://www.formula1.com/en/teams/red-bull-racing'},
+aston_martin:{name:'Aston Martin',color:'#229971',chassis:'AMR26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/astonmartin/2025astonmartinlogowhite.webp',url:'https://www.formula1.com/en/teams/aston-martin'},
+alpine:{name:'Alpine',color:'#00A1E8',chassis:'A526',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/alpine/2026alpinelogowhite.webp',url:'https://www.formula1.com/en/teams/alpine'},
+williams:{name:'Williams',color:'#1868DB',chassis:'FW48',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/williams/2026williamslogowhite.webp',url:'https://www.formula1.com/en/teams/williams'},
+rb:{name:'Racing Bulls',color:'#6C98FF',chassis:'VCARB 03',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/racingbulls/2025racingbullslogowhite.webp',url:'https://www.formula1.com/en/teams/racing-bulls'},
+haas:{name:'Haas F1 Team',color:'#9C9FA2',chassis:'VF-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/haasf1team/2026haasf1teamlogowhite.webp',url:'https://www.formula1.com/en/teams/haas'},
+audi:{name:'Audi',color:'#F50537',chassis:'R26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/audi/2026audilogowhite.webp',url:'https://www.formula1.com/en/teams/audi'},
+cadillac:{name:'Cadillac',color:'#909090',chassis:'MAC-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/cadillac/2026cadillaclogowhite.webp',url:'https://www.formula1.com/en/teams/cadillac'}
 };
 
 function escapeHTML(str=''){
@@ -1887,6 +1931,7 @@ document.getElementById('driver-profile-content').style.setProperty('--team-colo
 document.getElementById('profile-type').textContent='DRIVER PROFILE';
 document.getElementById('profile-name').textContent=`${driver.Driver.givenName} ${driver.Driver.familyName}`;
 document.getElementById('profile-number').textContent=number;
+const ghostNumber=document.getElementById('profile-ghost-number'); if(ghostNumber) ghostNumber.textContent=number;
 document.getElementById('profile-number-box').style.borderBottom=`3px solid ${meta.color}`;
 document.getElementById('profile-team').textContent=constructor?.name||meta.name;
 document.getElementById('profile-nationality').textContent=driver.Driver.nationality||'--';
