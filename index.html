@@ -1114,32 +1114,64 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </section>
 
 <aside id="standings" class="lg:col-span-5 f1-sidebar">
-<div class="sidebar-standings">
-<div class="flex items-end justify-between px-1">
-<div><p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p><h2 class="text-xl font-black mt-1">Bảng xếp hạng</h2></div>
-<span class="text-[8px] uppercase tracking-widest text-gray-600">LIVE DATA</span>
-</div>
+  <!-- Tiêu đề BXH -->
+  <div class="flex items-end justify-between px-1 mb-3">
+    <div>
+      <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p>
+      <h2 class="text-xl font-black mt-1">Bảng xếp hạng</h2>
+    </div>
+    <span class="text-[8px] uppercase tracking-widest text-gray-600">LIVE DATA</span>
+  </div>
 
-<div class="sidebar-standing-card">
-<div class="standing-head"><h3>Drivers Championship</h3><span>22 DRIVERS</span></div>
-<div class="standings-scroll"><div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div></div>
-</div>
+  <!-- Khung kẹp 2 banner 2 bên BXH -->
+  <div class="flex items-start justify-center gap-3">
+    
+    <!-- Banner Trái (tự ẩn trên màn hình nhỏ) -->
+    <div id="side-ad-left-inline" class="hidden 2xl:block w-[110px] shrink-0 sticky top-24">
+      <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
+        <img id="side-ad-left-img" class="w-full rounded border border-[#202023] object-cover" alt="Quảng cáo" style="min-height: 520px;">
+      </a>
+    </div>
 
-<div class="sidebar-standing-card constructors">
-<div class="standing-head"><h3>Constructors Championship</h3><span>11 TEAMS</span></div>
-<div class="standings-scroll"><div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div></div>
-</div>
+    <!-- Cụm 2 bảng Drivers & Teams ở giữa -->
+    <div class="flex-1 min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <!-- Bảng Tay đua -->
+      <div class="sidebar-standing-card">
+        <div class="standing-head">
+          <h3>Drivers Championship</h3>
+          <span>22 DRIVERS</span>
+        </div>
+        <div class="standings-scroll">
+          <div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
+        </div>
+      </div>
 
-<div id="ad-container" class="hidden ad-shell" aria-hidden="true">
-<div class="flex justify-between mb-2"><span class="sponsor-label">Sponsored</span></div>
-<a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
-</div>
+      <!-- Bảng Đội đua -->
+      <div class="sidebar-standing-card constructors">
+        <div class="standing-head">
+          <h3>Constructors Championship</h3>
+          <span>11 TEAMS</span>
+        </div>
+        <div class="standings-scroll">
+          <div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
+        </div>
+      </div>
+    </div>
 
-<div class="card rounded-xl p-4">
-<div class="flex items-center justify-between"><div><div class="sponsor-label">QUICK LOOK</div><div class="text-sm font-black mt-1">2026 SEASON</div></div><div class="text-[9px] uppercase tracking-widest text-gray-600">Live Data</div></div>
-<div class="mt-4 grid grid-cols-2 gap-2"><div class="bg-[#111114] border border-[#202023] rounded p-3"><div class="timing-label">Drivers</div><div class="text-2xl font-black mt-1">22</div></div><div class="bg-[#111114] border border-[#202023] rounded p-3"><div class="timing-label">Teams</div><div class="text-2xl font-black mt-1">11</div></div></div>
-</div>
-</div>
+    <!-- Banner Phải (tự ẩn trên màn hình nhỏ) -->
+    <div id="side-ad-right-inline" class="hidden 2xl:block w-[110px] shrink-0 sticky top-24">
+      <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
+        <img id="side-ad-right-img" class="w-full rounded border border-[#202023] object-cover" alt="Quảng cáo" style="min-height: 520px;">
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Banner ngang phụ (nếu có cấu hình) -->
+  <div id="ad-container" class="hidden ad-shell mt-3" aria-hidden="true">
+    <div class="flex justify-between mb-2"><span class="sponsor-label">Sponsored</span></div>
+    <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
+  </div>
 </aside>
 </div>
 
