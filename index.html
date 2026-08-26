@@ -24,6 +24,7 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:#eee;font-family:Inter,sans-serif;overflow-x:hidden}
 body.modal-open{overflow:hidden}
 img{display:block}
+#brand-logo[style*="display:none"],#footer-brand-logo[style*="display:none"]{display:none!important}
 button,a{outline:none}
 button{font-family:inherit}
 ::-webkit-scrollbar{width:4px;height:4px}
@@ -918,7 +919,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 @keyframes sideAdRevealLeft{0%{opacity:0;transform:translate3d(-28px,-50%,0) scale(.97);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
 @keyframes sideAdRevealRight{0%{opacity:0;transform:translate3d(28px,-50%,0) scale(.97);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
 #side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0}
-#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both}
+#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 2s var(--ad-ease) both}
 #side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;position:relative;z-index:1}
 #side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s var(--ad-ease),filter .5s ease}
 #side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.008);filter:brightness(1.025)}
@@ -963,8 +964,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="h-20 flex items-center justify-between">
 <a href="#" class="flex items-center gap-3 min-w-0">
 <div id="brand-logo-wrap" class="flex items-center">
-<div id="brand-text" class="text-2xl font-black tracking-tighter">F1<span class="f1-red">HUB</span></div>
-<img id="brand-logo" class="hidden max-h-9 max-w-[145px] object-contain" alt="F1 HUB">
+<img id="brand-logo" class="hidden max-h-9 max-w-[145px] object-contain" style="display:none" alt="Site logo" decoding="async">
 </div>
 <div class="hidden sm:block text-[9px] uppercase tracking-[.25em] text-gray-600 border-l border-gray-800 pl-3">Formula 1</div>
 </a>
@@ -1128,7 +1128,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="card rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 justify-between">
 <div>
 <div id="sponsor-label" class="sponsor-label">Sponsored / Affiliate</div>
-<div id="sponsor-title" class="text-sm font-black mt-1">F1 HUB PICKS</div>
+<div id="sponsor-title" class="text-sm font-black mt-1">PICKS</div>
 <div id="sponsor-description" class="data-note mt-1">Khu vực dành cho banner quảng cáo hoặc link affiliate.</div>
 </div>
 <a id="inline-ad-link" class="hidden px-5 py-3 bg-white text-black text-[9px] font-black rounded" target="_blank" rel="sponsored noopener">XEM ƯU ĐÃI →</a>
@@ -1175,7 +1175,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="max-w-7xl mx-auto px-5 lg:px-8 py-12">
 <div class="grid md:grid-cols-3 gap-10">
 <div>
-<div id="footer-brand" class="text-2xl font-black">F1<span class="f1-red">HUB</span></div>
+<img id="footer-brand-logo" class="hidden max-h-10 max-w-[170px] object-contain" style="display:none" alt="Site logo" decoding="async">
 <p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">Nền tảng tổng hợp tin tức và dữ liệu Formula 1 với giao diện lấy cảm hứng từ broadcast graphics.</p>
 </div>
 <div>
@@ -1190,11 +1190,11 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 <div>
 <div class="text-[9px] uppercase tracking-widest text-gray-600 mb-4">Data</div>
-<p class="text-xs text-gray-600 leading-relaxed">F1 HUB là website fan-made, không phải website chính thức của Formula 1, FOM hoặc FIA. Dữ liệu được hợp nhất từ API công khai; hình ảnh ưu tiên F1 Media và fallback tự động.</p>
+<p class="text-xs text-gray-600 leading-relaxed">Đây là website fan-made, không phải website chính thức của Formula 1, FOM hoặc FIA. Dữ liệu được hợp nhất từ API công khai; hình ảnh ưu tiên F1 Media và fallback tự động.</p>
 </div>
 </div>
 <div class="border-t border-gray-900 mt-10 pt-6 text-[10px] text-gray-700 flex justify-between">
-<span>© 2026 F1 HUB</span>
+<span>© 2026</span>
 <span>Built for F1 fans</span>
 </div>
 </div>
@@ -1506,14 +1506,18 @@ async function fetchConfigAndTrack(){
 
       // Logo
       const logoEl=document.getElementById('brand-logo');
-      const brandText=document.getElementById('brand-text');
-      const logo=data.logoImg||data.logo||data.logoUrl;
-      if(logoEl&&brandText&&logo){
-        const logoUrl=safeUrl(logo);
-        if(logoUrl!=='#'){
-          logoEl.src=logoUrl;
-          logoEl.classList.remove('hidden');
-          brandText.classList.add('hidden');
+      const footerLogoEl=document.getElementById('footer-brand-logo');
+      const logo=safeUrl(data.logoImg||data.logo||data.logoUrl);
+      if(logo!=='#'){
+        if(logoEl){
+          logoEl.onload=()=>{ logoEl.style.display='block'; logoEl.classList.remove('hidden'); };
+          logoEl.onerror=()=>{ logoEl.style.display='none'; logoEl.classList.add('hidden'); };
+          logoEl.src=logo;
+        }
+        if(footerLogoEl){
+          footerLogoEl.onload=()=>{ footerLogoEl.style.display='block'; footerLogoEl.classList.remove('hidden'); };
+          footerLogoEl.onerror=()=>{ footerLogoEl.style.display='none'; footerLogoEl.classList.add('hidden'); };
+          footerLogoEl.src=logo;
         }
       }
 
@@ -1667,7 +1671,7 @@ async function fetchConfigAndTrack(){
 
         if(canShowInline){
           if(sponsorLabel)sponsorLabel.textContent=data.adLabel||'Sponsored / Affiliate';
-          if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'F1 HUB PICKS';
+          if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'PICKS';
           if(sponsorDescription)sponsorDescription.textContent=data.adDescription||'Khu vực dành cho banner quảng cáo hoặc link affiliate.';
           prepareExternalLink(inlineLink,data.affiliateUrl);
           inlineLink?.classList.remove('hidden');
@@ -2648,12 +2652,12 @@ document.querySelectorAll('#mobile-menu a').forEach(link=>{
 });
 
 async function sharePage(){
-const shareData={title:'F1 HUB | Formula 1 News & Race Control',text:'Theo dõi tin tức, lịch đua và dữ liệu F1 2026 trên F1 HUB.',url:location.href};
+const shareData={title:'Formula 1 News & Race Control',text:'Theo dõi tin tức, lịch đua và dữ liệu Formula 1 2026.',url:location.href};
 try{
 if(navigator.share)await navigator.share(shareData);
 else{
 await navigator.clipboard.writeText(location.href);
-alert('Đã copy link F1 HUB.');
+alert('Đã copy liên kết.');
 }
 }catch{}
 }
