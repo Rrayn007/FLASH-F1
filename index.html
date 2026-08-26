@@ -589,36 +589,90 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   background:var(--ui-blue);
 }
 
-/* ADS SYSTEM */
-#ad-container, #sponsor-slot, #side-ad-left, #side-ad-right {
+/* =========================================================
+   SIDE ADS: DESKTOP CỐ ĐỊNH MÉP - MOBILE KẸP BXH
+   ========================================================= */
+#side-ad-left, #side-ad-right {
+  display: none !important;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-#ad-container.ad-ready, #sponsor-slot.ad-ready, #side-ad-left.ad-ready, #side-ad-right.ad-ready {
+#side-ad-left.ad-ready, #side-ad-right.ad-ready {
+  display: block !important;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#side-ad-left:after, #side-ad-right:after { content:""; position:absolute; inset:0; pointer-events:none; z-index:3; background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%); transform:translateX(-125%); opacity:0; }
+#side-ad-left.is-shining:after, #side-ad-right.is-shining:after { opacity:1; animation:adGlassSweep 1.45s var(--ad-ease) both; }
+#side-ad-left-link, #side-ad-right-link { display:block; width:100%; height:100%; position:relative; z-index:1; }
+#side-ad-left-img, #side-ad-right-img { display:block; width:100%; height:100%; object-fit:cover; object-position:center; transition:transform .8s var(--ad-ease),filter .5s ease; }
+#side-ad-left:hover img, #side-ad-right:hover img { transform:scale(1.008); filter:brightness(1.025); }
+
+/* 1. DESKTOP LỚN (> 1500px): Quảng cáo dạt ra 2 mép ngoài cùng */
+@media (min-width: 1501px) {
+  #side-ad-left, #side-ad-right {
+    position: fixed !important; top: 50% !important; transform: translateY(-50%) scale(0.985);
+    width: var(--side-ad-width) !important; height: var(--side-ad-height) !important;
+    z-index: 30; border-radius: 4px; overflow: hidden;
+  }
+  #side-ad-left { left: var(--side-ad-edge) !important; right: auto !important; }
+  #side-ad-right { right: var(--side-ad-edge) !important; left: auto !important; }
+  #side-ad-left.ad-ready { animation: sideAdRevealLeft .78s var(--ad-ease) both; }
+  #side-ad-right.ad-ready { animation: sideAdRevealRight .78s var(--ad-ease) both; }
+}
+
+@keyframes sideAdRevealLeft { 0% { opacity:0; transform:translate3d(-28px,-50%,0) scale(.97); filter:blur(2px); } 100% { opacity:1; transform:translate3d(0,-50%,0) scale(1); filter:blur(0); } }
+@keyframes sideAdRevealRight { 0% { opacity:0; transform:translate3d(28px,-50%,0) scale(.97); filter:blur(2px); } 100% { opacity:1; transform:translate3d(0,-50%,0) scale(1); filter:blur(0); } }
+
+/* 2. DESKTOP NHỎ (1024px - 1500px): Ẩn quảng cáo sườn để không đè vào chữ */
+@media (min-width: 1024px) and (max-width: 1500px) {
+  #side-ad-left, #side-ad-right { display: none !important; }
+}
+
+/* 3. KHI XUỐNG 1 CỘT BỐ CỤC CHUNG (Tablet: 768px - 1023px): Quảng cáo kẹp sát 2 bên BXH */
+@media (max-width: 1023px) {
+  #side-ad-left, #side-ad-right {
+    position: sticky !important; top: 6rem !important; width: 110px !important; height: auto !important;
+    flex-shrink: 0; border-radius: 8px; overflow: hidden;
+  }
+  #side-ad-left.ad-ready, #side-ad-right.ad-ready { animation: adReveal .72s var(--ad-ease) both; }
+}
+
+/* 4. ĐIỆN THOẠI (< 768px): Ẩn để tránh bóp méo khung BXH quá nhỏ */
+@media (max-width: 767px) {
+  #side-ad-left, #side-ad-right { display: none !important; }
+}
+
+@media(min-width:1501px) and (max-height:800px){:root{--side-ad-height:450px}}
+@media(min-width:1501px) and (max-height:650px){:root{--side-ad-height:380px}}
+
+/* =========================================================
+   ADS MAIN BANNER / SPONSOR
+   ========================================================= */
+#ad-container, #sponsor-slot {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+#ad-container.ad-ready, #sponsor-slot.ad-ready {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   animation: adReveal .72s var(--ad-ease) both;
 }
-
 @keyframes adReveal {
-  0% { opacity: 0; transform: scale(.98); }
-  100% { opacity: 1; transform: scale(1); }
+  0% { opacity: 0; transform: scale(.98); filter:blur(2px); }
+  100% { opacity: 1; transform: scale(1); filter:blur(0); }
 }
-
-#side-ad-left-link, #side-ad-right-link {
-  display: block;
-  width: 100%;
-}
-
-#side-ad-left-img, #side-ad-right-img {
-  display: block;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-}
+#ad-container{position:relative;will-change:opacity,transform}
+#ad-container:after,#sponsor-slot .card:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 48%,rgba(255,255,255,.035) 52%,transparent 66%);transform:translateX(-120%);z-index:5}
+#ad-container.is-shining:after,#sponsor-slot.is-shining .card:after{opacity:1;animation:adGlassSweep 1.35s var(--ad-ease) both}
+@keyframes adGlassSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.9}55%{opacity:.65}100%{transform:translateX(120%);opacity:0}}
+#ad-banner{transition:filter .45s ease,transform .7s var(--ad-ease)}
+#ad-container:hover #ad-banner{transform:scale(1.008);filter:brightness(1.025)}
 
 /* Lịch đua, Tay đua & BXH giữ 2 cột trên Mobile / Tablet */
 @media (max-width: 1023px) {
@@ -653,6 +707,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
 }
 </style>
+
 <style id="driver-card-rank-ghost-v8">
 /* V8 — stronger position badge + oversized background driver number */
 .driver-card .driver-rank{
@@ -864,14 +919,16 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     <span class="text-[8px] uppercase tracking-widest text-gray-600">LIVE DATA</span>
   </div>
 
-  <div class="flex flex-col md:flex-row items-start justify-center gap-3">
+  <div class="flex items-start justify-center gap-3">
     
-    <div id="side-ad-left" class="w-full md:w-[110px] shrink-0 sticky top-24">
+    <!-- Banner Trái -->
+    <div id="side-ad-left" aria-hidden="true">
       <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
-        <img id="side-ad-left-img" class="w-full rounded border border-[#202023] object-cover" alt="Quảng cáo">
+        <img id="side-ad-left-img" class="border border-[#202023]" alt="Quảng cáo">
       </a>
     </div>
 
+    <!-- Cụm 2 bảng Drivers & Teams ở giữa -->
     <div class="flex-1 w-full min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3">
       <div class="sidebar-standing-card">
         <div class="standing-head">
@@ -894,13 +951,15 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
       </div>
     </div>
 
-    <div id="side-ad-right" class="w-full md:w-[110px] shrink-0 sticky top-24">
+    <!-- Banner Phải -->
+    <div id="side-ad-right" aria-hidden="true">
       <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
-        <img id="side-ad-right-img" class="w-full rounded border border-[#202023] object-cover" alt="Quảng cáo">
+        <img id="side-ad-right-img" class="border border-[#202023]" alt="Quảng cáo">
       </a>
     </div>
   </div>
 
+  <!-- Banner ngang phụ -->
   <div id="ad-container" class="hidden ad-shell mt-3" aria-hidden="true">
     <div class="flex justify-between mb-2"><span class="sponsor-label">Sponsored</span></div>
     <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
@@ -1174,7 +1233,6 @@ function safeUrl(url=''){
 let value=String(url||'').trim();
 if(!value)return'#';
 
-// URL tuyệt đối: giữ nguyên domain, không ghép vào domain F1 HUB.
 if(/^https?:\/\/.+/i.test(value)){
   try{
     const u=new URL(value);
@@ -1182,7 +1240,6 @@ if(/^https?:\/\/.+/i.test(value)){
   }catch{return'#'}
 }
 
-// Cho phép www.example.com hoặc example.com.
 if(/^www\./i.test(value))value='https://'+value;
 else if(/^[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(value))value='https://'+value;
 else return'#';
@@ -1289,7 +1346,6 @@ async function fetchConfigAndTrack(){
       const data=await response.json();
       siteConfig=data||{};
 
-      const EMBEDDED_LOGO_URL='https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000';
       const logoEl=document.getElementById('brand-logo');
       const footerLogoEl=document.getElementById('footer-brand-logo');
       const sheetLogo=safeUrl(data.logoImg||data.logo||data.logoUrl);
@@ -1684,7 +1740,6 @@ return `<div class="result-podium">${podium.map((p,i)=>`
 }
 
 async function ensureRaceData(){
-// Fill missing race/qualifying records per round. This prevents one incomplete bulk response from hiding Pole/Podium.
 if(!races.length)return;
 const completed=races.filter(r=>raceStart(r)<=new Date());
 const jobs=[];
