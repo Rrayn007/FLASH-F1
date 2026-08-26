@@ -613,10 +613,7 @@ function driverImageFallback(driver){
 const first=(driver.givenName||'').replace(/[^A-Za-z]/g,'');
 const last=(driver.familyName||'').replace(/[^A-Za-z]/g,'');
 const id=(driver.driverId||'').toLowerCase();
-const map={
-hadjar:'https://media.formula1.com/image/upload/c_fit,w_876,h_742/q_auto/v1740000000/common/f1/2025/racingbulls/isahad01/2025racingbullsisahad01numberwhitefrless.webp'
-};
-if(map[id])return map[id];
+if(!id)return'';
 return `https://www.formula1.com/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/2col/image.png`;
 }
 
@@ -1177,7 +1174,7 @@ cadillac:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/c
 function getCarImage(team){
 const id=teamKey(team.id);
 // Prefer the current official 2026 F1 Media asset over configurable/wiki fallbacks.
-return F1_CAR_MEDIA[id]||teamCarImages[id]||teamCarImages[team.name]||carWikiImages[id]||'';
+return F1_CAR_MEDIA[id]||carWikiImages[id]||'';
 }
 
 function renderTeams(){
@@ -1402,7 +1399,22 @@ document.getElementById('profile-modal').addEventListener('click',function(e){
 if(e.target===this)closeProfile();
 });
 
+document.addEventListener('contextmenu',function(e){
+e.preventDefault();
+});
+
 document.addEventListener('keydown',function(e){
+const key=String(e.key||'').toLowerCase();
+const ctrl=e.ctrlKey;
+if(
+e.key==='F12' ||
+(ctrl&&key==='u') ||
+(ctrl&&e.shiftKey&&(key==='i'||key==='j'||key==='c'))
+){
+e.preventDefault();
+e.stopPropagation();
+return false;
+}
 if(e.key==='Escape'){
 closeRaceModal();
 closeProfile();
