@@ -899,7 +899,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.008);filter:brightness(1.025)}
 
 /* Never show side ads on smaller screens. */
-@media(max-width:1200px){#side-ad-left,#side-ad-right{display:none!important}}
+
 @media(min-width:1501px) and (max-height:800px){:root{--side-ad-height:450px}}
 @media(min-width:1501px) and (max-height:650px){:root{--side-ad-height:380px}}
 @media(prefers-reduced-motion:reduce){
@@ -913,6 +913,10 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #ad-container.ad-ready,#sponsor-slot.ad-ready,#side-ad-left.ad-ready,#side-ad-right.ad-ready{display:block!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
 #ad-container:not(.ad-ready),#sponsor-slot:not(.ad-ready),#side-ad-left:not(.ad-ready),#side-ad-right:not(.ad-ready){opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 #ad-container img,#side-ad-left img,#side-ad-right img{display:block!important}
+</style>
+<style id="f1hub-ads-hard-override">
+#ad-container.ad-ready,#sponsor-slot.ad-ready,#side-ad-left.ad-ready,#side-ad-right.ad-ready{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+#brand-logo:not(.hidden){display:block!important;visibility:visible!important}
 </style>
 </head>
 
@@ -1500,248 +1504,161 @@ return u.toString();
 }
 
 async function fetchConfigAndTrack(){
-  const CONFIG_CACHE_KEY='f1hub_site_config_v2';
-  const CONFIG_CACHE_TTL=120000;
+  // ADS/LOGO: simple and independent. Do not let analytics or animations
+  // block an image from appearing.
+  const cacheKey='f1hub_ads_config_simple_v1';
 
-  const applyAds=(rawData)=>{
-    const data=buildConfig(rawData||{});
+  const show=(el)=>{
+    if(!el)return;
+    el.classList.remove('hidden');
+    el.classList.add('ad-ready');
+    el.removeAttribute('aria-hidden');
+    el.style.display='block';
+    el.style.visibility='visible';
+    el.style.opacity='1';
+    el.style.pointerEvents='auto';
+  };
+  const hide=(el)=>{
+    if(!el)return;
+    el.classList.remove('ad-ready');
+    el.classList.add('hidden');
+    el.setAttribute('aria-hidden','true');
+  };
+  const setLink=(el,url)=>{
+    if(!el)return;
+    const u=safeUrl(url);
+    el.removeAttribute('href');
+    if(u!=='#'){
+      el.href=u;
+      el.target='_blank';
+      el.rel='sponsored noopener noreferrer';
+    }
+  };
+  const setImage=(img,box,url)=>{
+    if(!img||!box)return;
+    const u=normalizeImageUrl(url);
+    if(u==='#'){
+      hide(box);
+      return;
+    }
+    img.onerror=()=>hide(box);
+    img.onload=()=>show(box);
+    img.removeAttribute('srcset');
+    img.src=u;
+    // Cached image: do not wait for another event.
+    if(img.complete && img.naturalWidth>0)show(box);
+  };
+
+  const apply=(raw)=>{
+    const data=buildConfig(raw||{});
     siteConfig=data;
 
-    // Keep all existing site features independent from the ad loader.
-    const adContainer=document.getElementById('ad-container');
-    const adBanner=document.getElementById('ad-banner');
-    const adLink=document.getElementById('ad-link');
-    const sponsorSlot=document.getElementById('sponsor-slot');
-    const inlineLink=document.getElementById('inline-ad-link');
-    const sponsorLabel=document.getElementById('sponsor-label');
-    const sponsorTitle=document.getElementById('sponsor-title');
-    const sponsorDescription=document.getElementById('sponsor-description');
-    const sideAds=[
-      {el:document.getElementById('side-ad-left'),link:document.getElementById('side-ad-left-link'),img:document.getElementById('side-ad-left-img')},
-      {el:document.getElementById('side-ad-right'),link:document.getElementById('side-ad-right-link'),img:document.getElementById('side-ad-right-img')}
-    ];
-
-    const adShineTimers=new WeakMap();
-    function stopAdShine(el){
-      if(!el)return;
-      const timer=adShineTimers.get(el);
-      if(timer)clearTimeout(timer);
-      adShineTimers.delete(el);
-      el.classList.remove('is-shining');
-    }
-    function scheduleAdShine(el){
-      if(!el)return;
-      stopAdShine(el);
-      const run=()=>{
-        if(!el.classList.contains('ad-ready'))return;
-        el.classList.remove('is-shining');
-        void el.offsetWidth;
-        el.classList.add('is-shining');
-        setTimeout(()=>el.classList.remove('is-shining'),1800);
-        adShineTimers.set(el,setTimeout(run,12000+Math.random()*10000));
-      };
-      adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
-    }
-    function revealAd(el){
-      if(!el)return;
-      el.classList.remove('hidden');
-      el.setAttribute('aria-hidden','false');
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        el.classList.add('ad-ready');
-        scheduleAdShine(el);
-      }));
-    }
-    function hideAd(el){
-      if(!el)return;
-      stopAdShine(el);
-      el.classList.remove('ad-ready');
-      el.classList.add('hidden');
-      el.setAttribute('aria-hidden','true');
-    }
-    function resetLink(link){
-      if(!link)return;
-      link.removeAttribute('href');
-      link.removeAttribute('target');
-      link.removeAttribute('rel');
-      link.style.pointerEvents='none';
-    }
-    function resetImage(img){
-      if(!img)return;
-      img.onload=null;
-      img.onerror=null;
-      img.removeAttribute('src');
-      img.removeAttribute('srcset');
-    }
-    function prepareExternalLink(link,url){
-      if(!link)return false;
-      const safe=safeUrl(url);
-      resetLink(link);
-      if(safe==='#')return false;
-      link.href=safe;
-      link.target='_blank';
-      link.rel='sponsored noopener noreferrer';
-      link.style.pointerEvents='auto';
-      return true;
+    // MAIN BANNER: B5 + B2
+    const main=document.getElementById('ad-container');
+    const mainImg=document.getElementById('ad-banner');
+    const mainLink=document.getElementById('ad-link');
+    hide(main);
+    if(isConfigOn(data.adEnabled) && normalizeImageUrl(data.bannerImg)!=='#'){
+      setLink(mainLink,data.adUrl);
+      setImage(mainImg,main,data.bannerImg);
     }
 
-    // Reliable image loader. It handles normal URLs, cached images, decode(),
-    // and a short timeout without blocking the rest of the page.
-    function loadAdImage(img,el,imageUrl){
-      return new Promise(resolve=>{
-        if(!img||!el||!imageUrl||imageUrl==='#'){
-          hideAd(el);
-          resolve(false);
-          return;
-        }
-        let settled=false;
-        const finish=(ok)=>{
-          if(settled)return;
-          settled=true;
-          clearTimeout(timer);
-          img.onload=null;
-          img.onerror=null;
-          if(ok)revealAd(el); else hideAd(el);
-          resolve(ok);
-        };
-        const timer=setTimeout(()=>finish(false),12000);
-        img.onload=async()=>{
-          try{if(img.decode)await img.decode();}catch{}
-          finish(img.naturalWidth>0&&img.naturalHeight>0);
-        };
-        img.onerror=()=>finish(false);
-        img.src=imageUrl;
-        if(img.complete){
-          if(img.naturalWidth>0){
-            if(img.decode)img.decode().catch(()=>{}).finally(()=>finish(true));
-            else finish(true);
-          }
-        }
-      });
-    }
-    function setSideAd(item,enabled,imageValue,urlValue){
-      const {el,link,img}=item||{};
-      if(!el)return;
-      hideAd(el);
-      resetLink(link);
-      resetImage(img);
-      if(!enabled||!img)return;
-      const imageUrl=normalizeImageUrl(imageValue);
-      if(imageUrl==='#')return;
-      prepareExternalLink(link,urlValue);
-      loadAdImage(img,el,imageUrl);
-    }
-
-    // MAIN BANNER: controlled only by B5 + B2. Click URL is optional.
-    if(adContainer){
-      hideAd(adContainer);
-      resetLink(adLink);
-      resetImage(adBanner);
-      const enabled=isConfigOn(data.adEnabled);
-      const imageUrl=normalizeImageUrl(data.bannerImg);
-      if(enabled&&adBanner&&imageUrl!=='#'){
-        prepareExternalLink(adLink,data.adUrl);
-        loadAdImage(adBanner,adContainer,imageUrl);
-      }
-    }
-
-    // AFFILIATE: independent from the banner image. B9 + B4 are enough.
-    if(sponsorSlot){
-      hideAd(sponsorSlot);
-      resetLink(inlineLink);
-      const enabled=isConfigOn(data.inlineAdEnabled);
+    // AFFILIATE: B9 + B4. No dependency on the banner.
+    const sponsor=document.getElementById('sponsor-slot');
+    const inline=document.getElementById('inline-ad-link');
+    if(sponsor){
+      hide(sponsor);
       const affiliate=safeUrl(data.affiliateUrl);
-      if(enabled&&affiliate!=='#'){
-        if(sponsorLabel)sponsorLabel.textContent=data.adLabel||'SPONSORED / AFFILIATE';
-        if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'F1HUB PICKS';
-        if(sponsorDescription)sponsorDescription.textContent=data.adDescription||'Khu vực dành cho banner quảng cáo hoặc link affiliate.';
-        prepareExternalLink(inlineLink,affiliate);
-        if(inlineLink)inlineLink.classList.remove('hidden');
-        revealAd(sponsorSlot);
-      }else if(inlineLink){
-        inlineLink.classList.add('hidden');
+      if(isConfigOn(data.inlineAdEnabled) && affiliate!=='#'){
+        const label=document.getElementById('sponsor-label');
+        const title=document.getElementById('sponsor-title');
+        const desc=document.getElementById('sponsor-description');
+        if(label)label.textContent=data.adLabel||'SPONSORED / AFFILIATE';
+        if(title)title.textContent=data.adTitle||'F1HUB PICKS';
+        if(desc)desc.textContent=data.adDescription||'Khu vực dành cho banner quảng cáo hoặc link affiliate.';
+        setLink(inline,affiliate);
+        if(inline)inline.classList.remove('hidden');
+        show(sponsor);
+      }else if(inline){
+        inline.classList.add('hidden');
       }
     }
 
-    // SIDE ADS: controlled by B10 + B12/B14. Each side works independently.
-    const sideEnabled=isConfigOn(data.sideAdEnabled);
-    setSideAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
-    setSideAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
+    // SIDE ADS: B10 + each image. Each side is independent.
+    const left=document.getElementById('side-ad-left');
+    const leftImg=document.getElementById('side-ad-left-img');
+    const leftLink=document.getElementById('side-ad-left-link');
+    const right=document.getElementById('side-ad-right');
+    const rightImg=document.getElementById('side-ad-right-img');
+    const rightLink=document.getElementById('side-ad-right-link');
+    hide(left); hide(right);
+    if(isConfigOn(data.sideAdEnabled)){
+      setLink(leftLink,data.sideAdLeftUrl);
+      setLink(rightLink,data.sideAdRightUrl);
+      setImage(leftImg,left,data.sideAdLeftImg);
+      setImage(rightImg,right,data.sideAdRightImg);
+    }
 
-    // LOGO: independent from all ads. B3 must never be allowed to break the page.
-    const logoEl=document.getElementById('brand-logo');
-    const brandText=document.getElementById('brand-text');
-    const logoValue=data.logoImg||data.logo||data.logoUrl||'';
-    const logoUrl=normalizeImageUrl(logoValue);
-    if(logoEl&&logoUrl!=='#'){
-      logoEl.onload=()=>{
-        logoEl.classList.remove('hidden');
-        brandText?.classList.add('hidden');
+    // LOGO: B3 only. Never depends on ads/analytics.
+    const logo=document.getElementById('brand-logo');
+    const text=document.getElementById('brand-text');
+    const logoUrl=normalizeImageUrl(data.logoImg||data.logo||data.logoUrl);
+    if(logo && logoUrl!=='#'){
+      logo.onerror=()=>{
+        logo.classList.add('hidden');
+        if(text)text.classList.remove('hidden');
       };
-      logoEl.onerror=()=>{
-        logoEl.classList.add('hidden');
-        brandText?.classList.remove('hidden');
+      logo.onload=()=>{
+        logo.classList.remove('hidden');
+        logo.style.display='block';
+        if(text)text.classList.add('hidden');
       };
-      logoEl.src=logoUrl;
-      if(logoEl.complete&&logoEl.naturalWidth>0){
-        logoEl.classList.remove('hidden');
-        brandText?.classList.add('hidden');
+      logo.src=logoUrl;
+      if(logo.complete && logo.naturalWidth>0){
+        logo.classList.remove('hidden');
+        logo.style.display='block';
+        if(text)text.classList.add('hidden');
       }
+    }else if(text){
+      text.classList.remove('hidden');
     }
 
     if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
-
-    console.info('[F1HUB ADS] config applied',{
-      main:{enabled:isConfigOn(data.adEnabled),image:normalizeImageUrl(data.bannerImg)!=='#',url:safeUrl(data.adUrl)!=='#'},
-      affiliate:{enabled:isConfigOn(data.inlineAdEnabled),url:safeUrl(data.affiliateUrl)!=='#'},
-      side:{enabled:sideEnabled,left:normalizeImageUrl(data.sideAdLeftImg)!=='#',right:normalizeImageUrl(data.sideAdRightImg)!=='#'},
-      logo:logoUrl!=='#'
+    console.info('[F1HUB] Ads applied',{
+      ad:isConfigOn(data.adEnabled),
+      affiliate:isConfigOn(data.inlineAdEnabled),
+      side:isConfigOn(data.sideAdEnabled),
+      banner:data.bannerImg||'',logo:data.logoImg||''
     });
     return data;
   };
 
-  // 1) Use the last known config immediately if available. This prevents a
-  // temporary Apps Script failure from making an already-working site blank.
+  // First use cached config so the page does not go blank during a temporary API issue.
   try{
-    const cached=sessionStorage.getItem(CONFIG_CACHE_KEY);
+    const cached=sessionStorage.getItem(cacheKey);
     if(cached){
       const obj=JSON.parse(cached);
-      if(obj?.data&&Date.now()-Number(obj.time||0)<CONFIG_CACHE_TTL)applyAds(obj.data);
+      if(obj?.data)apply(obj.data);
     }
   }catch{}
 
-  // 2) Fetch Config separately. Analytics is NEVER allowed to block this call.
-  let freshData=null;
-  for(let attempt=1;attempt<=2&&!freshData;attempt++){
-    try{
-      const controller=new AbortController();
-      const timer=setTimeout(()=>controller.abort(),9000);
-      const response=await fetch(GAS_WEB_APP_URL,{cache:'no-store',signal:controller.signal});
-      clearTimeout(timer);
-      if(!response.ok)throw new Error(`GAS HTTP ${response.status}`);
-      const raw=await response.json();
-      if(raw?.error)throw new Error(raw.message||'GAS returned an error');
-      freshData=applyAds(raw);
-      try{sessionStorage.setItem(CONFIG_CACHE_KEY,JSON.stringify({time:Date.now(),data:freshData}));}catch{}
-    }catch(error){
-      console.warn(`[F1HUB] Config request ${attempt}/2 failed`,error);
-      if(attempt<2)await new Promise(r=>setTimeout(r,700));
-    }
-  }
-
-  // 3) Track only once per browser session and only after Config is requested.
-  // This is a separate lightweight Apps Script request (?track=1).
+  // One simple Config request. No IP, no Analytics, no Lock.
   try{
-    if(!sessionStorage.getItem('f1hub_analytics_tracked')){
-      sessionStorage.setItem('f1hub_analytics_tracked','1');
-      getClientIp().then(ip=>{
-        if(!ip)return;
-        const trackUrl=new URL(GAS_WEB_APP_URL);
-        trackUrl.searchParams.set('track','1');
-        trackUrl.searchParams.set('ip',ip);
-        fetch(trackUrl.toString(),{cache:'no-store',keepalive:true}).catch(()=>{});
-      }).catch(()=>{});
-    }
-  }catch{}
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),10000);
+    const response=await fetch(GAS_WEB_APP_URL+'?v='+Date.now(),{
+      cache:'no-store',
+      signal:controller.signal
+    });
+    clearTimeout(timer);
+    if(!response.ok)throw new Error('GAS HTTP '+response.status);
+    const data=await response.json();
+    if(data?.error)throw new Error(data.message||'Config error');
+    apply(data);
+    try{sessionStorage.setItem(cacheKey,JSON.stringify({time:Date.now(),data}))}catch{}
+  }catch(error){
+    console.warn('[F1HUB] Config unavailable; keeping cached/default state.',error);
+  }
 }
 
 async function fetchNews(){
