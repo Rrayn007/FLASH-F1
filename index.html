@@ -1309,10 +1309,35 @@ clearTimeout(timer);
 }
 }
 
+async function getClientIp(){
+const endpoints=[
+'https://api64.ipify.org?format=json',
+'https://api.ipify.org?format=json'
+];
+for(const endpoint of endpoints){
+try{
+const response=await fetch(endpoint,{cache:'no-store'});
+if(!response.ok)continue;
+const data=await response.json();
+if(data?.ip)return String(data.ip).trim();
+}catch{}
+}
+return '';
+}
+
 async function fetchConfigAndTrack(){
 try{
-const data=await fetchJSON(GAS_WEB_APP_URL,'f1hub_config',300000);
+// Get the public IP once per page load. The Apps Script deduplicates it,
+// so F5/reloads from the same IP do not increase Unique Visitors.
+const ip=await getClientIp();
+const url=new URL(GAS_WEB_APP_URL);
+if(ip)url.searchParams.set('ip',ip);
+
+const response=await fetch(url.toString(),{cache:'no-store'});
+if(!response.ok)throw new Error(`GAS HTTP ${response.status}`);
+const data=await response.json();
 siteConfig=data||{};
+
 if(data.logoImg||data.logo||data.logoUrl){
 const logo=data.logoImg||data.logo||data.logoUrl;
 document.getElementById('brand-logo').src=safeUrl(logo);
@@ -1329,7 +1354,7 @@ const a=document.getElementById('inline-ad-link'); a.href=safeUrl(data.affiliate
 }
 if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
 }catch(error){
-console.warn('GAS config unavailable');
+console.warn('GAS config/analytics unavailable',error);
 }
 }
 
