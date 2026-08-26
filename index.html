@@ -105,8 +105,8 @@ button{font-family:inherit}
 .car-svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .45s ease;transform-origin:center}
 .team-card:hover .car-svg{transform:translateX(8px) scale(1.03)}
 .car-visual img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));image-rendering:auto}
-.driver-photo-wrap{position:absolute;right:-1%;bottom:0;width:68%;height:320px;display:flex;justify-content:flex-end;align-items:flex-end;pointer-events:none;z-index:1}
-.driver-photo{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:bottom right;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));transition:transform .35s ease;image-rendering:auto}
+.driver-photo-wrap{position:absolute;right:-1%;top:0;bottom:auto;width:58%;height:305px;display:flex;justify-content:flex-end;align-items:flex-start;overflow:hidden;pointer-events:none;z-index:1}
+.driver-photo{height:455px;width:auto;max-width:none;object-fit:contain;object-position:top right;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));transition:transform .35s ease;image-rendering:auto}
 .driver-card:hover .driver-photo{transform:translateY(-4px) scale(1.025)}
 .img-fallback{opacity:.92}
 .driver-content{position:relative;z-index:3}
@@ -139,7 +139,8 @@ button{font-family:inherit}
 .profile-team-logo{width:62px;height:46px}
 #profile-driver-image{position:relative;right:auto;top:auto;width:100%;height:400px;display:block;object-position:center bottom;margin:8px 0 0}
 #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
-.driver-photo-wrap{width:58%;height:235px}
+.driver-photo-wrap{right:-2%;top:0;width:62%;height:250px}
+.driver-photo{height:370px}
 .driver-card{min-height:390px}
 .driver-number{top:14px;right:14px;font-size:28px}
 }
@@ -427,7 +428,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 </footer>
 
-<div id="race-modal" class="hidden fixed inset-0 z-[300] bg-black/85 backdrop-blur-md p-5 flex items-center justify-center modal-backdrop">
+<div id="race-modal" aria-hidden="true" class="hidden fixed inset-0 z-[300] bg-black/85 backdrop-blur-md p-5 flex items-center justify-center modal-backdrop">
 <div class="modal-box max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
 <div class="h-1 bg-red-600"></div>
 <div class="p-6 border-b border-gray-900 flex justify-between items-start">
@@ -435,7 +436,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="text-[8px] uppercase tracking-widest text-gray-600">Race Weekend</div>
 <h2 id="modal-race-name" class="text-2xl font-black mt-2">--</h2>
 </div>
-<button onclick="closeRaceModal()" class="text-gray-500 hover:text-white text-xl">×</button>
+<button type="button" id="race-modal-close" aria-label="Close race modal" onclick="closeRaceModal(); return false;" class="text-gray-500 hover:text-white text-xl w-9 h-9 flex items-center justify-center rounded-full border border-transparent hover:border-gray-700 hover:bg-[#111] transition">×</button>
 </div>
 <div class="p-6 space-y-6">
 <div class="grid grid-cols-2 gap-4">
@@ -858,18 +859,20 @@ function getQualifyingResult(round){
 return qualifyingResults.find(r=>String(r.round)===String(round))||null;
 }
 
-function getPole(round){
+function getPole(raceOrRound){
+const round=typeof raceOrRound==='object' ? raceOrRound?.round : raceOrRound;
 const q=getQualifyingResult(round);
 if(q?.QualifyingResults?.[0])return q.QualifyingResults[0];
-const s=OFFICIAL_RACE_SUMMARY[String(round)];
+const s=getOfficialRaceSummary(raceOrRound);
 return s?{Driver:summaryDriver(s.pole).Driver,Constructor:summaryDriver(s.pole).Constructor}:null;
 }
 
-function getPodium(round){
+function getPodium(raceOrRound){
+const round=typeof raceOrRound==='object' ? raceOrRound?.round : raceOrRound;
 const r=getRaceResult(round);
 const live=r?.Results?.filter(x=>['1','2','3'].includes(String(x.position))).sort((a,b)=>Number(a.position)-Number(b.position))||[];
 if(live.length===3)return live;
-const s=OFFICIAL_RACE_SUMMARY[String(round)];
+const s=getOfficialRaceSummary(raceOrRound);
 return s?s.podium.map((id,i)=>{const d=summaryDriver(id);return {...d,position:String(i+1)}}):[];
 }
 
@@ -1042,9 +1045,19 @@ resultBlock.classList.remove('hidden');
 document.getElementById('modal-top10').innerHTML='<div class="race-result-empty">Race completed, but the results API is temporarily unavailable.</div>';
 }
 
-document.getElementById('race-modal').classList.remove('hidden');
+const raceModal=document.getElementById('race-modal');
+raceModal.classList.remove('hidden');
+raceModal.setAttribute('aria-hidden','false');
+document.body.classList.add('modal-open');
 }
 
+function closeRaceModal(){
+const modal=document.getElementById('race-modal');
+if(!modal)return;
+modal.classList.add('hidden');
+modal.setAttribute('aria-hidden','true');
+document.body.classList.remove('modal-open');
+}
 
 
 async function fetchStandings(){
@@ -1576,6 +1589,15 @@ if(e.target===this)closeRaceModal();
 
 document.getElementById('profile-modal').addEventListener('click',function(e){
 if(e.target===this)closeProfile();
+});
+
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'){
+const raceModal=document.getElementById('race-modal');
+const profileModal=document.getElementById('profile-modal');
+if(raceModal && !raceModal.classList.contains('hidden')) closeRaceModal();
+else if(profileModal && !profileModal.classList.contains('hidden')) closeProfile();
+}
 });
 
 document.addEventListener('contextmenu',function(e){
