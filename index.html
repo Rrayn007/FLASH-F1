@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -67,203 +66,204 @@ button{font-family:inherit}
 .news-card:hover img{transform:scale(1.04)}
 .hero-title{font-size:clamp(3.5rem,7vw,6.8rem);line-height:.84;letter-spacing:-.075em}
 .card,.driver-card,.team-card,.team-driver-mini,.team-card-driver-mini{
-  border:1px solid var(--ui-border,#272b31);
-  box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);
+  border:1px solid var(--ui-border,#272b31);
+  box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);
 }
 
 /* =========================================================
-   F1 CARD SYSTEM — FINAL REFERENCE MATCH
-   Driver card : square 1:1
-   Team card   : compact square-ish card, 3-column grid
-   Mini driver : waist crop + soft fade
-   ========================================================= */
+   F1 CARD SYSTEM — FINAL REFERENCE MATCH
+   ========================================================= */
 .driver-card,.team-card{
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
-  isolation:isolate;
-  min-width:0;
-  border-radius:10px;
-  border:1px solid #272b31;
-  background:
-    radial-gradient(circle at 100% 0%,rgba(255,255,255,.018),transparent 38%),
-    linear-gradient(145deg,#0b0d10 0%,#101216 100%);
-  box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);
-  font-family:Inter,Arial,Helvetica,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:geometricPrecision;
-  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  isolation:isolate;
+  min-width:0;
+  border-radius:10px;
+  border:1px solid #272b31;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(255,255,255,.018),transparent 38%),
+    linear-gradient(145deg,#0b0d10 0%,#101216 100%);
+  box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
 }
 .driver-card:hover,.team-card:hover{
-  transform:translateY(-3px);
-  border-color:#3a4048;
-  box-shadow:0 16px 38px rgba(0,0,0,.28);
+  transform:translateY(-3px);
+  border-color:#3a4048;
+  box-shadow:0 16px 38px rgba(0,0,0,.28);
 }
 .driver-card:after,.team-card:after{
-  content:"";
-  position:absolute;
-  left:0;right:0;bottom:0;height:3px;
-  background:var(--team-color,#00d7c4);
-  box-shadow:0 0 12px color-mix(in srgb,var(--team-color,#00d7c4) 28%,transparent);
-  z-index:30;
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;height:3px;
+  background:var(--team-color,#00d7c4);
+  box-shadow:0 0 12px color-mix(in srgb,var(--team-color,#00d7c4) 28%,transparent);
+  z-index:30;
 }
 
-/* DRIVER CARD — square, upper-body / waist crop */
+/* DRIVER CARD */
 .driver-card{
-  aspect-ratio:1/1;
-  padding:0!important;
+  aspect-ratio:1/1;
+  padding:0!important;
 }
 .driver-card:before{
-  content:"";
-  position:absolute;
-  left:0;bottom:0;
-  width:62%;height:46%;
-  z-index:0;
-  pointer-events:none;
-  opacity:.72;
-  background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 50%,transparent) 1px,transparent 1px);
-  background-size:8px 8px;
-  -webkit-mask-image:linear-gradient(to right,black,transparent 92%);
-  mask-image:linear-gradient(to right,black,transparent 92%);
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:62%;height:46%;
+  z-index:0;
+  pointer-events:none;
+  opacity:.72;
+  background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 50%,transparent) 1px,transparent 1px);
+  background-size:8px 8px;
+  -webkit-mask-image:linear-gradient(to right,black,transparent 92%);
+  mask-image:linear-gradient(to right,black,transparent 92%);
 }
 .driver-card .driver-photo-wrap{
-  position:absolute;
-  left:0;right:0;top:0;bottom:9%;
-  z-index:1;
-  overflow:hidden;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-  pointer-events:none;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.92) 78%,rgba(0,0,0,.58) 88%,transparent 100%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.92) 78%,rgba(0,0,0,.58) 88%,transparent 100%);
+  position:absolute;
+  left:0;right:0;top:0;bottom:9%;
+  z-index:1;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.92) 78%,rgba(0,0,0,.58) 88%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.92) 78%,rgba(0,0,0,.58) 88%,transparent 100%);
 }
 .driver-card .driver-photo{
-  position:absolute;
-  left:-5%;top:-2%;
-  width:118%;height:142%;
-  max-width:none;min-width:0;
-  object-fit:contain;
-  object-position:center top;
-  transform:scale(1.02);
-  transform-origin:center top;
-  filter:drop-shadow(0 14px 20px rgba(0,0,0,.58));
-  transition:transform .3s ease;
+  position:absolute;
+  left:12%!important; /* Dịch phải 12% */
+  top:0!important;
+  width:108%!important;
+  height:112%!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:scale(1.01)!important;
+  transform-origin:center top!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  filter:drop-shadow(0 12px 18px rgba(0,0,0,.58));
+  transition:transform .3s ease;
 }
-.driver-card:hover .driver-photo{transform:scale(1.055) translateY(-2px)}
+.driver-card:hover .driver-photo{transform:scale(1.035)!important;}
 .driver-card .driver-gradient{
-  position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:
-    radial-gradient(ellipse 70% 40% at 18% 77%,color-mix(in srgb,var(--team-color,#00d7c4) 25%,transparent),transparent 72%),
-    linear-gradient(to bottom,transparent 38%,rgba(10,12,15,.04) 53%,rgba(10,12,15,.26) 68%,rgba(10,12,15,.72) 84%,#0b0d10 100%);
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 40% at 18% 77%,color-mix(in srgb,var(--team-color,#00d7c4) 25%,transparent),transparent 72%),
+    linear-gradient(to bottom,transparent 38%,rgba(10,12,15,.04) 53%,rgba(10,12,15,.26) 68%,rgba(10,12,15,.72) 84%,#0b0d10 100%);
 }
 .driver-card .driver-content{
-  position:relative;z-index:8;height:100%;
-  padding:20px 20px 16px;
-  display:flex;flex-direction:column;
-  pointer-events:auto;
+  position:relative;z-index:8;height:100%;
+  padding:16px 16px 13px!important;
+  display:flex;flex-direction:column;
+  pointer-events:auto;
 }
 .driver-card .driver-content>.flex.justify-between.items-start{width:100%}
-.driver-card .team-stripe{width:3px;height:42px;box-shadow:0 0 10px color-mix(in srgb,var(--team-color,#00d7c4) 25%,transparent)}
+.driver-card .team-stripe{width:3px;height:36px!important;box-shadow:0 0 10px color-mix(in srgb,var(--team-color,#00d7c4) 25%,transparent)}
 .driver-card .timing-label{font-size:8px;letter-spacing:.19em;color:#7c828c;font-weight:500}
 .driver-card .driver-rank{font-size:11px;font-weight:800;color:#858b95}
 .driver-card .driver-number{
-  position:absolute;top:17px;right:18px;z-index:5;
-  font-size:48px;line-height:1;font-weight:900;
-  color:rgba(255,255,255,.055);letter-spacing:-.07em;
-  pointer-events:none;
+  position:absolute;top:14px!important;right:15px!important;z-index:5;
+  font-size:42px!important;line-height:1;font-weight:900;
+  color:rgba(255,255,255,.055);letter-spacing:-.07em;
+  pointer-events:none;
 }
 .driver-card .driver-name-zone{
-  position:relative;z-index:8;
-  margin-top:auto;margin-bottom:10px;
-  padding:8px 0 7px;
-  min-height:86px;
-  display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;z-index:8;
+  margin-top:auto;
+  margin-bottom:8px!important;
+  padding:8px 0 7px;
+  min-height:72px!important;
+  display:flex;flex-direction:column;justify-content:flex-end;
 }
 .driver-card .driver-name-zone:before{
-  content:"";position:absolute;z-index:-1;
-  left:-20px;right:-12px;top:-5px;bottom:-5px;
-  background:
-    radial-gradient(ellipse at 18% 72%,color-mix(in srgb,var(--team-color,#00d7c4) 22%,transparent),transparent 66%),
-    linear-gradient(90deg,color-mix(in srgb,var(--team-color,#00d7c4) 9%,transparent),transparent 86%);
-  filter:blur(9px);pointer-events:none;
+  content:"";position:absolute;z-index:-1;
+  left:-20px;right:-12px;top:-5px;bottom:-5px;
+  background:
+    radial-gradient(ellipse at 18% 72%,color-mix(in srgb,var(--team-color,#00d7c4) 22%,transparent),transparent 66%),
+    linear-gradient(90deg,color-mix(in srgb,var(--team-color,#00d7c4) 9%,transparent),transparent 86%);
+  filter:blur(9px);pointer-events:none;
 }
 .driver-card .driver-firstname,.driver-card .driver-lastname{position:relative;z-index:2;text-shadow:0 2px 12px rgba(0,0,0,.8)}
 .driver-card .driver-firstname{
-  font-size:11px!important;line-height:1.1!important;
-  color:#a6abb3!important;letter-spacing:.08em!important;font-weight:500!important;
+  font-size:10px!important;line-height:1.1!important;
+  color:#a6abb3!important;letter-spacing:.08em!important;font-weight:500!important;
 }
 .driver-card .driver-lastname{
-  margin-top:3px;
-  font-family:Inter,Arial,Helvetica,sans-serif;
-  font-size:clamp(25px,2.65vw,36px)!important;
-  line-height:.88!important;max-width:100%!important;
-  color:#f5f5f6;font-weight:900!important;
-  letter-spacing:-.06em!important;text-transform:uppercase;
+  margin-top:3px;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  font-size:clamp(21px,2.05vw,29px)!important;
+  line-height:.88!important;max-width:100%!important;
+  color:#f5f5f6;font-weight:900!important;
+  letter-spacing:-.055em!important;text-transform:uppercase;
 }
 .driver-card .driver-stats-row{
-  position:relative;z-index:8;
-  margin-top:0!important;padding:10px 0 0!important;
-  border-top:1px solid #25292f;
+  position:relative;z-index:8;
+  margin-top:0!important;
+  padding-top:9px!important;
+  border-top:1px solid #25292f;
 }
 .driver-card .driver-stats-row .timing-label{font-size:7px;color:var(--team-color,#00d7c4);letter-spacing:.16em}
-.driver-card .driver-stats-row .timing-value{font-size:14px!important;color:#f4f5f6;font-weight:800}
+.driver-card .driver-stats-row .timing-value{font-size:12px!important;color:#f4f5f6;font-weight:800}
 
-/* TEAM CARD — compact constructor card, intended for 3 columns */
+/* TEAM CARD */
 .team-card{
-  aspect-ratio:1/1.06;
-  padding:17px!important;
+  aspect-ratio:1/1.06;
+  padding:17px!important;
 }
 .team-card:before{
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(circle at 12% 58%,color-mix(in srgb,var(--team-color,#00d7c4) 8%,transparent),transparent 34%),
-    linear-gradient(180deg,transparent,rgba(255,255,255,.012) 52%,transparent);
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 12% 58%,color-mix(in srgb,var(--team-color,#00d7c4) 8%,transparent),transparent 34%),
+    linear-gradient(180deg,transparent,rgba(255,255,255,.012) 52%,transparent);
 }
 .team-card>*{position:relative;z-index:2}
-.team-card .team-stripe{width:3px;height:36px;box-shadow:0 0 9px color-mix(in srgb,var(--team-color,#00d7c4) 25%,transparent)}
+.team-card .team-stripe{display:none!important;}
 .team-card .timing-label{font-size:7px;letter-spacing:.2em;color:#737983;font-weight:500}
 .team-card .team-name{font-size:18px;line-height:.95;font-weight:900;text-transform:uppercase;letter-spacing:-.045em;color:#f4f5f6}
 .team-card .team-points{font-size:54px;line-height:.78;font-weight:900;color:rgba(255,255,255,.055);letter-spacing:-.06em}
 .team-card .car-visual{
-  height:128px;margin-top:10px;overflow:hidden;
-  background:
-    radial-gradient(circle at 55% 54%,rgba(255,255,255,.065),transparent 42%),
-    radial-gradient(circle at 30% 70%,color-mix(in srgb,var(--team-color,#00d7c4) 8%,transparent),transparent 46%);
+  height:128px;margin-top:10px;overflow:hidden;
+  background:
+    radial-gradient(circle at 55% 54%,rgba(255,255,255,.065),transparent 42%),
+    radial-gradient(circle at 30% 70%,color-mix(in srgb,var(--team-color,#00d7c4) 8%,transparent),transparent 46%);
 }
 .team-card .car-visual:after{left:3%;right:3%;bottom:13px;background:rgba(255,255,255,.065)}
 .team-card .car-visual:before{content:"";position:absolute;left:4%;right:4%;top:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.03),transparent)}
 .team-card .car-visual .team-car-image{filter:drop-shadow(0 10px 15px rgba(0,0,0,.5)) saturate(.95)}
 .team-card .team-card-driver-mini{
-  position:relative;overflow:hidden;
-  height:88px!important;min-height:88px!important;
-  padding:5px 7px!important;gap:5px!important;
-  border-radius:7px!important;
-  background:
-    radial-gradient(circle at 10% 85%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 48%),
-    linear-gradient(145deg,#111317,#0d0f12)!important;
-  border:1px solid #252a30!important;
+  position:relative;overflow:hidden;
+  height:88px!important;min-height:88px!important;
+  padding:5px 7px!important;gap:5px!important;
+  border-radius:7px!important;
+  background:
+    radial-gradient(circle at 10% 85%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 48%),
+    linear-gradient(145deg,#111317,#0d0f12)!important;
+  border:1px solid #252a30!important;
+  border-bottom-color:#252a30!important;
 }
-.team-card .team-card-driver-mini:after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
-  background:var(--team-color,#00d7c4);
-}
+.team-card .team-card-driver-mini:after{display:none!important;}
 .team-card .team-card-driver-mini .driver-mini-image{
-  position:absolute!important;
-  left:-4%!important;top:-7%!important;bottom:auto!important;
-  width:61%!important;max-width:none!important;
-  height:145%!important;flex:none!important;
-  object-fit:contain!important;object-position:center top!important;
-  transform:scale(1.02);transform-origin:center top;
-  filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 58%,rgba(0,0,0,.94) 68%,rgba(0,0,0,.58) 80%,transparent 94%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 58%,rgba(0,0,0,.94) 68%,rgba(0,0,0,.58) 80%,transparent 94%);
-  transition:transform .25s ease;
+  position:absolute!important;
+  left:-2%!important;top:0!important;bottom:auto!important;
+  width:61%!important;max-width:none!important;
+  height:128%!important;flex:none!important;
+  object-fit:contain!important;object-position:center top!important;
+  transform:scale(1.02);transform-origin:center top;
+  filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 68%,rgba(0,0,0,.96) 76%,rgba(0,0,0,.72) 84%,rgba(0,0,0,.35) 93%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0%,#000 68%,rgba(0,0,0,.96) 76%,rgba(0,0,0,.72) 84%,rgba(0,0,0,.35) 93%,transparent 100%)!important;
+  transition:transform .25s ease;
 }
-.team-card .team-card-driver-mini:hover .driver-mini-image{transform:scale(1.06) translateY(-1px)}
+.team-card .team-card-driver-mini:hover .driver-mini-image{transform:scale(1.045)!important;}
 .team-card .team-card-driver-mini .team-driver-copy{
-  position:absolute!important;left:50%!important;right:5%!important;bottom:11px!important;
-  z-index:5;min-width:0;padding:0!important;pointer-events:none;
+  position:absolute!important;left:50%!important;right:5%!important;bottom:11px!important;
+  z-index:5;min-width:0;padding:0!important;pointer-events:none;
 }
 .team-card .team-card-driver-mini .driver-mini-label{font-size:6px!important;letter-spacing:.16em;color:#6b727b!important;margin:0 0 4px!important}
 .team-card .team-card-driver-mini .driver-mini-name{font-size:11px!important;line-height:1!important;letter-spacing:-.02em;font-weight:900!important}
@@ -272,43 +272,33 @@ button{font-family:inherit}
 .team-card>.flex.justify-between.items-end.mt-3 .text-3xl{font-size:30px!important;line-height:.88;letter-spacing:-.055em}
 .team-card>.mt-5{margin-top:9px!important;padding-top:7px;border-top:1px solid #1f2328;color:color-mix(in srgb,var(--team-color,#00d7c4) 72%,#7c828b)!important;font-weight:800}
 
-/* PROFILE LINEUP CARD — same waist-crop language, larger presentation */
+/* PROFILE LINEUP CARD */
 .team-driver-mini{
-  position:relative;min-height:350px;height:350px;overflow:hidden;cursor:pointer;pointer-events:auto;isolation:isolate;
-  border-radius:10px;border-color:#272c32;
-  background:radial-gradient(circle at 10% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 13%,transparent),transparent 44%),linear-gradient(145deg,#111317,#0d0f12)!important;
-  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+  position:relative;min-height:350px;height:350px;overflow:hidden;cursor:pointer;pointer-events:auto;isolation:isolate;
+  border-radius:10px;border-color:#272c32;
+  background:radial-gradient(circle at 10% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 13%,transparent),transparent 44%),linear-gradient(145deg,#111317,#0d0f12)!important;
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
 }
 .team-driver-mini:hover{transform:translateY(-3px);border-color:#3a3f46}
 .team-driver-mini:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,transparent 36%,rgba(12,12,14,.05) 48%,rgba(12,12,14,.18) 63%,rgba(12,12,14,.52) 80%,#0c0c0e 100%)}
 .team-driver-mini:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--team-color,#00d7c4);z-index:8}
-.team-driver-mini .driver-mini-photo-wrap{position:absolute;left:0;right:0;top:0;bottom:8%;z-index:1;overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.9) 80%,rgba(0,0,0,.52) 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.9) 80%,rgba(0,0,0,.52) 90%,transparent 100%)}
-.team-driver-mini .driver-mini-image{position:absolute;left:-2%;top:-2%;width:64%!important;height:120%!important;max-width:none!important;object-fit:contain!important;object-position:center top!important;transform:scale(1.04);transform-origin:center top;filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transition:transform .3s ease}
-.team-driver-mini:hover .driver-mini-image{transform:scale(1.07) translateY(-2px)}
+.team-driver-mini .driver-mini-photo-wrap{position:absolute;left:0;right:0;top:0;bottom:0!important;z-index:1;overflow:hidden;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.97) 77%,rgba(0,0,0,.76) 84%,rgba(0,0,0,.40) 92%,transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.97) 77%,rgba(0,0,0,.76) 84%,rgba(0,0,0,.40) 92%,transparent 100%)!important;
+}
+.team-driver-mini .driver-mini-image{
+  position:absolute;left:0!important;top:0!important;width:68%!important;height:116%!important;max-width:none!important;
+  object-fit:contain!important;object-position:center top!important;transform:scale(1.04)!important;transform-origin:center top!important;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transition:transform .3s ease;
+  -webkit-mask-image:none!important;mask-image:none!important;
+}
+.team-driver-mini:hover .driver-mini-image{transform:scale(1.07)!important;}
 .team-driver-mini .team-driver-copy{position:absolute;left:45%;right:6%;bottom:27px;z-index:7;min-width:0;pointer-events:none}
 .team-driver-mini .team-driver-copy:before{content:"";position:absolute;z-index:-1;left:-28px;right:-18px;top:-42px;bottom:-24px;background:radial-gradient(ellipse at 25% 72%,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 68%),linear-gradient(90deg,color-mix(in srgb,var(--team-color,#00d7c4) 9%,transparent),rgba(10,10,12,.28) 48%,transparent);filter:blur(14px);opacity:.9}
 .team-driver-mini .driver-mini-label{font-size:9px;line-height:1;text-transform:uppercase;letter-spacing:.2em;color:#6f747d;margin-bottom:9px}
 .team-driver-mini .driver-mini-name{font-size:clamp(21px,2.1vw,29px);line-height:.98;font-weight:900;letter-spacing:-.035em;color:#f5f5f6;text-transform:uppercase;white-space:normal}
 .team-driver-mini .driver-mini-points{margin-top:11px;font-size:16px;line-height:1;color:color-mix(in srgb,var(--team-color,#00d7c4) 68%,#888e97);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
 .team-driver-mini .driver-mini-number{position:absolute;right:8%;top:7%;z-index:5;font-size:52px;line-height:1;font-weight:900;color:rgba(255,255,255,.055);pointer-events:none}
-
-@media(max-width:900px){
-  .team-card{aspect-ratio:1/1.04;padding:15px!important}
-  .team-card .car-visual{height:120px}
-  .team-card .team-card-driver-mini{height:82px!important;min-height:82px!important}
-  .team-card .team-card-driver-mini .driver-mini-name{font-size:10px!important}
-}
-@media(max-width:640px){
-  .driver-card .driver-content{padding:17px 17px 14px}
-  .driver-card .driver-lastname{font-size:clamp(23px,8vw,31px)!important}
-  .driver-card .driver-number{top:14px;right:14px;font-size:42px}
-  .team-card{aspect-ratio:1/1.08;padding:14px!important}
-  .team-card .team-name{font-size:16px}
-  .team-card .car-visual{height:108px;margin-top:8px}
-  .team-card .team-card-driver-mini{height:76px!important;min-height:76px!important}
-  .team-card .team-card-driver-mini .driver-mini-name{font-size:9px!important}
-  .team-card .team-card-driver-mini .driver-mini-points{font-size:6px!important}
-}
 
 .timing-label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#555}
 .timing-value{font-family:monospace;font-weight:700}
@@ -350,29 +340,27 @@ button{font-family:inherit}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
 .profile-number{font-size:110px;line-height:.75;font-weight:900;color:rgba(255,255,255,.035)}
-/* PROFILE VISIBILITY CONTRACT
-   The modal contains two mutually-exclusive panels.
-   Keep .hidden authoritative so the driver panel can never leak into a team profile. */
+/* PROFILE VISIBILITY CONTRACT */
 #driver-profile-content.hidden,
 #team-profile-content.hidden{
-  display:none !important;
+  display:none !important;
 }
 #driver-profile-content:not(.hidden){
-  display:grid;
+  display:grid;
 }
 
-/* DRIVER PROFILE — clean editorial two-column system */
+/* DRIVER PROFILE */
 #driver-profile-content{
-  position:relative;
-  display:grid;
-  grid-template-columns:minmax(0,56%) minmax(360px,44%);
-  grid-template-rows:auto auto auto;
-  column-gap:18px;
-  row-gap:14px;
-  min-height:560px;
-  padding:0;
-  overflow:hidden;
-  isolation:isolate;
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,56%) minmax(360px,44%);
+  grid-template-rows:auto auto auto;
+  column-gap:18px;
+  row-gap:14px;
+  min-height:560px;
+  padding:0;
+  overflow:hidden;
+  isolation:isolate;
 }
 #driver-profile-content > .grid:first-of-type{grid-column:1;grid-row:1;display:grid;grid-template-columns:34% 66%;gap:14px;width:100%;margin:0;align-self:start}
 #driver-stats{grid-column:1;grid-row:2;width:100%;margin:0!important}
@@ -380,115 +368,116 @@ button{font-family:inherit}
 .profile-constructor-box{min-height:172px;position:relative;z-index:2;background:linear-gradient(145deg,#111113 0%,#0e0e10 100%);border:1px solid #1c1e23;overflow:hidden}
 .profile-constructor-info{min-height:120px;display:flex;align-items:center}
 .profile-team-logo{
-  width:92px;height:72px;object-fit:contain;object-position:center;
-  opacity:1;flex:none;display:block;
-  image-rendering:auto;
-  filter:brightness(1.08) contrast(1.08) drop-shadow(0 4px 8px rgba(0,0,0,.35));
+  width:92px;height:72px;object-fit:contain;object-position:center;
+  opacity:1;flex:none;display:block;
+  image-rendering:auto;
+  filter:brightness(1.08) contrast(1.08) drop-shadow(0 4px 8px rgba(0,0,0,.35));
 }
 .profile-number-box{
-  min-height:172px!important;
-  border-bottom-width:3px!important;
-  background:linear-gradient(145deg,#111113,#0d0d0f)!important;
+  min-height:172px!important;
+  border-bottom-width:3px!important;
+  background:linear-gradient(145deg,#111113,#0d0d0f)!important;
 }
 .profile-number{
-  position:absolute;
-  right:12px!important;
-  bottom:8px!important;
-  font-size:92px!important;
-  line-height:.9!important;
-  font-weight:950!important;
-  letter-spacing:-.08em;
-  color:rgba(255,255,255,.045)!important;
-  white-space:nowrap;
-  pointer-events:none;
+  position:absolute;
+  right:12px!important;
+  bottom:8px!important;
+  font-size:92px!important;
+  line-height:.9!important;
+  font-weight:950!important;
+  letter-spacing:-.08em;
+  color:rgba(255,255,255,.045)!important;
+  white-space:nowrap;
+  pointer-events:none;
 }
 #profile-number{font-size:76px!important;line-height:.9!important;position:relative;z-index:2;white-space:nowrap}
 .profile-driver-visual{
-  grid-column:2;grid-row:1 / span 3;
-  position:relative;z-index:2;width:100%;height:560px;
-  overflow:hidden;pointer-events:none;isolation:isolate;
-  background:
-    radial-gradient(ellipse at 52% 48%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 62%),
-    linear-gradient(90deg,rgba(9,9,10,.96) 0%,rgba(9,9,10,.28) 42%,transparent 72%);
-  border-left:1px solid rgba(255,255,255,.025);
+  grid-column:2;grid-row:1 / span 3;
+  position:relative;z-index:2;width:100%;height:560px;
+  overflow:hidden;pointer-events:none;isolation:isolate;
+  background:
+    radial-gradient(ellipse at 52% 48%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 62%),
+    linear-gradient(90deg,rgba(9,9,10,.96) 0%,rgba(9,9,10,.28) 42%,transparent 72%);
+  border-left:1px solid rgba(255,255,255,.025);
 }
 .profile-driver-visual:before{
-  content:"";position:absolute;inset:0;z-index:0;
-  background:
-    radial-gradient(ellipse at 28% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 58%),
-    linear-gradient(90deg,rgba(9,9,10,.82),rgba(9,9,10,.16) 48%,transparent 82%);
+  content:"";position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse at 28% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 58%),
+    linear-gradient(90deg,rgba(9,9,10,.82),rgba(9,9,10,.16) 48%,transparent 82%);
 }
 .profile-driver-grid{
-  position:absolute;inset:0;z-index:1;opacity:.26;
-  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:28px 28px;
-  mask-image:linear-gradient(90deg,black,transparent 82%);
+  position:absolute;inset:0;z-index:1;opacity:.26;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:28px 28px;
+  mask-image:linear-gradient(90deg,black,transparent 82%);
 }
 .profile-driver-dots{
-  position:absolute;z-index:2;left:0;bottom:8%;width:68%;height:45%;opacity:.66;
-  background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 78%,transparent) 1px,transparent 1.6px);
-  background-size:8px 8px;mask-image:linear-gradient(90deg,black,transparent 92%);
+  position:absolute;z-index:2;left:0;bottom:8%;width:68%;height:45%;opacity:.66;
+  background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 78%,transparent) 1px,transparent 1.6px);
+  background-size:8px 8px;mask-image:linear-gradient(90deg,black,transparent 92%);
 }
 .profile-driver-glow{
-  position:absolute;z-index:1;left:2%;bottom:4%;width:82%;height:58%;
-  background:radial-gradient(ellipse,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 70%);
-  filter:blur(24px);opacity:.68;
+  position:absolute;z-index:1;left:2%;bottom:4%;width:82%;height:58%;
+  background:radial-gradient(ellipse,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 70%);
+  filter:blur(24px);opacity:.68;
 }
 .profile-driver-ghost{
-  position:absolute;z-index:2;right:7%;top:4%;
-  font:950 150px/.78 Inter,Arial,sans-serif;letter-spacing:-.09em;
-  color:rgba(255,255,255,.035);white-space:nowrap;
+  position:absolute;z-index:2;right:7%;top:4%;
+  font:950 150px/.78 Inter,Arial,sans-serif;letter-spacing:-.09em;
+  color:rgba(255,255,255,.035);white-space:nowrap;
 }
 .profile-driver-visual:after{
-  content:"";position:absolute;z-index:6;left:0;right:0;bottom:0;height:31%;
-  background:linear-gradient(to bottom,transparent 0%,rgba(9,9,10,.05) 18%,rgba(9,9,10,.42) 60%,#090909 100%);
+  content:"";position:absolute;z-index:6;left:0;right:0;bottom:0;height:31%;
+  background:linear-gradient(to bottom,transparent 0%,rgba(9,9,10,.05) 18%,rgba(9,9,10,.42) 60%,#090909 100%);
 }
 #profile-driver-image{
-  position:absolute;right:-2%;top:0;width:100%;height:100%;
-  object-fit:contain;object-position:center top;
-  z-index:5;display:block;pointer-events:none;
-  filter:drop-shadow(0 18px 26px rgba(0,0,0,.68));
-  transform:scale(1.12);transform-origin:center top;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 66%,rgba(0,0,0,.98) 73%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.38) 92%,transparent 100%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 66%,rgba(0,0,0,.98) 73%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.38) 92%,transparent 100%);
+  position:absolute;right:-2%;top:0;width:100%;height:100%;
+  object-fit:contain;object-position:center top;
+  z-index:5;display:block;pointer-events:none;
+  filter:drop-shadow(0 18px 26px rgba(0,0,0,.68));
+  transform:scale(1.12);transform-origin:center top;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 66%,rgba(0,0,0,.98) 73%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.38) 92%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 66%,rgba(0,0,0,.98) 73%,rgba(0,0,0,.78) 82%,rgba(0,0,0,.38) 92%,transparent 100%);
 }
 #driver-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#202020;border:1px solid #202020;border-radius:8px;overflow:hidden}
 #driver-stats>div{background:#101010;min-height:82px;padding:18px 16px!important}
 #driver-stats .text-xl{font-size:22px!important;line-height:1;font-weight:900}
 #driver-profile-content > .grid:last-child>div{min-height:112px;padding:18px 20px!important;background:linear-gradient(145deg,#111113,#0e0e10)!important;border:1px solid #1c1e23}
 #profile-position,#profile-points{font-size:40px!important;line-height:1!important;font-weight:950}
+
 @media(max-width:900px){
-  #driver-profile-content{grid-template-columns:1fr;min-height:0;overflow:visible}
-  #driver-profile-content > .grid:first-of-type{grid-column:1;grid-row:2;grid-template-columns:34% 66%}
-  .profile-driver-visual{grid-column:1;grid-row:1;height:360px;border-left:0;border-bottom:1px solid rgba(255,255,255,.04)}
-  #driver-stats{grid-column:1;grid-row:3}
-  #driver-profile-content > .grid:last-child{grid-column:1;grid-row:4}
+  #driver-profile-content{grid-template-columns:1fr;min-height:0;overflow:visible}
+  #driver-profile-content > .grid:first-of-type{grid-column:1;grid-row:2;grid-template-columns:34% 66%}
+  .profile-driver-visual{grid-column:1;grid-row:1;height:360px;border-left:0;border-bottom:1px solid rgba(255,255,255,.04)}
+  #driver-stats{grid-column:1;grid-row:3}
+  #driver-profile-content > .grid:last-child{grid-column:1;grid-row:4}
 }
 @media(max-width:560px){
-  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr}
-  #driver-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .profile-driver-visual{height:330px}
-  .profile-team-logo{width:72px;height:58px}
-  #profile-number{font-size:62px!important}
+  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr}
+  #driver-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .profile-driver-visual{height:330px}
+  .profile-team-logo{width:72px;height:58px}
+  #profile-number{font-size:62px!important}
 }
 
-/* TEAM PROFILE — dedicated layout, isolated from driver profile */
+/* TEAM PROFILE */
 #team-profile-content{
-  position:relative;
+  position:relative;
 }
 #team-profile-content .team-profile-hero{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 180px;
-  gap:16px;
-  align-items:stretch;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 180px;
+  gap:16px;
+  align-items:stretch;
 }
 #team-profile-content .team-profile-stat{
-  background:linear-gradient(145deg,#111113,#0d0d0f);
-  border:1px solid #1c1e23;
-  border-radius:9px;
+  background:linear-gradient(145deg,#111113,#0d0d0f);
+  border:1px solid #1c1e23;
+  border-radius:9px;
 }
 @media(max-width:640px){
-  #team-profile-content .team-profile-hero{grid-template-columns:1fr}
+  #team-profile-content .team-profile-hero{grid-template-columns:1fr}
 }
 
 .fastest-label{background:#7d22b8}
@@ -501,34 +490,35 @@ button{font-family:inherit}
 .status-upcoming{background:#171717;color:#555;border:1px solid #252525}
 .icon-btn{width:38px;height:38px;border:1px solid #25252a;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;line-height:0;color:#aaa;transition:.2s ease;flex:none}.icon-btn:hover{border-color:#fff;background:#fff;color:#000}.icon-btn svg{width:15px;height:15px;display:block}
 
-/* MOBILE MENU — smooth expand/collapse instead of display:none */
+/* MOBILE MENU */
 #mobile-menu{
-  max-height:0;
-  padding-bottom:0;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(-8px);
-  pointer-events:none;
-  border-top-color:transparent;
-  transition:max-height .38s cubic-bezier(.22,1,.36,1),opacity .24s ease,transform .38s cubic-bezier(.22,1,.36,1),padding-bottom .38s ease,border-color .25s ease;
-  will-change:max-height,opacity,transform;
+  max-height:0;
+  padding-bottom:0;
+  overflow:hidden;
+  opacity:0;
+  transform:translateY(-8px);
+  pointer-events:none;
+  border-top-color:transparent;
+  transition:max-height .38s cubic-bezier(.22,1,.36,1),opacity .24s ease,transform .38s cubic-bezier(.22,1,.36,1),padding-bottom .38s ease,border-color .25s ease;
+  will-change:max-height,opacity,transform;
 }
 #mobile-menu.is-open{
-  max-height:260px;
-  padding-bottom:20px;
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-  border-top-color:#1f1f22;
+  max-height:260px;
+  padding-bottom:20px;
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+  border-top-color:#1f1f22;
 }
 #mobile-menu > div{
-  transform:translateY(-6px);
-  opacity:0;
-  transition:transform .35s cubic-bezier(.22,1,.36,1) .03s,opacity .22s ease .03s;
+  transform:translateY(-6px);
+  opacity:0;
+  transition:transform .35s cubic-bezier(.22,1,.36,1) .03s,opacity .22s ease .03s;
 }
 #mobile-menu.is-open > div{transform:translateY(0);opacity:1}
 #mobile-menu-toggle{transition:transform .25s ease,color .2s ease}
 #mobile-menu-toggle[aria-expanded="true"]{transform:rotate(90deg);}
+
 .standings-duo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:18px;align-items:start}
 .standings-panel{min-width:0}
 .standings-scroll{overflow:hidden}
@@ -550,6 +540,7 @@ button{font-family:inherit}
 .official-source:hover{color:#fff}
 section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #news{scroll-margin-top:96px}
+
 @media(max-width:1100px){.sidebar-standings{grid-template-columns:1fr 1fr;gap:10px}.standing-row{padding-left:10px;padding-right:10px}}
 @media(max-width:1100px){.f1-sidebar{position:static;max-height:none;overflow:visible;padding-right:0}}
 @media(max-width:900px){.sidebar-standings{grid-template-columns:1fr}.sidebar-standings>.flex,.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:auto}.sidebar-standing-card{height:auto;min-height:0}.sidebar-standing-card .standings-scroll,.sidebar-standing-card.constructors .standings-scroll{height:auto;max-height:360px}.news-featured-image{height:270px}.news-feed-card img{height:150px}}
@@ -557,11 +548,11 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 
 .team-logo{width:44px;height:32px;object-fit:contain;object-position:center}
 .driver-mini-image{width:35px;height:35px;object-fit:contain;object-position:bottom center}
+
 @media(max-width:768px){
 .hero-title{font-size:3.8rem;line-height:.86}
 .mobile-scroll{overflow-x:auto;scrollbar-width:none}
 .mobile-scroll::-webkit-scrollbar{display:none}
-.driver-lastname{font-size:21px}
 }
 
 /* Readability + layering fixes */
@@ -578,384 +569,155 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .calendar-card,
 .pole-chip,
 .result-podium-item{
-  border-color:#25292f!important;
-  background:#0d0f12!important;
+  border-color:#25292f!important;
+  background:#0d0f12!important;
 }
 
 .standing-row{
-  border-bottom-color:#20242a;
+  border-bottom-color:#20242a;
 }
 
 .standing-row:hover{
-  background:#13161a;
+  background:#13161a;
 }
 
 .standing-rank.top{
-  color:var(--ui-cyan);
+  color:var(--ui-cyan);
 }
 
 .status-next{
-  background:var(--ui-blue);
+  background:var(--ui-blue);
 }
 
-/* =========================================================
-   FINAL IMAGE / ACCENT PASS
-   - Never crop the top of a driver portrait.
-   - Crop only the lower body and fade it into the card.
-   - Keep only the main team-card accent; remove extra team bars.
-   ========================================================= */
+/* ADS SYSTEM */
+#ad-container, #sponsor-slot, #side-ad-left, #side-ad-right {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 
-/* Main DRIVER CARD: head is always preserved; lower body fades softly. */
-.driver-card .driver-photo-wrap{
-  top:0!important;
-  bottom:4%!important;
-  overflow:hidden!important;
-  -webkit-mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 72%,
-    rgba(0,0,0,.98) 78%,
-    rgba(0,0,0,.82) 84%,
-    rgba(0,0,0,.48) 91%,
-    rgba(0,0,0,.16) 97%,
-    transparent 100%
-  )!important;
-  mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 72%,
-    rgba(0,0,0,.98) 78%,
-    rgba(0,0,0,.82) 84%,
-    rgba(0,0,0,.48) 91%,
-    rgba(0,0,0,.16) 97%,
-    transparent 100%
-  )!important;
+#ad-container.ad-ready, #sponsor-slot.ad-ready, #side-ad-left.ad-ready, #side-ad-right.ad-ready {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  animation: adReveal .72s var(--ad-ease) both;
 }
-.driver-card .driver-photo{
-  left:0!important;
-  top:0!important;
-  width:112%!important;
-  height:118%!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  transform:scale(1.02)!important;
-  transform-origin:center top!important;
-  -webkit-mask-image:none!important;
-  mask-image:none!important;
-}
-.driver-card:hover .driver-photo{transform:scale(1.045)!important;}
 
-/* Team card: remove the extra vertical accent bar. */
-.team-card .team-stripe{display:none!important;}
-.team-card .team-card-driver-mini:after{display:none!important;}
-.team-card .team-card-driver-mini{border-bottom-color:#252a30!important;}
+@keyframes adReveal {
+  0% { opacity: 0; transform: scale(.98); }
+  100% { opacity: 1; transform: scale(1); }
+}
 
-/* Team-card driver portraits: full head + upper body, fade only at the bottom. */
-.team-card .team-card-driver-mini .driver-mini-image{
-  left:-2%!important;
-  top:0!important;
-  width:61%!important;
-  height:128%!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  transform:scale(1.02)!important;
-  transform-origin:center top!important;
-  -webkit-mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 68%,
-    rgba(0,0,0,.96) 76%,
-    rgba(0,0,0,.72) 84%,
-    rgba(0,0,0,.35) 93%,
-    transparent 100%
-  )!important;
-  mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 68%,
-    rgba(0,0,0,.96) 76%,
-    rgba(0,0,0,.72) 84%,
-    rgba(0,0,0,.35) 93%,
-    transparent 100%
-  )!important;
+#side-ad-left-link, #side-ad-right-link {
+  display: block;
+  width: 100%;
 }
-.team-card .team-card-driver-mini:hover .driver-mini-image{transform:scale(1.045)!important;}
 
-/* Team profile lineup: never crop the head; fade from waist downward. */
-.team-driver-mini .driver-mini-photo-wrap{
-  top:0!important;
-  bottom:0!important;
-  -webkit-mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 70%,
-    rgba(0,0,0,.97) 77%,
-    rgba(0,0,0,.76) 84%,
-    rgba(0,0,0,.40) 92%,
-    transparent 100%
-  )!important;
-  mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 70%,
-    rgba(0,0,0,.97) 77%,
-    rgba(0,0,0,.76) 84%,
-    rgba(0,0,0,.40) 92%,
-    transparent 100%
-  )!important;
+#side-ad-left-img, #side-ad-right-img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
 }
-.team-driver-mini .driver-mini-image{
-  left:0!important;
-  top:0!important;
-  width:68%!important;
-  height:116%!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  transform:scale(1.04)!important;
-  transform-origin:center top!important;
-  -webkit-mask-image:none!important;
-  mask-image:none!important;
-}
-.team-driver-mini:hover .driver-mini-image{transform:scale(1.07)!important;}
 
-/* =========================================================
-   DRIVER GRID — FINAL 4-COLUMN / WAIST-CROP PASS
-   Keep the portrait head fully visible. Only the lower body
-   exits the frame and fades softly into the card background.
-   ========================================================= */
-#drivers-grid{
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:16px!important;
+/* Lịch đua, Tay đua & BXH giữ 2 cột trên Mobile / Tablet */
+@media (max-width: 1023px) {
+  #calendar-grid,
+  #drivers-grid,
+  .sidebar-standings {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  /* Riêng Đội đua: về 1 cột */
+  #teams-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
 }
-.driver-card{
-  aspect-ratio:1/1!important;
-  min-height:0!important;
-  padding:0!important;
-}
-.driver-card .driver-photo-wrap{
-  left:0!important;
-  right:0!important;
-  top:0!important;
-  bottom:0!important;
-  overflow:hidden!important;
-  align-items:flex-start!important;
-  justify-content:center!important;
-  -webkit-mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 68%,
-    rgba(0,0,0,.98) 75%,
-    rgba(0,0,0,.82) 82%,
-    rgba(0,0,0,.52) 89%,
-    rgba(0,0,0,.20) 96%,
-    transparent 100%
-  )!important;
-  mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 68%,
-    rgba(0,0,0,.98) 75%,
-    rgba(0,0,0,.82) 82%,
-    rgba(0,0,0,.52) 89%,
-    rgba(0,0,0,.20) 96%,
-    transparent 100%
-  )!important;
-}
-.driver-card .driver-photo{
-  left:0!important;
-  top:0!important;
-  width:108%!important;
-  height:112%!important;
-  max-width:none!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  transform:scale(1.01)!important;
-  transform-origin:center top!important;
-  -webkit-mask-image:none!important;
-  mask-image:none!important;
-  filter:drop-shadow(0 12px 18px rgba(0,0,0,.58));
-}
-.driver-card:hover .driver-photo{transform:scale(1.035)!important;}
-.driver-card .driver-content{padding:16px 16px 13px!important;}
-.driver-card .driver-lastname{
-  font-size:clamp(21px,2.05vw,29px)!important;
-  letter-spacing:-.055em!important;
-}
-.driver-card .driver-firstname{font-size:10px!important;}
-.driver-card .driver-number{font-size:42px!important;top:14px!important;right:15px!important;}
-.driver-card .team-stripe{height:36px!important;}
-.driver-card .driver-name-zone{min-height:72px!important;margin-bottom:8px!important;}
-.driver-card .driver-stats-row{padding-top:9px!important;}
-.driver-card .driver-stats-row .timing-value{font-size:12px!important;}
 
-@media (max-width:1100px){
-  #drivers-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media (min-width: 1024px) {
+  #drivers-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+  #teams-grid,
+  #calendar-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
 }
-@media (max-width:760px){
-  #drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}
-  .driver-card .driver-content{padding:14px 13px 12px!important;}
-  .driver-card .driver-lastname{font-size:clamp(20px,5.5vw,27px)!important;}
-  .driver-card .driver-number{font-size:38px!important;}
+
+@media(prefers-reduced-motion:reduce){
+  #ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{animation:none!important;transition:none!important}
+  #ad-container.is-shining:after,#sponsor-slot.is-shining .card:after,#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{animation:none!important}
+  #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
 }
 </style>
-
 <style id="driver-card-rank-ghost-v8">
 /* V8 — stronger position badge + oversized background driver number */
 .driver-card .driver-rank{
-  position:relative!important;
-  z-index:12!important;
-  font-size:17px!important;
-  line-height:1!important;
-  font-weight:900!important;
-  letter-spacing:-.035em!important;
-  color:#aeb4bd!important;
-  text-shadow:0 1px 8px rgba(0,0,0,.45);
-  padding-top:2px;
+  position:relative!important;
+  z-index:12!important;
+  font-size:17px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:-.035em!important;
+  color:#aeb4bd!important;
+  text-shadow:0 1px 8px rgba(0,0,0,.45);
+  padding-top:2px;
 }
 .driver-card .driver-number{
-  top:22px!important;
-  right:18px!important;
-  z-index:2!important;
-  font-size:92px!important;
-  line-height:.9!important;
-  font-weight:900!important;
-  letter-spacing:-.025em!important;
-  white-space:nowrap!important;
-  width:max-content!important;
-  min-width:1.25em!important;
-  text-align:right!important;
-  color:rgba(255,255,255,.052)!important;
-  opacity:1!important;
-  pointer-events:none!important;
-  user-select:none!important;
-  text-shadow:none!important;
-  transform:none!important;
+  top:22px!important;
+  right:18px!important;
+  z-index:2!important;
+  font-size:92px!important;
+  line-height:.9!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+  white-space:nowrap!important;
+  width:max-content!important;
+  min-width:1.25em!important;
+  text-align:right!important;
+  color:rgba(255,255,255,.052)!important;
+  opacity:1!important;
+  pointer-events:none!important;
+  user-select:none!important;
+  text-shadow:none!important;
+  transform:none!important;
 }
 .driver-card .driver-content>.flex.justify-between.items-start{
-  position:relative!important;
-  z-index:10!important;
+  position:relative!important;
+  z-index:10!important;
 }
 @media(max-width:760px){
-  .driver-card .driver-rank{font-size:15px!important}
-  .driver-card .driver-number{font-size:76px!important;top:20px!important;right:15px!important;letter-spacing:-.02em!important;}
+  .driver-card .driver-rank{font-size:15px!important}
+  .driver-card .driver-number{font-size:76px!important;top:20px!important;right:15px!important;letter-spacing:-.02em!important;}
 }
 </style>
 
 <style id="mobile-responsive-fixes-v2">
 /* PHONE TEAM CARDS — remove the forced square ratio that creates a large empty tail */
 @media (max-width:640px){
-  #teams-grid{gap:12px!important;}
-  .team-card{
-    aspect-ratio:auto!important;
-    height:auto!important;
-    min-height:0!important;
-    padding:14px!important;
-  }
-  .team-card .car-visual{height:108px!important;margin-top:8px!important;}
-  .team-card .team-card-driver-mini{height:76px!important;min-height:76px!important;}
-  .team-card > .grid.grid-cols-2{margin-top:14px!important;}
-  .team-card > .mt-5{margin-top:14px!important;}
+  #teams-grid{gap:12px!important;}
+  .team-card{
+    aspect-ratio:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:14px!important;
+  }
+  .team-card .car-visual{height:108px!important;margin-top:8px!important;}
+  .team-card .team-card-driver-mini{height:76px!important;min-height:76px!important;}
+  .team-card > .grid.grid-cols-2{margin-top:14px!important;}
+  .team-card > .mt-5{margin-top:14px!important;}
 }
 
 @media (max-width:380px){
-  .team-card{padding:12px!important;}
-  .team-card .car-visual{height:96px!important;}
-  .team-card .team-card-driver-mini{height:72px!important;min-height:72px!important;}
-}
-
-@media (prefers-reduced-motion:reduce){
-  #mobile-menu, #mobile-menu > div, #mobile-menu-toggle{transition:none!important;}
+  .team-card{padding:12px!important;}
+  .team-card .car-visual{height:96px!important;}
+  .team-card .team-card-driver-mini{height:72px!important;min-height:72px!important;}
 }
 </style>
 
-<style id="f1hub-ads">
-:root{--side-ad-width:120px;--side-ad-height:500px;--side-ad-edge:16px;--ad-ease:cubic-bezier(.22,1,.36,1)}
-
-/* =========================================================
-   ADS — hidden by default, then animated into the layout.
-   OFF / missing config / broken image = display:none.
-   ========================================================= */
-#ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{
-  display:none!important;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-
-#ad-container.ad-ready,#sponsor-slot.ad-ready,#side-ad-left.ad-ready,#side-ad-right.ad-ready{
-  display:block!important;
-  visibility:visible;
-  pointer-events:auto;
-  animation:adReveal .72s var(--ad-ease) both;
-}
-
-@keyframes adReveal{
-  0%{opacity:0;transform:translate3d(0,18px,0) scale(.975);filter:blur(2px)}
-  45%{opacity:.72;filter:blur(.4px)}
-  100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
-}
-
-/* Main banner / inline sponsor */
-#ad-container,#sponsor-slot{position:relative;will-change:opacity,transform}
-#ad-container:after,#sponsor-slot .card:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 48%,rgba(255,255,255,.035) 52%,transparent 66%);transform:translateX(-120%);z-index:5}
-#ad-container.is-shining:after,#sponsor-slot.is-shining .card:after{opacity:1;animation:adGlassSweep 1.35s var(--ad-ease) both}
-@keyframes adGlassSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.9}55%{opacity:.65}100%{transform:translateX(120%);opacity:0}}
-#ad-banner{transition:filter .45s ease,transform .7s var(--ad-ease)}
-#ad-container:hover #ad-banner{transform:scale(1.008);filter:brightness(1.025)}
-
-/* Desktop side banners — ONLY large desktop screens. */
-#side-ad-left,#side-ad-right{
-  position:fixed;top:50%;width:var(--side-ad-width);height:var(--side-ad-height);
-  z-index:30;overflow:hidden;border-radius:4px;isolation:isolate;
-  will-change:transform,opacity;
-}
-#side-ad-left{left:var(--side-ad-edge);transform:translate3d(-12px,-50%,0) scale(.985)}
-#side-ad-right{right:var(--side-ad-edge);transform:translate3d(12px,-50%,0) scale(.985)}
-#side-ad-left.ad-ready{animation:sideAdRevealLeft .78s var(--ad-ease) both}
-#side-ad-right.ad-ready{animation:sideAdRevealRight .78s var(--ad-ease) both}
-@keyframes sideAdRevealLeft{0%{opacity:0;transform:translate3d(-28px,-50%,0) scale(.97);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
-@keyframes sideAdRevealRight{0%{opacity:0;transform:translate3d(28px,-50%,0) scale(.97);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
-#side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0}
-#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both}
-#side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;position:relative;z-index:1}
-#side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s var(--ad-ease),filter .5s ease}
-#side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.008);filter:brightness(1.025)}
-
-/* HARD responsive rule: side ads are completely removed below desktop. */
-@media(max-width:1500px){
-  body #side-ad-left,body #side-ad-right{
-    display:none!important;
-    visibility:hidden!important;
-    opacity:0!important;
-    pointer-events:none!important;
-    animation:none!important;
-  }
-}
-@media(min-width:1501px) and (max-height:800px){:root{--side-ad-height:450px}}
-@media(min-width:1501px) and (max-height:650px){:root{--side-ad-height:380px}}
-
-/* Lịch đua, Tay đua & BXH giữ 2 cột trên Mobile / Tablet */
-@media (max-width: 1023px) {
-  #calendar-grid,
-  #drivers-grid,
-  .sidebar-standings {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-  }
-
-  /* Riêng Đội đua: về 1 cột */
-  #teams-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-}
-
-@media(prefers-reduced-motion:reduce){
-  #ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{animation:none!important;transition:none!important}
-  #ad-container.is-shining:after,#sponsor-slot.is-shining .card:after,#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{animation:none!important}
-  #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
-}
-</style>
 <link rel="preload" as="image" href="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" fetchpriority="high">
 </head>
 
@@ -965,39 +727,18 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="max-w-7xl mx-auto px-5 lg:px-8">
 <div class="h-20 flex items-center justify-between">
 <div class="flex items-center gap-5 min-w-0">
-  <a href="/" aria-label="F1HUB" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
-    <svg 
-  id="Layer_2" 
-  data-name="Layer 2" 
-  xmlns="http://www.w3.org/2000/svg" 
-  viewBox="0 0 199 62"
-  style="height: 32px; width: auto; display: block;"
->
-  <defs>
-    <style>
-      .cls-1 { fill: #ed1c24; }
-      .cls-1, .cls-2 { stroke-width: 0px; }
-      .cls-2 { fill: #fff; }
-    </style>
-  </defs>
-  <g id="Layer_1-2" data-name="Layer 1">
-    <g>
-      <!-- Ô trắng 1 -->
-      <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
-      <!-- Ô trắng 2 -->
-      <path class="cls-2" d="m123.4,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99h-34.28V13.71h34.28v34.27Z"/>
-      <!-- Ô đỏ số 7 -->
-      <path class="cls-1" d="m191.96,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-31.6,47.99h-9.53l18.86-27.42h-18.86v-6.85h34.28l-24.75,34.27Z"/>
-    </g>
-  </g>
-</svg>
-  </a>
-
-  <span class="hidden sm:block w-[1px] h-[22px] bg-[#1f2937]" aria-hidden="true"></span>
-
-  <span class="hidden sm:block text-[11px] uppercase tracking-[0.32em] text-[#4b5563] font-normal select-none">
-    Formula 1
-  </span>
+  <a href="/" aria-label="F1HUB" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
+    <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
+      <defs><style>.cls-1 { fill: #ed1c24; } .cls-1, .cls-2 { stroke-width: 0px; } .cls-2 { fill: #fff; }</style></defs>
+      <g id="Layer_1-2" data-name="Layer 1"><g>
+        <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
+        <path class="cls-2" d="m123.4,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99h-34.28V13.71h34.28v34.27Z"/>
+        <path class="cls-1" d="m191.96,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-31.6,47.99h-9.53l18.86-27.42h-18.86v-6.85h34.28l-24.75,34.27Z"/>
+      </g></g>
+    </svg>
+  </a>
+  <span class="hidden sm:block w-[1px] h-[22px] bg-[#1f2937]" aria-hidden="true"></span>
+  <span class="hidden sm:block text-[11px] uppercase tracking-[0.32em] text-[#4b5563] font-normal select-none">Formula 1</span>
 </div>
 <nav class="hidden lg:flex items-center gap-8 text-[10px] font-bold tracking-wider text-gray-500">
 <a class="nav-link hover:text-white transition" href="#news">TIN TỨC</a>
@@ -1115,64 +856,55 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </section>
 
 <aside id="standings" class="lg:col-span-5 f1-sidebar">
-  <!-- Tiêu đề BXH -->
-  <div class="flex items-end justify-between px-1 mb-3">
-    <div>
-      <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p>
-      <h2 class="text-xl font-black mt-1">Bảng xếp hạng</h2>
-    </div>
-    <span class="text-[8px] uppercase tracking-widest text-gray-600">LIVE DATA</span>
-  </div>
+  <div class="flex items-end justify-between px-1 mb-3">
+    <div>
+      <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p>
+      <h2 class="text-xl font-black mt-1">Bảng xếp hạng</h2>
+    </div>
+    <span class="text-[8px] uppercase tracking-widest text-gray-600">LIVE DATA</span>
+  </div>
 
-  <!-- Khung kẹp 2 banner 2 bên BXH -->
-  <div class="flex items-start justify-center gap-3">
-    
-    <!-- Banner Trái (tự ẩn trên màn hình nhỏ) -->
-    <div id="side-ad-left-inline" class="hidden 2xl:block w-[110px] shrink-0 sticky top-24">
-      <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
-        <img id="side-ad-left-img" class="w-full rounded border border-[#202023] object-cover" alt="Quảng cáo" style="min-height: 520px;">
-      </a>
-    </div>
+  <div class="flex flex-col md:flex-row items-start justify-center gap-3">
+    
+    <div id="side-ad-left" class="w-full md:w-[110px] shrink-0 sticky top-24">
+      <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
+        <img id="side-ad-left-img" class="w-full rounded border border-[#202023] object-cover" alt="Quảng cáo">
+      </a>
+    </div>
 
-    <!-- Cụm 2 bảng Drivers & Teams ở giữa -->
-    <div class="flex-1 min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <!-- Bảng Tay đua -->
-      <div class="sidebar-standing-card">
-        <div class="standing-head">
-          <h3>Drivers Championship</h3>
-          <span>22 DRIVERS</span>
-        </div>
-        <div class="standings-scroll">
-          <div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
-        </div>
-      </div>
+    <div class="flex-1 w-full min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div class="sidebar-standing-card">
+        <div class="standing-head">
+          <h3>Drivers Championship</h3>
+          <span>22 DRIVERS</span>
+        </div>
+        <div class="standings-scroll">
+          <div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
+        </div>
+      </div>
 
-      <!-- Bảng Đội đua -->
-      <div class="sidebar-standing-card constructors">
-        <div class="standing-head">
-          <h3>Constructors Championship</h3>
-          <span>11 TEAMS</span>
-        </div>
-        <div class="standings-scroll">
-          <div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
-        </div>
-      </div>
-    </div>
+      <div class="sidebar-standing-card constructors">
+        <div class="standing-head">
+          <h3>Constructors Championship</h3>
+          <span>11 TEAMS</span>
+        </div>
+        <div class="standings-scroll">
+          <div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Banner Phải (tự ẩn trên màn hình nhỏ) -->
-    <div id="side-ad-right-inline" class="hidden 2xl:block w-[110px] shrink-0 sticky top-24">
-      <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
-        <img id="side-ad-right-img" class="w-full rounded border border-[#202023] object-cover" alt="Quảng cáo" style="min-height: 520px;">
-      </a>
-    </div>
+    <div id="side-ad-right" class="w-full md:w-[110px] shrink-0 sticky top-24">
+      <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
+        <img id="side-ad-right-img" class="w-full rounded border border-[#202023] object-cover" alt="Quảng cáo">
+      </a>
+    </div>
+  </div>
 
-  </div>
-
-  <!-- Banner ngang phụ (nếu có cấu hình) -->
-  <div id="ad-container" class="hidden ad-shell mt-3" aria-hidden="true">
-    <div class="flex justify-between mb-2"><span class="sponsor-label">Sponsored</span></div>
-    <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
-  </div>
+  <div id="ad-container" class="hidden ad-shell mt-3" aria-hidden="true">
+    <div class="flex justify-between mb-2"><span class="sponsor-label">Sponsored</span></div>
+    <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
+  </div>
 </aside>
 </div>
 
@@ -1184,7 +916,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 <span class="hidden md:block text-[9px] uppercase tracking-widest text-gray-600">Pole · Podium · Fastest Lap · Live Data</span>
 </div>
-<div id="calendar-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+<div id="calendar-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4"></div>
 </section>
 
 <section id="sponsor-slot" class="mt-16 hidden ad-shell" aria-hidden="true">
@@ -1198,20 +930,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 </section>
 
-<!-- SIDE ADS: desktop only; controlled from Config sheet 
-<div id="side-ad-left" class="hidden" aria-hidden="true">
-<a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
-<img id="side-ad-left-img" alt="Advertisement" loading="eager" decoding="async">
-</a>
-</div>
-
-<div id="side-ad-right" class="hidden" aria-hidden="true">
-<a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
-<img id="side-ad-right-img" alt="Advertisement" loading="eager" decoding="async">
-</a>
-</div>
--->
-
 <section id="drivers" class="mt-24">
 <div class="flex justify-between items-end mb-8">
 <div>
@@ -1220,7 +938,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 <div class="hidden md:flex items-center gap-2 text-[9px] uppercase tracking-widest text-gray-600"><span class="w-2 h-2 bg-red-600 rounded-full live-dot"></span>Official F1 Media</div>
 </div>
-<div id="drivers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+<div id="drivers-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4"></div>
 </section>
 
 <section id="teams" class="mt-24">
@@ -1231,7 +949,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 <span class="hidden md:block text-[9px] uppercase tracking-widest text-gray-600">11 TEAMS</span>
 </div>
-<div id="teams-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+<div id="teams-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-5"></div>
 </section>
 </main>
 
@@ -1240,31 +958,14 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="grid md:grid-cols-3 gap-10">
 <div>
 <a href="/" aria-label="F1HUB" class="footer-brand-logo" style="display: inline-block; line-height: 0;">
-  <svg 
-  id="Layer_2" 
-  data-name="Layer 2" 
-  xmlns="http://www.w3.org/2000/svg" 
-  viewBox="0 0 199 62"
-  style="height: 32px; width: auto; display: block;"
->
-  <defs>
-    <style>
-      .cls-1 { fill: #ed1c24; }
-      .cls-1, .cls-2 { stroke-width: 0px; }
-      .cls-2 { fill: #fff; }
-    </style>
-  </defs>
-  <g id="Layer_1-2" data-name="Layer 1">
-    <g>
-      <!-- Ô trắng 1 -->
-      <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
-      <!-- Ô trắng 2 -->
-      <path class="cls-2" d="m123.4,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99h-34.28V13.71h34.28v34.27Z"/>
-      <!-- Ô đỏ số 7 -->
-      <path class="cls-1" d="m191.96,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-31.6,47.99h-9.53l18.86-27.42h-18.86v-6.85h34.28l-24.75,34.27Z"/>
-    </g>
-  </g>
-</svg>
+  <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
+    <defs><style>.cls-1 { fill: #ed1c24; } .cls-1, .cls-2 { stroke-width: 0px; } .cls-2 { fill: #fff; }</style></defs>
+    <g id="Layer_1-2" data-name="Layer 1"><g>
+      <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
+      <path class="cls-2" d="m123.4,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99h-34.28V13.71h34.28v34.27Z"/>
+      <path class="cls-1" d="m191.96,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-31.6,47.99h-9.53l18.86-27.42h-18.86v-6.85h34.28l-24.75,34.27Z"/>
+    </g></g>
+  </svg>
 </a>
 <p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">Nền tảng tổng hợp tin tức và dữ liệu Formula 1 với giao diện lấy cảm hứng từ broadcast graphics.</p>
 </div>
@@ -1338,11 +1039,11 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 
 <div id="driver-profile-content" class="mt-8">
 <div class="profile-driver-visual" aria-hidden="true">
-  <div class="profile-driver-grid"></div>
-  <div class="profile-driver-dots"></div>
-  <div class="profile-driver-glow"></div>
-  <div class="profile-driver-ghost">01</div>
-  <img id="profile-driver-image" class="profile-driver-image" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+  <div class="profile-driver-grid"></div>
+  <div class="profile-driver-dots"></div>
+  <div class="profile-driver-glow"></div>
+  <div class="profile-driver-ghost">01</div>
+  <img id="profile-driver-image" class="profile-driver-image" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
 </div>
 <div class="grid md:grid-cols-3 gap-4">
 <div id="profile-number-box" class="md:col-span-1 bg-[#101010] rounded-lg p-6 relative overflow-hidden">
@@ -1475,10 +1176,10 @@ if(!value)return'#';
 
 // URL tuyệt đối: giữ nguyên domain, không ghép vào domain F1 HUB.
 if(/^https?:\/\/.+/i.test(value)){
-  try{
-    const u=new URL(value);
-    return (u.protocol==='http:'||u.protocol==='https:')?u.toString():'#';
-  }catch{return'#'}
+  try{
+    const u=new URL(value);
+    return (u.protocol==='http:'||u.protocol==='https:')?u.toString():'#';
+  }catch{return'#'}
 }
 
 // Cho phép www.example.com hoặc example.com.
@@ -1487,8 +1188,8 @@ else if(/^[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(value))value='https://'+value;
 else return'#';
 
 try{
-  const u=new URL(value);
-  return (u.protocol==='http:'||u.protocol==='https:')?u.toString():'#';
+  const u=new URL(value);
+  return (u.protocol==='http:'||u.protocol==='https:')?u.toString():'#';
 }catch{return'#'}
 }
 
@@ -1581,255 +1282,221 @@ return '';
 }
 
 async function fetchConfigAndTrack(){
-  /*
-   * IMPORTANT:
-   * Config/ads must never wait for the public-IP service.
-   * The page can show the correct ON/OFF state as soon as Apps Script responds.
-   * Visitor tracking runs separately and can fail without affecting the website.
-   */
-  const configRequest=(async()=>{
-    try{
-      const response=await fetch(GAS_WEB_APP_URL,{cache:'no-store'});
-      if(!response.ok)throw new Error(`GAS CONFIG HTTP ${response.status}`);
-      const data=await response.json();
-      siteConfig=data||{};
+  const configRequest=(async()=>{
+    try{
+      const response=await fetch(GAS_WEB_APP_URL,{cache:'no-store'});
+      if(!response.ok)throw new Error(`GAS CONFIG HTTP ${response.status}`);
+      const data=await response.json();
+      siteConfig=data||{};
 
-      // Logo: embedded fast-path first; Sheet is fallback only if the embedded logo fails.
-      const EMBEDDED_LOGO_URL='https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000';
-      const logoEl=document.getElementById('brand-logo');
-      const footerLogoEl=document.getElementById('footer-brand-logo');
-      const sheetLogo=safeUrl(data.logoImg||data.logo||data.logoUrl);
+      const EMBEDDED_LOGO_URL='https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000';
+      const logoEl=document.getElementById('brand-logo');
+      const footerLogoEl=document.getElementById('footer-brand-logo');
+      const sheetLogo=safeUrl(data.logoImg||data.logo||data.logoUrl);
 
-      const applySheetLogoFallback=(el)=>{
-        if(!el || sheetLogo==='#')return;
-        el.classList.remove('logo-failed','hidden');
-        el.style.display='block';
-        if(el.src!==sheetLogo)el.src=sheetLogo;
-      };
+      const applySheetLogoFallback=(el)=>{
+        if(!el || sheetLogo==='#')return;
+        el.classList.remove('logo-failed','hidden');
+        el.style.display='block';
+        if(el.src!==sheetLogo)el.src=sheetLogo;
+      };
 
-      if(logoEl){
-        logoEl.onerror=()=>{
-          logoEl.classList.add('logo-failed');
-          applySheetLogoFallback(logoEl);
-        };
-        // If the embedded logo is already loaded, leave it alone.
-        if(logoEl.complete && logoEl.naturalWidth>0){
-          logoEl.classList.remove('logo-failed','hidden');
-          logoEl.style.display='block';
-        }
-      }
+      if(logoEl){
+        logoEl.onerror=()=>{
+          logoEl.classList.add('logo-failed');
+          applySheetLogoFallback(logoEl);
+        };
+        if(logoEl.complete && logoEl.naturalWidth>0){
+          logoEl.classList.remove('logo-failed','hidden');
+          logoEl.style.display='block';
+        }
+      }
 
-      if(footerLogoEl){
-        footerLogoEl.onerror=()=>{
-          footerLogoEl.classList.add('logo-failed');
-          applySheetLogoFallback(footerLogoEl);
-        };
-        if(footerLogoEl.complete && footerLogoEl.naturalWidth>0){
-          footerLogoEl.classList.remove('logo-failed','hidden');
-          footerLogoEl.style.display='block';
-        }
-      }
+      if(footerLogoEl){
+        footerLogoEl.onerror=()=>{
+          footerLogoEl.classList.add('logo-failed');
+          applySheetLogoFallback(footerLogoEl);
+        };
+        if(footerLogoEl.complete && footerLogoEl.naturalWidth>0){
+          footerLogoEl.classList.remove('logo-failed','hidden');
+          footerLogoEl.style.display='block';
+        }
+      }
 
-      // If there is no embedded logo available, Sheet remains the normal source.
-      // Do not replace a working embedded logo: this avoids a second image request.
-      if(sheetLogo!=='#'){
-        if(logoEl && logoEl.classList.contains('logo-failed'))applySheetLogoFallback(logoEl);
-        if(footerLogoEl && footerLogoEl.classList.contains('logo-failed'))applySheetLogoFallback(footerLogoEl);
-      }
+      if(sheetLogo!=='#'){
+        if(logoEl && logoEl.classList.contains('logo-failed'))applySheetLogoFallback(logoEl);
+        if(footerLogoEl && footerLogoEl.classList.contains('logo-failed'))applySheetLogoFallback(footerLogoEl);
+      }
 
-      // ============================================================
-      // ADS — controlled entirely from Google Sheet
-      // ============================================================
-      const adContainer=document.getElementById('ad-container');
-      const adBanner=document.getElementById('ad-banner');
-      const adLink=document.getElementById('ad-link');
-      const sponsorSlot=document.getElementById('sponsor-slot');
-      const inlineLink=document.getElementById('inline-ad-link');
-      const sponsorLabel=document.getElementById('sponsor-label');
-      const sponsorTitle=document.getElementById('sponsor-title');
-      const sponsorDescription=document.getElementById('sponsor-description');
+      const adContainer=document.getElementById('ad-container');
+      const adBanner=document.getElementById('ad-banner');
+      const adLink=document.getElementById('ad-link');
+      const sponsorSlot=document.getElementById('sponsor-slot');
+      const inlineLink=document.getElementById('inline-ad-link');
+      const sponsorLabel=document.getElementById('sponsor-label');
+      const sponsorTitle=document.getElementById('sponsor-title');
+      const sponsorDescription=document.getElementById('sponsor-description');
 
-      const sideAds=[
-        {el:document.getElementById('side-ad-left'),link:document.getElementById('side-ad-left-link'),img:document.getElementById('side-ad-left-img')},
-        {el:document.getElementById('side-ad-right'),link:document.getElementById('side-ad-right-link'),img:document.getElementById('side-ad-right-img')}
-      ];
+      const sideAds=[
+        {el:document.getElementById('side-ad-left'),link:document.getElementById('side-ad-left-link'),img:document.getElementById('side-ad-left-img')},
+        {el:document.getElementById('side-ad-right'),link:document.getElementById('side-ad-right-link'),img:document.getElementById('side-ad-right-img')}
+      ];
 
-      const isConfigOn=value=>value===true||['ON','TRUE','YES','1','Y','ENABLE','ENABLED'].includes(String(value??'').trim().toUpperCase());
-      const adShineTimers=new WeakMap();
+      const isConfigOn=value=>value===true||['ON','TRUE','YES','1','Y','ENABLE','ENABLED'].includes(String(value??'').trim().toUpperCase());
+      const adShineTimers=new WeakMap();
 
-      function stopAdShine(el){
-        if(!el)return;
-        const timer=adShineTimers.get(el);
-        if(timer)clearTimeout(timer);
-        adShineTimers.delete(el);
-        el.classList.remove('is-shining');
-      }
+      function stopAdShine(el){
+        if(!el)return;
+        const timer=adShineTimers.get(el);
+        if(timer)clearTimeout(timer);
+        adShineTimers.delete(el);
+        el.classList.remove('is-shining');
+      }
 
-      function scheduleAdShine(el){
-        if(!el)return;
-        stopAdShine(el);
-        const run=()=>{
-          if(!el.classList.contains('ad-ready'))return;
-          el.classList.remove('is-shining');
-          void el.offsetWidth;
-          el.classList.add('is-shining');
-          setTimeout(()=>el.classList.remove('is-shining'),1500);
-          adShineTimers.set(el,setTimeout(run,9000+Math.random()*8000));
-        };
-        adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
-      }
+      function scheduleAdShine(el){
+        if(!el)return;
+        stopAdShine(el);
+        const run=()=>{
+          if(!el.classList.contains('ad-ready'))return;
+          el.classList.remove('is-shining');
+          void el.offsetWidth;
+          el.classList.add('is-shining');
+          setTimeout(()=>el.classList.remove('is-shining'),1500);
+          adShineTimers.set(el,setTimeout(run,9000+Math.random()*8000));
+        };
+        adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
+      }
 
-      function revealAd(el){
-        if(!el)return;
-        stopAdShine(el);
-        el.classList.remove('hidden','ad-ready');
-        el.setAttribute('aria-hidden','false');
-        // Force a clean layout frame before starting the entrance animation.
-        void el.offsetWidth;
-        requestAnimationFrame(()=>{
-          el.classList.add('ad-ready');
-          scheduleAdShine(el);
-        });
-      }
+      function revealAd(el){
+        if(!el)return;
+        stopAdShine(el);
+        el.classList.remove('hidden','ad-ready');
+        el.setAttribute('aria-hidden','false');
+        void el.offsetWidth;
+        requestAnimationFrame(()=>{
+          el.classList.add('ad-ready');
+          scheduleAdShine(el);
+        });
+      }
 
-      function hideAd(el){
-        if(!el)return;
-        stopAdShine(el);
-        el.classList.remove('ad-ready');
-        el.classList.add('hidden');
-        el.setAttribute('aria-hidden','true');
-      }
+      function hideAd(el){
+        if(!el)return;
+        stopAdShine(el);
+        el.classList.remove('ad-ready');
+        el.classList.add('hidden');
+        el.setAttribute('aria-hidden','true');
+      }
 
-      function resetLink(link){
-        if(!link)return;
-        link.removeAttribute('href');
-        link.removeAttribute('target');
-        link.removeAttribute('rel');
-        link.style.pointerEvents='none';
-      }
+      function resetLink(link){
+        if(!link)return;
+        link.removeAttribute('href');
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+        link.style.pointerEvents='none';
+      }
 
-      function resetImage(img){
-        if(!img)return;
-        img.onload=null;
-        img.onerror=null;
-        img.removeAttribute('src');
-        img.removeAttribute('srcset');
-      }
+      function resetImage(img){
+        if(!img)return;
+        img.onload=null;
+        img.onerror=null;
+        img.removeAttribute('src');
+        img.removeAttribute('srcset');
+      }
 
-      function prepareExternalLink(link,url){
-        const safe=safeUrl(url);
-        resetLink(link);
-        if(link&&safe!=='#'){
-          link.href=safe;
-          link.target='_blank';
-          link.rel='sponsored noopener noreferrer';
-          link.style.pointerEvents='auto';
-          return true;
-        }
-        return false;
-      }
+      function prepareExternalLink(link,url){
+        const safe=safeUrl(url);
+        resetLink(link);
+        if(link&&safe!=='#'){
+          link.href=safe;
+          link.target='_blank';
+          link.rel='sponsored noopener noreferrer';
+          link.style.pointerEvents='auto';
+          return true;
+        }
+        return false;
+      }
 
-      function loadImageAd({el,link,img},enabled,imageValue,urlValue){
-        // Always start from a completely hidden/clean state.
-        hideAd(el);
-        resetLink(link);
-        resetImage(img);
+      function loadImageAd({el,link,img},enabled,imageValue,urlValue){
+        hideAd(el);
+        resetLink(link);
+        resetImage(img);
 
-        if(!enabled||!el||!img)return;
+        if(!enabled||!el||!img)return;
 
-        const imageUrl=safeUrl(imageValue);
-        if(imageUrl==='#')return;
+        const imageUrl=safeUrl(imageValue);
+        if(imageUrl==='#')return;
 
-        prepareExternalLink(link,urlValue);
+        prepareExternalLink(link,urlValue);
 
-        const loadToken=String(Date.now())+Math.random().toString(36).slice(2);
-        img.dataset.adLoadToken=loadToken;
+        const loadToken=String(Date.now())+Math.random().toString(36).slice(2);
+        img.dataset.adLoadToken=loadToken;
 
-        img.onload=()=>{
-          if(img.dataset.adLoadToken!==loadToken)return;
-          // Only reveal after the browser has a real image with dimensions.
-          if(img.naturalWidth>0&&img.naturalHeight>0)revealAd(el);
-          else hideAd(el);
-        };
-        img.onerror=()=>{
-          if(img.dataset.adLoadToken===loadToken)hideAd(el);
-        };
-        img.src=imageUrl;
+        img.onload=()=>{
+          if(img.dataset.adLoadToken!==loadToken)return;
+          if(img.naturalWidth>0&&img.naturalHeight>0)revealAd(el);
+          else hideAd(el);
+        };
+        img.onerror=()=>{
+          if(img.dataset.adLoadToken===loadToken)hideAd(el);
+        };
+        img.src=imageUrl;
 
-        // Cached image safety net.
-        if(img.complete&&img.naturalWidth>0&&img.dataset.adLoadToken===loadToken)revealAd(el);
-      }
+        if(img.complete&&img.naturalWidth>0&&img.dataset.adLoadToken===loadToken)revealAd(el);
+      }
 
-      // ------------------------------------------------------------
-      // MAIN AD
-      // OFF => remains display:none and never loads the image.
-      // ON  => load image first; only successful load reveals the card.
-      // ------------------------------------------------------------
-      loadImageAd(
-        {el:adContainer,link:adLink,img:adBanner},
-        isConfigOn(data.adEnabled),
-        data.bannerImg,
-        data.adUrl
-      );
+      loadImageAd(
+        {el:adContainer,link:adLink,img:adBanner},
+        isConfigOn(data.adEnabled),
+        data.bannerImg,
+        data.adUrl
+      );
 
-      // ------------------------------------------------------------
-      // INLINE AFFILIATE
-      // No image dependency. It is shown only when ON + valid URL.
-      // ------------------------------------------------------------
-      if(sponsorSlot){
-        hideAd(sponsorSlot);
-        resetLink(inlineLink);
-        inlineLink?.classList.add('hidden');
+      if(sponsorSlot){
+        hideAd(sponsorSlot);
+        resetLink(inlineLink);
+        inlineLink?.classList.add('hidden');
 
-        const canShowInline=
-          isConfigOn(data.inlineAdEnabled)&&
-          safeUrl(data.affiliateUrl)!=='#';
+        const canShowInline=
+          isConfigOn(data.inlineAdEnabled)&&
+          safeUrl(data.affiliateUrl)!=='#';
 
-        if(canShowInline){
-          if(sponsorLabel)sponsorLabel.textContent=data.adLabel||'Sponsored / Affiliate';
-          if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'PICKS';
-          if(sponsorDescription)sponsorDescription.textContent=data.adDescription||'Khu vực dành cho banner quảng cáo hoặc link affiliate.';
-          prepareExternalLink(inlineLink,data.affiliateUrl);
-          inlineLink?.classList.remove('hidden');
-          revealAd(sponsorSlot);
-        }
-      }
+        if(canShowInline){
+          if(sponsorLabel)sponsorLabel.textContent=data.adLabel||'Sponsored / Affiliate';
+          if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'PICKS';
+          if(sponsorDescription)sponsorDescription.textContent=data.adDescription||'Khu vực dành cho banner quảng cáo hoặc link affiliate.';
+          prepareExternalLink(inlineLink,data.affiliateUrl);
+          inlineLink?.classList.remove('hidden');
+          revealAd(sponsorSlot);
+        }
+      }
 
-      // ------------------------------------------------------------
-      // SIDE ADS
-      // Load them only on the desktop breakpoint where they can actually
-      // be displayed. This prevents mobile/tablet overlays and unnecessary
-      // image requests.
-      // ------------------------------------------------------------
-      const sideDesktop=window.matchMedia('(min-width:1501px)').matches;
-      const sideEnabled=sideDesktop&&isConfigOn(data.sideAdEnabled);
-      loadImageAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
-      loadImageAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
+      const sideEnabled=isConfigOn(data.sideAdEnabled);
+      loadImageAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
+      loadImageAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
 
-      if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
-    }catch(error){
-      console.warn('GAS config unavailable',error);
-      // Fail closed: all ad surfaces remain hidden.
-      hideAd(document.getElementById('ad-container'));
-      hideAd(document.getElementById('sponsor-slot'));
-      hideAd(document.getElementById('side-ad-left'));
-      hideAd(document.getElementById('side-ad-right'));
-    }
-  })();
+      if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
+    }catch(error){
+      console.warn('GAS config unavailable',error);
+      hideAd(document.getElementById('ad-container'));
+      hideAd(document.getElementById('sponsor-slot'));
+      hideAd(document.getElementById('side-ad-left'));
+      hideAd(document.getElementById('side-ad-right'));
+    }
+  })();
 
-  const trackingRequest=(async()=>{
-    try{
-      const ip=await getClientIp();
-      const url=new URL(GAS_WEB_APP_URL);
-      url.searchParams.set('track','1');
-      if(ip)url.searchParams.set('ip',ip);
-      await fetch(url.toString(),{cache:'no-store',keepalive:true});
-    }catch(error){
-      console.warn('Visitor tracking unavailable',error);
-    }
-  })();
+  const trackingRequest=(async()=>{
+    try{
+      const ip=await getClientIp();
+      const url=new URL(GAS_WEB_APP_URL);
+      url.searchParams.set('track','1');
+      if(ip)url.searchParams.set('ip',ip);
+      await fetch(url.toString(),{cache:'no-store',keepalive:true});
+    }catch(error){
+      console.warn('Visitor tracking unavailable',error);
+    }
+  })();
 
-  await Promise.allSettled([configRequest,trackingRequest]);
+  await Promise.allSettled([configRequest,trackingRequest]);
 }
 
 async function fetchNews(){
@@ -2195,12 +1862,10 @@ fetchJSON(`${F1_API}/${SEASON}/driverStandings.json`,'f1hub_driver_standings',60
 fetchJSON(`${F1_API}/${SEASON}/constructorStandings.json`,'f1hub_constructor_standings',60000)
 ]);
 const rawDrivers=driverData.MRData.StandingsTable.StandingsLists?.[0]?.DriverStandings||[];
-// Main grid = official 22-driver 2026 lineup. Substitute appearances such as Tsunoda remain in race results but do not replace a contracted driver in the grid.
 standings=OFFICIAL_DRIVERS.map((officialId,index)=>{
 const aliases=[officialId,DRIVER_ALIASES[officialId],DRIVER_NUMBER_MAP[officialId]].filter(Boolean);
 return rawDrivers.find(d=>aliases.includes(d.Driver?.driverId)||aliases.includes(d.Driver?.permanentNumber))||null;
 }).filter(Boolean);
-// Preserve championship ordering from the API, then append any official driver that has no points yet.
 standings.sort((a,b)=>Number(a.position||999)-Number(b.position||999));
 constructorStandings=constructorData.MRData.StandingsTable.StandingsLists?.[0]?.ConstructorStandings||[];
 renderStandings();
@@ -2319,9 +1984,8 @@ const code=d.Driver?.code?.toLowerCase()||'';
 const official=officialDriverMediaImage(d);
 const openf1=driverImages[code]||driverImages[id]||'';
 const wiki=driverWikiImages[id]||'';
-// Do not use the legacy F1 placeholder/silhouette URL as a preferred image.
 if(id==='lindblad'){
-  return official||openf1||wiki||'';
+  return official||openf1||wiki||'';
 }
 return official||openf1||wiki||'';
 }
@@ -2330,51 +1994,47 @@ const id=(d.Driver?.driverId||'').toLowerCase();
 const code=d.Driver?.code?.toLowerCase()||'';
 const candidates=[];
 const push=(v)=>{if(v && !candidates.includes(v))candidates.push(v)};
-// Current F1 full-body asset first.
 push(officialDriverMediaImage(d));
-// Lindblad has multiple known CDN path variants.
 if(id==='lindblad'){
-  const team='racingbulls';
-  const code='arvlin01';
-  const roots=[
-    `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}/${code}`,
-    `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}`
-  ];
-  roots.forEach(base=>{
-    push(`${base}/2026${team}${code}right.webp`);
-    push(`${base}/2026${team}${code}.webp`);
-  });
-  push(`https://media.formula1.com/image/upload/c_fill,w_720/q_auto/common/f1/2026/${team}/${code}/2026${team}${code}right.webp`);
-  push(`https://media.formula1.com/image/upload/c_fill,w_720/q_auto/common/f1/2026/${team}/${code}/2026${team}${code}.webp`);
+  const team='racingbulls';
+  const code='arvlin01';
+  const roots=[
+    `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}/${code}`,
+    `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}`
+  ];
+  roots.forEach(base=>{
+    push(`${base}/2026${team}${code}right.webp`);
+    push(`${base}/2026${team}${code}.webp`);
+  });
+  push(`https://media.formula1.com/image/upload/c_fill,w_720/q_auto/common/f1/2026/${team}/${code}/2026${team}${code}right.webp`);
+  push(`https://media.formula1.com/image/upload/c_fill,w_720/q_auto/common/f1/2026/${team}/${code}/2026${team}${code}.webp`);
 }
 push(driverImages[code]);
 push(driverImages[id]);
 push(driverWikiImages[id]);
-// Search by the exact Wikipedia page only after F1/OpenF1 sources.
 return candidates.filter(Boolean);
 }
 async function driverImageOnError(img){
 try{
- const list=JSON.parse(img.dataset.srcList||'[]');
- const next=Number(img.dataset.srcIndex||0)+1;
- if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
- const page=img.dataset.wikiPage||'';
- if(page){
-   const wiki=await fetchWikipediaSummaryImage(page);
-   if(wiki && !list.includes(wiki)){
-     const updated=[...list,wiki];
-     img.dataset.srcIndex=String(updated.length-1);
-     img.dataset.srcList=JSON.stringify(updated);
-     img.src=wiki;
-     return;
-   }
- }
+ const list=JSON.parse(img.dataset.srcList||'[]');
+ const next=Number(img.dataset.srcIndex||0)+1;
+ if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
+ const page=img.dataset.wikiPage||'';
+ if(page){
+   const wiki=await fetchWikipediaSummaryImage(page);
+   if(wiki && !list.includes(wiki)){
+     const updated=[...list,wiki];
+     img.dataset.srcIndex=String(updated.length-1);
+     img.dataset.srcList=JSON.stringify(updated);
+     img.src=wiki;
+     return;
+   }
+ }
 }catch(e){}
 img.onerror=null;
 img.style.display='none';
 }
 
-// Official F1 Media is preferred for current driver headshots. OpenF1 commonly returns the same F1 media headshots; Wikimedia is only a fallback.
 function officialDriverImageCandidates(d){
 return [officialDriverMediaImage(d),getDriverImage(d),driverWikiImages[(d.Driver?.driverId||'').toLowerCase()],driverImageFallback(d.Driver)].filter(Boolean);
 }
@@ -2456,7 +2116,7 @@ bindDriverCardClicks();
 }
 
 function bindDriverCardClicks(){
-  // Intentionally empty: #drivers-grid uses one delegated click handler below.
+  // Intentionally empty: #drivers-grid uses one delegated click handler below.
 }
 
 const F1_CAR_MEDIA={
@@ -2475,7 +2135,7 @@ const base=`https://media.formula1.com/image/upload/c_fill,w_3392/q_auto/v174000
 const stems=[`2026${folder}car`,`2026${folder}`,`2026${slug}car`,`2026${slug}`];
 const urls=[];
 for(const stem of stems){
-  urls.push(`${base}/${stem}right.webp`,`${base}/${stem}.webp`,`${base}/${folder}/${stem}right.webp`,`${base}/${folder}/${stem}.webp`);
+  urls.push(`${base}/${stem}right.webp`,`${base}/${stem}.webp`,`${base}/${folder}/${stem}right.webp`,`${base}/${folder}/${stem}.webp`);
 }
 if(carWikiImages[key])urls.push(carWikiImages[key]);
 return [...new Set(urls)];
@@ -2483,9 +2143,9 @@ return [...new Set(urls)];
 function getCarImage(team){return getCarImageCandidates(team)[0]||carWikiImages[teamKey(team.id)]||'';}
 function carImageOnError(img){
 try{
- const list=JSON.parse(img.dataset.srcList||'[]');
- const next=Number(img.dataset.srcIndex||0)+1;
- if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
+ const list=JSON.parse(img.dataset.srcList||'[]');
+ const next=Number(img.dataset.srcIndex||0)+1;
+ if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
 }catch{}
 img.onerror=null;
 img.style.display='none';
@@ -2553,26 +2213,26 @@ img.dataset.srcList=JSON.stringify(list);
 img.dataset.srcIndex='0';
 img.style.display='block';
 img.onerror=async function(){
-  const next=Number(img.dataset.srcIndex||0)+1;
-  if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
-  const page=(driver.Driver?.givenName+'_'+driver.Driver?.familyName).replaceAll(' ','_');
-  const wiki=await fetchWikipediaSummaryImage(page);
-  if(wiki && !list.includes(wiki)){list.push(wiki);img.dataset.srcList=JSON.stringify(list);img.dataset.srcIndex=String(list.length-1);img.src=wiki;return;}
-  img.onerror=null;
+  const next=Number(img.dataset.srcIndex||0)+1;
+  if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
+  const page=(driver.Driver?.givenName+'_'+driver.Driver?.familyName).replaceAll(' ','_');
+  const wiki=await fetchWikipediaSummaryImage(page);
+  if(wiki && !list.includes(wiki)){list.push(wiki);img.dataset.srcList=JSON.stringify(list);img.dataset.srcIndex=String(list.length-1);img.src=wiki;return;}
+  img.onerror=null;
 };
 if(list[0])img.src=list[0];
 else img.removeAttribute('src');
 }
 
 function setProfilePanel(mode){
-  const driverPanel=document.getElementById('driver-profile-content');
-  const teamPanel=document.getElementById('team-profile-content');
-  if(!driverPanel||!teamPanel)return;
-  const showDriver=mode==='driver';
-  driverPanel.classList.toggle('hidden',!showDriver);
-  teamPanel.classList.toggle('hidden',showDriver);
-  driverPanel.setAttribute('aria-hidden',String(!showDriver));
-  teamPanel.setAttribute('aria-hidden',String(showDriver));
+  const driverPanel=document.getElementById('driver-profile-content');
+  const teamPanel=document.getElementById('team-profile-content');
+  if(!driverPanel||!teamPanel)return;
+  const showDriver=mode==='driver';
+  driverPanel.classList.toggle('hidden',!showDriver);
+  teamPanel.classList.toggle('hidden',showDriver);
+  driverPanel.setAttribute('aria-hidden',String(!showDriver));
+  teamPanel.setAttribute('aria-hidden',String(showDriver));
 }
 
 function openDriverProfile(driverId){
@@ -2657,15 +2317,15 @@ const fullName=`${firstName} ${lastName}`.trim();
 const number=driver.Driver?.permanentNumber||DRIVER_NUMBER_MAP[driver.Driver?.driverId]||'--';
 return`
 <div class="team-driver-mini" data-driver-id="${escapeHTML(driver.Driver?.driverId||'')}" role="button" tabindex="0" aria-label="Open ${escapeHTML(fullName)} profile" style="--team-color:${meta.color}">
-  <div class="driver-mini-photo-wrap">
-    <img src="${escapeHTML(candidates[0]||'')}" data-src-list='${escapeHTML(JSON.stringify(candidates))}' data-src-index="0" class="driver-mini-image" alt="${escapeHTML(fullName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
-  </div>
-  <div class="driver-mini-number">#${escapeHTML(number)}</div>
-  <div class="team-driver-copy">
-    <div class="driver-mini-label">Driver</div>
-    <div class="driver-mini-name">${escapeHTML(fullName)}</div>
-    <div class="driver-mini-points">${escapeHTML(driver.points||0)} PTS</div>
-  </div>
+  <div class="driver-mini-photo-wrap">
+    <img src="${escapeHTML(candidates[0]||'')}" data-src-list='${escapeHTML(JSON.stringify(candidates))}' data-src-index="0" class="driver-mini-image" alt="${escapeHTML(fullName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
+  </div>
+  <div class="driver-mini-number">#${escapeHTML(number)}</div>
+  <div class="team-driver-copy">
+    <div class="driver-mini-label">Driver</div>
+    <div class="driver-mini-name">${escapeHTML(fullName)}</div>
+    <div class="driver-mini-points">${escapeHTML(driver.points||0)} PTS</div>
+  </div>
 </div>`;
 }).join('');
 
@@ -2684,7 +2344,6 @@ document.body.classList.remove('modal-open');
 setProfilePanel('driver');
 }
 
-// Keep profile actions globally callable for inline/search/team interactions.
 window.openDriverProfile=openDriverProfile;
 window.openTeamProfile=openTeamProfile;
 window.closeProfile=closeProfile;
@@ -2744,27 +2403,28 @@ result.innerHTML=html||'<div class="text-gray-600 text-sm">Không tìm thấy k�
 }
 
 function toggleMobileMenu(){
-  const menu=document.getElementById('mobile-menu');
-  const toggle=document.getElementById('mobile-menu-toggle');
-  if(!menu)return;
-  const isOpen=menu.classList.toggle('is-open');
-  if(toggle){
-    toggle.setAttribute('aria-expanded',String(isOpen));
-    toggle.setAttribute('aria-label',isOpen?'Đóng menu':'Mở menu');
-  }
+  const menu=document.getElementById('mobile-menu');
+  const toggle=document.getElementById('mobile-menu-toggle');
+  if(!menu)return;
+  menu.classList.remove('hidden');
+  const isOpen=menu.classList.toggle('is-open');
+  if(toggle){
+    toggle.setAttribute('aria-expanded',String(isOpen));
+    toggle.setAttribute('aria-label',isOpen?'Đóng menu':'Mở menu');
+  }
 }
 
 document.querySelectorAll('#mobile-menu a').forEach(link=>{
-  link.addEventListener('click',()=>{
-    const menu=document.getElementById('mobile-menu');
-    const toggle=document.getElementById('mobile-menu-toggle');
-    if(!menu)return;
-    menu.classList.remove('is-open');
-    if(toggle){
-      toggle.setAttribute('aria-expanded','false');
-      toggle.setAttribute('aria-label','Mở menu');
-    }
-  });
+  link.addEventListener('click',()=>{
+    const menu=document.getElementById('mobile-menu');
+    const toggle=document.getElementById('mobile-menu-toggle');
+    if(!menu)return;
+    menu.classList.remove('is-open');
+    if(toggle){
+      toggle.setAttribute('aria-expanded','false');
+      toggle.setAttribute('aria-label','Mở menu');
+    }
+  });
 });
 
 async function sharePage(){
@@ -2819,73 +2479,81 @@ document.getElementById('search-panel').classList.add('hidden');
 });
 
 function setupAnchorNavigation(){
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-a.addEventListener('click',function(e){
-const id=this.getAttribute('href');
-if(!id||id==='#')return;
-const target=document.querySelector(id);
-if(!target)return;
-e.preventDefault();
-const header=document.querySelector('header');
-const offset=(header?.getBoundingClientRect().height||80)+10;
-const y=target.getBoundingClientRect().top+window.scrollY-offset;
-window.history.replaceState(null,'',id);
-window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
-const menu=document.getElementById('mobile-menu');
-if(menu&&!menu.classList.contains('hidden'))menu.classList.add('hidden');
-});
-});
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',function(e){
+      const id=this.getAttribute('href');
+      if(!id||id==='#')return;
+      const target=document.querySelector(id);
+      if(!target)return;
+      e.preventDefault();
+      const header=document.querySelector('header');
+      const offset=(header?.getBoundingClientRect().height||80)+10;
+      const y=target.getBoundingClientRect().top+window.scrollY-offset;
+      window.history.replaceState(null,'',id);
+      window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+      
+      const menu=document.getElementById('mobile-menu');
+      const toggle=document.getElementById('mobile-menu-toggle');
+      if(menu){
+        menu.classList.remove('is-open');
+        if(toggle){
+          toggle.setAttribute('aria-expanded','false');
+          toggle.setAttribute('aria-label','Mở menu');
+        }
+      }
+    });
+  });
 }
 
 const driversGrid=document.getElementById('drivers-grid');
 if(driversGrid){
-  driversGrid.addEventListener('click',function(e){
-    const card=e.target.closest('.driver-card[data-driver-id]');
-    if(!card || !driversGrid.contains(card)) return;
-    e.preventDefault();
-    e.stopPropagation();
-    openDriverProfile(card.dataset.driverId);
-  },true);
-  driversGrid.addEventListener('keydown',function(e){
-    if(e.key!=='Enter' && e.key!==' ') return;
-    const card=e.target.closest('.driver-card[data-driver-id]');
-    if(!card || !driversGrid.contains(card)) return;
-    e.preventDefault();
-    openDriverProfile(card.dataset.driverId);
-  },true);
+  driversGrid.addEventListener('click',function(e){
+    const card=e.target.closest('.driver-card[data-driver-id]');
+    if(!card || !driversGrid.contains(card)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openDriverProfile(card.dataset.driverId);
+  },true);
+  driversGrid.addEventListener('keydown',function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    const card=e.target.closest('.driver-card[data-driver-id]');
+    if(!card || !driversGrid.contains(card)) return;
+    e.preventDefault();
+    openDriverProfile(card.dataset.driverId);
+  },true);
 }
 
 const teamProfileDrivers=document.getElementById('team-profile-drivers');
 if(teamProfileDrivers){
-  teamProfileDrivers.addEventListener('click',function(e){
-    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
-    if(!item || !teamProfileDrivers.contains(item)) return;
-    e.preventDefault();
-    e.stopPropagation();
-    openDriverProfile(item.dataset.driverId);
-  },true);
-  teamProfileDrivers.addEventListener('keydown',function(e){
-    if(e.key!=='Enter' && e.key!==' ') return;
-    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
-    if(!item || !teamProfileDrivers.contains(item)) return;
-    e.preventDefault();
-    e.stopPropagation();
-    openDriverProfile(item.dataset.driverId);
-  },true);
+  teamProfileDrivers.addEventListener('click',function(e){
+    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
+    if(!item || !teamProfileDrivers.contains(item)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openDriverProfile(item.dataset.driverId);
+  },true);
+  teamProfileDrivers.addEventListener('keydown',function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
+    if(!item || !teamProfileDrivers.contains(item)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openDriverProfile(item.dataset.driverId);
+  },true);
 }
 
 const teamsGrid=document.getElementById('teams-grid');
 if(teamsGrid){
-  const activateTeamDriver=(e)=>{
-    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
-    if(!item || !teamsGrid.contains(item))return;
-    if(e.type==='keydown' && e.key!=='Enter' && e.key!==' ')return;
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    openDriverProfile(item.dataset.driverId);
-  };
-  teamsGrid.addEventListener('click',activateTeamDriver,true);
-  teamsGrid.addEventListener('keydown',activateTeamDriver,true);
+  const activateTeamDriver=(e)=>{
+    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
+    if(!item || !teamsGrid.contains(item))return;
+    if(e.type==='keydown' && e.key!=='Enter' && e.key!==' ')return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    openDriverProfile(item.dataset.driverId);
+  };
+  teamsGrid.addEventListener('click',activateTeamDriver,true);
+  teamsGrid.addEventListener('keydown',activateTeamDriver,true);
 }
 
 document.addEventListener('DOMContentLoaded',async()=>{
