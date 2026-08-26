@@ -911,9 +911,13 @@ document.getElementById('modal-date').textContent=formatDate(race.date);
 const result=getRaceResult(race.round);
 const pole=getPole(race.round);
 const podium=getPodium(race.round);
+const officialSummary=OFFICIAL_RACE_SUMMARY[String(race.round)];
 const resultBlock=document.getElementById('modal-result-block');
 
-if(result){
+// The calendar can already have an official completed summary even when
+// the external results endpoint has not returned a race-result object.
+// In that case Pole/Podium must still be shown inside the modal.
+if(result||officialSummary){
 resultBlock.classList.remove('hidden');
 document.getElementById('modal-pole').innerHTML=pole?`
 <div class="pole-chip">
@@ -927,7 +931,7 @@ document.getElementById('modal-podium').innerHTML=podium.length?`
 ${renderPodium(podium)}
 </div>`:'';
 
-document.getElementById('modal-top10').innerHTML=(result.Results||[]).slice(0,10).map(r=>`
+document.getElementById('modal-top10').innerHTML=(result?.Results||[]).slice(0,10).map(r=>`
 <div class="flex items-center gap-3 bg-[#111] border border-gray-900 px-3 py-2 rounded">
 <div class="w-5 text-center text-[9px] font-black">${escapeHTML(r.position||'')}</div>
 <div class="flex-1 text-xs font-semibold">${escapeHTML(r.Driver?.givenName||'')} ${escapeHTML(r.Driver?.familyName||'')}</div>
