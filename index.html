@@ -105,11 +105,11 @@ button{font-family:inherit}
 .car-svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .45s ease;transform-origin:center}
 .team-card:hover .car-svg{transform:translateX(8px) scale(1.03)}
 .team-card:hover .car-visual img{transform:translateY(-50%) scale(1.025)}
-.car-visual img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));image-rendering:auto;width:118%!important;max-width:none!important;height:auto!important;left:-9%!important;top:50%!important;bottom:auto!important;transform:translateY(-50%);object-fit:contain!important;padding:0!important}
-.team-car-image{width:118%!important;max-width:none!important;height:auto!important;left:-9%!important;top:50%!important;bottom:auto!important;transform:translateY(-50%);object-fit:contain!important;padding:0!important;filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));}
-.profile-car-visual{height:210px}.profile-car-visual .team-car-image{width:112%!important;left:-6%!important}.car-image-empty{z-index:2}
-.driver-photo-wrap{position:absolute;right:-2%;top:0;width:58%;height:72%;display:flex;justify-content:flex-end;align-items:flex-start;overflow:hidden;pointer-events:none;z-index:1}
-.driver-photo{height:430px;width:auto;max-width:none;object-fit:contain;object-position:top right;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));transition:transform .35s ease;image-rendering:auto}
+.car-visual img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));image-rendering:auto;width:100%!important;max-width:100%!important;height:100%!important;left:0!important;top:0!important;bottom:auto!important;transform:none;object-fit:contain!important;padding:0!important}
+.team-car-image{width:100%!important;max-width:100%!important;height:100%!important;left:0!important;top:0!important;bottom:auto!important;transform:none;object-fit:contain!important;padding:0!important;filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));}
+.profile-car-visual{height:210px}.profile-car-visual .team-car-image{width:100%!important;max-width:100%!important;left:0!important;height:100%!important;top:0!important;transform:none!important}.car-image-empty{z-index:2}
+.driver-photo-wrap{position:absolute;right:-2%;top:0;width:60%;height:76%;display:flex;justify-content:flex-end;align-items:flex-start;overflow:hidden;pointer-events:none;z-index:1}
+.driver-photo{height:620px;width:auto;max-width:none;object-fit:contain;object-position:top right;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));transition:transform .35s ease;image-rendering:auto}
 .driver-card:hover .driver-photo{transform:translateY(-4px) scale(1.025)}
 .img-fallback{opacity:.92}
 .driver-content{position:relative;z-index:6;height:100%;display:flex;flex-direction:column;padding-top:2px}
@@ -143,7 +143,7 @@ button{font-family:inherit}
 #profile-driver-image{position:relative;right:auto;top:auto;width:100%;height:400px;display:block;object-position:center bottom;margin:8px 0 0}
 #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
 .driver-photo-wrap{right:-2%;top:0;width:62%;height:70%}
-.driver-photo{height:360px}
+.driver-photo{height:500px}
 .driver-card{aspect-ratio:1/1;min-height:0}
 .driver-number{top:14px;right:14px;font-size:28px}
 }
@@ -189,9 +189,18 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .hero-title{font-size:3.8rem;line-height:.86}
 .mobile-scroll{overflow-x:auto;scrollbar-width:none}
 .mobile-scroll::-webkit-scrollbar{display:none}
-.driver-photo-wrap{width:54%;height:235px}
+.driver-photo-wrap{width:58%;height:235px}
 .driver-lastname{font-size:21px}
 }
+
+/* Final driver-card interaction/crop fixes */
+.driver-card{position:relative;z-index:1;pointer-events:auto;isolation:isolate}
+.driver-card .driver-content{pointer-events:auto}
+.driver-card .driver-photo-wrap,.driver-card .driver-gradient,.driver-card .driver-number{pointer-events:none}
+.driver-card .driver-firstname,.driver-card .driver-lastname,.driver-card .driver-stats-row{pointer-events:auto}
+/* The team car is never cropped; only the driver portrait is intentionally clipped. */
+.car-visual,.profile-car-visual{overflow:hidden}
+.team-car-image{object-fit:contain!important}
 
 /* Readability + layering fixes */
 #modal-sessions > div{border-color:#20242c;color:#e5e5e7}
@@ -1293,7 +1302,7 @@ const lastName=d.Driver.familyName||'';
 const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver.driverId)]||'--';
 const image=getDriverImage(d);
 const imageCandidates=getDriverImageCandidates(d);
-return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
+return `<article class="driver-card rounded-lg p-5" data-driver-id="${escapeHTML(d.Driver.driverId)}" role="button" tabindex="0" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}'); return false;">
 <div class="driver-gradient"></div>
 <div class="driver-photo-wrap"><img src="${escapeHTML(image)}" data-src-list='${escapeHTML(JSON.stringify(imageCandidates))}' data-src-index="0" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
@@ -1634,6 +1643,24 @@ const menu=document.getElementById('mobile-menu');
 if(menu&&!menu.classList.contains('hidden'))menu.classList.add('hidden');
 });
 });
+}
+
+const driversGrid=document.getElementById('drivers-grid');
+if(driversGrid){
+  driversGrid.addEventListener('click',function(e){
+    const card=e.target.closest('.driver-card[data-driver-id]');
+    if(!card || !driversGrid.contains(card)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openDriverProfile(card.dataset.driverId);
+  },true);
+  driversGrid.addEventListener('keydown',function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    const card=e.target.closest('.driver-card[data-driver-id]');
+    if(!card || !driversGrid.contains(card)) return;
+    e.preventDefault();
+    openDriverProfile(card.dataset.driverId);
+  });
 }
 
 document.addEventListener('DOMContentLoaded',async()=>{
