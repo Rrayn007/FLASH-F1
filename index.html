@@ -870,66 +870,42 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 </style>
 
-<style id="f1hub-side-ads">
-:root{
-  --side-ad-width:120px;
-  --side-ad-height:500px;
-  --side-ad-edge:16px;
-}
+<style id="f1hub-ads">
+:root{--side-ad-width:120px;--side-ad-height:500px;--side-ad-edge:16px;--ad-ease:cubic-bezier(.22,1,.36,1)}
 
-/* Hidden on first paint; JavaScript adds .ad-enabled only after config confirms ON. */
-#side-ad-left,#side-ad-right{
-  position:fixed;
-  top:50%;
-  width:var(--side-ad-width);
-  height:var(--side-ad-height);
-  transform:translateY(-50%) translateX(0) scale(.98);
-  z-index:30;
-  overflow:hidden;
-  display:block!important;
-  visibility:hidden!important;
-  opacity:0!important;
-  pointer-events:none!important;
-  transition:
-    opacity .42s ease,
-    transform .52s cubic-bezier(.22,1,.36,1),
-    visibility 0s linear .52s;
-  will-change:transform,opacity;
-}
-#side-ad-left.ad-enabled,#side-ad-right.ad-enabled{
-  visibility:visible!important;
-  opacity:1!important;
-  transform:translateY(-50%) translateX(0) scale(1);
-  pointer-events:auto!important;
-  transition:
-    opacity .42s ease,
-    transform .52s cubic-bezier(.22,1,.36,1),
-    visibility 0s linear 0s;
-}
-#side-ad-left{left:var(--side-ad-edge);transform:translateY(-50%) translateX(-14px) scale(.98);}
-#side-ad-right{right:var(--side-ad-edge);transform:translateY(-50%) translateX(14px) scale(.98);}
-#side-ad-left.ad-enabled{transform:translateY(-50%) translateX(0) scale(1);}
-#side-ad-right.ad-enabled{transform:translateY(-50%) translateX(0) scale(1);}
-#side-ad-left{left:var(--side-ad-edge);}
-#side-ad-right{right:var(--side-ad-edge);}
-#side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;}
-#side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;}
+/* All ads are invisible on first paint. JS reveals them only after valid config/image load. */
+#ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{opacity:0;visibility:hidden;pointer-events:none}
+#ad-container.ad-ready,#sponsor-slot.ad-ready,#side-ad-left.ad-ready,#side-ad-right.ad-ready{opacity:1;visibility:visible;pointer-events:auto}
 
-/* Never show side ads on smaller screens, even if the sheet says ON. */
-@media (max-width:1500px){
-  #side-ad-left,#side-ad-right{display:none!important;}
-}
+/* Main banner / inline sponsor */
+#ad-container,#sponsor-slot{transform:translateY(10px) scale(.992);transition:opacity .62s ease,transform .72s var(--ad-ease),visibility 0s linear .72s}
+#ad-container.ad-ready,#sponsor-slot.ad-ready{transform:translateY(0) scale(1);transition:opacity .62s ease,transform .72s var(--ad-ease),visibility 0s linear 0s}
+#ad-container{position:relative}
+#ad-container:after,#sponsor-slot .card:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 48%,rgba(255,255,255,.035) 52%,transparent 66%);transform:translateX(-120%);z-index:5}
+#ad-container.is-shining:after,#sponsor-slot.is-shining .card:after{opacity:1;animation:adGlassSweep 1.35s var(--ad-ease) both}
+@keyframes adGlassSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.9}55%{opacity:.65}100%{transform:translateX(120%);opacity:0}}
+#ad-banner{transition:filter .45s ease,transform .7s var(--ad-ease)}
+#ad-container:hover #ad-banner{transform:scale(1.008);filter:brightness(1.025)}
 
-@media (prefers-reduced-motion:reduce){
-  #side-ad-left,#side-ad-right{transition:none!important;}
-}
+/* Desktop side banners */
+#side-ad-left,#side-ad-right{position:fixed;top:50%;width:var(--side-ad-width);height:var(--side-ad-height);z-index:30;overflow:hidden;border-radius:4px;isolation:isolate;will-change:transform,opacity;transition:opacity .68s ease,transform .82s var(--ad-ease),visibility 0s linear .82s}
+#side-ad-left{left:var(--side-ad-edge);transform:translateY(-50%) translateX(-12px) scale(.985)}
+#side-ad-right{right:var(--side-ad-edge);transform:translateY(-50%) translateX(12px) scale(.985)}
+#side-ad-left.ad-ready,#side-ad-right.ad-ready{transform:translateY(-50%) translateX(0) scale(1);transition:opacity .68s ease,transform .82s var(--ad-ease),visibility 0s linear 0s}
+#side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0}
+#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both}
+#side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;position:relative;z-index:1}
+#side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s var(--ad-ease),filter .5s ease}
+#side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.008);filter:brightness(1.025)}
 
-@media (min-width:1501px) and (max-height:800px){
-  :root{--side-ad-height:450px;}
-}
-
-@media (min-width:1501px) and (max-height:650px){
-  :root{--side-ad-height:380px;}
+/* Never show side ads on smaller screens. */
+@media(max-width:1500px){#side-ad-left,#side-ad-right{display:none!important}}
+@media(min-width:1501px) and (max-height:800px){:root{--side-ad-height:450px}}
+@media(min-width:1501px) and (max-height:650px){:root{--side-ad-height:380px}}
+@media(prefers-reduced-motion:reduce){
+  #ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{transition:none!important;transform:none!important}
+  #ad-container.is-shining:after,#sponsor-slot.is-shining .card:after,#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{animation:none!important}
+  #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
 }
 </style>
 </head>
@@ -1078,9 +1054,9 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="standings-scroll"><div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div></div>
 </div>
 
-<div id="ad-container" class="hidden">
+<div id="ad-container" class="hidden ad-shell" aria-hidden="true">
 <div class="flex justify-between mb-2"><span class="sponsor-label">Sponsored</span></div>
-<a id="ad-link" href="#" target="_blank" rel="noopener"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="lazy"></a>
+<a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="lazy" decoding="async"></a>
 </div>
 
 <div class="card rounded-xl p-4">
@@ -1102,7 +1078,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div id="calendar-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </section>
 
-<section id="sponsor-slot" class="mt-16 hidden">
+<section id="sponsor-slot" class="mt-16 hidden ad-shell" aria-hidden="true">
 <div class="card rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 justify-between">
 <div>
 <div id="sponsor-label" class="sponsor-label">Sponsored / Affiliate</div>
@@ -1491,148 +1467,152 @@ document.getElementById('brand-text').classList.add('hidden');
 // ADS — controlled entirely from Google Sheet
 // ============================================================
 const adContainer=document.getElementById('ad-container');
-if(adContainer){
-  if(data.adEnabled===true && data.bannerImg && String(data.bannerImg).trim()){
-    adContainer.classList.remove('hidden');
-    const banner=document.getElementById('ad-banner');
-    const link=document.getElementById('ad-link');
-    if(banner){
-      const imageUrl=safeUrl(data.bannerImg);
-      if(imageUrl!=='#')banner.src=imageUrl;
-    }
-    if(link){
-      const clickUrl=safeUrl(data.adUrl);
-      if(clickUrl!=='#'){
-        link.href=clickUrl;
-        link.target='_blank';
-        link.rel='sponsored noopener noreferrer';
-      }else{
-        link.removeAttribute('href');
-      }
-    }
-  }else{
-    adContainer.classList.add('hidden');
-  }
-}
-
+const adBanner=document.getElementById('ad-banner');
+const adLink=document.getElementById('ad-link');
 const sponsorSlot=document.getElementById('sponsor-slot');
 const inlineLink=document.getElementById('inline-ad-link');
 const sponsorLabel=document.getElementById('sponsor-label');
 const sponsorTitle=document.getElementById('sponsor-title');
 const sponsorDescription=document.getElementById('sponsor-description');
-if(sponsorSlot){
-  const canShowInline=data.inlineAdEnabled===true && data.affiliateUrl && String(data.affiliateUrl).trim();
-  if(canShowInline){
-    sponsorSlot.classList.remove('hidden');
-    if(inlineLink){
-      const clickUrl=safeUrl(data.affiliateUrl);
-      if(clickUrl!=='#'){
-        inlineLink.href=clickUrl;
-        inlineLink.target='_blank';
-        inlineLink.rel='sponsored noopener noreferrer';
-        inlineLink.classList.remove('hidden');
-      }
-    }
-    if(sponsorLabel&&data.adLabel)sponsorLabel.textContent=data.adLabel;
-    if(sponsorTitle&&data.adTitle)sponsorTitle.textContent=data.adTitle;
-    if(sponsorDescription&&data.adDescription)sponsorDescription.textContent=data.adDescription;
-  }else{
-    sponsorSlot.classList.add('hidden');
-    if(inlineLink)inlineLink.classList.add('hidden');
-  }
+
+const sideAds=[
+  {el:document.getElementById('side-ad-left'),link:document.getElementById('side-ad-left-link'),img:document.getElementById('side-ad-left-img')},
+  {el:document.getElementById('side-ad-right'),link:document.getElementById('side-ad-right-link'),img:document.getElementById('side-ad-right-img')}
+];
+
+const isConfigOn=value=>value===true||['ON','TRUE','YES','1'].includes(String(value??'').trim().toUpperCase());
+const adShineTimers=new WeakMap();
+
+function stopAdShine(el){
+  if(!el)return;
+  const timer=adShineTimers.get(el);
+  if(timer)clearTimeout(timer);
+  adShineTimers.delete(el);
+  el.classList.remove('is-shining');
 }
 
-const sideLeft=document.getElementById('side-ad-left');
-const sideLeftLink=document.getElementById('side-ad-left-link');
-const sideLeftImg=document.getElementById('side-ad-left-img');
-const sideRight=document.getElementById('side-ad-right');
-const sideRightLink=document.getElementById('side-ad-right-link');
-const sideRightImg=document.getElementById('side-ad-right-img');
-
-/*
- * SIDE ADS — OFF means completely gone:
- * - hide the wrapper
- * - remove the href so it cannot open a new tab
- * - disable pointer events
- * - clear the image source so a broken/old image cannot leave a frame
- *
- * The config may arrive as boolean, "ON"/"OFF", "TRUE"/"FALSE", etc.
- * Only an explicit ON/TRUE/YES/1 enables the ad.
- */
-const isConfigOn=value=>{
-  if(value===true)return true;
-  return ['ON','TRUE','YES','1'].includes(String(value??'').trim().toUpperCase());
-};
-
-const setSideAd=(el,link,img,enabled,imageValue,urlValue)=>{
+function scheduleAdShine(el){
   if(!el)return;
+  stopAdShine(el);
+  const run=()=>{
+    if(!el.classList.contains('ad-ready'))return;
+    el.classList.remove('is-shining');
+    void el.offsetWidth;
+    el.classList.add('is-shining');
+    // Remove the temporary shine class after the sweep, then wait a random interval.
+    setTimeout(()=>el.classList.remove('is-shining'),1500);
+    const next=9000+Math.random()*8000; // 9–17s, intentionally irregular
+    adShineTimers.set(el,setTimeout(run,next));
+  };
+  adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
+}
 
-  // Reset first: OFF must immediately remove every interactive/stale state.
-  el.classList.remove('ad-enabled');
+function revealAd(el){
+  if(!el)return;
+  el.classList.remove('hidden');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    el.classList.add('ad-ready');
+    scheduleAdShine(el);
+  }));
+}
+
+function hideAd(el){
+  if(!el)return;
+  stopAdShine(el);
+  el.classList.remove('ad-ready');
+  el.classList.add('hidden');
   el.setAttribute('aria-hidden','true');
+}
 
-  if(link){
-    link.removeAttribute('href');
-    link.removeAttribute('target');
-    link.removeAttribute('rel');
-    link.style.pointerEvents='none';
-  }
-  if(img){
-    img.onload=null;
-    img.onerror=null;
-    img.removeAttribute('src');
-    img.removeAttribute('srcset');
-  }
+function resetLink(link){
+  if(!link)return;
+  link.removeAttribute('href');
+  link.removeAttribute('target');
+  link.removeAttribute('rel');
+  link.style.pointerEvents='none';
+}
 
-  const imageUrl=safeUrl(imageValue);
-  if(!enabled || imageUrl==='#' || !img)return;
+function resetImage(img){
+  if(!img)return;
+  img.onload=null;
+  img.onerror=null;
+  img.removeAttribute('src');
+  img.removeAttribute('srcset');
+}
 
-  const showAd=()=>{
-    el.classList.add('ad-enabled');
-    el.setAttribute('aria-hidden','false');
-  };
-
-  // Load the image completely before revealing the ad, so it never pops in
-  // as a broken/blank frame and then changes size/content.
-  img.onload=showAd;
-  img.onerror=()=>{
-    img.removeAttribute('src');
-    el.classList.remove('ad-enabled');
-    el.setAttribute('aria-hidden','true');
-  };
-  img.src=imageUrl;
-
-  // Cached images may already be complete when src is assigned.
-  if(img.complete && img.naturalWidth>0)showAd();
-
-  const clickUrl=safeUrl(urlValue);
-  if(link && clickUrl!=='#'){
-    link.href=clickUrl;
+function prepareExternalLink(link,url){
+  const safe=safeUrl(url);
+  resetLink(link);
+  if(link&&safe!=='#'){
+    link.href=safe;
     link.target='_blank';
     link.rel='sponsored noopener noreferrer';
     link.style.pointerEvents='auto';
+    return true;
   }
-};
+  return false;
+}
 
-const sideAdsOn=isConfigOn(data.sideAdEnabled);
+function setSideAd({el,link,img},enabled,imageValue,urlValue){
+  if(!el)return;
+  hideAd(el);
+  resetLink(link);
+  resetImage(img);
+  if(!enabled||!img)return;
 
-setSideAd(
-  sideLeft,
-  sideLeftLink,
-  sideLeftImg,
-  sideAdsOn,
-  data.sideAdLeftImg,
-  data.sideAdLeftUrl
-);
+  const imageUrl=safeUrl(imageValue);
+  if(imageUrl==='#')return;
 
-setSideAd(
-  sideRight,
-  sideRightLink,
-  sideRightImg,
-  sideAdsOn,
-  data.sideAdRightImg,
-  data.sideAdRightUrl
-);
+  img.onload=()=>{
+    // The image is fully decoded before the container enters the page.
+    revealAd(el);
+  };
+  img.onerror=()=>hideAd(el);
+  img.src=imageUrl;
+
+  // Cached image: onload can be skipped in some browsers.
+  if(img.complete&&img.naturalWidth>0)revealAd(el);
+
+  prepareExternalLink(link,urlValue);
+}
+
+// Main sidebar banner: load first, then reveal smoothly.
+if(adContainer){
+  hideAd(adContainer);
+  resetLink(adLink);
+  if(adBanner)resetImage(adBanner);
+
+  const enabled=isConfigOn(data.adEnabled);
+  const imageUrl=safeUrl(data.bannerImg);
+  if(enabled&&adBanner&&imageUrl!=='#'){
+    adBanner.onload=()=>revealAd(adContainer);
+    adBanner.onerror=()=>hideAd(adContainer);
+    adBanner.src=imageUrl;
+    if(adBanner.complete&&adBanner.naturalWidth>0)revealAd(adContainer);
+    prepareExternalLink(adLink,data.adUrl);
+  }
+}
+
+// Inline affiliate block: no image dependency, but still fades/slides in gently.
+if(sponsorSlot){
+  hideAd(sponsorSlot);
+  resetLink(inlineLink);
+  const canShowInline=isConfigOn(data.inlineAdEnabled)&&String(data.affiliateUrl||'').trim();
+  if(canShowInline){
+    if(sponsorLabel)sponsorLabel.textContent=data.adLabel||'Sponsored / Affiliate';
+    if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'F1 HUB PICKS';
+    if(sponsorDescription)sponsorDescription.textContent=data.adDescription||'Khu vực dành cho banner quảng cáo hoặc link affiliate.';
+    prepareExternalLink(inlineLink,data.affiliateUrl);
+    inlineLink?.classList.remove('hidden');
+    revealAd(sponsorSlot);
+  }else{
+    inlineLink?.classList.add('hidden');
+  }
+}
+
+const sideEnabled=isConfigOn(data.sideAdEnabled);
+setSideAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
+setSideAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
 
 if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
 }catch(error){
