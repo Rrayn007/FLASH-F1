@@ -24,7 +24,7 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:#eee;font-family:Inter,sans-serif;overflow-x:hidden}
 body.modal-open{overflow:hidden}
 img{display:block}
-#brand-logo[style*="display:none"],#footer-brand-logo[style*="display:none"]{display:none!important}
+#brand-logo.logo-failed,#footer-brand-logo.logo-failed{display:none!important}
 button,a{outline:none}
 button{font-family:inherit}
 ::-webkit-scrollbar{width:4px;height:4px}
@@ -919,7 +919,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 @keyframes sideAdRevealLeft{0%{opacity:0;transform:translate3d(-28px,-50%,0) scale(.97);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
 @keyframes sideAdRevealRight{0%{opacity:0;transform:translate3d(28px,-50%,0) scale(.97);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
 #side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0}
-#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 2s var(--ad-ease) both}
+#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both}
 #side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;position:relative;z-index:1}
 #side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s var(--ad-ease),filter .5s ease}
 #side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.008);filter:brightness(1.025)}
@@ -955,6 +955,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
 }
 </style>
+<link rel="preload" as="image" href="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" fetchpriority="high">
 </head>
 
 <body>
@@ -964,7 +965,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="h-20 flex items-center justify-between">
 <a href="#" class="flex items-center gap-3 min-w-0">
 <div id="brand-logo-wrap" class="flex items-center">
-<img id="brand-logo" class="hidden max-h-9 max-w-[145px] object-contain" style="display:none" alt="Site logo" decoding="async">
+<img id="brand-logo" src="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" class="max-h-9 max-w-[145px] object-contain" style="display:block" alt="Site logo" decoding="async" fetchpriority="high">
 </div>
 <div class="hidden sm:block text-[9px] uppercase tracking-[.25em] text-gray-600 border-l border-gray-800 pl-3">Formula 1</div>
 </a>
@@ -1175,7 +1176,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="max-w-7xl mx-auto px-5 lg:px-8 py-12">
 <div class="grid md:grid-cols-3 gap-10">
 <div>
-<img id="footer-brand-logo" class="hidden max-h-10 max-w-[170px] object-contain" style="display:none" alt="Site logo" decoding="async">
+<img id="footer-brand-logo" src="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" class="max-h-10 max-w-[170px] object-contain" style="display:block" alt="Site logo" decoding="async" loading="lazy">
 <p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">Nền tảng tổng hợp tin tức và dữ liệu Formula 1 với giao diện lấy cảm hứng từ broadcast graphics.</p>
 </div>
 <div>
@@ -1504,21 +1505,47 @@ async function fetchConfigAndTrack(){
       const data=await response.json();
       siteConfig=data||{};
 
-      // Logo
+      // Logo: embedded fast-path first; Sheet is fallback only if the embedded logo fails.
+      const EMBEDDED_LOGO_URL='https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000';
       const logoEl=document.getElementById('brand-logo');
       const footerLogoEl=document.getElementById('footer-brand-logo');
-      const logo=safeUrl(data.logoImg||data.logo||data.logoUrl);
-      if(logo!=='#'){
-        if(logoEl){
-          logoEl.onload=()=>{ logoEl.style.display='block'; logoEl.classList.remove('hidden'); };
-          logoEl.onerror=()=>{ logoEl.style.display='none'; logoEl.classList.add('hidden'); };
-          logoEl.src=logo;
+      const sheetLogo=safeUrl(data.logoImg||data.logo||data.logoUrl);
+
+      const applySheetLogoFallback=(el)=>{
+        if(!el || sheetLogo==='#')return;
+        el.classList.remove('logo-failed','hidden');
+        el.style.display='block';
+        if(el.src!==sheetLogo)el.src=sheetLogo;
+      };
+
+      if(logoEl){
+        logoEl.onerror=()=>{
+          logoEl.classList.add('logo-failed');
+          applySheetLogoFallback(logoEl);
+        };
+        // If the embedded logo is already loaded, leave it alone.
+        if(logoEl.complete && logoEl.naturalWidth>0){
+          logoEl.classList.remove('logo-failed','hidden');
+          logoEl.style.display='block';
         }
-        if(footerLogoEl){
-          footerLogoEl.onload=()=>{ footerLogoEl.style.display='block'; footerLogoEl.classList.remove('hidden'); };
-          footerLogoEl.onerror=()=>{ footerLogoEl.style.display='none'; footerLogoEl.classList.add('hidden'); };
-          footerLogoEl.src=logo;
+      }
+
+      if(footerLogoEl){
+        footerLogoEl.onerror=()=>{
+          footerLogoEl.classList.add('logo-failed');
+          applySheetLogoFallback(footerLogoEl);
+        };
+        if(footerLogoEl.complete && footerLogoEl.naturalWidth>0){
+          footerLogoEl.classList.remove('logo-failed','hidden');
+          footerLogoEl.style.display='block';
         }
+      }
+
+      // If there is no embedded logo available, Sheet remains the normal source.
+      // Do not replace a working embedded logo: this avoids a second image request.
+      if(sheetLogo!=='#'){
+        if(logoEl && logoEl.classList.contains('logo-failed'))applySheetLogoFallback(logoEl);
+        if(footerLogoEl && footerLogoEl.classList.contains('logo-failed'))applySheetLogoFallback(footerLogoEl);
       }
 
       // ============================================================
