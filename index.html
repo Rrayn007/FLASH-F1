@@ -908,6 +908,107 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
 }
 </style>
+
+<style id="side-ad-final-style">
+@media (min-width:1501px){
+  #side-ad-left,#side-ad-right{
+    display:none;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateY(4px) scale(.985);
+    transition:
+      opacity .65s cubic-bezier(.22,1,.36,1),
+      transform .65s cubic-bezier(.22,1,.36,1),
+      visibility 0s linear .65s;
+    will-change:opacity,transform;
+  }
+
+  #side-ad-left.ad-enabled,#side-ad-right.ad-enabled{
+    display:block;
+    visibility:visible;
+    pointer-events:auto;
+    opacity:1;
+    transform:none;
+    transition:
+      opacity .65s cubic-bezier(.22,1,.36,1),
+      transform .65s cubic-bezier(.22,1,.36,1),
+      visibility 0s;
+  }
+
+  #side-ad-left.is-entering,#side-ad-right.is-entering{
+    opacity:0;
+    transform:translateY(5px) scale(.985);
+  }
+
+  #side-ad-left a,#side-ad-right a{
+    display:block;
+    position:relative;
+    overflow:hidden;
+    border-radius:inherit;
+  }
+
+  #side-ad-left a::after,#side-ad-right a::after{
+    content:"";
+    position:absolute;
+    top:-25%;
+    left:-70%;
+    width:34%;
+    height:150%;
+    pointer-events:none;
+    opacity:0;
+    transform:skewX(-18deg);
+    background:linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255,255,255,0) 30%,
+      rgba(255,255,255,.12) 46%,
+      rgba(255,255,255,.28) 50%,
+      rgba(255,255,255,.08) 54%,
+      rgba(255,255,255,0) 70%,
+      transparent 100%
+    );
+  }
+
+  #side-ad-left.is-shining a::after,
+  #side-ad-right.is-shining a::after{
+    opacity:1;
+    animation:sideAdGlassSweep 1.8s cubic-bezier(.4,0,.2,1) both;
+  }
+
+  #side-ad-left img,#side-ad-right img{
+    display:block;
+    width:100%;
+    height:auto;
+    transform:translateZ(0);
+  }
+}
+
+@keyframes sideAdGlassSweep{
+  from{left:-70%;opacity:0}
+  8%{opacity:.9}
+  50%{opacity:1}
+  92%{opacity:.65}
+  to{left:135%;opacity:0}
+}
+
+@media (max-width:1500px){
+  #side-ad-left,#side-ad-right{
+    display:none!important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  #side-ad-left,#side-ad-right{
+    transition:none!important;
+  }
+  #side-ad-left.is-shining a::after,
+  #side-ad-right.is-shining a::after{
+    animation:none!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -1090,15 +1191,15 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </section>
 
 <!-- SIDE ADS: desktop only; controlled from Config sheet -->
-<div id="side-ad-left" class="hidden" aria-hidden="true">
+<div id="side-ad-left" aria-hidden="true" class="hidden" aria-hidden="true">
 <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
-<img id="side-ad-left-img" alt="Advertisement" loading="lazy" decoding="async">
+<img id="side-ad-left-img" alt="Advertisement" decoding="async">
 </a>
 </div>
 
-<div id="side-ad-right" class="hidden" aria-hidden="true">
+<div id="side-ad-right" aria-hidden="true" class="hidden" aria-hidden="true">
 <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
-<img id="side-ad-right-img" alt="Advertisement" loading="lazy" decoding="async">
+<img id="side-ad-right-img" alt="Advertisement" decoding="async">
 </a>
 </div>
 
@@ -1491,39 +1592,6 @@ function stopAdShine(el){
   el.classList.remove('is-shining');
 }
 
-function scheduleAdShine(el){
-  if(!el)return;
-  stopAdShine(el);
-  const run=()=>{
-    if(!el.classList.contains('ad-ready'))return;
-    el.classList.remove('is-shining');
-    void el.offsetWidth;
-    el.classList.add('is-shining');
-    // Remove the temporary shine class after the sweep, then wait a random interval.
-    setTimeout(()=>el.classList.remove('is-shining'),1500);
-    const next=9000+Math.random()*8000; // 9–17s, intentionally irregular
-    adShineTimers.set(el,setTimeout(run,next));
-  };
-  adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
-}
-
-function revealAd(el){
-  if(!el)return;
-  el.classList.remove('hidden');
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    el.classList.add('ad-ready');
-    scheduleAdShine(el);
-  }));
-}
-
-function hideAd(el){
-  if(!el)return;
-  stopAdShine(el);
-  el.classList.remove('ad-ready');
-  el.classList.add('hidden');
-  el.setAttribute('aria-hidden','true');
-}
-
 function resetLink(link){
   if(!link)return;
   link.removeAttribute('href');
@@ -1538,42 +1606,6 @@ function resetImage(img){
   img.onerror=null;
   img.removeAttribute('src');
   img.removeAttribute('srcset');
-}
-
-function prepareExternalLink(link,url){
-  const safe=safeUrl(url);
-  resetLink(link);
-  if(link&&safe!=='#'){
-    link.href=safe;
-    link.target='_blank';
-    link.rel='sponsored noopener noreferrer';
-    link.style.pointerEvents='auto';
-    return true;
-  }
-  return false;
-}
-
-function setSideAd({el,link,img},enabled,imageValue,urlValue){
-  if(!el)return;
-  hideAd(el);
-  resetLink(link);
-  resetImage(img);
-  if(!enabled||!img)return;
-
-  const imageUrl=safeUrl(imageValue);
-  if(imageUrl==='#')return;
-
-  img.onload=()=>{
-    // The image is fully decoded before the container enters the page.
-    revealAd(el);
-  };
-  img.onerror=()=>hideAd(el);
-  img.src=imageUrl;
-
-  // Cached image: onload can be skipped in some browsers.
-  if(img.complete&&img.naturalWidth>0)revealAd(el);
-
-  prepareExternalLink(link,urlValue);
 }
 
 // Main sidebar banner: load first, then reveal smoothly.
@@ -2686,6 +2718,145 @@ fetchStandings();
 fetchDriverImages().then(fetchDriverWikiFallbacks).then(()=>renderDrivers());
 fetchCarImages();
 });
+</script>
+
+
+<script id="side-ad-controller">
+(() => {
+  'use strict';
+
+  const ADS = {
+    left:  document.getElementById('side-ad-left'),
+    right: document.getElementById('side-ad-right')
+  };
+
+  const REDUCED = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+  const SHINE_DURATION = 1800;
+  const SHINE_MIN = 12000;
+  const SHINE_RANGE = 10000;
+
+  const hideAd = (el) => {
+    if (!el) return;
+    const img = el.querySelector('img');
+    const link = el.querySelector('a');
+
+    el.classList.remove('ad-enabled', 'is-shining', 'is-entering');
+    el.setAttribute('aria-hidden', 'true');
+    el.style.display = 'none';
+
+    if (link) {
+      link.removeAttribute('href');
+      link.setAttribute('tabindex', '-1');
+      link.setAttribute('aria-disabled', 'true');
+    }
+    if (img) {
+      img.removeAttribute('src');
+      img.removeAttribute('srcset');
+      img.alt = '';
+    }
+  };
+
+  const prepareAd = (el, url, href) => {
+    if (!el || !url) return Promise.resolve(false);
+
+    const img = el.querySelector('img');
+    const link = el.querySelector('a');
+    if (!img) return Promise.resolve(false);
+
+    // Reset everything before loading.
+    hideAd(el);
+    el.style.display = '';
+
+    return new Promise(resolve => {
+      let settled = false;
+      const finish = ok => {
+        if (settled) return;
+        settled = true;
+        resolve(ok);
+      };
+
+      const verify = () => {
+        if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+          if (link && href) {
+            link.href = href;
+            link.removeAttribute('aria-disabled');
+            link.removeAttribute('tabindex');
+          }
+          el.classList.add('ad-enabled');
+          el.setAttribute('aria-hidden', 'false');
+
+          // Force a layout boundary so the entrance transition starts cleanly.
+          void el.offsetWidth;
+          el.classList.add('is-entering');
+
+          setTimeout(() => {
+            el.classList.remove('is-entering');
+            finish(true);
+          }, 650);
+        } else {
+          hideAd(el);
+          finish(false);
+        }
+      };
+
+      img.onload = verify;
+      img.onerror = () => {
+        hideAd(el);
+        finish(false);
+      };
+
+      img.src = url;
+
+      // Cached image fallback.
+      if (img.complete) {
+        if (img.decode) {
+          img.decode().then(verify).catch(() => {
+            setTimeout(verify, 0);
+          });
+        } else {
+          setTimeout(verify, 0);
+        }
+      }
+    });
+  };
+
+  const scheduleAdShine = el => {
+    if (!el || REDUCED) return;
+
+    const run = () => {
+      if (!el.classList.contains('ad-enabled')) return;
+
+      el.classList.remove('is-shining');
+      void el.offsetWidth;
+      el.classList.add('is-shining');
+
+      window.setTimeout(() => {
+        el.classList.remove('is-shining');
+      }, SHINE_DURATION);
+
+      window.setTimeout(run, SHINE_MIN + Math.random() * SHINE_RANGE);
+    };
+
+    window.setTimeout(run, 8500 + Math.random() * 5000);
+  };
+
+  // Public controller used by the existing config code.
+  window.setSideAd = async (side, enabled, imageUrl, targetUrl) => {
+    const el = ADS[side];
+    if (!el) return;
+
+    if (!enabled || !imageUrl) {
+      hideAd(el);
+      return;
+    }
+
+    const ok = await prepareAd(el, imageUrl, targetUrl);
+    if (ok) scheduleAdShine(el);
+  };
+
+  // Hard-safe initial state before Google Sheet config arrives.
+  Object.values(ADS).forEach(hideAd);
+})();
 </script>
 
 </body>
