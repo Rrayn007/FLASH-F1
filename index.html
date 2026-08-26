@@ -471,7 +471,6 @@ button{font-family:inherit}
   #profile-number{font-size:62px!important}
 }
 
-
 /* TEAM PROFILE — dedicated layout, isolated from driver profile */
 #team-profile-content{
   position:relative;
@@ -555,7 +554,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 @media(max-width:900px){.sidebar-standings{grid-template-columns:1fr}.sidebar-standings>.flex,.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:auto}.sidebar-standing-card{height:auto;min-height:0}.sidebar-standing-card .standings-scroll,.sidebar-standing-card.constructors .standings-scroll{height:auto;max-height:360px}.news-featured-image{height:270px}.news-feed-card img{height:150px}}
 @media(max-width:640px){.news-featured-image{height:220px}}
 
-
 .team-logo{width:44px;height:32px;object-fit:contain;object-position:center}
 .driver-mini-image{width:35px;height:35px;object-fit:contain;object-position:bottom center}
 @media(max-width:768px){
@@ -565,14 +563,12 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .driver-lastname{font-size:21px}
 }
 
-
 /* Readability + layering fixes */
 #modal-sessions > div{border-color:#20242c;color:#e5e5e7}
 #modal-sessions > div span:last-child{color:#8b8f98;font-size:10px}
 #modal-result-block{padding-top:2px}
 #modal-result-block > .text\[9px\]{color:#70747d}
 #modal-race-name{letter-spacing:-.035em}
-
 
 /* Standings and small cards use the same graphite panel language */
 .sidebar-standing-card,
@@ -600,8 +596,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .status-next{
   background:var(--ui-blue);
 }
-
-
 
 /* =========================================================
    FINAL IMAGE / ACCENT PASS
@@ -723,8 +717,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 .team-driver-mini:hover .driver-mini-image{transform:scale(1.07)!important;}
 
-
-
 /* =========================================================
    DRIVER GRID — FINAL 4-COLUMN / WAIST-CROP PASS
    Keep the portrait head fully visible. Only the lower body
@@ -809,7 +801,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 </style>
 
-
 <style id="driver-card-rank-ghost-v8">
 /* V8 — stronger position badge + oversized background driver number */
 .driver-card .driver-rank{
@@ -886,63 +877,51 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   --side-ad-edge:16px;
 }
 
-/* IMPORTANT: side ads are invisible by default during first paint.
-   They become visible only after Google Sheet config confirms ON. */
+/* Hidden on first paint; JavaScript adds .ad-enabled only after config confirms ON. */
 #side-ad-left,#side-ad-right{
   position:fixed;
   top:50%;
   width:var(--side-ad-width);
   height:var(--side-ad-height);
-  transform:translateY(-50%);
+  transform:translateY(-50%) translateX(0) scale(.98);
   z-index:30;
   overflow:hidden;
-  display:none!important;
+  display:block!important;
   visibility:hidden!important;
   opacity:0!important;
   pointer-events:none!important;
+  transition:
+    opacity .42s ease,
+    transform .52s cubic-bezier(.22,1,.36,1),
+    visibility 0s linear .52s;
+  will-change:transform,opacity;
 }
-
-/* ON state is applied by JavaScript only after config has loaded. */
 #side-ad-left.ad-enabled,#side-ad-right.ad-enabled{
-  display:block!important;
   visibility:visible!important;
   opacity:1!important;
+  transform:translateY(-50%) translateX(0) scale(1);
   pointer-events:auto!important;
+  transition:
+    opacity .42s ease,
+    transform .52s cubic-bezier(.22,1,.36,1),
+    visibility 0s linear 0s;
 }
-
+#side-ad-left{left:var(--side-ad-edge);transform:translateY(-50%) translateX(-14px) scale(.98);}
+#side-ad-right{right:var(--side-ad-edge);transform:translateY(-50%) translateX(14px) scale(.98);}
+#side-ad-left.ad-enabled{transform:translateY(-50%) translateX(0) scale(1);}
+#side-ad-right.ad-enabled{transform:translateY(-50%) translateX(0) scale(1);}
 #side-ad-left{left:var(--side-ad-edge);}
 #side-ad-right{right:var(--side-ad-edge);}
-
-#side-ad-left-link,#side-ad-right-link{
-  display:block;
-  width:100%;
-  height:100%;
-}
-
-#side-ad-left-img,#side-ad-right-img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-}
-
-/* HARD OFF: an ad marked OFF must never leave an empty/clickable frame. */
-#side-ad-left.ad-disabled,
-#side-ad-right.ad-disabled{
-  display:none!important;
-  visibility:hidden!important;
-  opacity:0!important;
-  pointer-events:none!important;
-}
-#side-ad-left.ad-disabled *,
-#side-ad-right.ad-disabled *{
-  pointer-events:none!important;
-}
+#side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;}
+#side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;}
 
 /* Never show side ads on smaller screens, even if the sheet says ON. */
 @media (max-width:1500px){
   #side-ad-left,#side-ad-right{display:none!important;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #side-ad-left,#side-ad-right{transition:none!important;}
 }
 
 @media (min-width:1501px) and (max-height:800px){
@@ -1135,14 +1114,14 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </section>
 
 <!-- SIDE ADS: desktop only; controlled from Config sheet -->
-<div id="side-ad-left" class="hidden">
-<a id="side-ad-left-link" href="#" target="_blank" rel="sponsored noopener">
+<div id="side-ad-left" class="hidden" aria-hidden="true">
+<a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
 <img id="side-ad-left-img" alt="Advertisement" loading="lazy" decoding="async">
 </a>
 </div>
 
-<div id="side-ad-right" class="hidden">
-<a id="side-ad-right-link" href="#" target="_blank" rel="sponsored noopener">
+<div id="side-ad-right" class="hidden" aria-hidden="true">
+<a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
 <img id="side-ad-right-img" alt="Advertisement" loading="lazy" decoding="async">
 </a>
 </div>
@@ -1580,18 +1559,16 @@ const sideRightImg=document.getElementById('side-ad-right-img');
  * The config may arrive as boolean, "ON"/"OFF", "TRUE"/"FALSE", etc.
  * Only an explicit ON/TRUE/YES/1 enables the ad.
  */
-const isConfigOn=(value)=>{
+const isConfigOn=value=>{
   if(value===true)return true;
-  const normalized=String(value??'').trim().toUpperCase();
-  return ['ON','TRUE','YES','1'].includes(normalized);
+  return ['ON','TRUE','YES','1'].includes(String(value??'').trim().toUpperCase());
 };
 
 const setSideAd=(el,link,img,enabled,imageValue,urlValue)=>{
   if(!el)return;
 
-  // Reset everything first. This prevents stale DOM state after switching ON -> OFF.
+  // Reset first: OFF must immediately remove every interactive/stale state.
   el.classList.remove('ad-enabled');
-  el.classList.add('hidden','ad-disabled');
   el.setAttribute('aria-hidden','true');
 
   if(link){
@@ -1600,31 +1577,40 @@ const setSideAd=(el,link,img,enabled,imageValue,urlValue)=>{
     link.removeAttribute('rel');
     link.style.pointerEvents='none';
   }
-
   if(img){
+    img.onload=null;
+    img.onerror=null;
     img.removeAttribute('src');
     img.removeAttribute('srcset');
   }
 
-  if(!enabled || !imageValue)return;
-
   const imageUrl=safeUrl(imageValue);
-  if(imageUrl==='#')return;
+  if(!enabled || imageUrl==='#' || !img)return;
 
-  el.classList.remove('hidden','ad-disabled');
-  el.classList.add('ad-enabled');
-  el.setAttribute('aria-hidden','false');
+  const showAd=()=>{
+    el.classList.add('ad-enabled');
+    el.setAttribute('aria-hidden','false');
+  };
 
-  if(img)img.src=imageUrl;
+  // Load the image completely before revealing the ad, so it never pops in
+  // as a broken/blank frame and then changes size/content.
+  img.onload=showAd;
+  img.onerror=()=>{
+    img.removeAttribute('src');
+    el.classList.remove('ad-enabled');
+    el.setAttribute('aria-hidden','true');
+  };
+  img.src=imageUrl;
 
-  if(link){
-    const clickUrl=safeUrl(urlValue);
-    if(clickUrl!=='#'){
-      link.href=clickUrl;
-      link.target='_blank';
-      link.rel='sponsored noopener noreferrer';
-      link.style.pointerEvents='auto';
-    }
+  // Cached images may already be complete when src is assigned.
+  if(img.complete && img.naturalWidth>0)showAd();
+
+  const clickUrl=safeUrl(urlValue);
+  if(link && clickUrl!=='#'){
+    link.href=clickUrl;
+    link.target='_blank';
+    link.rel='sponsored noopener noreferrer';
+    link.style.pointerEvents='auto';
   }
 };
 
@@ -2010,7 +1996,6 @@ modal.setAttribute('aria-hidden','true');
 document.body.classList.remove('modal-open');
 }
 
-
 async function fetchStandings(){
 try{
 const [driverData,constructorData]=await Promise.all([
@@ -2035,7 +2020,6 @@ console.error('Standings API:',error);
 document.getElementById('standings-board').innerHTML='<div class="p-6 text-center text-red-700 text-xs">API CONNECTION ERROR</div>';
 }
 }
-
 
 const driverWikiImages={};
 const carWikiImages={};
@@ -2282,7 +2266,6 @@ bindDriverCardClicks();
 function bindDriverCardClicks(){
   // Intentionally empty: #drivers-grid uses one delegated click handler below.
 }
-
 
 const F1_CAR_MEDIA={
 mercedes:['mercedes','mercedes'],mclaren:['mclaren','mclaren'],ferrari:['ferrari','ferrari'],
@@ -2642,7 +2625,6 @@ closeProfile();
 document.getElementById('search-panel').classList.add('hidden');
 }
 });
-
 
 function setupAnchorNavigation(){
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
