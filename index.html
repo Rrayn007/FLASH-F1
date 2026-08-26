@@ -1471,15 +1471,29 @@ return official||fallback||'';
 function getDriverImageCandidates(d){
 const id=(d.Driver?.driverId||'').toLowerCase();
 const code=d.Driver?.code?.toLowerCase()||'';
-return [
+const candidates=[
 officialDriverMediaImage(d),
 driverImages[code],
 driverImages[id],
 driverWikiImages[id],
 driverImageFallback(d.Driver)
-].filter(Boolean);
+];
+// Arvid Lindblad needs extra F1 Media URL variants because the media CDN has
+// used both a nested asset path and a flat asset path for this driver.
+if(id==='lindblad'){
+  const team='racingbulls';
+  const code='arvlin01';
+  const base='https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/'+team;
+  candidates.unshift(
+    base+'/'+code+'/2026'+team+code+'right.webp',
+    base+'/'+code+'/2026'+team+code+'.webp',
+    base+'/2026'+team+code+'right.webp',
+    base+'/2026'+team+code+'.webp'
+  );
 }
-function driverImageOnError(img){
+return [...new Set(candidates.filter(Boolean))];
+}
+async function driverImageOnError(img){
 try{
 const list=JSON.parse(img.dataset.srcList||'[]');
 const next=Number(img.dataset.srcIndex||0)+1;
@@ -1487,6 +1501,18 @@ if(next<list.length){
 img.dataset.srcIndex=String(next);
 img.src=list[next];
 return;
+}
+// Last-resort Wikimedia fallback. This is especially important for Lindblad
+// when an F1 Media CDN variant changes or is temporarily unavailable.
+const page=img.dataset.wikiPage||'';
+if(page){
+  const wiki=await fetchWikipediaSummaryImage(page);
+  if(wiki){
+    img.dataset.srcIndex=String(list.length);
+    img.dataset.srcList=JSON.stringify([...list,wiki]);
+    img.src=wiki;
+    return;
+  }
 }
 }catch{}
 img.onerror=null;
@@ -1563,7 +1589,7 @@ const image=getDriverImage(d);
 const imageCandidates=getDriverImageCandidates(d);
 return `<article class="driver-card rounded-lg p-5" data-driver-id="${escapeHTML(d.Driver.driverId)}" role="button" tabindex="0" style="--team-color:${meta.color}">
 <div class="driver-gradient"></div>
-<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" data-src-list='${escapeHTML(JSON.stringify(imageCandidates))}' data-src-index="0" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)"></div>
+<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" data-src-list='${escapeHTML(JSON.stringify(imageCandidates))}' data-src-index="0" data-wiki-page="${escapeHTML((firstName+'_'+lastName).replaceAll(' ','_'))}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
 <div class="driver-content">
 <div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-500 mt-1">2026 DRIVER</div></div></div><div class="driver-rank">P${escapeHTML(d.position||index+1)}</div></div>
@@ -1651,7 +1677,7 @@ ${team.drivers.slice(0,2).map(driver=>{
 const image=getDriverImage(driver);
 return`
 <div class="team-card-driver-mini bg-[#171719] rounded px-3 py-2 flex items-center gap-2" data-driver-id="${escapeHTML(driver.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)} profile">
-<img src="${escapeHTML(image)}" class="driver-mini-image shrink-0" alt="${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)}" loading="lazy" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
+<img src="${escapeHTML(image)}" data-src-list='${escapeHTML(JSON.stringify(getDriverImageCandidates(driver)))}' data-src-index="0" data-wiki-page="${escapeHTML((driver.Driver.givenName+'_'+driver.Driver.familyName).replaceAll(' ','_'))}" class="driver-mini-image shrink-0" alt="${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
 <div class="team-driver-copy">
 <div class="text-[7px] uppercase text-gray-600">Driver</div>
 <div class="text-xs font-black uppercase mt-1 truncate">${escapeHTML(driver.Driver.familyName)}</div>
