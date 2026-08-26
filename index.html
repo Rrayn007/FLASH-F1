@@ -565,6 +565,159 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   .team-card-driver-mini .driver-mini-name{font-size:11px;}
 }
 
+
+/* =========================================================
+   FINAL VISUAL PASS — clean F1 editorial layout
+   ========================================================= */
+
+/* Main Driver cards: remove the hard horizontal black band.
+   The photo fades organically into the team-colour title zone. */
+.driver-card{isolation:isolate;background:linear-gradient(145deg,#0b0b0d 0%,#101013 100%);}
+.driver-card .driver-photo-wrap{z-index:1;}
+.driver-card .driver-gradient{
+  z-index:2;
+  inset:0;
+  height:100%;
+  background:
+    radial-gradient(ellipse 70% 42% at 20% 78%,color-mix(in srgb,var(--team-color,#e10600) 24%,transparent) 0%,color-mix(in srgb,var(--team-color,#e10600) 12%,transparent) 30%,transparent 72%),
+    linear-gradient(to bottom,transparent 42%,rgba(10,10,12,.05) 50%,rgba(10,10,12,.22) 64%,rgba(10,10,12,.58) 80%,#0b0b0d 100%);
+  pointer-events:none;
+}
+.driver-card .driver-gradient::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:42%;
+  bottom:15%;
+  height:26%;
+  background:radial-gradient(ellipse at 28% 55%,color-mix(in srgb,var(--team-color,#e10600) 18%,transparent),transparent 72%);
+  filter:blur(10px);
+  opacity:.8;
+}
+.driver-card .driver-content{z-index:6;}
+.driver-card .driver-firstname,
+.driver-card .driver-lastname{
+  text-shadow:0 2px 12px rgba(0,0,0,.75),0 0 24px rgba(0,0,0,.5);
+}
+.driver-card .driver-lastname{max-width:78%;}
+
+/* Team listing cards: compact but readable driver tiles. */
+.team-card-driver-mini{
+  height:132px!important;
+  min-height:132px!important;
+  padding:8px 10px!important;
+  gap:8px!important;
+  align-items:flex-end;
+  background:linear-gradient(145deg,#151517,#101012)!important;
+  border:1px solid #242428;
+  border-radius:9px;
+}
+.team-card-driver-mini .driver-mini-image{
+  flex:0 0 78px!important;
+  width:78px!important;
+  max-width:78px!important;
+  height:124px!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:scale(1.06);
+  transform-origin:center bottom;
+  filter:drop-shadow(0 8px 12px rgba(0,0,0,.55));
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 76%,rgba(0,0,0,.72) 91%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 76%,rgba(0,0,0,.72) 91%,transparent 100%);
+}
+.team-card-driver-mini:hover .driver-mini-image{transform:scale(1.10) translateY(-1px);}
+.team-card-driver-mini .team-driver-copy{
+  align-self:center;
+  padding:0 3px 2px 0!important;
+  min-width:0;
+}
+.team-card-driver-mini .driver-mini-label{font-size:7px!important;margin-bottom:7px!important;color:#666970!important;}
+.team-card-driver-mini .driver-mini-name{
+  font-size:14px!important;
+  line-height:1!important;
+  letter-spacing:-.025em;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+.team-card-driver-mini .driver-mini-points{font-size:9px!important;margin-top:7px!important;color:#80838b!important;}
+.team-card-driver-mini::before{
+  z-index:1;
+  background:radial-gradient(ellipse at 12% 82%,color-mix(in srgb,var(--team-color,#e10600) 11%,transparent),transparent 52%),linear-gradient(90deg,transparent 28%,rgba(10,10,12,.12) 52%,rgba(10,10,12,.72) 100%)!important;
+}
+
+/* Team Profile lineup: no horizontal cut. The portrait and title merge
+   through a soft radial team-colour field + bottom vignette. */
+.team-driver-mini{
+  min-height:350px!important;
+  height:350px!important;
+  background:linear-gradient(145deg,#111113,#0d0d0f)!important;
+}
+.team-driver-mini::before{
+  background:
+    radial-gradient(ellipse 58% 46% at 22% 76%,color-mix(in srgb,var(--team-color,#e10600) 20%,transparent) 0%,color-mix(in srgb,var(--team-color,#e10600) 8%,transparent) 38%,transparent 74%),
+    linear-gradient(to bottom,transparent 36%,rgba(12,12,14,.05) 48%,rgba(12,12,14,.18) 63%,rgba(12,12,14,.48) 78%,#0c0c0e 100%)!important;
+}
+.team-driver-mini .driver-mini-photo-wrap{
+  z-index:1;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 72%,rgba(0,0,0,.9) 82%,rgba(0,0,0,.55) 91%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 72%,rgba(0,0,0,.9) 82%,rgba(0,0,0,.55) 91%,transparent 100%);
+}
+.team-driver-mini .driver-mini-image{
+  left:-2%!important;
+  top:-3%!important;
+  width:60%!important;
+  height:110%!important;
+  transform:scale(1.04)!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+.team-driver-mini:hover .driver-mini-image{transform:scale(1.07) translateY(-2px)!important;}
+.team-driver-mini .team-driver-copy{
+  left:45%!important;
+  right:6%!important;
+  bottom:27px!important;
+  z-index:7;
+}
+.team-driver-mini .team-driver-copy::before{
+  left:-28px!important;
+  right:-18px!important;
+  top:-42px!important;
+  bottom:-24px!important;
+  background:
+    radial-gradient(ellipse at 25% 72%,color-mix(in srgb,var(--team-color,#e10600) 24%,transparent),transparent 68%),
+    linear-gradient(90deg,color-mix(in srgb,var(--team-color,#e10600) 9%,transparent),rgba(10,10,12,.28) 48%,transparent 100%)!important;
+  filter:blur(14px)!important;
+  opacity:.9!important;
+}
+.team-driver-mini .team-driver-copy .driver-mini-label{margin-bottom:9px!important;}
+.team-driver-mini .team-driver-copy .driver-mini-name{
+  font-size:clamp(21px,2.1vw,29px)!important;
+  line-height:.98!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+.team-driver-mini .team-driver-copy .driver-mini-points{margin-top:11px!important;font-size:16px!important;}
+.team-driver-mini .driver-mini-number{font-size:44px!important;color:rgba(255,255,255,.045)!important;}
+
+@media(max-width:768px){
+  .team-driver-mini{min-height:300px!important;height:300px!important;}
+  .team-driver-mini .driver-mini-image{width:64%!important;height:108%!important;left:-7%!important;}
+  .team-driver-mini .team-driver-copy{left:45%!important;bottom:22px!important;}
+  .team-driver-mini .team-driver-copy .driver-mini-name{font-size:clamp(18px,5vw,24px)!important;}
+  .team-card-driver-mini{height:120px!important;min-height:120px!important;}
+  .team-card-driver-mini .driver-mini-image{flex-basis:70px!important;width:70px!important;max-width:70px!important;height:114px!important;}
+}
+@media(max-width:480px){
+  .team-card-driver-mini{height:112px!important;min-height:112px!important;padding:7px!important;gap:6px!important;}
+  .team-card-driver-mini .driver-mini-image{flex-basis:62px!important;width:62px!important;max-width:62px!important;height:108px!important;}
+  .team-card-driver-mini .driver-mini-name{font-size:12px!important;}
+}
+
 </style>
 
 </head>
