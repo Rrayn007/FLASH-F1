@@ -15,7 +15,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 :root{--red:#e10600;--bg:#080808;--panel:#0d0d0f;--panel2:#111114;--border:#222225;--ui-border:#272b31;--ui-cyan:#00d7c4;--ui-blue:#3f82ff;--ui-muted:#777d86}
@@ -89,6 +89,8 @@ button{font-family:inherit}
     linear-gradient(145deg,#0b0d10 0%,#101216 100%);
   box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);
   font-family:Inter,Arial,Helvetica,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
   transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
 }
 .driver-card:hover,.team-card:hover{
@@ -138,11 +140,11 @@ button{font-family:inherit}
 .driver-card .driver-photo{
   position:absolute;
   left:-5%;top:-2%;
-  width:110%;height:122%;
+  width:118%;height:142%;
   max-width:none;min-width:0;
   object-fit:contain;
   object-position:center top;
-  transform:scale(1.03);
+  transform:scale(1.02);
   transform-origin:center top;
   filter:drop-shadow(0 14px 20px rgba(0,0,0,.58));
   transition:transform .3s ease;
@@ -247,17 +249,17 @@ button{font-family:inherit}
 }
 .team-card .team-card-driver-mini .driver-mini-image{
   position:absolute!important;
-  left:-2%!important;bottom:-10%!important;
-  width:56%!important;max-width:none!important;
-  height:132%!important;flex:none!important;
-  object-fit:contain!important;object-position:center bottom!important;
-  transform:scale(1.04);transform-origin:center bottom;
-  filter:drop-shadow(0 7px 10px rgba(0,0,0,.55));
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 68%,rgba(0,0,0,.85) 80%,transparent 100%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 68%,rgba(0,0,0,.85) 80%,transparent 100%);
+  left:-4%!important;top:-7%!important;bottom:auto!important;
+  width:61%!important;max-width:none!important;
+  height:145%!important;flex:none!important;
+  object-fit:contain!important;object-position:center top!important;
+  transform:scale(1.02);transform-origin:center top;
+  filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 58%,rgba(0,0,0,.94) 68%,rgba(0,0,0,.58) 80%,transparent 94%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 58%,rgba(0,0,0,.94) 68%,rgba(0,0,0,.58) 80%,transparent 94%);
   transition:transform .25s ease;
 }
-.team-card .team-card-driver-mini:hover .driver-mini-image{transform:scale(1.08) translateY(-1px)}
+.team-card .team-card-driver-mini:hover .driver-mini-image{transform:scale(1.06) translateY(-1px)}
 .team-card .team-card-driver-mini .team-driver-copy{
   position:absolute!important;left:50%!important;right:5%!important;bottom:11px!important;
   z-index:5;min-width:0;padding:0!important;pointer-events:none;
@@ -351,7 +353,27 @@ button{font-family:inherit}
 .profile-constructor-box{min-height:194px;position:relative;z-index:2}
 .profile-constructor-info{min-height:145px;display:flex;align-items:center}
 .profile-team-logo{width:84px;height:64px;object-fit:contain;object-position:center;opacity:.96;flex:none}
-#profile-driver-image{position:absolute;right:-1%;top:-2px;width:38%;height:625px;object-fit:contain;object-position:center bottom;z-index:5;filter:drop-shadow(0 16px 24px rgba(0,0,0,.55));display:block;pointer-events:none}
+/* DRIVER PROFILE VISUAL — head-to-waist crop + editorial effects */
+#driver-profile-content{position:relative;min-height:540px;overflow:hidden;isolation:isolate}
+.profile-driver-visual{
+  position:absolute;z-index:2;right:-2%;top:6px;width:48%;height:570px;
+  overflow:hidden;pointer-events:none;
+  background:radial-gradient(ellipse at 48% 46%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 64%);
+}
+.profile-driver-visual:before{
+  content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse at 34% 76%,color-mix(in srgb,var(--team-color,#00d7c4) 22%,transparent),transparent 58%),
+             linear-gradient(90deg,rgba(9,10,12,.98) 0%,rgba(9,10,12,.46) 25%,transparent 62%);
+}
+.profile-driver-grid{position:absolute;inset:0;z-index:1;opacity:.34;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(90deg,black,transparent 78%)}
+.profile-driver-dots{position:absolute;z-index:2;left:0;bottom:8%;width:56%;height:46%;opacity:.68;background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 72%,transparent) 1px,transparent 1.5px);background-size:8px 8px;mask-image:linear-gradient(90deg,black,transparent 90%)}
+.profile-driver-glow{position:absolute;z-index:1;left:8%;bottom:4%;width:74%;height:54%;background:radial-gradient(ellipse,color-mix(in srgb,var(--team-color,#00d7c4) 22%,transparent),transparent 70%);filter:blur(24px);opacity:.72}
+.profile-driver-ghost{position:absolute;z-index:1;right:8%;top:4%;font:900 130px/.8 Inter,Arial,sans-serif;letter-spacing:-.08em;color:rgba(255,255,255,.035)}
+.profile-driver-visual:after{content:"";position:absolute;z-index:6;left:0;right:0;bottom:0;height:34%;background:linear-gradient(to bottom,transparent 0%,rgba(9,9,10,.06) 25%,rgba(9,9,10,.52) 70%,#090909 100%)}
+#profile-driver-image{position:absolute;right:1%;top:-4%;width:96%;height:112%;object-fit:contain;object-position:center top;z-index:5;filter:drop-shadow(0 16px 24px rgba(0,0,0,.62));display:block;pointer-events:none;transform:scale(1.34);transform-origin:center top;-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 62%,rgba(0,0,0,.96) 70%,rgba(0,0,0,.62) 82%,rgba(0,0,0,.18) 94%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 62%,rgba(0,0,0,.96) 70%,rgba(0,0,0,.62) 82%,rgba(0,0,0,.18) 94%,transparent 100%)}
+#driver-profile-content>.grid,#driver-stats{position:relative;z-index:10;width:58%}
+#driver-profile-content>.grid{margin-right:auto}
+
 #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
 #driver-profile-content > .grid:first-child{width:100%}
 .profile-image-fallback{display:block!important;opacity:.98}
@@ -361,7 +383,10 @@ button{font-family:inherit}
   .profile-constructor-box{min-height:160px}
   .profile-constructor-info{min-height:110px}
   .profile-team-logo{width:62px;height:46px}
-  #profile-driver-image{position:relative;right:auto;top:auto;width:100%;height:400px;display:block;object-position:center bottom;margin:8px 0 0}
+  #driver-profile-content{min-height:0;padding-bottom:0}
+  .profile-driver-visual{position:relative;right:auto;top:auto;width:100%;height:390px;margin:4px 0 -20px}
+  #profile-driver-image{right:-4%;top:-2%;width:108%;height:112%;transform:scale(1.22);object-position:center top}
+  #driver-profile-content>.grid,#driver-stats{width:100%}
   #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
 }
 
@@ -724,7 +749,13 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 
 <div id="driver-profile-content" class="mt-8">
-<img id="profile-driver-image" class="profile-driver-image" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+<div class="profile-driver-visual" aria-hidden="true">
+  <div class="profile-driver-grid"></div>
+  <div class="profile-driver-dots"></div>
+  <div class="profile-driver-glow"></div>
+  <div class="profile-driver-ghost">01</div>
+  <img id="profile-driver-image" class="profile-driver-image" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+</div>
 <div class="grid md:grid-cols-3 gap-4">
 <div id="profile-number-box" class="md:col-span-1 bg-[#101010] rounded-lg p-6 relative overflow-hidden">
 <div class="absolute right-[-10px] bottom-[-25px] profile-number">1</div>
@@ -1700,6 +1731,7 @@ const profileModal=document.getElementById('profile-modal');
 if(!profileModal){console.error('[F1 HUB] #profile-modal is missing from the DOM.');return;}
 
 document.getElementById('profile-color-bar').style.background=meta.color;
+document.getElementById('driver-profile-content').style.setProperty('--team-color',meta.color);
 document.getElementById('profile-type').textContent='DRIVER PROFILE';
 document.getElementById('profile-name').textContent=`${driver.Driver.givenName} ${driver.Driver.familyName}`;
 document.getElementById('profile-number').textContent=number;
