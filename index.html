@@ -893,13 +893,13 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #side-ad-right{right:var(--side-ad-edge);transform:translateY(-50%) translateX(12px) scale(.985)}
 #side-ad-left.ad-ready,#side-ad-right.ad-ready{transform:translateY(-50%) translateX(0) scale(1);transition:opacity .68s ease,transform .82s var(--ad-ease),visibility 0s linear 0s}
 #side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0}
-#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.8s var(--ad-ease) both}
+#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both}
 #side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;position:relative;z-index:1}
 #side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s var(--ad-ease),filter .5s ease}
 #side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.008);filter:brightness(1.025)}
 
 /* Never show side ads on smaller screens. */
-
+@media(max-width:1500px){#side-ad-left,#side-ad-right{display:none!important}}
 @media(min-width:1501px) and (max-height:800px){:root{--side-ad-height:450px}}
 @media(min-width:1501px) and (max-height:650px){:root{--side-ad-height:380px}}
 @media(prefers-reduced-motion:reduce){
@@ -907,16 +907,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   #ad-container.is-shining:after,#sponsor-slot.is-shining .card:after,#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{animation:none!important}
   #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
 }
-</style>
-<style id="f1hub-ads-runtime-fix">
-/* Runtime fix: Tailwind .hidden is used only as the initial state. JS removes it before .ad-ready. */
-#ad-container.ad-ready,#sponsor-slot.ad-ready,#side-ad-left.ad-ready,#side-ad-right.ad-ready{display:block!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
-#ad-container:not(.ad-ready),#sponsor-slot:not(.ad-ready),#side-ad-left:not(.ad-ready),#side-ad-right:not(.ad-ready){opacity:0!important;visibility:hidden!important;pointer-events:none!important}
-#ad-container img,#side-ad-left img,#side-ad-right img{display:block!important}
-</style>
-<style id="f1hub-ads-hard-override">
-#ad-container.ad-ready,#sponsor-slot.ad-ready,#side-ad-left.ad-ready,#side-ad-right.ad-ready{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
-#brand-logo:not(.hidden){display:block!important;visibility:visible!important}
 </style>
 </head>
 
@@ -1439,13 +1429,13 @@ clearTimeout(timer);
 }
 
 async function getClientIp(){
-const endpoints=['https://api64.ipify.org?format=json','https://api.ipify.org?format=json'];
+const endpoints=[
+'https://api64.ipify.org?format=json',
+'https://api.ipify.org?format=json'
+];
 for(const endpoint of endpoints){
 try{
-const controller=new AbortController();
-const timer=setTimeout(()=>controller.abort(),3500);
-const response=await fetch(endpoint,{cache:'no-store',signal:controller.signal});
-clearTimeout(timer);
+const response=await fetch(endpoint,{cache:'no-store'});
 if(!response.ok)continue;
 const data=await response.json();
 if(data?.ip)return String(data.ip).trim();
@@ -1454,211 +1444,180 @@ if(data?.ip)return String(data.ip).trim();
 return '';
 }
 
-function configKey(value=''){
-return String(value??'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
-}
-
-function buildConfig(raw={}){
-const source=(raw&&typeof raw==='object'&&!Array.isArray(raw))?(raw.config&&typeof raw.config==='object'?raw.config:raw):{};
-const map={};
-Object.keys(source).forEach(key=>map[configKey(key)]=source[key]);
-const aliases={
- adEnabled:['adenabled','adson','bannerenabled','mainadenabled'],
- bannerImg:['bannerimg','bannerimage','adimage','adbanner','bannerurl'],
- adUrl:['adurl','bannerurlclick','bannerlink','adlink'],
- inlineAdEnabled:['inlineadenabled','inlineadson','affiliateenabled'],
- affiliateUrl:['affiliateurl','inlinelink','affiliateLink'],
- adLabel:['adlabel','sponsorlabel'],
- adTitle:['adtitle','sponsortitle'],
- adDescription:['addescription','sponsordescription'],
- sideAdEnabled:['sideadenabled','sideadson','sidebannersenabled'],
- sideAdLeftImg:['sideadleftimg','leftadimg','leftbannerimg','leftsidead'],
- sideAdLeftUrl:['sideadlefturl','leftadurl','leftbannerurl','leftsideadurl'],
- sideAdRightImg:['sideadrightimg','rightadimg','rightbannerimg','rightsidead'],
- sideAdRightUrl:['sideadrighturl','rightadurl','rightbannerurl','rightsideadurl'],
- logoImg:['logoimg','logo','logourl']
-};
-const out={...source};
-Object.entries(aliases).forEach(([target,names])=>{
-for(const name of names){const key=configKey(name);if(map[key]!==undefined&&map[key]!==null&&String(map[key]).trim()!==''){out[target]=map[key];break;}}
-});
-return out;
-}
-
-function isConfigOn(value){
-return value===true||value===1||['ON','TRUE','YES','1','Y','ENABLED'].includes(String(value??'').trim().toUpperCase());
-}
-
-function normalizeImageUrl(value=''){
-let url=safeUrl(value);
-if(url==='#')return '#';
-try{
-const u=new URL(url);
-// Google Drive share/file URLs are not direct image URLs; convert the common forms.
-if(u.hostname==='drive.google.com'){
-const id=u.pathname.match(/\/file\/d\/([^/]+)/)?.[1]||u.searchParams.get('id');
-if(id)return `https://drive.google.com/uc?export=view&id=${encodeURIComponent(id)}`;
-}
-return u.toString();
-}catch{return '#'}
-}
-
 async function fetchConfigAndTrack(){
-  // ADS/LOGO: simple and independent. Do not let analytics or animations
-  // block an image from appearing.
-  const cacheKey='f1hub_ads_config_simple_v1';
+try{
+// Get the public IP once per page load. The Apps Script deduplicates it,
+// so F5/reloads from the same IP do not increase Unique Visitors.
+const ip=await getClientIp();
+const url=new URL(GAS_WEB_APP_URL);
+if(ip)url.searchParams.set('ip',ip);
 
-  const show=(el)=>{
-    if(!el)return;
-    el.classList.remove('hidden');
+const response=await fetch(url.toString(),{cache:'no-store'});
+if(!response.ok)throw new Error(`GAS HTTP ${response.status}`);
+const data=await response.json();
+siteConfig=data||{};
+
+if(data.logoImg||data.logo||data.logoUrl){
+const logo=data.logoImg||data.logo||data.logoUrl;
+document.getElementById('brand-logo').src=safeUrl(logo);
+document.getElementById('brand-logo').classList.remove('hidden');
+document.getElementById('brand-text').classList.add('hidden');
+}
+// ============================================================
+// ADS — controlled entirely from Google Sheet
+// ============================================================
+const adContainer=document.getElementById('ad-container');
+const adBanner=document.getElementById('ad-banner');
+const adLink=document.getElementById('ad-link');
+const sponsorSlot=document.getElementById('sponsor-slot');
+const inlineLink=document.getElementById('inline-ad-link');
+const sponsorLabel=document.getElementById('sponsor-label');
+const sponsorTitle=document.getElementById('sponsor-title');
+const sponsorDescription=document.getElementById('sponsor-description');
+
+const sideAds=[
+  {el:document.getElementById('side-ad-left'),link:document.getElementById('side-ad-left-link'),img:document.getElementById('side-ad-left-img')},
+  {el:document.getElementById('side-ad-right'),link:document.getElementById('side-ad-right-link'),img:document.getElementById('side-ad-right-img')}
+];
+
+const isConfigOn=value=>value===true||['ON','TRUE','YES','1'].includes(String(value??'').trim().toUpperCase());
+const adShineTimers=new WeakMap();
+
+function stopAdShine(el){
+  if(!el)return;
+  const timer=adShineTimers.get(el);
+  if(timer)clearTimeout(timer);
+  adShineTimers.delete(el);
+  el.classList.remove('is-shining');
+}
+
+function scheduleAdShine(el){
+  if(!el)return;
+  stopAdShine(el);
+  const run=()=>{
+    if(!el.classList.contains('ad-ready'))return;
+    el.classList.remove('is-shining');
+    void el.offsetWidth;
+    el.classList.add('is-shining');
+    // Remove the temporary shine class after the sweep, then wait a random interval.
+    setTimeout(()=>el.classList.remove('is-shining'),1500);
+    const next=9000+Math.random()*8000; // 9–17s, intentionally irregular
+    adShineTimers.set(el,setTimeout(run,next));
+  };
+  adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
+}
+
+function revealAd(el){
+  if(!el)return;
+  el.classList.remove('hidden');
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
     el.classList.add('ad-ready');
-    el.removeAttribute('aria-hidden');
-    el.style.display='block';
-    el.style.visibility='visible';
-    el.style.opacity='1';
-    el.style.pointerEvents='auto';
-  };
-  const hide=(el)=>{
-    if(!el)return;
-    el.classList.remove('ad-ready');
-    el.classList.add('hidden');
-    el.setAttribute('aria-hidden','true');
-  };
-  const setLink=(el,url)=>{
-    if(!el)return;
-    const u=safeUrl(url);
-    el.removeAttribute('href');
-    if(u!=='#'){
-      el.href=u;
-      el.target='_blank';
-      el.rel='sponsored noopener noreferrer';
-    }
-  };
-  const setImage=(img,box,url)=>{
-    if(!img||!box)return;
-    const u=normalizeImageUrl(url);
-    if(u==='#'){
-      hide(box);
-      return;
-    }
-    img.onerror=()=>hide(box);
-    img.onload=()=>show(box);
-    img.removeAttribute('srcset');
-    img.src=u;
-    // Cached image: do not wait for another event.
-    if(img.complete && img.naturalWidth>0)show(box);
-  };
+    scheduleAdShine(el);
+  }));
+}
 
-  const apply=(raw)=>{
-    const data=buildConfig(raw||{});
-    siteConfig=data;
+function hideAd(el){
+  if(!el)return;
+  stopAdShine(el);
+  el.classList.remove('ad-ready');
+  el.classList.add('hidden');
+  el.setAttribute('aria-hidden','true');
+}
 
-    // MAIN BANNER: B5 + B2
-    const main=document.getElementById('ad-container');
-    const mainImg=document.getElementById('ad-banner');
-    const mainLink=document.getElementById('ad-link');
-    hide(main);
-    if(isConfigOn(data.adEnabled) && normalizeImageUrl(data.bannerImg)!=='#'){
-      setLink(mainLink,data.adUrl);
-      setImage(mainImg,main,data.bannerImg);
-    }
+function resetLink(link){
+  if(!link)return;
+  link.removeAttribute('href');
+  link.removeAttribute('target');
+  link.removeAttribute('rel');
+  link.style.pointerEvents='none';
+}
 
-    // AFFILIATE: B9 + B4. No dependency on the banner.
-    const sponsor=document.getElementById('sponsor-slot');
-    const inline=document.getElementById('inline-ad-link');
-    if(sponsor){
-      hide(sponsor);
-      const affiliate=safeUrl(data.affiliateUrl);
-      if(isConfigOn(data.inlineAdEnabled) && affiliate!=='#'){
-        const label=document.getElementById('sponsor-label');
-        const title=document.getElementById('sponsor-title');
-        const desc=document.getElementById('sponsor-description');
-        if(label)label.textContent=data.adLabel||'SPONSORED / AFFILIATE';
-        if(title)title.textContent=data.adTitle||'F1HUB PICKS';
-        if(desc)desc.textContent=data.adDescription||'Khu vực dành cho banner quảng cáo hoặc link affiliate.';
-        setLink(inline,affiliate);
-        if(inline)inline.classList.remove('hidden');
-        show(sponsor);
-      }else if(inline){
-        inline.classList.add('hidden');
-      }
-    }
+function resetImage(img){
+  if(!img)return;
+  img.onload=null;
+  img.onerror=null;
+  img.removeAttribute('src');
+  img.removeAttribute('srcset');
+}
 
-    // SIDE ADS: B10 + each image. Each side is independent.
-    const left=document.getElementById('side-ad-left');
-    const leftImg=document.getElementById('side-ad-left-img');
-    const leftLink=document.getElementById('side-ad-left-link');
-    const right=document.getElementById('side-ad-right');
-    const rightImg=document.getElementById('side-ad-right-img');
-    const rightLink=document.getElementById('side-ad-right-link');
-    hide(left); hide(right);
-    if(isConfigOn(data.sideAdEnabled)){
-      setLink(leftLink,data.sideAdLeftUrl);
-      setLink(rightLink,data.sideAdRightUrl);
-      setImage(leftImg,left,data.sideAdLeftImg);
-      setImage(rightImg,right,data.sideAdRightImg);
-    }
-
-    // LOGO: B3 only. Never depends on ads/analytics.
-    const logo=document.getElementById('brand-logo');
-    const text=document.getElementById('brand-text');
-    const logoUrl=normalizeImageUrl(data.logoImg||data.logo||data.logoUrl);
-    if(logo && logoUrl!=='#'){
-      logo.onerror=()=>{
-        logo.classList.add('hidden');
-        if(text)text.classList.remove('hidden');
-      };
-      logo.onload=()=>{
-        logo.classList.remove('hidden');
-        logo.style.display='block';
-        if(text)text.classList.add('hidden');
-      };
-      logo.src=logoUrl;
-      if(logo.complete && logo.naturalWidth>0){
-        logo.classList.remove('hidden');
-        logo.style.display='block';
-        if(text)text.classList.add('hidden');
-      }
-    }else if(text){
-      text.classList.remove('hidden');
-    }
-
-    if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
-    console.info('[F1HUB] Ads applied',{
-      ad:isConfigOn(data.adEnabled),
-      affiliate:isConfigOn(data.inlineAdEnabled),
-      side:isConfigOn(data.sideAdEnabled),
-      banner:data.bannerImg||'',logo:data.logoImg||''
-    });
-    return data;
-  };
-
-  // First use cached config so the page does not go blank during a temporary API issue.
-  try{
-    const cached=sessionStorage.getItem(cacheKey);
-    if(cached){
-      const obj=JSON.parse(cached);
-      if(obj?.data)apply(obj.data);
-    }
-  }catch{}
-
-  // One simple Config request. No IP, no Analytics, no Lock.
-  try{
-    const controller=new AbortController();
-    const timer=setTimeout(()=>controller.abort(),10000);
-    const response=await fetch(GAS_WEB_APP_URL+'?v='+Date.now(),{
-      cache:'no-store',
-      signal:controller.signal
-    });
-    clearTimeout(timer);
-    if(!response.ok)throw new Error('GAS HTTP '+response.status);
-    const data=await response.json();
-    if(data?.error)throw new Error(data.message||'Config error');
-    apply(data);
-    try{sessionStorage.setItem(cacheKey,JSON.stringify({time:Date.now(),data}))}catch{}
-  }catch(error){
-    console.warn('[F1HUB] Config unavailable; keeping cached/default state.',error);
+function prepareExternalLink(link,url){
+  const safe=safeUrl(url);
+  resetLink(link);
+  if(link&&safe!=='#'){
+    link.href=safe;
+    link.target='_blank';
+    link.rel='sponsored noopener noreferrer';
+    link.style.pointerEvents='auto';
+    return true;
   }
+  return false;
+}
+
+function setSideAd({el,link,img},enabled,imageValue,urlValue){
+  if(!el)return;
+  hideAd(el);
+  resetLink(link);
+  resetImage(img);
+  if(!enabled||!img)return;
+
+  const imageUrl=safeUrl(imageValue);
+  if(imageUrl==='#')return;
+
+  img.onload=()=>{
+    // The image is fully decoded before the container enters the page.
+    revealAd(el);
+  };
+  img.onerror=()=>hideAd(el);
+  img.src=imageUrl;
+
+  // Cached image: onload can be skipped in some browsers.
+  if(img.complete&&img.naturalWidth>0)revealAd(el);
+
+  prepareExternalLink(link,urlValue);
+}
+
+// Main sidebar banner: load first, then reveal smoothly.
+if(adContainer){
+  hideAd(adContainer);
+  resetLink(adLink);
+  if(adBanner)resetImage(adBanner);
+
+  const enabled=isConfigOn(data.adEnabled);
+  const imageUrl=safeUrl(data.bannerImg);
+  if(enabled&&adBanner&&imageUrl!=='#'){
+    adBanner.onload=()=>revealAd(adContainer);
+    adBanner.onerror=()=>hideAd(adContainer);
+    adBanner.src=imageUrl;
+    if(adBanner.complete&&adBanner.naturalWidth>0)revealAd(adContainer);
+    prepareExternalLink(adLink,data.adUrl);
+  }
+}
+
+// Inline affiliate block: no image dependency, but still fades/slides in gently.
+if(sponsorSlot){
+  hideAd(sponsorSlot);
+  resetLink(inlineLink);
+  const canShowInline=isConfigOn(data.inlineAdEnabled)&&String(data.affiliateUrl||'').trim();
+  if(canShowInline){
+    if(sponsorLabel)sponsorLabel.textContent=data.adLabel||'Sponsored / Affiliate';
+    if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'F1 HUB PICKS';
+    if(sponsorDescription)sponsorDescription.textContent=data.adDescription||'Khu vực dành cho banner quảng cáo hoặc link affiliate.';
+    prepareExternalLink(inlineLink,data.affiliateUrl);
+    inlineLink?.classList.remove('hidden');
+    revealAd(sponsorSlot);
+  }else{
+    inlineLink?.classList.add('hidden');
+  }
+}
+
+const sideEnabled=isConfigOn(data.sideAdEnabled);
+setSideAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
+setSideAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
+
+if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
+}catch(error){
+console.warn('GAS config/analytics unavailable',error);
+}
 }
 
 async function fetchNews(){
