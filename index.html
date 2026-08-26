@@ -105,23 +105,38 @@ button{font-family:inherit}
 .car-svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .45s ease;transform-origin:center}
 .team-card:hover .car-svg{transform:translateX(8px) scale(1.03)}
 .car-visual img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));image-rendering:auto}
-.driver-photo-wrap{position:absolute;right:-2%;bottom:0;width:64%;height:285px;display:flex;justify-content:flex-end;align-items:flex-end;pointer-events:none;z-index:1}
+.driver-photo-wrap{position:absolute;right:-1%;bottom:0;width:68%;height:320px;display:flex;justify-content:flex-end;align-items:flex-end;pointer-events:none;z-index:1}
 .driver-photo{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:bottom right;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));transition:transform .35s ease;image-rendering:auto}
 .driver-card:hover .driver-photo{transform:translateY(-4px) scale(1.025)}
 .img-fallback{opacity:.92}
-.driver-content{position:relative;z-index:2}
+.driver-content{position:relative;z-index:3}
 .driver-gradient{position:absolute;inset:auto 0 0 0;height:155px;background:linear-gradient(0deg,#0b0b0d 12%,rgba(11,11,13,.9) 44%,transparent 100%);pointer-events:none;z-index:2}
-.driver-stats-row{position:relative}
+.driver-number{z-index:4;right:16px;bottom:auto;top:16px;font-size:34px;line-height:1;font-weight:900;color:rgba(255,255,255,.24);letter-spacing:-.04em;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.driver-rank{font-size:12px;font-weight:800;color:#85858b;letter-spacing:.02em;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+.driver-stats-row{position:relative;z-index:3}
+.driver-card .timing-label{font-size:9px;color:#66666d}
+.driver-card .driver-firstname{font-size:11px;color:#8a8a90}
+.driver-card .driver-lastname{font-size:26px}
+.driver-card{min-height:410px}
 .modal-backdrop{animation:fadeIn .18s ease}
 .modal-box{animation:modalIn .22s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
 .profile-number{font-size:110px;line-height:.75;font-weight:900;color:rgba(255,255,255,.035)}
-#driver-profile-content{position:relative;padding-right:31%;min-height:570px}
-#profile-driver-image{position:absolute;right:-1%;top:0;width:33%;height:570px;object-fit:contain;object-position:bottom right;z-index:5;filter:drop-shadow(0 16px 24px rgba(0,0,0,.5))}
+#driver-profile-content{position:relative;padding-right:34%;min-height:600px}
+#profile-driver-image{position:absolute;right:-1%;top:-10px;width:36%;height:610px;object-fit:contain;object-position:center bottom;z-index:5;filter:drop-shadow(0 16px 24px rgba(0,0,0,.5));display:block}
 #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
 #driver-profile-content > .grid:first-child{width:100%}
-@media(max-width:768px){#driver-profile-content{padding-right:0;min-height:0}#profile-driver-image{position:relative;right:auto;top:auto;width:100%;height:360px;display:block;object-position:center bottom;margin:8px 0 0}#driver-stats,#driver-profile-content > .grid:last-child{width:100%}.driver-photo-wrap{width:58%;height:220px}}
+.profile-image-fallback{display:block!important;opacity:.98}
+.race-result-empty{background:#111;border:1px solid #202023;border-radius:8px;padding:14px;color:#777;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:768px){
+#driver-profile-content{padding-right:0;min-height:0}
+#profile-driver-image{position:relative;right:auto;top:auto;width:100%;height:380px;display:block;object-position:center bottom;margin:8px 0 0}
+#driver-stats,#driver-profile-content > .grid:last-child{width:100%}
+.driver-photo-wrap{width:58%;height:235px}
+.driver-card{min-height:390px}
+.driver-number{top:14px;right:14px;font-size:28px}
+}
 .fastest-label{background:#7d22b8}
 .share-btn{width:38px;height:38px;border:1px solid #29292d;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.2s}
 .share-btn:hover{border-color:#fff;background:#fff;color:#000}
@@ -164,9 +179,17 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .hero-title{font-size:3.8rem;line-height:.86}
 .mobile-scroll{overflow-x:auto;scrollbar-width:none}
 .mobile-scroll::-webkit-scrollbar{display:none}
-.driver-photo-wrap{width:48%;height:165px}
+.driver-photo-wrap{width:54%;height:235px}
 .driver-lastname{font-size:21px}
 }
+
+/* Readability + layering fixes */
+#modal-sessions > div{border-color:#20242c;color:#e5e5e7}
+#modal-sessions > div span:last-child{color:#8b8f98;font-size:10px}
+#modal-result-block{padding-top:2px}
+#modal-result-block > .text\[9px\]{color:#70747d}
+#modal-race-name{letter-spacing:-.035em}
+
 </style>
 
 </head>
@@ -793,6 +816,25 @@ const OFFICIAL_RACE_SUMMARY={
 '11':{pole:'norris',podium:['norris','max_verstappen','antonelli']},
 '12':{pole:'norris',podium:['norris','antonelli','russell']}
 };
+// Fallback by race identity. This prevents the modal from hiding a completed result
+// when the schedule API uses a different round number than the cached summary.
+const OFFICIAL_RACE_SUMMARY_BY_NAME={
+'dutch grand prix':{pole:'norris',podium:['norris','antonelli','russell']},
+'netherlands':{pole:'norris',podium:['norris','antonelli','russell']}
+};
+function getOfficialRaceSummary(raceOrRound){
+const key=typeof raceOrRound==='object'
+?String(raceOrRound?.raceName||'').toLowerCase()
+:String(raceOrRound||'');
+if(OFFICIAL_RACE_SUMMARY[key])return OFFICIAL_RACE_SUMMARY[key];
+if(typeof raceOrRound==='object'){
+const name=`${raceOrRound?.raceName||''} ${raceOrRound?.Circuit?.circuitName||''}`.toLowerCase();
+const byName=Object.keys(OFFICIAL_RACE_SUMMARY_BY_NAME).find(k=>name.includes(k));
+if(byName)return OFFICIAL_RACE_SUMMARY_BY_NAME[byName];
+return OFFICIAL_RACE_SUMMARY[String(raceOrRound?.round)]||null;
+}
+return OFFICIAL_RACE_SUMMARY[String(raceOrRound)]||null;
+}
 const DRIVER_DISPLAY={
 russell:['George','Russell','Mercedes'],antonelli:['Kimi','Antonelli','Mercedes'],leclerc:['Charles','Leclerc','Ferrari'],hamilton:['Lewis','Hamilton','Ferrari'],norris:['Lando','Norris','McLaren'],piastri:['Oscar','Piastri','McLaren'],max_verstappen:['Max','Verstappen','Red Bull Racing'],gasly:['Pierre','Gasly','Alpine']
 };
@@ -858,9 +900,9 @@ function renderCalendar(){
 if(!races.length)return;
 document.getElementById('calendar-grid').innerHTML=races.map((race,index)=>{
 const result=getRaceResult(race.round);
-const pole=getPole(race.round);
-const podium=getPodium(race.round);
-const officialSummary=OFFICIAL_RACE_SUMMARY[String(race.round)];
+const pole=getPole(race);
+const podium=getPodium(race);
+const officialSummary=getOfficialRaceSummary(race);
 const completed=!!result||!!officialSummary;
 const isNext=nextRace&&String(race.round)===String(nextRace.round);
 const accent=getRaceBrandColor(race);
@@ -901,46 +943,45 @@ ${renderPodium(podium)}
 }).join('');
 }
 
-function openRaceModal(index){
+async function ensureSingleRaceData(race){
+if(!race)return;
+const round=String(race.round);
+const jobs=[];
+if(!getRaceResult(round)){
+jobs.push(
+fetchJSON(`${F1_API}/${SEASON}/${round}/results.json?limit=100&ts=${Date.now()}`,`f1hub_modal_r_${round}`,30000)
+.then(x=>{
+const rr=x.MRData?.RaceTable?.Races?.[0];
+if(rr)seasonResults.push(rr);
+}).catch(()=>{})
+);
+}
+if(!getQualifyingResult(round)){
+jobs.push(
+fetchJSON(`${F1_API}/${SEASON}/${round}/qualifying.json?limit=100&ts=${Date.now()}`,`f1hub_modal_q_${round}`,30000)
+.then(x=>{
+const qr=x.MRData?.RaceTable?.Races?.[0];
+if(qr)qualifyingResults.push(qr);
+}).catch(()=>{})
+);
+}
+if(jobs.length)await Promise.all(jobs);
+}
+
+async function openRaceModal(index){
 const race=races[index];
 if(!race)return;
+
 document.getElementById('modal-race-name').textContent=race.raceName;
 document.getElementById('modal-circuit').textContent=race.Circuit.circuitName;
 document.getElementById('modal-date').textContent=formatDate(race.date);
 
-const result=getRaceResult(race.round);
-const pole=getPole(race.round);
-const podium=getPodium(race.round);
-const officialSummary=OFFICIAL_RACE_SUMMARY[String(race.round)];
+const completedByDate=raceStart(race)<=new Date();
 const resultBlock=document.getElementById('modal-result-block');
-
-// The calendar can already have an official completed summary even when
-// the external results endpoint has not returned a race-result object.
-// In that case Pole/Podium must still be shown inside the modal.
-if(result||officialSummary){
-resultBlock.classList.remove('hidden');
-document.getElementById('modal-pole').innerHTML=pole?`
-<div class="pole-chip">
-<span>POLE POSITION</span>
-<span>${escapeHTML(pole.Driver.givenName)} ${escapeHTML(pole.Driver.familyName)}</span>
-</div>`:'';
-
-document.getElementById('modal-podium').innerHTML=podium.length?`
-<div>
-<div class="text-[8px] uppercase tracking-widest text-gray-600 mb-2">PODIUM</div>
-${renderPodium(podium)}
-</div>`:'';
-
-document.getElementById('modal-top10').innerHTML=(result?.Results||[]).slice(0,10).map(r=>`
-<div class="flex items-center gap-3 bg-[#111] border border-gray-900 px-3 py-2 rounded">
-<div class="w-5 text-center text-[9px] font-black">${escapeHTML(r.position||'')}</div>
-<div class="flex-1 text-xs font-semibold">${escapeHTML(r.Driver?.givenName||'')} ${escapeHTML(r.Driver?.familyName||'')}</div>
-<div class="text-[8px] text-gray-600">${escapeHTML(r.Constructor?.name||'')}</div>
-<div class="font-mono text-[9px] text-gray-400">${escapeHTML(r.points||'0')} PTS</div>
-</div>`).join('');
-}else{
 resultBlock.classList.add('hidden');
-}
+document.getElementById('modal-pole').innerHTML='';
+document.getElementById('modal-podium').innerHTML='';
+document.getElementById('modal-top10').innerHTML='';
 
 const sessions=[];
 if(race.FirstPractice)sessions.push(['Practice 1',race.FirstPractice]);
@@ -953,15 +994,50 @@ sessions.push(['Race',{date:race.date,time:race.time}]);
 document.getElementById('modal-sessions').innerHTML=sessions.map(([name,s])=>`
 <div class="flex justify-between items-center bg-[#111] border border-gray-900 p-3 rounded">
 <span class="text-xs font-bold">${escapeHTML(name)}</span>
-<span class="text-[9px] text-gray-500">${formatDate(s.date)} ${formatTime(s.time)}</span>
+<span class="text-[9px] text-gray-400">${formatDate(s.date)} ${formatTime(s.time)}</span>
 </div>`).join('');
+
+if(completedByDate){
+await ensureSingleRaceData(race);
+}
+
+const result=getRaceResult(race.round);
+const pole=getPole(race);
+const podium=getPodium(race);
+const officialSummary=getOfficialRaceSummary(race);
+
+if(result||officialSummary){
+resultBlock.classList.remove('hidden');
+
+document.getElementById('modal-pole').innerHTML=pole?`
+<div class="pole-chip">
+<span>POLE POSITION</span>
+<span>${escapeHTML(pole.Driver.givenName)} ${escapeHTML(pole.Driver.familyName)}</span>
+</div>`:'';
+
+document.getElementById('modal-podium').innerHTML=podium.length?`
+<div>
+<div class="text-[8px] uppercase tracking-widest text-gray-600 mb-2">PODIUM</div>
+${renderPodium(podium)}
+</div>`:'';
+
+const top10=(result?.Results||[]).slice(0,10);
+document.getElementById('modal-top10').innerHTML=top10.length?top10.map(r=>`
+<div class="flex items-center gap-3 bg-[#111] border border-gray-900 px-3 py-2 rounded">
+<div class="w-5 text-center text-[9px] font-black">${escapeHTML(r.position||'')}</div>
+<div class="flex-1 text-xs font-semibold">${escapeHTML(r.Driver?.givenName||'')} ${escapeHTML(r.Driver?.familyName||'')}</div>
+<div class="text-[8px] text-gray-500">${escapeHTML(r.Constructor?.name||'')}</div>
+<div class="font-mono text-[9px] text-gray-300">${escapeHTML(r.points||'0')} PTS</div>
+</div>`).join(''):`<div class="race-result-empty">Full top 10 data is not available from the API. Podium shown from verified race summary.</div>`;
+}else if(completedByDate){
+resultBlock.classList.remove('hidden');
+document.getElementById('modal-top10').innerHTML='<div class="race-result-empty">Race completed, but the results API is temporarily unavailable.</div>';
+}
 
 document.getElementById('race-modal').classList.remove('hidden');
 }
 
-function closeRaceModal(){
-document.getElementById('race-modal').classList.add('hidden');
-}
+
 
 async function fetchStandings(){
 try{
@@ -1093,10 +1169,35 @@ const official=officialDriverMediaImage(d);
 const code=d.Driver?.code?.toLowerCase()||'';
 const family=d.Driver?.familyName?.toLowerCase()||'';
 const given=d.Driver?.givenName?.toLowerCase()||'';
-const candidates=[code,family,given,Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId)];
-// Current F1 Media is the primary source so the grid always prefers 2026 driver assets.
-// OpenF1/Wikimedia are fallbacks only when the official asset is unavailable.
-return official||'';
+const alias=Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId);
+const fallback=driverImages[code]||driverImages[id]||driverWikiImages[id]||driverImageFallback(d.Driver)||'';
+// Current F1 Media remains the primary 2026 full-body asset.
+// If that asset is unavailable, use OpenF1/Wikimedia/fallback media instead of leaving the image blank.
+return official||fallback||'';
+}
+function getDriverImageCandidates(d){
+const id=(d.Driver?.driverId||'').toLowerCase();
+const code=d.Driver?.code?.toLowerCase()||'';
+return [
+officialDriverMediaImage(d),
+driverImages[code],
+driverImages[id],
+driverWikiImages[id],
+driverImageFallback(d.Driver)
+].filter(Boolean);
+}
+function driverImageOnError(img){
+try{
+const list=JSON.parse(img.dataset.srcList||'[]');
+const next=Number(img.dataset.srcIndex||0)+1;
+if(next<list.length){
+img.dataset.srcIndex=String(next);
+img.src=list[next];
+return;
+}
+}catch{}
+img.onerror=null;
+img.style.display='none';
 }
 
 // Official F1 Media is preferred for current driver headshots. OpenF1 commonly returns the same F1 media headshots; Wikimedia is only a fallback.
@@ -1166,12 +1267,13 @@ const firstName=d.Driver.givenName||'';
 const lastName=d.Driver.familyName||'';
 const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver.driverId)]||'--';
 const image=getDriverImage(d);
+const imageCandidates=getDriverImageCandidates(d);
 return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
 <div class="driver-gradient"></div>
-<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none'"></div>
+<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" data-src-list='${escapeHTML(JSON.stringify(imageCandidates))}' data-src-index="0" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
 <div class="driver-content">
-<div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-700 mt-1">2026 DRIVER</div></div></div><div class="text-[10px] font-mono text-gray-600">P${escapeHTML(d.position||index+1)}</div></div>
+<div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-500 mt-1">2026 DRIVER</div></div></div><div class="driver-rank">P${escapeHTML(d.position||index+1)}</div></div>
 <div class="relative mt-20"><div class="driver-firstname">${escapeHTML(firstName)}</div><div class="driver-lastname">${escapeHTML(lastName)}</div></div>
 <div class="driver-stats-row relative mt-8 pt-4 grid grid-cols-2"><div><div class="timing-label">Points</div><div class="timing-value text-sm mt-1">${escapeHTML(d.points||0)}</div></div><div class="text-right"><div class="timing-label">Number</div><div class="timing-value text-sm mt-1">#${escapeHTML(number)}</div></div></div>
 </div></article>`;
@@ -1260,6 +1362,8 @@ const constructor=driver.Constructors?.[0];
 const meta=getTeamMeta(constructor?.constructorId);
 const number=driver.Driver.permanentNumber||'--';
 const image=getDriverImage(driver);
+const imageCandidates=getDriverImageCandidates(driver);
+const profileImage=document.getElementById('profile-driver-image');
 
 document.getElementById('profile-color-bar').style.background=meta.color;
 document.getElementById('profile-type').textContent='DRIVER PROFILE';
@@ -1270,8 +1374,13 @@ document.getElementById('profile-team').textContent=constructor?.name||meta.name
 document.getElementById('profile-nationality').textContent=driver.Driver.nationality||'--';
 document.getElementById('profile-position').textContent=`P${driver.position}`;
 document.getElementById('profile-points').textContent=driver.points;
-document.getElementById('profile-driver-image').src=image;
-document.getElementById('profile-driver-image').alt=`${driver.Driver.givenName} ${driver.Driver.familyName}`;
+profileImage.dataset.srcList=JSON.stringify(imageCandidates);
+profileImage.dataset.srcIndex='0';
+profileImage.style.display='block';
+profileImage.classList.remove('profile-image-fallback');
+profileImage.onerror=()=>driverImageOnError(profileImage);
+profileImage.src=image;
+profileImage.alt=`${driver.Driver.givenName} ${driver.Driver.familyName}`;
 
 document.getElementById('driver-stats').innerHTML=`
 <div class="bg-[#101010] p-4"><div class="timing-label">Wins</div><div class="text-xl font-black mt-2">${driver.wins||0}</div></div>
