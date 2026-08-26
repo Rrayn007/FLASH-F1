@@ -792,13 +792,10 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   #drivers-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
 }
 @media (max-width:760px){
-  #drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important;}
+  #drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}
   .driver-card .driver-content{padding:14px 13px 12px!important;}
   .driver-card .driver-lastname{font-size:clamp(20px,5.5vw,27px)!important;}
   .driver-card .driver-number{font-size:38px!important;}
-}
-@media (max-width:480px){
-  #drivers-grid{grid-template-columns:1fr;}
 }
 </style>
 
@@ -937,16 +934,15 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 @media(min-width:1501px) and (max-height:800px){:root{--side-ad-height:450px}}
 @media(min-width:1501px) and (max-height:650px){:root{--side-ad-height:380px}}
 
-/* Tablet: calendar + drivers + teams use a stable 2-column layout. */
-@media(min-width:520px) and (max-width:900px){
-  #calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
-  #drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
-  #teams-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
-}
-
-/* Small phones remain single-column for readability. */
-@media(max-width:519px){
-  #calendar-grid,#drivers-grid,#teams-grid{grid-template-columns:1fr!important}
+/* Mọi thiết bị dưới 1024px (tất cả điện thoại và tablet) cố định 2 cột */
+@media (max-width: 1023px) {
+  #calendar-grid,
+  #drivers-grid,
+  #teams-grid,
+  .sidebar-standings {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -1197,7 +1193,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 </section>
 
-<!-- SIDE ADS: desktop only; controlled from Config sheet -->
+<!-- SIDE ADS: desktop only; controlled from Config sheet 
 <div id="side-ad-left" class="hidden" aria-hidden="true">
 <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
 <img id="side-ad-left-img" alt="Advertisement" loading="eager" decoding="async">
@@ -1209,6 +1205,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <img id="side-ad-right-img" alt="Advertisement" loading="eager" decoding="async">
 </a>
 </div>
+-->
 
 <section id="drivers" class="mt-24">
 <div class="flex justify-between items-end mb-8">
