@@ -1049,12 +1049,21 @@ renderTeams();
 const F1_DRIVER_ASSET_META={
 georuss:['G','GEORUS01_George_Russell','georus01'],antkin:['A','ANDANT01_Andrea_Kimi_Antonelli','andant01'],leclerc:['C','CHALEC01_Charles_Leclerc','chalec01'],hamilton:['L','LEWHAM01_Lewis_Hamilton','lewham01'],norris:['L','LANNOR01_Lando_Norris','lannor01'],piastri:['O','OSCPIA01_Oscar_Piastri','oscpia01'],max_verstappen:['M','MAXVER01_Max_Verstappen','maxver01'],hadjar:['I','ISAHAD01_Isack_Hadjar','isahad01'],lawson:['L','LIALAW01_Liam_Lawson','lialaw01'],lindblad:['A','ARVLIN01_Arvid_Lindblad','arvlin01'],gasly:['P','PIEGAS01_Pierre_Gasly','piegas01'],colapinto:['F','FRACOL01_Franco_Colapinto','fracol01'],ocon:['E','ESTOCO01_Esteban_Ocon','estoco01'],bearman:['O','OLIBEA01_Oliver_Bearman','olibea01'],hulkenberg:['N','NICHUL01_Nico_Hulkenberg','nichul01'],bortoleto:['G','GABBOR01_Gabriel_Bortoleto','gabbor01'],sainz:['C','CARSAI01_Carlos_Sainz','carsai01'],albon:['A','ALEALB01_Alexander_Albon','alealb01'],alonso:['F','FERALO01_Fernando_Alonso','feralo01'],stroll:['L','LANSTR01_Lance_Stroll','lanstr01'],perez:['S','SERPER01_Sergio_Perez','serper01'],bottas:['V','VALBOT01_Valtteri_Bottas','valbot01']
 };
+const F1_DRIVER_TEAM_2026={
+georuss:'mercedes',antkin:'mercedes',leclerc:'ferrari',hamilton:'ferrari',
+norris:'mclaren',piastri:'mclaren',max_verstappen:'redbullracing',hadjar:'redbullracing',
+lawson:'racingbulls',lindblad:'racingbulls',gasly:'alpine',colapinto:'alpine',
+ocon:'haasf1team',bearman:'haasf1team',hulkenberg:'audi',bortoleto:'audi',
+sainz:'williams',albon:'williams',alonso:'astonmartin',stroll:'astonmartin',
+perez:'cadillac',bottas:'cadillac'
+};
 function officialDriverMediaImage(d){
 const id=(d.Driver?.driverId||'').toLowerCase();
+const team=F1_DRIVER_TEAM_2026[id];
 const m=F1_DRIVER_ASSET_META[id];
-if(!m)return'';
-const [letter,folder,file]=m;
-return `https://www.formula1.com/content/dam/fom-website/drivers/${letter}/${folder}/${file}.png.transform/4col/image.png`;
+if(!team||!m)return'';
+const code=String(m[2]||'').toLowerCase();
+return `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}/${code}/2026${team}${code}right.webp`;
 }
 async function fetchDriverImages(){
 try{
@@ -1149,7 +1158,7 @@ const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIA
 const image=getDriverImage(d);
 return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
 <div class="driver-gradient"></div>
-<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(officialDriverMediaImage(d)||driverImages[(d.Driver?.code||'').toLowerCase()]||driverWikiImages[(d.Driver?.driverId||'').toLowerCase()]||driverImageFallback(d.Driver))};this.classList.add('img-fallback')"></div>
+<div class="driver-photo-wrap"><img src="${escapeHTML(image)}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none'"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
 <div class="driver-content">
 <div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-700 mt-1">2026 DRIVER</div></div></div><div class="text-[10px] font-mono text-gray-600">P${escapeHTML(d.position||index+1)}</div></div>
@@ -1160,29 +1169,34 @@ return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.c
 }
 
 const F1_CAR_MEDIA={
-mercedes:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/mercedes/2026-mercedes-w17',
-mclaren:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/mclaren/2026-mclaren-mcl40',
-ferrari:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/ferrari/2026-ferrari-sf26',
-red_bull:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/red-bull/2026-red-bull-rb22',
-rb:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/racing-bulls/2026-racing-bulls-vcarb03',
-alpine:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/alpine/2026-alpine-a526',
-haas:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/haas/2026-haas-vf26',
-audi:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/audi/2026-audi-r26',
-williams:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/williams/2026-williams-fw48',
-aston_martin:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/aston-martin/2026-aston-martin-amr26',
-cadillac:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/content/dam/fom-website/teams/2026/cadillac/2026-cadillac-mac26'
+mercedes:['mercedes','w17'],mclaren:['mclaren','mcl40'],ferrari:['ferrari','sf26'],
+red_bull:['redbullracing','rb22'],rb:['racingbulls','vcarb03'],alpine:['alpine','a526'],
+haas:['haasf1team','vf26'],audi:['audi','r26'],williams:['williams','fw48'],
+aston_martin:['astonmartin','amr26'],cadillac:['cadillac','mac26']
 };
-function getCarImage(team){
-const id=teamKey(team.id);
-// Prefer the current official 2026 F1 Media asset over configurable/wiki fallbacks.
-return F1_CAR_MEDIA[id]||'';
+function getCarImageCandidates(team){
+const asset=F1_CAR_MEDIA[teamKey(team.id)];
+if(!asset)return[];
+const [folder,chassis]=asset;
+const base=`https://media.formula1.com/image/upload/c_fill,w_1320/q_auto/v1740000000/common/f1/2026/${folder}`;
+const stem=`2026${folder}${chassis}`;
+return [`${base}/${stem}right.webp`,`${base}/${folder}${chassis}/${stem}right.webp`,`${base}/${stem}.webp`];
 }
-
+function getCarImage(team){return getCarImageCandidates(team)[0]||'';}
+function carImageOnError(img){
+try{
+const list=JSON.parse(img.dataset.srcList||'[]');
+const next=Number(img.dataset.srcIndex||0)+1;
+if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
+}catch{}
+img.onerror=null;img.style.display='none';
+}
 function renderTeams(){
 const teams=getTeams();
 document.getElementById('teams-grid').innerHTML=teams.map((team,index)=>{
 const meta=getTeamMeta(team.id);
 const carImage=getCarImage(team);
+const carImageCandidates=getCarImageCandidates(team);
 return`
 <article class="team-card rounded-lg p-6" style="--team-color:${meta.color}" onclick="openTeamProfile('${escapeHTML(team.id)}')">
 <div class="flex justify-between items-start">
@@ -1197,7 +1211,7 @@ return`
 </div>
 
 <div class="car-visual">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none';">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE</div>`}
+${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" data-src-list='${escapeHTML(JSON.stringify(carImageCandidates))}' data-src-index="0" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE</div>`}
 <div class="absolute left-3 bottom-3 z-10 text-[8px] tracking-[.2em] uppercase text-gray-600">${escapeHTML(meta.chassis)}</div>
 </div>
 
@@ -1276,6 +1290,7 @@ if(!team)return;
 const position=teams.findIndex(t=>t.id===teamId)+1;
 const meta=getTeamMeta(teamId);
 const carImage=getCarImage(team);
+const carImageCandidates=getCarImageCandidates(team);
 
 document.getElementById('profile-color-bar').style.background=meta.color;
 document.getElementById('profile-type').textContent='CONSTRUCTOR PROFILE';
@@ -1293,7 +1308,7 @@ document.getElementById('team-profile-car').innerHTML=`
 <a href="${escapeHTML(safeUrl(meta.url))}" target="_blank" rel="noopener" class="text-[8px] uppercase tracking-widest text-gray-600 hover:text-white">F1.COM →</a>
 </div>
 <div class="car-visual mt-3">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none';">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>`}
+${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" data-src-list='${escapeHTML(JSON.stringify(carImageCandidates))}' data-src-index="0" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>`}
 </div>
 </div>`;
 
@@ -1301,7 +1316,7 @@ document.getElementById('team-profile-drivers').innerHTML=team.drivers.slice(0,2
 const image=getDriverImage(driver);
 return`
 <div class="bg-[#111] border-b-2 p-5 rounded cursor-pointer hover:bg-[#161616] transition flex items-center gap-4" style="border-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(driver.Driver.driverId)}')">
-<img src="${escapeHTML(image)}" class="w-16 h-20 object-contain object-bottom" alt="" loading="lazy" referrerpolicy="no-referrer">
+<img src="${escapeHTML(image)}" class="w-16 h-20 object-contain object-bottom" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none'">
 <div class="flex-1">
 <div class="text-[8px] uppercase tracking-widest text-gray-600">Driver</div>
 <div class="text-xl font-black uppercase mt-2">${escapeHTML(driver.Driver.familyName)}</div>
