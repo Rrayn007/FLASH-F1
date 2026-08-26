@@ -879,6 +879,11 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 </style>
 
+<style id="f1hub-ad-responsive">
+@media(max-width:1200px){
+  #side-ad-left,#side-ad-right{display:none!important;}
+}
+</style>
 </head>
 
 <body>
@@ -1049,12 +1054,29 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div id="calendar-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </section>
 
-<section id="sponsor-slot" class="mt-16">
+<section id="sponsor-slot" class="mt-16 hidden">
 <div class="card rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 justify-between">
-<div><div class="sponsor-label">Sponsored / Affiliate</div><div class="text-sm font-black mt-1">F1 HUB PICKS</div><div class="data-note mt-1">Khu vực dành cho banner quảng cáo hoặc link affiliate. Mặc định ẩn nếu chưa cấu hình.</div></div>
+<div>
+<div id="sponsor-label" class="sponsor-label">Sponsored / Affiliate</div>
+<div id="sponsor-title" class="text-sm font-black mt-1">F1 HUB PICKS</div>
+<div id="sponsor-description" class="data-note mt-1">Khu vực dành cho banner quảng cáo hoặc link affiliate.</div>
+</div>
 <a id="inline-ad-link" class="hidden px-5 py-3 bg-white text-black text-[9px] font-black rounded" target="_blank" rel="sponsored noopener">XEM ƯU ĐÃI →</a>
 </div>
 </section>
+
+<!-- SIDE ADS: desktop only; controlled from Config sheet -->
+<div id="side-ad-left" class="hidden fixed left-4 top-1/2 -translate-y-1/2 z-30 w-[160px] max-h-[600px] overflow-hidden">
+<a id="side-ad-left-link" href="#" target="_blank" rel="sponsored noopener">
+<img id="side-ad-left-img" class="w-full h-auto object-contain" alt="Advertisement" loading="lazy">
+</a>
+</div>
+
+<div id="side-ad-right" class="hidden fixed right-4 top-1/2 -translate-y-1/2 z-30 w-[160px] max-h-[600px] overflow-hidden">
+<a id="side-ad-right-link" href="#" target="_blank" rel="sponsored noopener">
+<img id="side-ad-right-img" class="w-full h-auto object-contain" alt="Advertisement" loading="lazy">
+</a>
+</div>
 
 <section id="drivers" class="mt-24">
 <div class="flex justify-between items-end mb-8">
@@ -1401,14 +1423,67 @@ document.getElementById('brand-logo').src=safeUrl(logo);
 document.getElementById('brand-logo').classList.remove('hidden');
 document.getElementById('brand-text').classList.add('hidden');
 }
-if(data.bannerImg&&String(data.bannerImg).trim()){
-document.getElementById('ad-container').classList.remove('hidden');
-document.getElementById('ad-banner').src=safeUrl(data.bannerImg);
-document.getElementById('ad-link').href=safeUrl(data.adUrl||'#');
+// ============================================================
+// ADS — controlled entirely from Google Sheet
+// ============================================================
+const adContainer=document.getElementById('ad-container');
+if(adContainer){
+  if(data.adEnabled===true && data.bannerImg && String(data.bannerImg).trim()){
+    adContainer.classList.remove('hidden');
+    const banner=document.getElementById('ad-banner');
+    const link=document.getElementById('ad-link');
+    if(banner)banner.src=safeUrl(data.bannerImg);
+    if(link)link.href=safeUrl(data.adUrl||'#');
+  }else{
+    adContainer.classList.add('hidden');
+  }
 }
-if(data.affiliateUrl&&String(data.affiliateUrl).trim()){
-const a=document.getElementById('inline-ad-link'); a.href=safeUrl(data.affiliateUrl); a.classList.remove('hidden');
+
+const sponsorSlot=document.getElementById('sponsor-slot');
+const inlineLink=document.getElementById('inline-ad-link');
+const sponsorLabel=document.getElementById('sponsor-label');
+const sponsorTitle=document.getElementById('sponsor-title');
+const sponsorDescription=document.getElementById('sponsor-description');
+if(sponsorSlot){
+  const canShowInline=data.inlineAdEnabled===true && data.affiliateUrl && String(data.affiliateUrl).trim();
+  if(canShowInline){
+    sponsorSlot.classList.remove('hidden');
+    if(inlineLink){
+      inlineLink.href=safeUrl(data.affiliateUrl);
+      inlineLink.classList.remove('hidden');
+    }
+    if(sponsorLabel&&data.adLabel)sponsorLabel.textContent=data.adLabel;
+    if(sponsorTitle&&data.adTitle)sponsorTitle.textContent=data.adTitle;
+    if(sponsorDescription&&data.adDescription)sponsorDescription.textContent=data.adDescription;
+  }else{
+    sponsorSlot.classList.add('hidden');
+    if(inlineLink)inlineLink.classList.add('hidden');
+  }
 }
+
+const sideLeft=document.getElementById('side-ad-left');
+const sideLeftLink=document.getElementById('side-ad-left-link');
+const sideLeftImg=document.getElementById('side-ad-left-img');
+const sideRight=document.getElementById('side-ad-right');
+const sideRightLink=document.getElementById('side-ad-right-link');
+const sideRightImg=document.getElementById('side-ad-right-img');
+
+if(data.sideAdEnabled===true && data.sideAdLeftImg){
+  if(sideLeft)sideLeft.classList.remove('hidden');
+  if(sideLeftImg)sideLeftImg.src=safeUrl(data.sideAdLeftImg);
+  if(sideLeftLink)sideLeftLink.href=safeUrl(data.sideAdLeftUrl||'#');
+}else if(sideLeft){
+  sideLeft.classList.add('hidden');
+}
+
+if(data.sideAdEnabled===true && data.sideAdRightImg){
+  if(sideRight)sideRight.classList.remove('hidden');
+  if(sideRightImg)sideRightImg.src=safeUrl(data.sideAdRightImg);
+  if(sideRightLink)sideRightLink.href=safeUrl(data.sideAdRightUrl||'#');
+}else if(sideRight){
+  sideRight.classList.add('hidden');
+}
+
 if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
 }catch(error){
 console.warn('GAS config/analytics unavailable',error);
