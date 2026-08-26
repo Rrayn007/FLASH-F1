@@ -467,6 +467,104 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #modal-result-block > .text\[9px\]{color:#70747d}
 #modal-race-name{letter-spacing:-.035em}
 
+
+/* FINAL UI PASS — driver cards, team mini-cards, and reliable image fallbacks */
+.driver-card .driver-name-zone{
+  position:relative;
+  z-index:7;
+  margin-top:auto;
+  margin-bottom:10px;
+  padding:12px 0 10px 0;
+  min-height:88px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  overflow:visible;
+}
+.driver-card .driver-name-zone::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:-24px;
+  right:-10px;
+  top:0;
+  bottom:0;
+  background:
+    radial-gradient(ellipse at 18% 50%, color-mix(in srgb,var(--team-color,#e10600) 28%,transparent) 0%, color-mix(in srgb,var(--team-color,#e10600) 15%,transparent) 32%, transparent 78%),
+    linear-gradient(90deg,color-mix(in srgb,var(--team-color,#e10600) 18%,transparent),rgba(8,8,10,.38) 48%,transparent 100%);
+  filter:blur(7px);
+  opacity:.95;
+  pointer-events:none;
+}
+.driver-card .driver-name-zone::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:-18px;
+  right:0;
+  bottom:0;
+  height:48px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--team-color,#e10600) 16%,rgba(8,8,10,.72)),rgba(8,8,10,.54) 55%,transparent 100%);
+  pointer-events:none;
+}
+.driver-card .driver-firstname,.driver-card .driver-lastname{position:relative;z-index:2;text-shadow:0 2px 10px rgba(0,0,0,.72)}
+.driver-card .driver-lastname{max-width:78%;}
+
+/* Main team cards: compact, but the two driver portraits must remain clearly visible. */
+.team-card-driver-mini{height:112px;min-height:112px;padding:7px 9px;gap:8px;align-items:flex-end;overflow:hidden;}
+.team-card-driver-mini .driver-mini-image{
+  flex:0 0 72px;
+  width:72px!important;
+  max-width:72px!important;
+  height:108px!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:scale(1.38);
+  transform-origin:center bottom;
+  margin-bottom:-2px;
+}
+.team-card-driver-mini:hover .driver-mini-image{transform:scale(1.45) translateY(-1px)}
+.team-card-driver-mini .team-driver-copy{padding-bottom:5px;}
+.team-card-driver-mini .driver-mini-name{font-size:13px;line-height:1.02;}
+.team-card-driver-mini .driver-mini-points{font-size:8px;margin-top:7px;}
+.team-card-driver-mini::before{
+  background:linear-gradient(90deg,transparent 34%,rgba(12,12,14,.18) 48%,rgba(12,12,14,.72) 100%),linear-gradient(0deg,rgba(12,12,14,.18),transparent 62%);
+}
+
+/* Team Profile lineup: large portrait, no hard horizontal crop, smooth fade into the card. */
+.team-driver-mini{min-height:388px;height:388px;}
+.team-driver-mini .team-driver-copy{left:46%;right:6%;bottom:26px;}
+.team-driver-mini .team-driver-copy::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:-26px;
+  right:-16px;
+  top:-34px;
+  bottom:-18px;
+  background:
+    radial-gradient(ellipse at 25% 72%,color-mix(in srgb,var(--team-color,#e10600) 24%,transparent),transparent 62%),
+    linear-gradient(90deg,color-mix(in srgb,var(--team-color,#e10600) 13%,rgba(10,10,12,.62)),rgba(10,10,12,.54) 46%,transparent 100%);
+  filter:blur(8px);
+  opacity:.96;
+  pointer-events:none;
+}
+.team-driver-mini .team-driver-copy .driver-mini-name{max-width:100%;}
+
+/* Never turn Team Profile driver cards into giant vertical cards on small screens. */
+@media(max-width:768px){
+  .team-driver-mini{min-height:300px;height:300px;}
+  .team-driver-mini .driver-mini-image{width:72%!important;height:106%!important;left:-7%;transform:scale(1.05);}
+  .team-driver-mini .team-driver-copy{left:43%;right:5%;bottom:22px;}
+  .team-driver-mini .team-driver-copy .driver-mini-name{font-size:clamp(18px,5vw,25px);}
+  .driver-card .driver-lastname{font-size:22px;max-width:82%;}
+}
+@media(max-width:640px){
+  .team-card-driver-mini{height:104px;min-height:104px;padding:6px 7px;gap:5px;}
+  .team-card-driver-mini .driver-mini-image{flex-basis:64px;width:64px!important;max-width:64px!important;height:100px!important;transform:scale(1.32);}
+  .team-card-driver-mini .driver-mini-name{font-size:11px;}
+}
+
 </style>
 
 </head>
@@ -1380,14 +1478,15 @@ alonso:'alonso',stroll:'stroll',perez:'perez',bottas:'bottas'
 };
 async function fetchWikipediaSummaryImage(page){
 try{
-const key='f1hub_wiki_'+page;
+const key='f1hub_wiki_v2_'+page;
 const cached=sessionStorage.getItem(key);
-if(cached && /^(https?:)?\/\//i.test(cached))return cached;
+if(cached && /^(https?:)?\/\//i.test(cached) && !/(silhouette|default|placeholder|no[_-]?image|blank)/i.test(cached))return cached;
 if(cached)try{sessionStorage.removeItem(key)}catch{}
 const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(page)}`);
 if(!r.ok)throw 0;
 const d=await r.json();
-const img=d.originalimage?.source||d.thumbnail?.source||'';
+const candidates=[d.originalimage?.source,d.thumbnail?.source].filter(Boolean);
+const img=candidates.find(u=>!/(silhouette|default|placeholder|no[_-]?image|blank)/i.test(String(u)))||'';
 if(img)try{sessionStorage.setItem(key,img)}catch{}
 return img;
 }catch{return''}
@@ -1410,6 +1509,7 @@ const id=d.Driver?.driverId;
 if(!id)return;
 const page=(d.Driver?.givenName+'_'+d.Driver?.familyName).replaceAll(' ','_');
 driverWikiImages[id]=await fetchWikipediaSummaryImage(page);
+if(!driverWikiImages[id]) driverWikiImages[id]=await fetchWikipediaImageSearch(`${d.Driver?.givenName||''} ${d.Driver?.familyName||''} Formula 1`);
 });
 await Promise.all(jobs);
 }
@@ -1457,64 +1557,61 @@ console.warn('OpenF1 images unavailable');
 
 function getDriverImage(d){
 const id=(d.Driver?.driverId||'').toLowerCase();
-const official=officialDriverMediaImage(d);
 const code=d.Driver?.code?.toLowerCase()||'';
-const family=d.Driver?.familyName?.toLowerCase()||'';
-const given=d.Driver?.givenName?.toLowerCase()||'';
-const alias=Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId);
-const wikiNameKey=(given+'_'+family).replace(/\s+/g,'_');
-const fallback=driverImages[code]||driverImages[id]||driverWikiImages[id]||driverWikiImages[wikiNameKey]||driverImageFallback(d.Driver)||'';
-// Current F1 Media remains the primary 2026 full-body asset.
-// If that asset is unavailable, use OpenF1/Wikimedia/fallback media instead of leaving the image blank.
-return official||fallback||'';
+const official=officialDriverMediaImage(d);
+const openf1=driverImages[code]||driverImages[id]||'';
+const wiki=driverWikiImages[id]||'';
+// Do not use the legacy F1 placeholder/silhouette URL as a preferred image.
+if(id==='lindblad'){
+  return official||openf1||wiki||'';
+}
+return official||openf1||wiki||'';
 }
 function getDriverImageCandidates(d){
 const id=(d.Driver?.driverId||'').toLowerCase();
 const code=d.Driver?.code?.toLowerCase()||'';
-const candidates=[
-officialDriverMediaImage(d),
-driverImages[code],
-driverImages[id],
-driverWikiImages[id],
-driverImageFallback(d.Driver)
-];
-// Arvid Lindblad needs extra F1 Media URL variants because the media CDN has
-// used both a nested asset path and a flat asset path for this driver.
+const candidates=[];
+const push=(v)=>{if(v && !candidates.includes(v))candidates.push(v)};
+// Current F1 full-body asset first.
+push(officialDriverMediaImage(d));
+// Lindblad has multiple known CDN path variants.
 if(id==='lindblad'){
   const team='racingbulls';
   const code='arvlin01';
-  const base='https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/'+team;
-  candidates.unshift(
-    base+'/'+code+'/2026'+team+code+'right.webp',
-    base+'/'+code+'/2026'+team+code+'.webp',
-    base+'/2026'+team+code+'right.webp',
-    base+'/2026'+team+code+'.webp'
-  );
+  const roots=[
+    `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}/${code}`,
+    `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}`
+  ];
+  roots.forEach(base=>{
+    push(`${base}/2026${team}${code}right.webp`);
+    push(`${base}/2026${team}${code}.webp`);
+  });
+  push(`https://media.formula1.com/image/upload/c_fill,w_720/q_auto/common/f1/2026/${team}/${code}/2026${team}${code}right.webp`);
+  push(`https://media.formula1.com/image/upload/c_fill,w_720/q_auto/common/f1/2026/${team}/${code}/2026${team}${code}.webp`);
 }
-return [...new Set(candidates.filter(Boolean))];
+push(driverImages[code]);
+push(driverImages[id]);
+push(driverWikiImages[id]);
+// Search by the exact Wikipedia page only after F1/OpenF1 sources.
+return candidates.filter(Boolean);
 }
 async function driverImageOnError(img){
 try{
-const list=JSON.parse(img.dataset.srcList||'[]');
-const next=Number(img.dataset.srcIndex||0)+1;
-if(next<list.length){
-img.dataset.srcIndex=String(next);
-img.src=list[next];
-return;
-}
-// Last-resort Wikimedia fallback. This is especially important for Lindblad
-// when an F1 Media CDN variant changes or is temporarily unavailable.
-const page=img.dataset.wikiPage||'';
-if(page){
-  const wiki=await fetchWikipediaSummaryImage(page);
-  if(wiki){
-    img.dataset.srcIndex=String(list.length);
-    img.dataset.srcList=JSON.stringify([...list,wiki]);
-    img.src=wiki;
-    return;
-  }
-}
-}catch{}
+ const list=JSON.parse(img.dataset.srcList||'[]');
+ const next=Number(img.dataset.srcIndex||0)+1;
+ if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
+ const page=img.dataset.wikiPage||'';
+ if(page){
+   const wiki=await fetchWikipediaSummaryImage(page);
+   if(wiki && !list.includes(wiki)){
+     const updated=[...list,wiki];
+     img.dataset.srcIndex=String(updated.length-1);
+     img.dataset.srcList=JSON.stringify(updated);
+     img.src=wiki;
+     return;
+   }
+ }
+}catch(e){}
 img.onerror=null;
 img.style.display='none';
 }
@@ -1593,8 +1690,8 @@ return `<article class="driver-card rounded-lg p-5" data-driver-id="${escapeHTML
 <div class="driver-number">${escapeHTML(number)}</div>
 <div class="driver-content">
 <div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="team-stripe" style="background:${meta.color}"></div><div><div class="timing-label">${escapeHTML(constructor?.name||meta.name)}</div><div class="text-[7px] text-gray-500 mt-1">2026 DRIVER</div></div></div><div class="driver-rank">P${escapeHTML(d.position||index+1)}</div></div>
-<div class="relative mt-20"><div class="driver-firstname">${escapeHTML(firstName)}</div><div class="driver-lastname">${escapeHTML(lastName)}</div></div>
-<div class="driver-stats-row relative mt-8 pt-4 grid grid-cols-2"><div><div class="timing-label">Points</div><div class="timing-value text-sm mt-1">${escapeHTML(d.points||0)}</div></div><div class="text-right"><div class="timing-label">Number</div><div class="timing-value text-sm mt-1">#${escapeHTML(number)}</div></div></div>
+<div class="driver-name-zone"><div class="driver-firstname">${escapeHTML(firstName)}</div><div class="driver-lastname">${escapeHTML(lastName)}</div></div>
+<div class="driver-stats-row relative pt-4 grid grid-cols-2"><div><div class="timing-label">Points</div><div class="timing-value text-sm mt-1">${escapeHTML(d.points||0)}</div></div><div class="text-right"><div class="timing-label">Number</div><div class="timing-value text-sm mt-1">#${escapeHTML(number)}</div></div></div>
 </div></article>`;
 }).join('');
 bindDriverCardClicks();
@@ -1676,7 +1773,7 @@ ${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" data-src-list='${escapeH
 ${team.drivers.slice(0,2).map(driver=>{
 const image=getDriverImage(driver);
 return`
-<div class="team-card-driver-mini bg-[#171719] rounded px-3 py-2 flex items-center gap-2" data-driver-id="${escapeHTML(driver.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)} profile">
+<div class="team-card-driver-mini bg-[#171719] rounded px-3 py-2 flex items-center gap-2" style="--team-color:${meta.color}" data-driver-id="${escapeHTML(driver.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)} profile">
 <img src="${escapeHTML(image)}" data-src-list='${escapeHTML(JSON.stringify(getDriverImageCandidates(driver)))}' data-src-index="0" data-wiki-page="${escapeHTML((driver.Driver.givenName+'_'+driver.Driver.familyName).replaceAll(' ','_'))}" class="driver-mini-image shrink-0" alt="${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
 <div class="team-driver-copy">
 <div class="text-[7px] uppercase text-gray-600">Driver</div>
