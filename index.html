@@ -216,6 +216,101 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .driver-lastname{font-size:21px}
 }
 
+
+/* Team listing cards: compact driver tiles. Keep these separate from Team Profile's large driver cards. */
+.team-card-driver-mini{
+  position:relative;
+  min-width:0;
+  height:108px;
+  min-height:108px;
+  overflow:hidden;
+  cursor:pointer;
+  pointer-events:auto;
+  isolation:isolate;
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  padding:8px 10px;
+  background:linear-gradient(145deg,#151517,#111113);
+  border:1px solid #242428;
+  border-radius:8px;
+  transition:transform .2s ease,border-color .2s ease,background .2s ease;
+}
+.team-card-driver-mini:hover{
+  transform:translateY(-2px);
+  border-color:#3b3b40;
+  background:#19191c!important;
+}
+.team-card-driver-mini .driver-mini-image{
+  position:relative;
+  z-index:2;
+  flex:0 0 58px;
+  width:58px!important;
+  height:100px!important;
+  max-width:58px!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  align-self:flex-end;
+  filter:drop-shadow(0 7px 10px rgba(0,0,0,.5));
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 76%,rgba(0,0,0,.72) 90%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 76%,rgba(0,0,0,.72) 90%,transparent 100%);
+  transition:transform .25s ease;
+}
+.team-card-driver-mini:hover .driver-mini-image{transform:scale(1.04) translateY(-1px)}
+.team-card-driver-mini .team-driver-copy{
+  position:relative;
+  z-index:3;
+  min-width:0;
+  flex:1;
+  padding-bottom:3px;
+  pointer-events:none;
+}
+.team-card-driver-mini .driver-mini-label{
+  font-size:7px;
+  line-height:1;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#65666c;
+  margin-bottom:5px;
+}
+.team-card-driver-mini .driver-mini-name{
+  font-size:12px;
+  line-height:1;
+  font-weight:900;
+  text-transform:uppercase;
+  color:#f1f1f2;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.team-card-driver-mini .driver-mini-points{
+  font-size:8px;
+  line-height:1;
+  color:#777980;
+  margin-top:6px;
+}
+.team-card-driver-mini::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:2px;
+  background:var(--team-color,#e10600);
+  z-index:5;
+}
+.team-card-driver-mini::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent 38%,rgba(12,12,14,.25) 58%,rgba(12,12,14,.72) 100%);
+}
+@media(max-width:640px){
+  .team-card-driver-mini{height:104px;min-height:104px;padding:7px 8px;gap:7px}
+  .team-card-driver-mini .driver-mini-image{flex-basis:54px;width:54px!important;max-width:54px!important;height:96px!important}
+  .team-card-driver-mini .driver-mini-name{font-size:11px}
+}
+
 /* Team Profile — large driver portrait + smooth bottom fade + full name in fade zone. */
 .team-driver-mini{
   position:relative;
@@ -1555,7 +1650,7 @@ ${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" data-src-list='${escapeH
 ${team.drivers.slice(0,2).map(driver=>{
 const image=getDriverImage(driver);
 return`
-<div class="team-driver-mini bg-[#171719] rounded px-3 py-2 flex items-center gap-2" data-driver-id="${escapeHTML(driver.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)} profile">
+<div class="team-card-driver-mini bg-[#171719] rounded px-3 py-2 flex items-center gap-2" data-driver-id="${escapeHTML(driver.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)} profile">
 <img src="${escapeHTML(image)}" class="driver-mini-image shrink-0" alt="${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)}" loading="lazy" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
 <div class="team-driver-copy">
 <div class="text-[7px] uppercase text-gray-600">Driver</div>
@@ -1852,7 +1947,7 @@ if(driversGrid){
 const teamProfileDrivers=document.getElementById('team-profile-drivers');
 if(teamProfileDrivers){
   teamProfileDrivers.addEventListener('click',function(e){
-    const item=e.target.closest('.team-driver-mini[data-driver-id]');
+    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
     if(!item || !teamProfileDrivers.contains(item)) return;
     e.preventDefault();
     e.stopPropagation();
@@ -1860,7 +1955,7 @@ if(teamProfileDrivers){
   },true);
   teamProfileDrivers.addEventListener('keydown',function(e){
     if(e.key!=='Enter' && e.key!==' ') return;
-    const item=e.target.closest('.team-driver-mini[data-driver-id]');
+    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
     if(!item || !teamProfileDrivers.contains(item)) return;
     e.preventDefault();
     e.stopPropagation();
@@ -1871,7 +1966,7 @@ if(teamProfileDrivers){
 const teamsGrid=document.getElementById('teams-grid');
 if(teamsGrid){
   const activateTeamDriver=(e)=>{
-    const item=e.target.closest('.team-driver-mini[data-driver-id]');
+    const item=e.target.closest('.team-driver-mini[data-driver-id], .team-card-driver-mini[data-driver-id]');
     if(!item || !teamsGrid.contains(item))return;
     if(e.type==='keydown' && e.key!=='Enter' && e.key!==' ')return;
     e.preventDefault();
