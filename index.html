@@ -778,6 +778,131 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 @media (max-width:480px){
   #drivers-grid{grid-template-columns:1fr;}
 }
+
+/* V11 — clean Team Driver Lineup: reduce visual noise, improve hierarchy */
+.team-driver-mini{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  background:
+    radial-gradient(ellipse at 18% 78%, color-mix(in srgb,var(--team-color,#e10600) 9%, transparent), transparent 42%),
+    linear-gradient(145deg,#101114 0%,#0d0e11 62%,#0a0b0d 100%)!important;
+  border:1px solid #24282e!important;
+  border-radius:10px!important;
+}
+/* Remove the heavy dot field and decorative noise from the previous version. */
+.team-driver-mini::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(90deg,transparent 0%,rgba(255,255,255,.012) 52%,transparent 100%),
+    linear-gradient(to bottom,transparent 42%,rgba(7,8,10,.12) 66%,rgba(7,8,10,.72) 91%,#0a0b0d 100%)!important;
+  opacity:1!important;
+}
+.team-driver-mini::after{
+  height:2px!important;
+  box-shadow:none!important;
+  background:var(--team-color,#e10600)!important;
+  z-index:9!important;
+}
+.team-driver-mini .driver-mini-photo-wrap{
+  left:0!important;right:0!important;top:0!important;bottom:0!important;
+  z-index:1!important;
+  overflow:hidden!important;
+  background:none!important;
+}
+.team-driver-mini .driver-mini-photo-wrap::before{display:none!important}
+.team-driver-mini .driver-mini-image{
+  left:3%!important;
+  top:2%!important;
+  width:49%!important;
+  height:108%!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:scale(1.02)!important;
+  transform-origin:center top!important;
+  filter:drop-shadow(0 16px 20px rgba(0,0,0,.58))!important;
+}
+.team-driver-mini:hover .driver-mini-image{transform:scale(1.045) translateY(-1px)!important}
+.team-driver-mini .driver-mini-number{
+  right:5%!important;
+  top:5%!important;
+  z-index:3!important;
+  font-size:62px!important;
+  line-height:.9!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+  color:rgba(255,255,255,.035)!important;
+}
+.team-driver-mini .team-driver-copy{
+  left:46%!important;
+  right:6%!important;
+  bottom:27px!important;
+  z-index:7!important;
+  padding:0!important;
+}
+.team-driver-mini .team-driver-copy::before{
+  content:""!important;
+  position:absolute!important;
+  left:-22px!important;right:-12px!important;top:-28px!important;bottom:-20px!important;
+  z-index:-1!important;
+  background:radial-gradient(ellipse at 12% 78%,color-mix(in srgb,var(--team-color,#e10600) 11%,transparent),transparent 72%)!important;
+  filter:blur(12px)!important;
+  opacity:.8!important;
+}
+.team-driver-mini .team-driver-copy::after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;right:8%!important;bottom:-13px!important;
+  height:1px!important;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--team-color,#e10600) 70%,transparent),rgba(255,255,255,.07),transparent)!important;
+  opacity:.7!important;
+}
+.team-driver-mini .driver-mini-label{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin-bottom:9px!important;
+  color:#737983!important;
+  font-size:8px!important;
+  letter-spacing:.2em!important;
+}
+.team-driver-mini .driver-mini-label::before{
+  content:""!important;
+  width:14px!important;height:1px!important;
+  flex:0 0 auto!important;
+  background:var(--team-color,#e10600)!important;
+  box-shadow:none!important;
+}
+.team-driver-mini .driver-mini-name{
+  font-size:clamp(22px,2.2vw,30px)!important;
+  line-height:1!important;
+  letter-spacing:-.035em!important;
+  font-weight:900!important;
+  color:#f4f4f5!important;
+  text-shadow:none!important;
+}
+.team-driver-mini .driver-mini-points{
+  margin-top:10px!important;
+  font-size:14px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  color:color-mix(in srgb,var(--team-color,#e10600) 76%,#9a9fa7)!important;
+}
+@media(max-width:1100px){
+  .team-driver-mini .driver-mini-image{width:52%!important}
+  .team-driver-mini .team-driver-copy{left:47%!important}
+}
+@media(max-width:768px){
+  .team-driver-mini .driver-mini-image{width:58%!important;height:108%!important;left:0!important}
+  .team-driver-mini .team-driver-copy{left:43%!important;right:5%!important}
+  .team-driver-mini .driver-mini-name{font-size:clamp(19px,5vw,26px)!important}
+}
+
 </style>
 
 
