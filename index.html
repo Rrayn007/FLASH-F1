@@ -873,48 +873,83 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <style id="f1hub-ads">
 :root{--side-ad-width:120px;--side-ad-height:500px;--side-ad-edge:16px;--ad-ease:cubic-bezier(.22,1,.36,1)}
 
-/* Ads are removed from layout until JS explicitly confirms they can be shown.
-   OFF / missing config / broken image = display:none, so there is no empty gap. */
+/* =========================================================
+   ADS — hidden by default, then animated into the layout.
+   OFF / missing config / broken image = display:none.
+   ========================================================= */
 #ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{
   display:none!important;
   opacity:0;
   visibility:hidden;
   pointer-events:none;
 }
+
 #ad-container.ad-ready,#sponsor-slot.ad-ready,#side-ad-left.ad-ready,#side-ad-right.ad-ready{
   display:block!important;
-  opacity:1;
   visibility:visible;
   pointer-events:auto;
+  animation:adReveal .72s var(--ad-ease) both;
+}
+
+@keyframes adReveal{
+  0%{opacity:0;transform:translate3d(0,18px,0) scale(.975);filter:blur(2px)}
+  45%{opacity:.72;filter:blur(.4px)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
 }
 
 /* Main banner / inline sponsor */
-#ad-container,#sponsor-slot{transform:translateY(10px) scale(.992);transition:opacity .62s ease,transform .72s var(--ad-ease),visibility 0s linear .72s}
-#ad-container.ad-ready,#sponsor-slot.ad-ready{transform:translateY(0) scale(1);transition:opacity .62s ease,transform .72s var(--ad-ease),visibility 0s linear 0s}
-#ad-container{position:relative}
+#ad-container,#sponsor-slot{position:relative;will-change:opacity,transform}
 #ad-container:after,#sponsor-slot .card:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 48%,rgba(255,255,255,.035) 52%,transparent 66%);transform:translateX(-120%);z-index:5}
 #ad-container.is-shining:after,#sponsor-slot.is-shining .card:after{opacity:1;animation:adGlassSweep 1.35s var(--ad-ease) both}
 @keyframes adGlassSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.9}55%{opacity:.65}100%{transform:translateX(120%);opacity:0}}
 #ad-banner{transition:filter .45s ease,transform .7s var(--ad-ease)}
 #ad-container:hover #ad-banner{transform:scale(1.008);filter:brightness(1.025)}
 
-/* Desktop side banners */
-#side-ad-left,#side-ad-right{position:fixed;top:50%;width:var(--side-ad-width);height:var(--side-ad-height);z-index:30;overflow:hidden;border-radius:4px;isolation:isolate;will-change:transform,opacity;transition:opacity .68s ease,transform .82s var(--ad-ease),visibility 0s linear .82s}
-#side-ad-left{left:var(--side-ad-edge);transform:translateY(-50%) translateX(-12px) scale(.985)}
-#side-ad-right{right:var(--side-ad-edge);transform:translateY(-50%) translateX(12px) scale(.985)}
-#side-ad-left.ad-ready,#side-ad-right.ad-ready{transform:translateY(-50%) translateX(0) scale(1);transition:opacity .68s ease,transform .82s var(--ad-ease),visibility 0s linear 0s}
+/* Desktop side banners — ONLY large desktop screens. */
+#side-ad-left,#side-ad-right{
+  position:fixed;top:50%;width:var(--side-ad-width);height:var(--side-ad-height);
+  z-index:30;overflow:hidden;border-radius:4px;isolation:isolate;
+  will-change:transform,opacity;
+}
+#side-ad-left{left:var(--side-ad-edge);transform:translate3d(-12px,-50%,0) scale(.985)}
+#side-ad-right{right:var(--side-ad-edge);transform:translate3d(12px,-50%,0) scale(.985)}
+#side-ad-left.ad-ready{animation:sideAdRevealLeft .78s var(--ad-ease) both}
+#side-ad-right.ad-ready{animation:sideAdRevealRight .78s var(--ad-ease) both}
+@keyframes sideAdRevealLeft{0%{opacity:0;transform:translate3d(-28px,-50%,0) scale(.97);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
+@keyframes sideAdRevealRight{0%{opacity:0;transform:translate3d(28px,-50%,0) scale(.97);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
 #side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0}
-#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.8s var(--ad-ease) both}
+#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both}
 #side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;position:relative;z-index:1}
 #side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s var(--ad-ease),filter .5s ease}
 #side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.008);filter:brightness(1.025)}
 
-/* Never show side ads on smaller screens. */
-@media(max-width:1500px){#side-ad-left,#side-ad-right{display:none!important}}
+/* HARD responsive rule: side ads are completely removed below desktop. */
+@media(max-width:1500px){
+  body #side-ad-left,body #side-ad-right{
+    display:none!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+    animation:none!important;
+  }
+}
 @media(min-width:1501px) and (max-height:800px){:root{--side-ad-height:450px}}
 @media(min-width:1501px) and (max-height:650px){:root{--side-ad-height:380px}}
+
+/* Tablet: calendar + drivers + teams use a stable 2-column layout. */
+@media(min-width:520px) and (max-width:900px){
+  #calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+  #drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+  #teams-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
+}
+
+/* Small phones remain single-column for readability. */
+@media(max-width:519px){
+  #calendar-grid,#drivers-grid,#teams-grid{grid-template-columns:1fr!important}
+}
+
 @media(prefers-reduced-motion:reduce){
-  #ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{transition:none!important;transform:none!important}
+  #ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{animation:none!important;transition:none!important}
   #ad-container.is-shining:after,#sponsor-slot.is-shining .card:after,#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{animation:none!important}
   #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
 }
@@ -1526,12 +1561,15 @@ async function fetchConfigAndTrack(){
 
       function revealAd(el){
         if(!el)return;
-        el.classList.remove('hidden');
+        stopAdShine(el);
+        el.classList.remove('hidden','ad-ready');
         el.setAttribute('aria-hidden','false');
-        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        // Force a clean layout frame before starting the entrance animation.
+        void el.offsetWidth;
+        requestAnimationFrame(()=>{
           el.classList.add('ad-ready');
           scheduleAdShine(el);
-        }));
+        });
       }
 
       function hideAd(el){
@@ -1584,16 +1622,22 @@ async function fetchConfigAndTrack(){
 
         prepareExternalLink(link,urlValue);
 
+        const loadToken=String(Date.now())+Math.random().toString(36).slice(2);
+        img.dataset.adLoadToken=loadToken;
+
         img.onload=()=>{
+          if(img.dataset.adLoadToken!==loadToken)return;
           // Only reveal after the browser has a real image with dimensions.
           if(img.naturalWidth>0&&img.naturalHeight>0)revealAd(el);
           else hideAd(el);
         };
-        img.onerror=()=>hideAd(el);
+        img.onerror=()=>{
+          if(img.dataset.adLoadToken===loadToken)hideAd(el);
+        };
         img.src=imageUrl;
 
         // Cached image safety net.
-        if(img.complete&&img.naturalWidth>0)revealAd(el);
+        if(img.complete&&img.naturalWidth>0&&img.dataset.adLoadToken===loadToken)revealAd(el);
       }
 
       // ------------------------------------------------------------
@@ -1633,8 +1677,12 @@ async function fetchConfigAndTrack(){
 
       // ------------------------------------------------------------
       // SIDE ADS
+      // Load them only on the desktop breakpoint where they can actually
+      // be displayed. This prevents mobile/tablet overlays and unnecessary
+      // image requests.
       // ------------------------------------------------------------
-      const sideEnabled=isConfigOn(data.sideAdEnabled);
+      const sideDesktop=window.matchMedia('(min-width:1501px)').matches;
+      const sideEnabled=sideDesktop&&isConfigOn(data.sideAdEnabled);
       loadImageAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
       loadImageAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
 
