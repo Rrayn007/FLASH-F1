@@ -922,6 +922,18 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   #side-ad-left,#side-ad-right{display:none!important;}
 }
 
+/* HARD OFF: an ad marked OFF must not leave an empty/clickable frame */
+#side-ad-left.ad-disabled,
+#side-ad-right.ad-disabled{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+#side-ad-left.ad-disabled *,
+#side-ad-right.ad-disabled *{
+  pointer-events:none!important;
+}
+
 @media (min-width:1501px) and (max-height:800px){
   :root{--side-ad-height:450px;}
 }
@@ -1547,49 +1559,81 @@ const sideRight=document.getElementById('side-ad-right');
 const sideRightLink=document.getElementById('side-ad-right-link');
 const sideRightImg=document.getElementById('side-ad-right-img');
 
-if(data.sideAdEnabled===true && data.sideAdLeftImg){
-  if(sideLeft)sideLeft.classList.remove('hidden');
-  if(sideLeftImg){
-    const imageUrl=safeUrl(data.sideAdLeftImg);
-    if(imageUrl!=='#')sideLeftImg.src=imageUrl;
-  }
-  if(sideLeftLink){
-    const clickUrl=safeUrl(data.sideAdLeftUrl);
-    if(clickUrl!=='#'){
-      sideLeftLink.href=clickUrl;
-      sideLeftLink.target='_blank';
-      sideLeftLink.rel='sponsored noopener noreferrer';
-      sideLeftLink.style.pointerEvents='auto';
-    }else{
-      sideLeftLink.removeAttribute('href');
-      sideLeftLink.style.pointerEvents='none';
-    }
-  }
-}else if(sideLeft){
-  sideLeft.classList.add('hidden');
-}
+/*
+ * SIDE ADS — OFF means completely gone:
+ * - hide the wrapper
+ * - remove the href so it cannot open a new tab
+ * - disable pointer events
+ * - clear the image source so a broken/old image cannot leave a frame
+ *
+ * The config may arrive as boolean, "ON"/"OFF", "TRUE"/"FALSE", etc.
+ * Only an explicit ON/TRUE/YES/1 enables the ad.
+ */
+const isConfigOn=(value)=>{
+  if(value===true)return true;
+  const normalized=String(value??'').trim().toUpperCase();
+  return ['ON','TRUE','YES','1'].includes(normalized);
+};
 
-if(data.sideAdEnabled===true && data.sideAdRightImg){
-  if(sideRight)sideRight.classList.remove('hidden');
-  if(sideRightImg){
-    const imageUrl=safeUrl(data.sideAdRightImg);
-    if(imageUrl!=='#')sideRightImg.src=imageUrl;
+const setSideAd=(el,link,img,enabled,imageValue,urlValue)=>{
+  if(!el)return;
+
+  // Reset everything first. This prevents stale DOM state after switching ON -> OFF.
+  el.classList.add('hidden','ad-disabled');
+  el.setAttribute('aria-hidden','true');
+
+  if(link){
+    link.removeAttribute('href');
+    link.removeAttribute('target');
+    link.removeAttribute('rel');
+    link.style.pointerEvents='none';
   }
-  if(sideRightLink){
-    const clickUrl=safeUrl(data.sideAdRightUrl);
+
+  if(img){
+    img.removeAttribute('src');
+    img.removeAttribute('srcset');
+  }
+
+  if(!enabled || !imageValue)return;
+
+  const imageUrl=safeUrl(imageValue);
+  if(imageUrl==='#')return;
+
+  el.classList.remove('hidden','ad-disabled');
+  el.setAttribute('aria-hidden','false');
+
+  if(img)img.src=imageUrl;
+
+  if(link){
+    const clickUrl=safeUrl(urlValue);
     if(clickUrl!=='#'){
-      sideRightLink.href=clickUrl;
-      sideRightLink.target='_blank';
-      sideRightLink.rel='sponsored noopener noreferrer';
-      sideRightLink.style.pointerEvents='auto';
-    }else{
-      sideRightLink.removeAttribute('href');
-      sideRightLink.style.pointerEvents='none';
+      link.href=clickUrl;
+      link.target='_blank';
+      link.rel='sponsored noopener noreferrer';
+      link.style.pointerEvents='auto';
     }
   }
-}else if(sideRight){
-  sideRight.classList.add('hidden');
-}
+};
+
+const sideAdsOn=isConfigOn(data.sideAdEnabled);
+
+setSideAd(
+  sideLeft,
+  sideLeftLink,
+  sideLeftImg,
+  sideAdsOn,
+  data.sideAdLeftImg,
+  data.sideAdLeftUrl
+);
+
+setSideAd(
+  sideRight,
+  sideRightLink,
+  sideRightImg,
+  sideAdsOn,
+  data.sideAdRightImg,
+  data.sideAdRightUrl
+);
 
 if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
 }catch(error){
