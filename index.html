@@ -349,10 +349,17 @@ button{font-family:inherit}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
 .profile-number{font-size:110px;line-height:.75;font-weight:900;color:rgba(255,255,255,.035)}
-#driver-profile-content{position:relative;padding-right:34%;min-height:620px}
-.profile-constructor-box{min-height:194px;position:relative;z-index:2}
-.profile-constructor-info{min-height:145px;display:flex;align-items:center}
-.profile-team-logo{width:84px;height:64px;object-fit:contain;object-position:center;opacity:.96;flex:none}
+/* PROFILE VISIBILITY CONTRACT
+   The modal contains two mutually-exclusive panels.
+   Keep .hidden authoritative so the driver panel can never leak into a team profile. */
+#driver-profile-content.hidden,
+#team-profile-content.hidden{
+  display:none !important;
+}
+#driver-profile-content:not(.hidden){
+  display:grid;
+}
+
 /* DRIVER PROFILE — clean editorial two-column system */
 #driver-profile-content{
   position:relative;
@@ -462,6 +469,26 @@ button{font-family:inherit}
   .profile-driver-visual{height:330px}
   .profile-team-logo{width:72px;height:58px}
   #profile-number{font-size:62px!important}
+}
+
+
+/* TEAM PROFILE — dedicated layout, isolated from driver profile */
+#team-profile-content{
+  position:relative;
+}
+#team-profile-content .team-profile-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 180px;
+  gap:16px;
+  align-items:stretch;
+}
+#team-profile-content .team-profile-stat{
+  background:linear-gradient(145deg,#111113,#0d0d0f);
+  border:1px solid #1c1e23;
+  border-radius:9px;
+}
+@media(max-width:640px){
+  #team-profile-content .team-profile-hero{grid-template-columns:1fr}
 }
 
 .fastest-label{background:#7d22b8}
@@ -667,6 +694,90 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 .team-driver-mini:hover .driver-mini-image{transform:scale(1.07)!important;}
 
+
+
+/* =========================================================
+   DRIVER GRID — FINAL 4-COLUMN / WAIST-CROP PASS
+   Keep the portrait head fully visible. Only the lower body
+   exits the frame and fades softly into the card background.
+   ========================================================= */
+#drivers-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:16px!important;
+}
+.driver-card{
+  aspect-ratio:1/1!important;
+  min-height:0!important;
+  padding:0!important;
+}
+.driver-card .driver-photo-wrap{
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  bottom:0!important;
+  overflow:hidden!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  -webkit-mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 68%,
+    rgba(0,0,0,.98) 75%,
+    rgba(0,0,0,.82) 82%,
+    rgba(0,0,0,.52) 89%,
+    rgba(0,0,0,.20) 96%,
+    transparent 100%
+  )!important;
+  mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 68%,
+    rgba(0,0,0,.98) 75%,
+    rgba(0,0,0,.82) 82%,
+    rgba(0,0,0,.52) 89%,
+    rgba(0,0,0,.20) 96%,
+    transparent 100%
+  )!important;
+}
+.driver-card .driver-photo{
+  left:0!important;
+  top:0!important;
+  width:108%!important;
+  height:112%!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:scale(1.01)!important;
+  transform-origin:center top!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  filter:drop-shadow(0 12px 18px rgba(0,0,0,.58));
+}
+.driver-card:hover .driver-photo{transform:scale(1.035)!important;}
+.driver-card .driver-content{padding:16px 16px 13px!important;}
+.driver-card .driver-lastname{
+  font-size:clamp(21px,2.05vw,29px)!important;
+  letter-spacing:-.055em!important;
+}
+.driver-card .driver-firstname{font-size:10px!important;}
+.driver-card .driver-number{font-size:42px!important;top:14px!important;right:15px!important;}
+.driver-card .team-stripe{height:36px!important;}
+.driver-card .driver-name-zone{min-height:72px!important;margin-bottom:8px!important;}
+.driver-card .driver-stats-row{padding-top:9px!important;}
+.driver-card .driver-stats-row .timing-value{font-size:12px!important;}
+
+@media (max-width:1100px){
+  #drivers-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media (max-width:760px){
+  #drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important;}
+  .driver-card .driver-content{padding:14px 13px 12px!important;}
+  .driver-card .driver-lastname{font-size:clamp(20px,5.5vw,27px)!important;}
+  .driver-card .driver-number{font-size:38px!important;}
+}
+@media (max-width:480px){
+  #drivers-grid{grid-template-columns:1fr;}
+}
 </style>
 
 </head>
@@ -854,7 +965,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 <div class="hidden md:flex items-center gap-2 text-[9px] uppercase tracking-widest text-gray-600"><span class="w-2 h-2 bg-red-600 rounded-full live-dot"></span>Official F1 Media</div>
 </div>
-<div id="drivers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+<div id="drivers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
 </section>
 
 <section id="teams" class="mt-24">
@@ -1915,6 +2026,17 @@ if(list[0])img.src=list[0];
 else img.removeAttribute('src');
 }
 
+function setProfilePanel(mode){
+  const driverPanel=document.getElementById('driver-profile-content');
+  const teamPanel=document.getElementById('team-profile-content');
+  if(!driverPanel||!teamPanel)return;
+  const showDriver=mode==='driver';
+  driverPanel.classList.toggle('hidden',!showDriver);
+  teamPanel.classList.toggle('hidden',showDriver);
+  driverPanel.setAttribute('aria-hidden',String(!showDriver));
+  teamPanel.setAttribute('aria-hidden',String(showDriver));
+}
+
 function openDriverProfile(driverId){
 const id=String(driverId||'').trim();
 const driver=standings.find(d=>String(d.Driver?.driverId||'')===id);
@@ -1948,8 +2070,7 @@ document.getElementById('driver-stats').innerHTML=`
 <div class="bg-[#101010] p-4"><div class="timing-label">Points</div><div class="text-xl font-black mt-2">${driver.points||0}</div></div>
 <div class="bg-[#101010] p-4"><div class="timing-label">Position</div><div class="text-xl font-black mt-2">P${driver.position||'--'}</div></div>`;
 
-document.getElementById('driver-profile-content').classList.remove('hidden');
-document.getElementById('team-profile-content').classList.add('hidden');
+setProfilePanel('driver');
 profileModal.classList.remove('hidden');
 profileModal.setAttribute('aria-hidden','false');
 document.body.classList.add('modal-open');
@@ -2010,8 +2131,7 @@ return`
 </div>`;
 }).join('');
 
-document.getElementById('driver-profile-content').classList.add('hidden');
-document.getElementById('team-profile-content').classList.remove('hidden');
+setProfilePanel('team');
 document.getElementById('profile-modal').classList.remove('hidden');
 document.getElementById('profile-modal').setAttribute('aria-hidden','false');
 document.body.classList.add('modal-open');
@@ -2023,6 +2143,7 @@ if(!modal)return;
 modal.classList.add('hidden');
 modal.setAttribute('aria-hidden','true');
 document.body.classList.remove('modal-open');
+setProfilePanel('driver');
 }
 
 // Keep profile actions globally callable for inline/search/team interactions.
