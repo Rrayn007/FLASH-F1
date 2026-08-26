@@ -148,6 +148,11 @@ button{font-family:inherit}
 .profile-image-fallback{display:block!important;opacity:.98}
 .race-result-empty{background:#111;border:1px solid #202023;border-radius:8px;padding:14px;color:#777;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
 @media(max-width:768px){
+.team-driver-mini{min-height:330px;height:330px}
+.team-driver-mini .driver-mini-image{width:70%!important;height:108%!important;left:-5%;transform:scale(1.04)}
+.team-driver-mini .team-driver-copy{left:45%;right:6%;bottom:24px}
+.team-driver-mini .team-driver-copy .driver-mini-name{font-size:24px}
+.team-driver-mini .team-driver-copy .driver-mini-points{font-size:15px}
 #driver-profile-content{padding-right:0;min-height:0}
 .profile-constructor-box{min-height:160px}
 .profile-constructor-info{min-height:110px}
@@ -211,11 +216,146 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .driver-lastname{font-size:21px}
 }
 
-/* Team-card driver mini: enlarge transparent full-body assets and fade lower body. */
-.team-driver-mini{position:relative;min-height:112px;overflow:hidden;cursor:pointer;pointer-events:auto;z-index:20;isolation:isolate}
-.team-driver-mini .driver-mini-image{width:76px!important;height:126px!important;object-fit:contain!important;object-position:top center!important;transform:scale(1.65);transform-origin:center top;filter:drop-shadow(0 8px 10px rgba(0,0,0,.45));-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 66%,rgba(0,0,0,.82) 78%,rgba(0,0,0,.35) 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 66%,rgba(0,0,0,.82) 78%,rgba(0,0,0,.35) 90%,transparent 100%)}
-.team-driver-mini .team-driver-copy{position:relative;z-index:5;pointer-events:none}
-.team-driver-mini:hover{background:#1d1d20!important}
+/* Team Profile — large driver portrait + smooth bottom fade + full name in fade zone. */
+.team-driver-mini{
+  position:relative;
+  min-height:388px;
+  height:388px;
+  overflow:hidden;
+  cursor:pointer;
+  pointer-events:auto;
+  z-index:20;
+  isolation:isolate;
+  background:linear-gradient(145deg,#111113 0%,#151517 100%);
+  border:1px solid #202023;
+  border-radius:10px;
+  transition:transform .25s ease,border-color .25s ease,background .25s ease;
+}
+.team-driver-mini:hover{transform:translateY(-3px);border-color:#3a3a40;background:#171719!important}
+.team-driver-mini::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(
+    to bottom,
+    rgba(12,12,14,0) 35%,
+    rgba(12,12,14,.015) 43%,
+    rgba(12,12,14,.08) 51%,
+    rgba(12,12,14,.24) 59%,
+    rgba(12,12,14,.48) 67%,
+    rgba(12,12,14,.72) 75%,
+    rgba(12,12,14,.90) 84%,
+    #0c0c0e 96%,
+    #0c0c0e 100%
+  );
+}
+.team-driver-mini::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:3px;
+  background:var(--team-color,#e10600);
+  z-index:8;
+}
+.team-driver-mini .driver-mini-photo-wrap{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  overflow:hidden;
+  pointer-events:none;
+  display:flex;
+  justify-content:flex-start;
+  align-items:flex-start;
+}
+.team-driver-mini .driver-mini-image{
+  position:absolute;
+  left:-2%;
+  top:-2%;
+  width:66%!important;
+  height:108%!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:scale(1.08);
+  transform-origin:center top;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));
+  -webkit-mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 50%,
+    rgba(0,0,0,.98) 58%,
+    rgba(0,0,0,.88) 65%,
+    rgba(0,0,0,.68) 72%,
+    rgba(0,0,0,.42) 80%,
+    rgba(0,0,0,.20) 89%,
+    transparent 100%
+  );
+  mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 50%,
+    rgba(0,0,0,.98) 58%,
+    rgba(0,0,0,.88) 65%,
+    rgba(0,0,0,.68) 72%,
+    rgba(0,0,0,.42) 80%,
+    rgba(0,0,0,.20) 89%,
+    transparent 100%
+  );
+  transition:transform .35s ease;
+}
+.team-driver-mini:hover .driver-mini-image{transform:scale(1.11) translateY(-2px)}
+.team-driver-mini .team-driver-copy{
+  position:absolute;
+  left:48%;
+  right:7%;
+  bottom:28px;
+  z-index:6;
+  pointer-events:none;
+  min-width:0;
+}
+.team-driver-mini .team-driver-copy .driver-mini-label{
+  font-size:9px;
+  line-height:1;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:#777a82;
+  margin-bottom:12px;
+}
+.team-driver-mini .team-driver-copy .driver-mini-name{
+  font-size:clamp(22px,2.25vw,31px);
+  line-height:.98;
+  font-weight:950;
+  letter-spacing:-.035em;
+  color:#f5f5f6;
+  text-transform:uppercase;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  word-break:normal;
+}
+.team-driver-mini .team-driver-copy .driver-mini-points{
+  margin-top:12px;
+  font-size:18px;
+  line-height:1;
+  color:#777b84;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  letter-spacing:-.02em;
+}
+.team-driver-mini .driver-mini-number{
+  position:absolute;
+  right:8%;
+  top:7%;
+  z-index:5;
+  font-size:46px;
+  line-height:1;
+  font-weight:950;
+  color:rgba(255,255,255,.045);
+  pointer-events:none;
+}
 /* Final driver-card interaction/crop fixes */
 .driver-card{position:relative;z-index:1;pointer-events:auto;isolation:isolate}
 .driver-card .driver-content{pointer-events:auto}
@@ -1524,15 +1664,22 @@ ${carCandidates.length?`<img src="${escapeHTML(safeUrl(carCandidates[0]))}" data
 
 document.getElementById('team-profile-drivers').innerHTML=team.drivers.slice(0,2).map(driver=>{
 const candidates=getDriverImageCandidates(driver);
+const firstName=driver.Driver?.givenName||'';
+const lastName=driver.Driver?.familyName||'';
+const fullName=`${firstName} ${lastName}`.trim();
+const number=driver.Driver?.permanentNumber||DRIVER_NUMBER_MAP[driver.Driver?.driverId]||'--';
 return`
-<div class="bg-[#111] border-b-2 p-5 rounded cursor-pointer hover:bg-[#161616] transition flex items-center gap-4" style="border-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(driver.Driver.driverId)}')">
-<img src="${escapeHTML(candidates[0]||'')}" data-src-list='${escapeHTML(JSON.stringify(candidates))}' data-src-index="0" class="w-16 h-20 object-contain object-top" alt="${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)}" loading="lazy" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
-<div class="flex-1 min-w-0">
-<div class="text-[8px] uppercase tracking-widest text-gray-600">Driver</div>
-<div class="text-xl font-black uppercase mt-2 truncate">${escapeHTML(driver.Driver.familyName)}</div>
-<div class="text-xs text-gray-600 mt-2">#${escapeHTML(driver.Driver.permanentNumber||'--')}</div>
-<div class="flex justify-between mt-5 pt-3 border-t border-gray-900"><span class="text-[8px] text-gray-600 uppercase">Points</span><span class="font-mono text-xs">${escapeHTML(driver.points||0)}</span></div>
-</div></div>`;
+<div class="team-driver-mini" data-driver-id="${escapeHTML(driver.Driver?.driverId||'')}" role="button" tabindex="0" aria-label="Open ${escapeHTML(fullName)} profile" style="--team-color:${meta.color}">
+  <div class="driver-mini-photo-wrap">
+    <img src="${escapeHTML(candidates[0]||'')}" data-src-list='${escapeHTML(JSON.stringify(candidates))}' data-src-index="0" class="driver-mini-image" alt="${escapeHTML(fullName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
+  </div>
+  <div class="driver-mini-number">#${escapeHTML(number)}</div>
+  <div class="team-driver-copy">
+    <div class="driver-mini-label">Driver</div>
+    <div class="driver-mini-name">${escapeHTML(fullName)}</div>
+    <div class="driver-mini-points">${escapeHTML(driver.points||0)} PTS</div>
+  </div>
+</div>`;
 }).join('');
 
 document.getElementById('driver-profile-content').classList.add('hidden');
@@ -1699,6 +1846,25 @@ if(driversGrid){
     if(!card || !driversGrid.contains(card)) return;
     e.preventDefault();
     openDriverProfile(card.dataset.driverId);
+  },true);
+}
+
+const teamProfileDrivers=document.getElementById('team-profile-drivers');
+if(teamProfileDrivers){
+  teamProfileDrivers.addEventListener('click',function(e){
+    const item=e.target.closest('.team-driver-mini[data-driver-id]');
+    if(!item || !teamProfileDrivers.contains(item)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openDriverProfile(item.dataset.driverId);
+  },true);
+  teamProfileDrivers.addEventListener('keydown',function(e){
+    if(e.key!=='Enter' && e.key!==' ') return;
+    const item=e.target.closest('.team-driver-mini[data-driver-id]');
+    if(!item || !teamProfileDrivers.contains(item)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openDriverProfile(item.dataset.driverId);
   },true);
 }
 
