@@ -123,15 +123,21 @@ button{font-family:inherit}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
 .profile-number{font-size:110px;line-height:.75;font-weight:900;color:rgba(255,255,255,.035)}
-#driver-profile-content{position:relative;padding-right:34%;min-height:600px}
-#profile-driver-image{position:absolute;right:-1%;top:-10px;width:36%;height:610px;object-fit:contain;object-position:center bottom;z-index:5;filter:drop-shadow(0 16px 24px rgba(0,0,0,.5));display:block}
+#driver-profile-content{position:relative;padding-right:34%;min-height:620px}
+.profile-constructor-box{min-height:194px;position:relative;z-index:2}
+.profile-constructor-info{min-height:145px;display:flex;align-items:center}
+.profile-team-logo{width:76px;height:56px;object-fit:contain;object-position:center;opacity:.96;flex:none}
+#profile-driver-image{position:absolute;right:-1%;top:-2px;width:38%;height:625px;object-fit:contain;object-position:center bottom;z-index:5;filter:drop-shadow(0 16px 24px rgba(0,0,0,.55));display:block;pointer-events:none}
 #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
 #driver-profile-content > .grid:first-child{width:100%}
 .profile-image-fallback{display:block!important;opacity:.98}
 .race-result-empty{background:#111;border:1px solid #202023;border-radius:8px;padding:14px;color:#777;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
 @media(max-width:768px){
 #driver-profile-content{padding-right:0;min-height:0}
-#profile-driver-image{position:relative;right:auto;top:auto;width:100%;height:380px;display:block;object-position:center bottom;margin:8px 0 0}
+.profile-constructor-box{min-height:160px}
+.profile-constructor-info{min-height:110px}
+.profile-team-logo{width:62px;height:46px}
+#profile-driver-image{position:relative;right:auto;top:auto;width:100%;height:400px;display:block;object-position:center bottom;margin:8px 0 0}
 #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
 .driver-photo-wrap{width:58%;height:235px}
 .driver-card{min-height:390px}
@@ -474,13 +480,15 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div class="text-[8px] uppercase tracking-widest text-gray-600 relative">Car Number</div>
 <div id="profile-number" class="text-7xl font-black leading-none mt-5 relative">--</div>
 </div>
-<div class="md:col-span-2 bg-[#101010] rounded-lg p-6">
-<div class="flex items-start gap-5">
-<img id="profile-driver-image" class="w-28 h-36 object-contain object-bottom" alt="" loading="lazy" onerror="this.onerror=null;this.style.display='none'">
+<div class="md:col-span-2 bg-[#101010] rounded-lg p-6 profile-constructor-box">
+<div class="profile-constructor-info">
+<div class="flex items-center gap-4">
+<img id="profile-team-logo" class="profile-team-logo" alt="" loading="lazy" referrerpolicy="no-referrer">
 <div>
 <div class="text-[8px] uppercase tracking-widest text-gray-600">Constructor</div>
-<div id="profile-team" class="text-xl font-black uppercase mt-3">--</div>
+<div id="profile-team" class="text-xl font-black uppercase mt-2">--</div>
 <div id="profile-nationality" class="text-xs text-gray-600 mt-2">--</div>
+</div>
 </div>
 </div>
 </div>
@@ -1170,7 +1178,8 @@ const code=d.Driver?.code?.toLowerCase()||'';
 const family=d.Driver?.familyName?.toLowerCase()||'';
 const given=d.Driver?.givenName?.toLowerCase()||'';
 const alias=Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId);
-const fallback=driverImages[code]||driverImages[id]||driverWikiImages[id]||driverImageFallback(d.Driver)||'';
+const wikiNameKey=(given+'_'+family).replace(/\s+/g,'_');
+const fallback=driverImages[code]||driverImages[id]||driverWikiImages[id]||driverWikiImages[wikiNameKey]||driverImageFallback(d.Driver)||'';
 // Current F1 Media remains the primary 2026 full-body asset.
 // If that asset is unavailable, use OpenF1/Wikimedia/fallback media instead of leaving the image blank.
 return official||fallback||'';
@@ -1372,15 +1381,50 @@ document.getElementById('profile-number').textContent=number;
 document.getElementById('profile-number-box').style.borderBottom=`3px solid ${meta.color}`;
 document.getElementById('profile-team').textContent=constructor?.name||meta.name;
 document.getElementById('profile-nationality').textContent=driver.Driver.nationality||'--';
+const profileTeamLogo=document.getElementById('profile-team-logo');
+profileTeamLogo.src=meta.logo||'';
+profileTeamLogo.alt=`${constructor?.name||meta.name} logo`;
+profileTeamLogo.style.display=meta.logo?'block':'none';
 document.getElementById('profile-position').textContent=`P${driver.position}`;
 document.getElementById('profile-points').textContent=driver.points;
 profileImage.dataset.srcList=JSON.stringify(imageCandidates);
 profileImage.dataset.srcIndex='0';
 profileImage.style.display='block';
 profileImage.classList.remove('profile-image-fallback');
-profileImage.onerror=()=>driverImageOnError(profileImage);
+profileImage.onerror=()=>{
+  driverImageOnError(profileImage);
+  if(profileImage.style.display==='none'){
+    const page=(driver.Driver.givenName+'_'+driver.Driver.familyName).replaceAll(' ','_');
+    fetchWikipediaSummaryImage(page).then(img=>{
+      if(!img)return;
+      const list=JSON.parse(profileImage.dataset.srcList||'[]');
+      if(!list.includes(img))list.push(img);
+      profileImage.dataset.srcList=JSON.stringify(list);
+      profileImage.dataset.srcIndex=String(list.length-1);
+      profileImage.style.display='block';
+      profileImage.src=img;
+    }).catch(()=>{});
+  }
+};
 profileImage.src=image;
 profileImage.alt=`${driver.Driver.givenName} ${driver.Driver.familyName}`;
+
+// Lindblad and a few newer 2026 assets can be missing from the current F1 Media path.
+// Load the Wikipedia portrait on demand as a final profile-only fallback, so the right-side
+// full-body/portrait area never stays blank when the official media URL changes.
+if(!image && driver.Driver?.familyName){
+  const page=(driver.Driver.givenName+'_'+driver.Driver.familyName).replaceAll(' ','_');
+  fetchWikipediaSummaryImage(page).then(img=>{
+    if(img && document.getElementById('profile-name')?.textContent===`${driver.Driver.givenName} ${driver.Driver.familyName}`){
+      const list=JSON.parse(profileImage.dataset.srcList||'[]');
+      if(!list.includes(img))list.push(img);
+      profileImage.dataset.srcList=JSON.stringify(list);
+      profileImage.dataset.srcIndex=String(list.length-1);
+      profileImage.style.display='block';
+      profileImage.src=img;
+    }
+  }).catch(()=>{});
+}
 
 document.getElementById('driver-stats').innerHTML=`
 <div class="bg-[#101010] p-4"><div class="timing-label">Wins</div><div class="text-xl font-black mt-2">${driver.wins||0}</div></div>
