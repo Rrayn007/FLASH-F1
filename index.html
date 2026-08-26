@@ -1500,7 +1500,7 @@ function scheduleAdShine(el){
     void el.offsetWidth;
     el.classList.add('is-shining');
     // Remove the temporary shine class after the sweep, then wait a random interval.
-    setTimeout(()=>el.classList.remove('is-shining'),1500);
+    setTimeout(()=>el.classList.remove('is-shining'),1800);
     const next=9000+Math.random()*8000; // 9–17s, intentionally irregular
     adShineTimers.set(el,setTimeout(run,next));
   };
