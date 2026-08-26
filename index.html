@@ -780,6 +780,44 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 </style>
 
+
+<style id="driver-card-rank-ghost-v8">
+/* V8 — stronger position badge + oversized background driver number */
+.driver-card .driver-rank{
+  position:relative!important;
+  z-index:12!important;
+  font-size:17px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:-.035em!important;
+  color:#aeb4bd!important;
+  text-shadow:0 1px 8px rgba(0,0,0,.45);
+  padding-top:2px;
+}
+.driver-card .driver-number{
+  top:22px!important;
+  right:18px!important;
+  z-index:2!important;
+  font-size:88px!important;
+  line-height:.82!important;
+  font-weight:950!important;
+  letter-spacing:-.095em!important;
+  color:rgba(255,255,255,.052)!important;
+  opacity:1!important;
+  pointer-events:none!important;
+  user-select:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+}
+.driver-card .driver-content>.flex.justify-between.items-start{
+  position:relative!important;
+  z-index:10!important;
+}
+@media(max-width:760px){
+  .driver-card .driver-rank{font-size:15px!important}
+  .driver-card .driver-number{font-size:74px!important;top:20px!important;right:15px!important}
+}
+</style>
 </head>
 
 <body>
