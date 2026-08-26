@@ -100,24 +100,27 @@ button{font-family:inherit}
 .pole-chip{display:flex;align-items:center;justify-content:space-between;background:#211624;border:1px solid #5b3d69;border-radius:6px;padding:9px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
 .pole-chip span:first-child{font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#d08af4}
 .pole-chip span:last-child{font-size:11px;font-weight:850;color:#fff}
-.car-visual{position:relative;height:150px;margin-top:18px;overflow:hidden;background:radial-gradient(circle at 60% 55%,rgba(255,255,255,.065),transparent 58%)}
+.car-visual{position:relative;height:170px;margin-top:18px;overflow:hidden;background:radial-gradient(circle at 60% 55%,rgba(255,255,255,.065),transparent 58%)}
 .car-visual:after{content:"";position:absolute;left:5%;right:5%;bottom:18px;height:1px;background:rgba(255,255,255,.055)}
 .car-svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .45s ease;transform-origin:center}
 .team-card:hover .car-svg{transform:translateX(8px) scale(1.03)}
-.car-visual img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));image-rendering:auto}
-.driver-photo-wrap{position:absolute;right:-1%;top:0;bottom:auto;width:58%;height:305px;display:flex;justify-content:flex-end;align-items:flex-start;overflow:hidden;pointer-events:none;z-index:1}
-.driver-photo{height:455px;width:auto;max-width:none;object-fit:contain;object-position:top right;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));transition:transform .35s ease;image-rendering:auto}
+.team-card:hover .car-visual img{transform:translateY(-50%) scale(1.025)}
+.car-visual img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));image-rendering:auto;width:118%!important;max-width:none!important;height:auto!important;left:-9%!important;top:50%!important;bottom:auto!important;transform:translateY(-50%);object-fit:contain!important;padding:0!important}
+.team-car-image{width:118%!important;max-width:none!important;height:auto!important;left:-9%!important;top:50%!important;bottom:auto!important;transform:translateY(-50%);object-fit:contain!important;padding:0!important;filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));}
+.profile-car-visual{height:210px}.profile-car-visual .team-car-image{width:112%!important;left:-6%!important}.car-image-empty{z-index:2}
+.driver-photo-wrap{position:absolute;right:-2%;top:0;width:58%;height:72%;display:flex;justify-content:flex-end;align-items:flex-start;overflow:hidden;pointer-events:none;z-index:1}
+.driver-photo{height:430px;width:auto;max-width:none;object-fit:contain;object-position:top right;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5));transition:transform .35s ease;image-rendering:auto}
 .driver-card:hover .driver-photo{transform:translateY(-4px) scale(1.025)}
 .img-fallback{opacity:.92}
-.driver-content{position:relative;z-index:3}
-.driver-gradient{position:absolute;inset:auto 0 0 0;height:155px;background:linear-gradient(0deg,#0b0b0d 12%,rgba(11,11,13,.9) 44%,transparent 100%);pointer-events:none;z-index:2}
-.driver-number{z-index:4;right:16px;bottom:auto;top:16px;font-size:34px;line-height:1;font-weight:900;color:rgba(255,255,255,.24);letter-spacing:-.04em;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.driver-content{position:relative;z-index:6;height:100%;display:flex;flex-direction:column;padding-top:2px}
+.driver-gradient{position:absolute;inset:auto 0 0 0;height:58%;background:linear-gradient(0deg,#0b0b0d 12%,rgba(11,11,13,.9) 44%,transparent 100%);pointer-events:none;z-index:2}
+.driver-number{z-index:4;right:16px;bottom:18px;top:auto;font-size:34px;line-height:1;font-weight:900;color:rgba(255,255,255,.24);letter-spacing:-.04em;text-shadow:0 2px 12px rgba(0,0,0,.7)}
 .driver-rank{font-size:12px;font-weight:800;color:#85858b;letter-spacing:.02em;text-shadow:0 1px 8px rgba(0,0,0,.65)}
-.driver-stats-row{position:relative;z-index:3}
+.driver-stats-row{position:relative;z-index:6;margin-top:auto!important;padding-bottom:2px}
 .driver-card .timing-label{font-size:9px;color:#66666d}
 .driver-card .driver-firstname{font-size:11px;color:#8a8a90}
-.driver-card .driver-lastname{font-size:26px}
-.driver-card{min-height:410px}
+.driver-card .driver-lastname{font-size:26px;max-width:62%;position:relative;z-index:5}
+.driver-card{aspect-ratio:1/1;min-height:0;height:auto}
 .modal-backdrop{animation:fadeIn .18s ease}
 .modal-box{animation:modalIn .22s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -126,7 +129,7 @@ button{font-family:inherit}
 #driver-profile-content{position:relative;padding-right:34%;min-height:620px}
 .profile-constructor-box{min-height:194px;position:relative;z-index:2}
 .profile-constructor-info{min-height:145px;display:flex;align-items:center}
-.profile-team-logo{width:76px;height:56px;object-fit:contain;object-position:center;opacity:.96;flex:none}
+.profile-team-logo{width:84px;height:64px;object-fit:contain;object-position:center;opacity:.96;flex:none}
 #profile-driver-image{position:absolute;right:-1%;top:-2px;width:38%;height:625px;object-fit:contain;object-position:center bottom;z-index:5;filter:drop-shadow(0 16px 24px rgba(0,0,0,.55));display:block;pointer-events:none}
 #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
 #driver-profile-content > .grid:first-child{width:100%}
@@ -139,9 +142,9 @@ button{font-family:inherit}
 .profile-team-logo{width:62px;height:46px}
 #profile-driver-image{position:relative;right:auto;top:auto;width:100%;height:400px;display:block;object-position:center bottom;margin:8px 0 0}
 #driver-stats,#driver-profile-content > .grid:last-child{width:100%}
-.driver-photo-wrap{right:-2%;top:0;width:62%;height:250px}
-.driver-photo{height:370px}
-.driver-card{min-height:390px}
+.driver-photo-wrap{right:-2%;top:0;width:62%;height:70%}
+.driver-photo{height:360px}
+.driver-card{aspect-ratio:1/1;min-height:0}
 .driver-number{top:14px;right:14px;font-size:28px}
 }
 .fastest-label{background:#7d22b8}
@@ -1303,28 +1306,39 @@ return `<article class="driver-card rounded-lg p-5" style="--team-color:${meta.c
 }
 
 const F1_CAR_MEDIA={
-mercedes:['mercedes','w17'],mclaren:['mclaren','mcl40'],ferrari:['ferrari','sf26'],
-red_bull:['redbullracing','rb22'],rb:['racingbulls','vcarb03'],alpine:['alpine','a526'],
-haas:['haasf1team','vf26'],audi:['audi','r26'],williams:['williams','fw48'],
-aston_martin:['astonmartin','amr26'],cadillac:['cadillac','mac26']
+mercedes:['mercedes','mercedes'],mclaren:['mclaren','mclaren'],ferrari:['ferrari','ferrari'],
+red_bull:['redbullracing','redbullracing'],rb:['racingbulls','racingbulls'],alpine:['alpine','alpine'],
+haas:['haasf1team','haasf1team'],audi:['audi','audi'],williams:['williams','williams'],
+aston_martin:['astonmartin','astonmartin'],cadillac:['cadillac','cadillac']
 };
 function getCarImageCandidates(team){
-const asset=F1_CAR_MEDIA[teamKey(team.id)];
-if(!asset)return[];
-const [folder,chassis]=asset;
-const base=`https://media.formula1.com/image/upload/c_fill,w_1320/q_auto/v1740000000/common/f1/2026/${folder}`;
-const stem=`2026${folder}${chassis}`;
-return [`${base}/${stem}right.webp`,`${base}/${folder}${chassis}/${stem}right.webp`,`${base}/${stem}.webp`];
+const key=teamKey(team.id);
+const asset=F1_CAR_MEDIA[key];
+const meta=getTeamMeta(key);
+if(!asset)return carWikiImages[key]?[carWikiImages[key]]:[];
+const [folder,slug]=asset;
+const base=`https://media.formula1.com/image/upload/c_fill,w_3392/q_auto/v1740000001/common/f1/2026/${folder}`;
+const stems=[`2026${folder}car`,`2026${folder}`,`2026${slug}car`,`2026${slug}`];
+const urls=[];
+for(const stem of stems){
+  urls.push(`${base}/${stem}right.webp`,`${base}/${stem}.webp`,`${base}/${folder}/${stem}right.webp`,`${base}/${folder}/${stem}.webp`);
 }
-function getCarImage(team){return getCarImageCandidates(team)[0]||'';}
+if(carWikiImages[key])urls.push(carWikiImages[key]);
+return [...new Set(urls)];
+}
+function getCarImage(team){return getCarImageCandidates(team)[0]||carWikiImages[teamKey(team.id)]||'';}
 function carImageOnError(img){
 try{
-const list=JSON.parse(img.dataset.srcList||'[]');
-const next=Number(img.dataset.srcIndex||0)+1;
-if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
+ const list=JSON.parse(img.dataset.srcList||'[]');
+ const next=Number(img.dataset.srcIndex||0)+1;
+ if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
 }catch{}
-img.onerror=null;img.style.display='none';
+img.onerror=null;
+img.style.display='none';
+const holder=img.parentElement?.querySelector('.car-image-empty');
+if(holder)holder.classList.remove('hidden');
 }
+
 function renderTeams(){
 const teams=getTeams();
 document.getElementById('teams-grid').innerHTML=teams.map((team,index)=>{
@@ -1345,7 +1359,8 @@ return`
 </div>
 
 <div class="car-visual">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" data-src-list='${escapeHTML(JSON.stringify(carImageCandidates))}' data-src-index="0" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE</div>`}
+${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" data-src-list='${escapeHTML(JSON.stringify(carImageCandidates))}' data-src-index="0" class="team-car-image absolute" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">`:''}
+<div class="car-image-empty ${carImage?'hidden':''} absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>
 <div class="absolute left-3 bottom-3 z-10 text-[8px] tracking-[.2em] uppercase text-gray-600">${escapeHTML(meta.chassis)}</div>
 </div>
 
@@ -1377,14 +1392,29 @@ return`
 }).join('');
 }
 
+function setProfileImageWithFallback(img,candidates,driver){
+const list=[...new Set((candidates||[]).filter(Boolean))];
+img.dataset.srcList=JSON.stringify(list);
+img.dataset.srcIndex='0';
+img.style.display='block';
+img.onerror=async function(){
+  const next=Number(img.dataset.srcIndex||0)+1;
+  if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
+  const page=(driver.Driver?.givenName+'_'+driver.Driver?.familyName).replaceAll(' ','_');
+  const wiki=await fetchWikipediaSummaryImage(page);
+  if(wiki && !list.includes(wiki)){list.push(wiki);img.dataset.srcList=JSON.stringify(list);img.dataset.srcIndex=String(list.length-1);img.src=wiki;return;}
+  img.onerror=null;
+};
+if(list[0])img.src=list[0];
+else img.removeAttribute('src');
+}
+
 function openDriverProfile(driverId){
 const driver=standings.find(d=>d.Driver.driverId===driverId);
 if(!driver)return;
 const constructor=driver.Constructors?.[0];
 const meta=getTeamMeta(constructor?.constructorId);
-const number=driver.Driver.permanentNumber||'--';
-const image=getDriverImage(driver);
-const imageCandidates=getDriverImageCandidates(driver);
+const number=driver.Driver.permanentNumber||DRIVER_NUMBER_MAP[driver.Driver.driverId]||'--';
 const profileImage=document.getElementById('profile-driver-image');
 
 document.getElementById('profile-color-bar').style.background=meta.color;
@@ -1394,60 +1424,24 @@ document.getElementById('profile-number').textContent=number;
 document.getElementById('profile-number-box').style.borderBottom=`3px solid ${meta.color}`;
 document.getElementById('profile-team').textContent=constructor?.name||meta.name;
 document.getElementById('profile-nationality').textContent=driver.Driver.nationality||'--';
-const profileTeamLogo=document.getElementById('profile-team-logo');
-profileTeamLogo.src=meta.logo||'';
-profileTeamLogo.alt=`${constructor?.name||meta.name} logo`;
-profileTeamLogo.style.display=meta.logo?'block':'none';
-document.getElementById('profile-position').textContent=`P${driver.position}`;
-document.getElementById('profile-points').textContent=driver.points;
-profileImage.dataset.srcList=JSON.stringify(imageCandidates);
-profileImage.dataset.srcIndex='0';
-profileImage.style.display='block';
-profileImage.classList.remove('profile-image-fallback');
-profileImage.onerror=()=>{
-  driverImageOnError(profileImage);
-  if(profileImage.style.display==='none'){
-    const page=(driver.Driver.givenName+'_'+driver.Driver.familyName).replaceAll(' ','_');
-    fetchWikipediaSummaryImage(page).then(img=>{
-      if(!img)return;
-      const list=JSON.parse(profileImage.dataset.srcList||'[]');
-      if(!list.includes(img))list.push(img);
-      profileImage.dataset.srcList=JSON.stringify(list);
-      profileImage.dataset.srcIndex=String(list.length-1);
-      profileImage.style.display='block';
-      profileImage.src=img;
-    }).catch(()=>{});
-  }
-};
-profileImage.src=image;
+document.getElementById('profile-position').textContent=`P${driver.position||'--'}`;
+document.getElementById('profile-points').textContent=driver.points||0;
+const logo=document.getElementById('profile-team-logo');
+logo.src=meta.logo||''; logo.alt=`${constructor?.name||meta.name} logo`; logo.style.display=meta.logo?'block':'none';
+setProfileImageWithFallback(profileImage,getDriverImageCandidates(driver),driver);
 profileImage.alt=`${driver.Driver.givenName} ${driver.Driver.familyName}`;
-
-// Lindblad and a few newer 2026 assets can be missing from the current F1 Media path.
-// Load the Wikipedia portrait on demand as a final profile-only fallback, so the right-side
-// full-body/portrait area never stays blank when the official media URL changes.
-if(!image && driver.Driver?.familyName){
-  const page=(driver.Driver.givenName+'_'+driver.Driver.familyName).replaceAll(' ','_');
-  fetchWikipediaSummaryImage(page).then(img=>{
-    if(img && document.getElementById('profile-name')?.textContent===`${driver.Driver.givenName} ${driver.Driver.familyName}`){
-      const list=JSON.parse(profileImage.dataset.srcList||'[]');
-      if(!list.includes(img))list.push(img);
-      profileImage.dataset.srcList=JSON.stringify(list);
-      profileImage.dataset.srcIndex=String(list.length-1);
-      profileImage.style.display='block';
-      profileImage.src=img;
-    }
-  }).catch(()=>{});
-}
 
 document.getElementById('driver-stats').innerHTML=`
 <div class="bg-[#101010] p-4"><div class="timing-label">Wins</div><div class="text-xl font-black mt-2">${driver.wins||0}</div></div>
 <div class="bg-[#101010] p-4"><div class="timing-label">Podiums</div><div class="text-xl font-black mt-2">${getDriverPodiums(driver.Driver.driverId)}</div></div>
-<div class="bg-[#101010] p-4"><div class="timing-label">Points</div><div class="text-xl font-black mt-2">${driver.points}</div></div>
-<div class="bg-[#101010] p-4"><div class="timing-label">Position</div><div class="text-xl font-black mt-2">P${driver.position}</div></div>`;
+<div class="bg-[#101010] p-4"><div class="timing-label">Points</div><div class="text-xl font-black mt-2">${driver.points||0}</div></div>
+<div class="bg-[#101010] p-4"><div class="timing-label">Position</div><div class="text-xl font-black mt-2">P${driver.position||'--'}</div></div>`;
 
 document.getElementById('driver-profile-content').classList.remove('hidden');
 document.getElementById('team-profile-content').classList.add('hidden');
 document.getElementById('profile-modal').classList.remove('hidden');
+document.getElementById('profile-modal').setAttribute('aria-hidden','false');
+document.body.classList.add('modal-open');
 }
 
 function getDriverPodiums(driverId){
@@ -1460,58 +1454,57 @@ return count;
 }
 
 function openTeamProfile(teamId){
-const teams=getTeams();
-const team=teams.find(t=>t.id===teamId);
+const team=getTeams().find(t=>t.id===teamId);
 if(!team)return;
+const teams=getTeams();
 const position=teams.findIndex(t=>t.id===teamId)+1;
 const meta=getTeamMeta(teamId);
-const carImage=getCarImage(team);
-const carImageCandidates=getCarImageCandidates(team);
+const carCandidates=getCarImageCandidates(team);
 
 document.getElementById('profile-color-bar').style.background=meta.color;
 document.getElementById('profile-type').textContent='CONSTRUCTOR PROFILE';
 document.getElementById('profile-name').textContent=team.name;
 document.getElementById('team-profile-position').textContent=`P${position}`;
-document.getElementById('team-profile-points').textContent=team.points;
+document.getElementById('team-profile-points').textContent=team.points||0;
 
 document.getElementById('team-profile-car').innerHTML=`
 <div class="bg-[#101010] rounded-lg p-5">
 <div class="flex justify-between items-center">
-<div>
-<div class="text-[8px] uppercase tracking-widest text-gray-600">2026 Challenger</div>
-<div class="text-2xl font-black mt-2">${escapeHTML(meta.chassis)}</div>
-</div>
+<div><div class="text-[8px] uppercase tracking-widest text-gray-600">2026 Challenger</div><div class="text-2xl font-black mt-2">${escapeHTML(meta.chassis)}</div></div>
 <a href="${escapeHTML(safeUrl(meta.url))}" target="_blank" rel="noopener" class="text-[8px] uppercase tracking-widest text-gray-600 hover:text-white">F1.COM →</a>
 </div>
-<div class="car-visual mt-3">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" data-src-list='${escapeHTML(JSON.stringify(carImageCandidates))}' data-src-index="0" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>`}
+<div class="car-visual profile-car-visual mt-3">
+${carCandidates.length?`<img src="${escapeHTML(safeUrl(carCandidates[0]))}" data-src-list='${escapeHTML(JSON.stringify(carCandidates))}' data-src-index="0" class="team-car-image absolute" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">`:''}
+<div class="car-image-empty ${carCandidates.length?'hidden':''} absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>
 </div>
 </div>`;
 
 document.getElementById('team-profile-drivers').innerHTML=team.drivers.slice(0,2).map(driver=>{
-const image=getDriverImage(driver);
+const candidates=getDriverImageCandidates(driver);
 return`
 <div class="bg-[#111] border-b-2 p-5 rounded cursor-pointer hover:bg-[#161616] transition flex items-center gap-4" style="border-color:${meta.color}" onclick="openDriverProfile('${escapeHTML(driver.Driver.driverId)}')">
-<img src="${escapeHTML(image)}" class="w-16 h-20 object-contain object-bottom" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none'">
-<div class="flex-1">
+<img src="${escapeHTML(candidates[0]||'')}" data-src-list='${escapeHTML(JSON.stringify(candidates))}' data-src-index="0" class="w-16 h-20 object-contain object-top" alt="${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)}" loading="lazy" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
+<div class="flex-1 min-w-0">
 <div class="text-[8px] uppercase tracking-widest text-gray-600">Driver</div>
-<div class="text-xl font-black uppercase mt-2">${escapeHTML(driver.Driver.familyName)}</div>
+<div class="text-xl font-black uppercase mt-2 truncate">${escapeHTML(driver.Driver.familyName)}</div>
 <div class="text-xs text-gray-600 mt-2">#${escapeHTML(driver.Driver.permanentNumber||'--')}</div>
-<div class="flex justify-between mt-5 pt-3 border-t border-gray-900">
-<span class="text-[8px] text-gray-600 uppercase">Points</span>
-<span class="font-mono text-xs">${escapeHTML(driver.points)}</span>
-</div>
-</div>
-</div>`;
+<div class="flex justify-between mt-5 pt-3 border-t border-gray-900"><span class="text-[8px] text-gray-600 uppercase">Points</span><span class="font-mono text-xs">${escapeHTML(driver.points||0)}</span></div>
+</div></div>`;
 }).join('');
 
 document.getElementById('driver-profile-content').classList.add('hidden');
 document.getElementById('team-profile-content').classList.remove('hidden');
 document.getElementById('profile-modal').classList.remove('hidden');
+document.getElementById('profile-modal').setAttribute('aria-hidden','false');
+document.body.classList.add('modal-open');
 }
 
 function closeProfile(){
-document.getElementById('profile-modal').classList.add('hidden');
+const modal=document.getElementById('profile-modal');
+if(!modal)return;
+modal.classList.add('hidden');
+modal.setAttribute('aria-hidden','true');
+document.body.classList.remove('modal-open');
 }
 
 function toggleSearch(){
