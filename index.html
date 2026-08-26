@@ -231,57 +231,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #modal-result-block > .text\[9px\]{color:#70747d}
 #modal-race-name{letter-spacing:-.035em}
 
-
-/* FINAL TEAM-PROFILE DRIVER MINI CARDS
-   The team car remains untouched. Only the driver portrait is enlarged and softly cropped. */
-.team-driver-mini{
-  position:relative!important;
-  min-height:112px!important;
-  height:112px!important;
-  overflow:hidden!important;
-  cursor:pointer!important;
-  pointer-events:auto!important;
-  z-index:30!important;
-  isolation:isolate;
-  display:flex!important;
-  align-items:stretch!important;
-}
-.team-driver-mini::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
-.driver-mini-photo-wrap{
-  position:relative!important;
-  flex:0 0 92px!important;
-  width:92px!important;
-  height:112px!important;
-  align-self:stretch!important;
-  overflow:hidden!important;
-  pointer-events:none!important;
-  z-index:1!important;
-  display:flex!important;
-  align-items:flex-start!important;
-  justify-content:center!important;
-}
-.team-driver-mini .driver-mini-image{
-  display:block!important;
-  position:absolute!important;
-  top:-3px!important;
-  left:50%!important;
-  width:170px!important;
-  height:220px!important;
-  max-width:none!important;
-  max-height:none!important;
-  margin:0!important;
-  object-fit:cover!important;
-  object-position:top center!important;
-  transform:translateX(-50%)!important;
-  transform-origin:top center!important;
-  filter:drop-shadow(0 8px 10px rgba(0,0,0,.45));
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 63%,rgba(0,0,0,.78) 78%,rgba(0,0,0,.35) 90%,transparent 100%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 63%,rgba(0,0,0,.78) 78%,rgba(0,0,0,.35) 90%,transparent 100%);
-}
-.team-driver-mini .team-driver-copy{position:relative!important;z-index:5!important;min-width:0!important;flex:1 1 auto!important;pointer-events:none!important}
-.team-driver-mini:hover{background:#1d1d20!important}
-.team-driver-mini:focus-visible{outline:1px solid var(--team-color,#e10600);outline-offset:2px}
-
 </style>
 
 </head>
@@ -1482,8 +1431,8 @@ ${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" data-src-list='${escapeH
 ${team.drivers.slice(0,2).map(driver=>{
 const image=getDriverImage(driver);
 return`
-<div class="team-driver-mini bg-[#171719] rounded px-3 py-2 flex items-center gap-2" onclick="event.preventDefault();event.stopPropagation();openDriverProfile('${escapeHTML(driver.Driver.driverId)}');return false;" data-driver-id="${escapeHTML(driver.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)} profile">
-<div class="driver-mini-photo-wrap" aria-hidden="true"><img src="${escapeHTML(image)}" class="driver-mini-image shrink-0" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="driverImageOnError(this)"></div>
+<div class="team-driver-mini bg-[#171719] rounded px-3 py-2 flex items-center gap-2" onclick="event.stopPropagation();openDriverProfile('${escapeHTML(driver.Driver.driverId)}');return false;" data-driver-id="${escapeHTML(driver.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)} profile">
+<img src="${escapeHTML(image)}" class="driver-mini-image shrink-0" alt="${escapeHTML(driver.Driver.givenName+' '+driver.Driver.familyName)}" loading="lazy" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
 <div class="team-driver-copy">
 <div class="text-[7px] uppercase text-gray-600">Driver</div>
 <div class="text-xs font-black uppercase mt-1 truncate">${escapeHTML(driver.Driver.familyName)}</div>
@@ -1771,12 +1720,9 @@ if(teamsGrid){
     const item=e.target.closest('.team-driver-mini[data-driver-id]');
     if(!item || !teamsGrid.contains(item))return;
     if(e.type==='keydown' && e.key!=='Enter' && e.key!==' ')return;
-    if(e.type==='pointerup' && e.button!==0)return;
     e.preventDefault();
-    e.stopPropagation();
     e.stopImmediatePropagation();
-    const id=item.dataset.driverId;
-    if(id) window.openDriverProfile(id);
+    openDriverProfile(item.dataset.driverId);
   };
   teamsGrid.addEventListener('click',activateTeamDriver,true);
   teamsGrid.addEventListener('pointerup',activateTeamDriver,true);
