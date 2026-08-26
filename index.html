@@ -718,6 +718,549 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   .team-card-driver-mini .driver-mini-name{font-size:12px!important;}
 }
 
+
+/* =========================================================
+   REFERENCE STYLE PASS — F1 broadcast/editorial cards
+   Tuned to the supplied reference image:
+   black graphite panels, thin borders, cyan/blue accents,
+   large editorial typography, ghost numbers and clean
+   portrait/car compositions.
+   ========================================================= */
+
+:root{
+  --ui-bg:#090a0c;
+  --ui-panel:#0d0f12;
+  --ui-panel-2:#111317;
+  --ui-border:#272b31;
+  --ui-border-soft:#1d2025;
+  --ui-muted:#777d86;
+  --ui-cyan:#00d7c4;
+  --ui-blue:#3f82ff;
+}
+
+/* Shared card language */
+.card,
+.driver-card,
+.team-card,
+.sidebar-standing-card,
+.team-driver-mini,
+.team-card-driver-mini{
+  border-color:var(--ui-border);
+  box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);
+}
+
+.driver-card,
+.team-card{
+  border-radius:11px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(255,255,255,.018),transparent 38%),
+    linear-gradient(145deg,#0b0d10 0%,#101216 100%);
+}
+
+.driver-card:hover,
+.team-card:hover{
+  border-color:#3b4149;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(255,255,255,.028),transparent 40%),
+    linear-gradient(145deg,#0d0f12 0%,#12151a 100%);
+  box-shadow:0 16px 38px rgba(0,0,0,.28);
+}
+
+/* Constructor/team cards — left card language from reference */
+.team-card{
+  min-height:610px;
+  padding:24px!important;
+  isolation:isolate;
+}
+
+.team-card:after{
+  height:3px;
+  background:var(--team-color,#00d7c4);
+  box-shadow:0 0 12px color-mix(in srgb,var(--team-color,#00d7c4) 35%,transparent);
+}
+
+.team-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(circle at 12% 58%,color-mix(in srgb,var(--team-color,#00d7c4) 9%,transparent),transparent 34%),
+    linear-gradient(180deg,transparent 0%,rgba(255,255,255,.012) 52%,transparent 100%);
+}
+
+.team-card > *{
+  position:relative;
+  z-index:2;
+}
+
+.team-card .team-stripe{
+  width:4px;
+  height:42px;
+  border-radius:0;
+  box-shadow:0 0 10px color-mix(in srgb,var(--team-color,#00d7c4) 25%,transparent);
+}
+
+.team-card .timing-label{
+  color:#737983;
+  font-size:9px;
+  letter-spacing:.22em;
+}
+
+.team-card .team-name{
+  font-size:24px;
+  line-height:.95;
+  letter-spacing:-.045em;
+  color:#f4f5f6;
+}
+
+.team-card > .flex:first-child > .text-\[10px\]{
+  font-size:11px!important;
+  font-weight:800;
+  color:#747a84!important;
+  letter-spacing:.03em;
+}
+
+.team-card .car-visual{
+  height:250px;
+  margin-top:22px;
+  background:
+    radial-gradient(circle at 55% 54%,rgba(255,255,255,.075),transparent 42%),
+    radial-gradient(circle at 30% 70%,color-mix(in srgb,var(--team-color,#00d7c4) 8%,transparent),transparent 46%);
+}
+
+.team-card .car-visual:after{
+  left:3%;
+  right:3%;
+  bottom:16px;
+  background:rgba(255,255,255,.075);
+}
+
+.team-card .car-visual:before{
+  content:"";
+  position:absolute;
+  left:4%;
+  right:4%;
+  top:50%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.035),transparent);
+}
+
+.team-card .car-visual .team-car-image{
+  filter:drop-shadow(0 14px 20px rgba(0,0,0,.5)) saturate(.95);
+}
+
+.team-card .car-visual .absolute.left-3.bottom-3{
+  color:#60666f!important;
+  font-size:8px!important;
+}
+
+.team-card .team-points{
+  font-size:72px;
+  line-height:.8;
+  color:rgba(255,255,255,.055);
+  letter-spacing:-.06em;
+}
+
+.team-card > .flex.justify-between.items-end.mt-3{
+  padding-top:14px;
+  border-top:1px solid #24282e;
+}
+
+.team-card > .flex.justify-between.items-end.mt-3 .text-3xl{
+  font-size:48px!important;
+  line-height:.9;
+  letter-spacing:-.055em;
+}
+
+.team-card .team-card-driver-mini{
+  height:142px!important;
+  min-height:142px!important;
+  padding:8px 12px!important;
+  border-radius:9px!important;
+  background:
+    radial-gradient(circle at 10% 85%,color-mix(in srgb,var(--team-color,#00d7c4) 11%,transparent),transparent 48%),
+    linear-gradient(145deg,#111317,#0d0f12)!important;
+  border:1px solid #252a30!important;
+}
+
+.team-card .team-card-driver-mini:after{
+  height:2px;
+}
+
+.team-card .team-card-driver-mini:before{
+  background:
+    radial-gradient(circle at 18% 72%,color-mix(in srgb,var(--team-color,#00d7c4) 12%,transparent),transparent 38%),
+    linear-gradient(90deg,transparent 35%,rgba(10,12,14,.12) 55%,rgba(10,12,14,.8) 100%)!important;
+}
+
+.team-card .team-card-driver-mini .driver-mini-image{
+  flex:0 0 82px!important;
+  width:82px!important;
+  max-width:82px!important;
+  height:136px!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:scale(1.05);
+  transform-origin:center bottom;
+}
+
+.team-card .team-card-driver-mini:hover .driver-mini-image{
+  transform:scale(1.09) translateY(-1px);
+}
+
+.team-card .team-card-driver-mini .team-driver-copy{
+  padding-bottom:4px!important;
+}
+
+.team-card .team-card-driver-mini .driver-mini-label{
+  font-size:8px!important;
+  letter-spacing:.18em;
+  color:#686e77!important;
+  margin-bottom:8px!important;
+}
+
+.team-card .team-card-driver-mini .driver-mini-name{
+  font-size:15px!important;
+  line-height:.98!important;
+  letter-spacing:-.025em;
+}
+
+.team-card .team-card-driver-mini .driver-mini-points{
+  margin-top:8px!important;
+  font-size:9px!important;
+  color:color-mix(in srgb,var(--team-color,#00d7c4) 72%,#8b9098)!important;
+}
+
+.team-card > .mt-5{
+  margin-top:18px!important;
+  padding-top:12px;
+  border-top:1px solid #1f2328;
+  color:color-mix(in srgb,var(--team-color,#00d7c4) 72%,#7c828b)!important;
+  font-weight:800;
+}
+
+/* Main driver cards — wide lineup cards like the reference bottom row */
+.driver-card{
+  height:286px!important;
+  min-height:286px!important;
+  aspect-ratio:auto!important;
+  padding:0!important;
+  overflow:hidden;
+}
+
+.driver-card:after{
+  height:3px;
+  background:var(--team-color,#00d7c4);
+  box-shadow:0 0 12px color-mix(in srgb,var(--team-color,#00d7c4) 30%,transparent);
+}
+
+.driver-card .driver-photo-wrap{
+  left:0;
+  right:auto;
+  top:0;
+  width:47%;
+  height:100%;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  overflow:hidden;
+  z-index:1;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.78) 83%,rgba(0,0,0,.32) 94%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.78) 83%,rgba(0,0,0,.32) 94%,transparent 100%);
+}
+
+.driver-card .driver-photo{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center top;
+  transform:none;
+  transform-origin:center top;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));
+  -webkit-mask-image:none;
+  mask-image:none;
+}
+
+.driver-card:hover .driver-photo{
+  transform:translateY(-2px) scale(1.025);
+}
+
+.driver-card .driver-gradient{
+  inset:0;
+  height:100%;
+  z-index:2;
+  background:
+    radial-gradient(ellipse 60% 45% at 18% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 18%,transparent),transparent 70%),
+    linear-gradient(90deg,transparent 0%,transparent 35%,rgba(10,12,15,.12) 47%,rgba(10,12,15,.86) 74%,#0b0d10 100%),
+    linear-gradient(to bottom,transparent 38%,rgba(10,12,15,.08) 58%,rgba(10,12,15,.72) 100%);
+}
+
+.driver-card .driver-gradient:before{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:15%;
+  width:46%;
+  height:40%;
+  background:
+    radial-gradient(circle at 15% 55%,color-mix(in srgb,var(--team-color,#00d7c4) 18%,transparent),transparent 58%);
+  filter:blur(12px);
+  opacity:.9;
+}
+
+.driver-card .driver-content{
+  position:relative;
+  z-index:6;
+  height:100%;
+  padding:22px 22px 18px 0;
+  margin-left:47%;
+  display:flex;
+  flex-direction:column;
+}
+
+.driver-card .driver-content > .flex.justify-between.items-start{
+  width:100%;
+}
+
+.driver-card .team-stripe{
+  width:3px;
+  height:34px;
+}
+
+.driver-card .timing-label{
+  font-size:8px;
+  letter-spacing:.2em;
+  color:#777d86;
+}
+
+.driver-card .driver-rank{
+  font-size:11px;
+  color:#858b95;
+  font-weight:800;
+}
+
+.driver-card .driver-number{
+  top:14px;
+  right:16px;
+  bottom:auto;
+  z-index:4;
+  font-size:66px;
+  color:rgba(255,255,255,.055);
+  letter-spacing:-.07em;
+  text-shadow:none;
+}
+
+.driver-card .driver-name-zone{
+  position:relative;
+  z-index:7;
+  margin-top:auto;
+  margin-bottom:10px;
+  padding:12px 0 10px;
+  min-height:96px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+}
+
+.driver-card .driver-name-zone:before{
+  left:-20px;
+  right:-4px;
+  background:
+    radial-gradient(ellipse at 12% 70%,color-mix(in srgb,var(--team-color,#00d7c4) 20%,transparent),transparent 64%),
+    linear-gradient(90deg,color-mix(in srgb,var(--team-color,#00d7c4) 8%,transparent),transparent 85%);
+  filter:blur(8px);
+}
+
+.driver-card .driver-name-zone:after{
+  left:-12px;
+  right:-2px;
+  bottom:0;
+  height:42px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--team-color,#00d7c4) 11%,rgba(8,10,12,.5)),rgba(8,10,12,.28) 62%,transparent);
+}
+
+.driver-card .driver-firstname{
+  font-size:11px!important;
+  color:#a0a5ad!important;
+  letter-spacing:.06em;
+}
+
+.driver-card .driver-lastname{
+  font-size:30px!important;
+  line-height:.9;
+  max-width:100%!important;
+  letter-spacing:-.055em;
+  color:#f4f5f6;
+}
+
+.driver-card .driver-stats-row{
+  position:relative;
+  z-index:7;
+  margin-top:0!important;
+  padding:12px 0 0!important;
+  border-top:1px solid #25292f;
+}
+
+.driver-card .driver-stats-row .timing-value{
+  font-size:14px!important;
+  color:#f4f5f6;
+}
+
+/* Soft technical/dot texture used in the supplied reference */
+.driver-card:before{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:46%;
+  height:48%;
+  z-index:0;
+  pointer-events:none;
+  opacity:.7;
+  background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 48%,transparent) 1px,transparent 1px);
+  background-size:8px 8px;
+  -webkit-mask-image:linear-gradient(to right,black,transparent 88%);
+  mask-image:linear-gradient(to right,black,transparent 88%);
+}
+
+/* Team-profile lineup cards: preserve the same visual system */
+.team-driver-mini{
+  border-radius:10px;
+  border-color:#272c32;
+  background:
+    radial-gradient(circle at 10% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 13%,transparent),transparent 44%),
+    linear-gradient(145deg,#111317,#0d0f12)!important;
+}
+
+.team-driver-mini:after{
+  height:3px;
+}
+
+.team-driver-mini .driver-mini-number{
+  font-size:52px!important;
+  color:rgba(255,255,255,.055)!important;
+}
+
+.team-driver-mini .driver-mini-label{
+  color:#6f747d!important;
+  letter-spacing:.2em;
+}
+
+.team-driver-mini .driver-mini-points{
+  color:color-mix(in srgb,var(--team-color,#00d7c4) 68%,#888e97)!important;
+}
+
+/* Standings and small cards use the same graphite panel language */
+.sidebar-standing-card,
+.standings-panel .card,
+.news-card,
+.calendar-card,
+.pole-chip,
+.result-podium-item{
+  border-color:#25292f!important;
+  background:#0d0f12!important;
+}
+
+.standing-row{
+  border-bottom-color:#20242a;
+}
+
+.standing-row:hover{
+  background:#13161a;
+}
+
+.standing-rank.top{
+  color:var(--ui-cyan);
+}
+
+.status-next{
+  background:var(--ui-blue);
+}
+
+/* Responsive */
+@media(max-width:1024px){
+  .team-card{min-height:580px;}
+  .driver-card{height:270px!important;min-height:270px!important;}
+}
+
+@media(max-width:768px){
+  .team-card{
+    min-height:0;
+    padding:18px!important;
+  }
+
+  .team-card .car-visual{height:210px;}
+
+  .team-card .team-card-driver-mini{
+    height:122px!important;
+    min-height:122px!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-image{
+    flex-basis:70px!important;
+    width:70px!important;
+    max-width:70px!important;
+    height:116px!important;
+  }
+
+  .driver-card{
+    height:350px!important;
+    min-height:350px!important;
+  }
+
+  .driver-card .driver-photo-wrap{
+    width:52%;
+  }
+
+  .driver-card .driver-content{
+    margin-left:52%;
+    padding-right:16px;
+  }
+
+  .driver-card .driver-lastname{
+    font-size:25px!important;
+  }
+
+  .driver-card .driver-number{
+    font-size:52px;
+  }
+}
+
+@media(max-width:560px){
+  .team-card .grid.grid-cols-2{
+    grid-template-columns:1fr;
+  }
+
+  .team-card .team-card-driver-mini{
+    height:118px!important;
+    min-height:118px!important;
+  }
+
+  .driver-card{
+    height:320px!important;
+    min-height:320px!important;
+  }
+
+  .driver-card .driver-photo-wrap{
+    width:48%;
+  }
+
+  .driver-card .driver-content{
+    margin-left:48%;
+    padding:16px 12px 14px 0;
+  }
+
+  .driver-card .driver-lastname{
+    font-size:23px!important;
+  }
+
+  .driver-card .driver-firstname{
+    font-size:9px!important;
+  }
+}
+
 </style>
 
 </head>
@@ -905,7 +1448,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 <div class="hidden md:flex items-center gap-2 text-[9px] uppercase tracking-widest text-gray-600"><span class="w-2 h-2 bg-red-600 rounded-full live-dot"></span>Official F1 Media</div>
 </div>
-<div id="drivers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+<div id="drivers-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
 </section>
 
 <section id="teams" class="mt-24">
@@ -916,7 +1459,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 <span class="hidden md:block text-[9px] uppercase tracking-widest text-gray-600">11 TEAMS</span>
 </div>
-<div id="teams-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+<div id="teams-grid" class="grid md:grid-cols-1 lg:grid-cols-2 gap-5"></div>
 </section>
 </main>
 
