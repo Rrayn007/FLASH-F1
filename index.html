@@ -477,6 +477,7 @@ button{font-family:inherit}
 </div>
 
 <script>
+/* F1 HUB: UI preserved. Security + current F1 image source updates only. */
 const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbwGJfMLmxZ9KO-9wIqfqBUMAa7ZNXSaw30aTAtAvW1YQQ5TRSJQh6jZXyzmo6k3OyVN/exec';
 const F1_API='https://api.jolpi.ca/ergast/f1';
 const OPENF1_API='https://api.openf1.org/v1';
@@ -502,28 +503,28 @@ const CAR_WIKI_QUERIES={
  mclaren:'McLaren MCL40 2026 Formula 1',mercedes:'Mercedes W17 2026 Formula 1',ferrari:'Ferrari SF-26 2026 Formula 1',red_bull:'Red Bull RB22 2026 Formula 1',rb:'Racing Bulls VCARB 03 2026 Formula 1',alpine:'Alpine A526 2026 Formula 1',haas:'Haas VF-26 2026 Formula 1',audi:'Audi R26 2026 Formula 1',williams:'Williams FW48 2026 Formula 1',aston_martin:'Aston Martin AMR26 2026 Formula 1',cadillac:'Cadillac 2026 Formula 1 car'
 };
 const F1_DRIVER_MEDIA={
- georuss:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/G/GEORUS01_George_Russell/georus01.png',
- antkin:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/A/ANTKIN01_Kimi_Antonelli/antkin01.png',
- leclerc:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/C/CHALEC01_Charles_Leclerc/chalec01.png',
- hamilton:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png',
- norris:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/L/LANNOR01_Lando_Norris/lannor01.png',
- piastri:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/O/OSCPIA01_Oscar_Piastri/oscpia01.png',
- max_verstappen:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png',
- hadjar:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/I/ISAHAD01_Isack_Hadjar/isahad01.png',
- lawson:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/L/LIALAW01_Liam_Lawson/lialaw01.png',
- lindblad:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/A/ARILIN01_Arvid_Lindblad/arilin01.png',
- gasly:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/P/PIEGAS01_Pierre_Gasly/piegas01.png',
- colapinto:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/F/FRACOL01_Franco_Colapinto/fracol01.png',
- ocon:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/E/ESTOCO01_Esteban_Ocon/estoco01.png',
- bearman:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/O/OLIBEA01_Oliver_Bearman/olibea01.png',
- hulkenberg:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/N/NICHUL01_Nico_Hulkenberg/nichul01.png',
- bortoleto:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/G/GABBOR01_Gabriel_Bortoleto/gabbor01.png',
- sainz:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/C/CARSAI01_Carlos_Sainz/carsai01.png',
- albon:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/A/ALEALB01_Alexander_Albon/alealb01.png',
- alonso:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/F/FERALO01_Fernando_Alonso/feralo01.png',
- stroll:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/L/LANSTR01_Lance_Stroll/lanstr01.png',
- perez:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/S/SERPER01_Sergio_Perez/serper01.png',
- bottas:'https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/V/VALBOT01_Valtteri_Bottas/valbot01.png',
+ georuss:'https://www.formula1.com/content/dam/fom-website/drivers/G/GEORUS01_George_Russell/georus01.png.transform/2col-retina/image.png',
+ antkin:'https://www.formula1.com/content/dam/fom-website/drivers/A/ANTKIN01_Kimi_Antonelli/antkin01.png.transform/2col-retina/image.png',
+ leclerc:'https://www.formula1.com/content/dam/fom-website/drivers/C/CHALEC01_Charles_Leclerc/chalec01.png.transform/2col-retina/image.png',
+ hamilton:'https://www.formula1.com/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png.transform/2col-retina/image.png',
+ norris:'https://www.formula1.com/content/dam/fom-website/drivers/L/LANNOR01_Lando_Norris/lannor01.png.transform/2col-retina/image.png',
+ piastri:'https://www.formula1.com/content/dam/fom-website/drivers/O/OSCPIA01_Oscar_Piastri/oscpia01.png.transform/2col-retina/image.png',
+ max_verstappen:'https://www.formula1.com/content/dam/fom-website/drivers/M/MAXVER01_Max_Verstappen/maxver01.png.transform/2col-retina/image.png',
+ hadjar:'https://www.formula1.com/content/dam/fom-website/drivers/I/ISAHAD01_Isack_Hadjar/isahad01.png.transform/2col-retina/image.png',
+ lawson:'https://www.formula1.com/content/dam/fom-website/drivers/L/LIALAW01_Liam_Lawson/lialaw01.png.transform/2col-retina/image.png',
+ lindblad:'https://www.formula1.com/content/dam/fom-website/drivers/A/ARILIN01_Arvid_Lindblad/arilin01.png.transform/2col-retina/image.png',
+ gasly:'https://www.formula1.com/content/dam/fom-website/drivers/P/PIEGAS01_Pierre_Gasly/piegas01.png.transform/2col-retina/image.png',
+ colapinto:'https://www.formula1.com/content/dam/fom-website/drivers/F/FRACOL01_Franco_Colapinto/fracol01.png.transform/2col-retina/image.png',
+ ocon:'https://www.formula1.com/content/dam/fom-website/drivers/E/ESTOCO01_Esteban_Ocon/estoco01.png.transform/2col-retina/image.png',
+ bearman:'https://www.formula1.com/content/dam/fom-website/drivers/O/OLIBEA01_Oliver_Bearman/olibea01.png.transform/2col-retina/image.png',
+ hulkenberg:'https://www.formula1.com/content/dam/fom-website/drivers/N/NICHUL01_Nico_Hulkenberg/nichul01.png.transform/2col-retina/image.png',
+ bortoleto:'https://www.formula1.com/content/dam/fom-website/drivers/G/GABBOR01_Gabriel_Bortoleto/gabbor01.png.transform/2col-retina/image.png',
+ sainz:'https://www.formula1.com/content/dam/fom-website/drivers/C/CARSAI01_Carlos_Sainz/carsai01.png.transform/2col-retina/image.png',
+ albon:'https://www.formula1.com/content/dam/fom-website/drivers/A/ALEALB01_Alexander_Albon/alealb01.png.transform/2col-retina/image.png',
+ alonso:'https://www.formula1.com/content/dam/fom-website/drivers/F/FERALO01_Fernando_Alonso/feralo01.png.transform/2col-retina/image.png',
+ stroll:'https://www.formula1.com/content/dam/fom-website/drivers/L/LANSTR01_Lance_Stroll/lanstr01.png.transform/2col-retina/image.png',
+ perez:'https://www.formula1.com/content/dam/fom-website/drivers/S/SERPER01_Sergio_Perez/serper01.png.transform/2col-retina/image.png',
+ bottas:'https://www.formula1.com/content/dam/fom-website/drivers/V/VALBOT01_Valtteri_Bottas/valbot01.png.transform/2col-retina/image.png',
 };
 
 const OFFICIAL_DRIVERS=[
@@ -629,7 +630,7 @@ const last=(driver.familyName||'').replace(/[^A-Za-z]/g,'');
 const id=(driver.driverId||'').toLowerCase();
 const alias=Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===id)||id;
 if(F1_DRIVER_MEDIA[alias])return F1_DRIVER_MEDIA[alias];
-return `https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png`;
+return `https://www.formula1.com/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/2col-retina/image.png`;
 }
 
 async function wikiSummaryImage(page){
@@ -692,7 +693,12 @@ document.getElementById('ad-link').href=safeUrl(data.adUrl||'#');
 if(data.affiliateUrl&&String(data.affiliateUrl).trim()){
 const a=document.getElementById('inline-ad-link'); a.href=safeUrl(data.affiliateUrl); a.classList.remove('hidden');
 }
-if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
+if(data.carImages&&typeof data.carImages==='object'){
+  teamCarImages=Object.fromEntries(Object.entries(data.carImages).filter(([key,url])=>{
+    const u=String(url||'').toLowerCase();
+    return u && !/2025|2024|2023/.test(u);
+  }));
+}
 }catch(error){
 console.warn('GAS config unavailable');
 }
@@ -1011,8 +1017,11 @@ const code=d.Driver?.code?.toLowerCase()||'';
 const family=d.Driver?.familyName?.toLowerCase()||'';
 const alias=Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver?.driverId)||'';
 const candidates=[code,family,alias];
+// Keep the visual source synchronized with the current official F1 driver pages.
+// OpenF1 is only a last-resort fallback; it must never override the official F1 asset.
+if(F1_DRIVER_MEDIA[alias])return F1_DRIVER_MEDIA[alias];
 for(const c of candidates){if(c&&driverImages[c])return driverImages[c];}
-return F1_DRIVER_MEDIA[alias]||driverImageFallback(d.Driver);
+return driverImageFallback(d.Driver);
 }
 
 // Official F1 Media is preferred for current driver headshots. OpenF1 commonly returns the same F1 media headshots; Wikimedia is only a fallback.
@@ -1020,10 +1029,23 @@ function officialDriverImageCandidates(d){
 const id=(d.Driver?.driverId||'').toLowerCase();
 const first=(d.Driver?.givenName||'').replace(/[^A-Za-z]/g,'');
 const last=(d.Driver?.familyName||'').replace(/[^A-Za-z]/g,'');
+const alias=Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===id)||id;
 return [
-`https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/1col/image.png`,
+F1_DRIVER_MEDIA[alias],
+`https://www.formula1.com/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/2col-retina/image.png`,
 getDriverImage(d)
 ].filter(Boolean);
+}
+
+function handleF1ImageError(img, candidates){
+  if(!img||!Array.isArray(candidates))return;
+  const index=Number(img.dataset.f1FallbackIndex||0);
+  if(index<candidates.length){
+    img.dataset.f1FallbackIndex=String(index+1);
+    const next=candidates[index];
+    if(next && img.src!==next){img.src=next;return;}
+  }
+  img.removeAttribute('src');
 }
 
 function renderStandings(){
