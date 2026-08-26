@@ -1005,7 +1005,8 @@ async function fetchWikipediaSummaryImage(page){
 try{
 const key='f1hub_wiki_'+page;
 const cached=sessionStorage.getItem(key);
-if(cached)return cached;
+if(cached && /^(https?:)?\/\//i.test(cached))return cached;
+if(cached)try{sessionStorage.removeItem(key)}catch{}
 const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(page)}`);
 if(!r.ok)throw 0;
 const d=await r.json();
@@ -1017,7 +1018,7 @@ return img;
 async function fetchWikipediaImageSearch(query){
 try{
 const key='f1hub_wiki_search_'+query.toLowerCase().replace(/\W+/g,'_');
-const cached=sessionStorage.getItem(key); if(cached)return cached;
+const cached=sessionStorage.getItem(key); if(cached && /^(https?:)?\/\//i.test(cached))return cached; if(cached)try{sessionStorage.removeItem(key)}catch{}
 const u=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=3&prop=pageimages&piprop=original&format=json&origin=*`;
 const r=await fetch(u); if(!r.ok)throw 0; const d=await r.json();
 const pages=Object.values(d.query?.pages||{});
@@ -1174,7 +1175,7 @@ cadillac:'https://media.formula1.com/image/upload/f_auto,c_limit,q_auto,w_1320/c
 function getCarImage(team){
 const id=teamKey(team.id);
 // Prefer the current official 2026 F1 Media asset over configurable/wiki fallbacks.
-return F1_CAR_MEDIA[id]||carWikiImages[id]||'';
+return F1_CAR_MEDIA[id]||'';
 }
 
 function renderTeams(){
@@ -1196,7 +1197,7 @@ return`
 </div>
 
 <div class="car-visual">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${escapeHTML(carWikiImages[teamKey(team.id)]||'')}'">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE</div>`}
+${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none';">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE</div>`}
 <div class="absolute left-3 bottom-3 z-10 text-[8px] tracking-[.2em] uppercase text-gray-600">${escapeHTML(meta.chassis)}</div>
 </div>
 
@@ -1292,7 +1293,7 @@ document.getElementById('team-profile-car').innerHTML=`
 <a href="${escapeHTML(safeUrl(meta.url))}" target="_blank" rel="noopener" class="text-[8px] uppercase tracking-widest text-gray-600 hover:text-white">F1.COM →</a>
 </div>
 <div class="car-visual mt-3">
-${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=${JSON.stringify(carWikiImages[teamKey(team.id)]||'')}">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>`}
+${carImage?`<img src="${escapeHTML(safeUrl(carImage))}" class="absolute inset-0 w-full h-full object-contain p-2" alt="${escapeHTML(team.name)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none';">`:`<div class="absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>`}
 </div>
 </div>`;
 
