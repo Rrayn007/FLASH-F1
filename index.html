@@ -340,6 +340,12 @@ button{font-family:inherit}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
 .profile-number{font-size:110px;line-height:.75;font-weight:900;color:rgba(255,255,255,.035)}
+
+/* PROFILE MODAL — visibility fix */
+#profile-modal:not(.hidden){display:flex !important;}
+#profile-modal.hidden{display:none !important;}
+.driver-card{cursor:pointer;}
+
 /* PROFILE VISIBILITY CONTRACT */
 #driver-profile-content.hidden,
 #team-profile-content.hidden{
@@ -2248,7 +2254,7 @@ const lastName=d.Driver.familyName||'';
 const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver.driverId)]||'--';
 const image=getDriverImage(d);
 const imageCandidates=getDriverImageCandidates(d);
-return `<article class="driver-card rounded-lg p-5" data-driver-id="${escapeHTML(d.Driver.driverId)}" role="button" tabindex="0" style="--team-color:${meta.color}">
+return `<article class="driver-card rounded-lg p-5" data-driver-id="${escapeHTML(d.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(firstName+' '+lastName)} profile" style="--team-color:${meta.color}" onclick="openDriverProfile(this.dataset.driverId)">
 <div class="driver-gradient"></div>
 <div class="driver-photo-wrap"><img src="${escapeHTML(image)}" data-src-list='${escapeHTML(JSON.stringify(imageCandidates))}' data-src-index="0" data-wiki-page="${escapeHTML((firstName+'_'+lastName).replaceAll(' ','_'))}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)"></div>
 <div class="driver-number">${escapeHTML(number)}</div>
@@ -2469,7 +2475,7 @@ setProfilePanel('driver');
 profileModal.classList.remove('hidden');
 profileModal.setAttribute('aria-hidden','false');
 document.body.classList.add('modal-open');
-enrichDriverProfile(driver);
+Promise.resolve(enrichDriverProfile(driver)).catch(error=>console.warn('[F1 HUB] Profile enrichment failed:',error));
 }
 
 function getDriverPodiums(driverId){
@@ -2703,23 +2709,24 @@ function setupAnchorNavigation(){
   });
 }
 
-const driversGrid=document.getElementById('drivers-grid');
-if(driversGrid){
-  driversGrid.addEventListener('click',function(e){
-    const card=e.target.closest('.driver-card[data-driver-id]');
-    if(!card || !driversGrid.contains(card)) return;
-    e.preventDefault();
-    e.stopPropagation();
-    openDriverProfile(card.dataset.driverId);
-  },true);
-  driversGrid.addEventListener('keydown',function(e){
-    if(e.key!=='Enter' && e.key!==' ') return;
-    const card=e.target.closest('.driver-card[data-driver-id]');
-    if(!card || !driversGrid.contains(card)) return;
-    e.preventDefault();
-    openDriverProfile(card.dataset.driverId);
-  },true);
-}
+// DRIVER PROFILE — delegated at document level so dynamically rendered cards always work.
+document.addEventListener('click',function(e){
+  const card=e.target.closest('.driver-card[data-driver-id]');
+  if(!card)return;
+  // The inline handler is the primary path; this is the fallback for dynamically injected cards.
+  if(e.target.closest('a,button'))return;
+  const id=card.dataset.driverId;
+  if(id)openDriverProfile(id);
+},true);
+
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Enter' && e.key!==' ')return;
+  const card=e.target.closest('.driver-card[data-driver-id]');
+  if(!card)return;
+  e.preventDefault();
+  const id=card.dataset.driverId;
+  if(id)openDriverProfile(id);
+},true);
 
 const teamProfileDrivers=document.getElementById('team-profile-drivers');
 if(teamProfileDrivers){
