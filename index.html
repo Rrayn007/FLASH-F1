@@ -662,37 +662,6 @@ button{font-family:inherit}
 #profile-career .profile-career-item:hover .profile-career-year,
 #profile-career .profile-career-item:hover .profile-career-copy strong{color:#fff}
 
-@media(max-width:820px){
-  #driver-profile-content{
-    grid-template-columns:1fr;
-    grid-template-rows:auto auto 360px auto;
-    min-height:0;
-    height:auto;
-    overflow:visible;
-  }
-  #driver-profile-content > .grid:first-of-type{grid-column:1;grid-row:1}
-  #driver-stats{grid-column:1;grid-row:2}
-  .profile-driver-visual{grid-column:1;grid-row:3;height:360px;min-height:360px;max-height:360px}
-  .driver-profile-about{grid-column:1;grid-row:4;grid-template-columns:1fr 1fr;height:520px;min-height:520px;max-height:520px}
-}
-@media(max-width:560px){
-  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr 1.55fr;gap:10px}
-  #profile-number-box,.profile-constructor-box{min-height:150px!important}
-  #profile-number{font-size:62px!important}
-  .profile-number{font-size:76px}
-  .profile-team-logo{width:72px;height:58px}
-  #driver-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .profile-driver-visual{height:300px;min-height:300px;max-height:300px}
-  .driver-profile-about{grid-template-columns:1fr;height:auto;min-height:0;max-height:none;gap:12px}
-  .profile-info-card{height:430px;min-height:430px;max-height:430px;padding:17px}
-  .profile-section-title{font-size:20px}
-  #profile-career.profile-career-list{--career-year-col:46px;--career-rail-col:22px;--career-gap:8px;margin-top:16px}
-}
-@media(max-width:390px){
-  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr}
-  .profile-driver-visual{height:270px;min-height:270px;max-height:270px}
-  .profile-info-card{height:400px;min-height:400px;max-height:400px}
-}
 /* TEAM PROFILE */
 #team-profile-content{
   position:relative;
@@ -857,21 +826,21 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 @keyframes sideAdRevealRight{0%{opacity:0;transform:translate3d(20px,-50%,0) scale(.98);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
 
 /* Tablet: ads remain beside standings and scale with viewport. */
-@media (max-width:1449px){
+@media (min-width:1024px) and (max-width:1449px){
   #standings>.flex.items-start.justify-center{
     align-items:flex-start;gap:clamp(7px,1vw,12px);
   }
   #side-ad-left,#side-ad-right{
     position:sticky!important;top:92px!important;
-    width:clamp(58px,8vw,96px)!important;
-    height:clamp(300px,42vw,460px)!important;
+    width:clamp(100px,7.5vw,150px)!important;
+    height:clamp(400px,38vw,560px)!important;
     z-index:10;
   }
   #side-ad-left.ad-ready,#side-ad-right.ad-ready{animation:adReveal .6s var(--ad-ease) both}
 }
 
 /* Mobile: keep the standings visually compact; ads get a little more width. */
-@media (max-width:767px){
+@media (max-width:1023px){
   #standings>.flex.items-start.justify-center{
     width:100%;
     gap:8px;
@@ -981,6 +950,180 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
 }
 
+
+<style id="driver-profile-final-clean">
+/* =========================================================
+   DRIVER PROFILE — CLEAN FINAL LAYOUT
+   Desktop: no outer modal scrolling. The profile itself is a
+   fixed-height grid; only Biography/Career scroll internally.
+   ========================================================= */
+@media (min-width:821px){
+  #profile-modal .modal-box{
+    max-height:calc(100vh - 24px)!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+  #profile-modal .modal-box > .p-6.md\:p-8{
+    overflow:hidden!important;
+  }
+  #driver-profile-content{
+    --profile-height:min(620px,calc(100vh - 315px));
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 340px!important;
+    grid-template-rows:154px 76px minmax(0,1fr)!important;
+    gap:14px!important;
+    width:100%!important;
+    height:var(--profile-height)!important;
+    min-height:var(--profile-height)!important;
+    max-height:var(--profile-height)!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+
+  #driver-profile-content > .grid:first-of-type{
+    grid-column:1!important;
+    grid-row:1!important;
+    display:grid!important;
+    grid-template-columns:160px minmax(0,1fr)!important;
+    gap:14px!important;
+    width:100%!important;
+    height:154px!important;
+    min-height:154px!important;
+    max-height:154px!important;
+    margin:0!important;
+  }
+
+  #profile-number-box,
+  #driver-profile-content .profile-constructor-box{
+    height:154px!important;
+    min-height:154px!important;
+    max-height:154px!important;
+    box-sizing:border-box!important;
+  }
+
+  #driver-stats{
+    grid-column:1!important;
+    grid-row:2!important;
+    height:76px!important;
+    min-height:76px!important;
+    max-height:76px!important;
+    box-sizing:border-box!important;
+  }
+  #driver-stats>div{
+    height:100%!important;
+    min-height:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .profile-driver-visual{
+    grid-column:2!important;
+    grid-row:1 / 4!important;
+    width:340px!important;
+    height:100%!important;
+    min-width:340px!important;
+    max-width:340px!important;
+    min-height:0!important;
+    max-height:none!important;
+    align-self:stretch!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+
+  #profile-driver-image{
+    position:absolute!important;
+    left:50%!important;
+    top:0!important;
+    width:auto!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:100%!important;
+    transform:translateX(-50%)!important;
+    object-fit:contain!important;
+    object-position:center top!important;
+  }
+
+  .driver-profile-about{
+    grid-column:1!important;
+    grid-row:3!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1.18fr) minmax(260px,.82fr)!important;
+    gap:14px!important;
+    width:100%!important;
+    height:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+
+  .profile-info-card{
+    display:flex!important;
+    flex-direction:column!important;
+    width:100%!important;
+    height:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+
+  #driver-profile-content #profile-bio,
+  #driver-profile-content #profile-career.profile-career-list{
+    display:block!important;
+    flex:1 1 0!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    scrollbar-width:thin!important;
+    scrollbar-color:#3a4049 transparent!important;
+  }
+}
+
+/* Smaller screens: modal may scroll, while each information area keeps its own scroll. */
+@media (max-width:820px){
+  #profile-modal .modal-box{max-height:calc(100vh - 24px)!important;overflow-y:auto!important;}
+  #driver-profile-content{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto 300px auto!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  #driver-profile-content > .grid:first-of-type{grid-column:1!important;grid-row:1!important;}
+  #driver-stats{grid-column:1!important;grid-row:2!important;}
+  .profile-driver-visual{grid-column:1!important;grid-row:3!important;width:100%!important;min-width:0!important;height:300px!important;min-height:300px!important;max-height:300px!important;overflow:hidden!important;}
+  #profile-driver-image{width:auto!important;height:100%!important;max-width:none!important;max-height:100%!important;object-fit:contain!important;object-position:center top!important;}
+  .driver-profile-about{grid-column:1!important;grid-row:4!important;grid-template-columns:1fr 1fr!important;height:430px!important;min-height:430px!important;max-height:430px!important;overflow:hidden!important;}
+  .profile-info-card{display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important;}
+  #driver-profile-content #profile-bio,
+  #driver-profile-content #profile-career.profile-career-list{display:block!important;flex:1 1 0!important;height:0!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important;}
+}
+@media (max-width:560px){
+  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr 1.55fr!important;gap:10px!important;}
+  #profile-number-box,.profile-constructor-box{min-height:150px!important;height:150px!important;max-height:150px!important;}
+  #profile-number{font-size:62px!important;}
+  .profile-number{font-size:76px!important;}
+  .profile-team-logo{width:72px!important;height:58px!important;}
+  #driver-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;height:auto!important;min-height:0!important;max-height:none!important;}
+  .profile-driver-visual{height:280px!important;min-height:280px!important;max-height:280px!important;}
+  .driver-profile-about{grid-template-columns:1fr!important;height:760px!important;min-height:760px!important;max-height:760px!important;gap:12px!important;}
+  .profile-info-card{height:374px!important;min-height:374px!important;max-height:374px!important;padding:17px!important;}
+}
+@media (max-width:390px){
+  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr!important;}
+  .profile-driver-visual{height:250px!important;min-height:250px!important;max-height:250px!important;}
+  .driver-profile-about{height:720px!important;min-height:720px!important;max-height:720px!important;}
+  .profile-info-card{height:354px!important;min-height:354px!important;max-height:354px!important;}
+}
+</style>
 <link rel="preload" as="image" href="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" fetchpriority="high">
 
 
@@ -993,246 +1136,9 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 
 
 
-<style id="driver-profile-final">
-/* =========================================================
-   DRIVER PROFILE — SINGLE SOURCE OF TRUTH
-   Desktop: left stack + one fixed-height image card.
-   Long text scrolls INSIDE its own card only.
-   ========================================================= */
-@media (min-width:821px){
-  #driver-profile-content{
-    --profile-height:min(760px,calc(90vh - 150px));
-    display:grid!important;
-    grid-template-columns:minmax(0,1.34fr) minmax(380px,.66fr)!important;
-    grid-template-rows:172px 82px minmax(0,1fr)!important;
-    gap:14px!important;
-    width:100%!important;
-    height:var(--profile-height)!important;
-    min-height:var(--profile-height)!important;
-    max-height:var(--profile-height)!important;
-    min-width:0!important;
-    overflow:hidden!important;
-    align-items:stretch!important;
-    box-sizing:border-box!important;
-  }
 
-  #driver-profile-content > .grid:first-of-type{
-    grid-column:1!important;
-    grid-row:1!important;
-    height:172px!important;
-    min-height:172px!important;
-    max-height:172px!important;
-    min-width:0!important;
-    margin:0!important;
-  }
-  #profile-number-box,
-  #driver-profile-content .profile-constructor-box{
-    height:172px!important;
-    min-height:172px!important;
-    max-height:172px!important;
-    box-sizing:border-box!important;
-  }
 
-  #driver-stats{
-    grid-column:1!important;
-    grid-row:2!important;
-    height:82px!important;
-    min-height:82px!important;
-    max-height:82px!important;
-    box-sizing:border-box!important;
-  }
-  #driver-stats>div{
-    min-height:0!important;
-    height:100%!important;
-    box-sizing:border-box!important;
-  }
 
-  .profile-driver-visual{
-    grid-column:2!important;
-    grid-row:1 / 4!important;
-    height:100%!important;
-    min-height:0!important;
-    max-height:none!important;
-    min-width:0!important;
-    align-self:stretch!important;
-    box-sizing:border-box!important;
-    overflow:hidden!important;
-  }
-
-  #profile-driver-image{
-    position:absolute!important;
-    left:50%!important;
-    top:0!important;
-    bottom:0!important;
-    width:auto!important;
-    height:100%!important;
-    max-width:100%!important;
-    max-height:100%!important;
-    transform:translateX(-50%)!important;
-    object-fit:contain!important;
-    object-position:center top!important;
-  }
-
-  .driver-profile-about{
-    grid-column:1!important;
-    grid-row:3!important;
-    display:grid!important;
-    grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr)!important;
-    gap:14px!important;
-    height:100%!important;
-    min-height:0!important;
-    max-height:none!important;
-    min-width:0!important;
-    margin:0!important;
-    overflow:hidden!important;
-    box-sizing:border-box!important;
-  }
-
-  .profile-info-card{
-    width:100%!important;
-    height:100%!important;
-    min-width:0!important;
-    min-height:0!important;
-    max-height:none!important;
-    box-sizing:border-box!important;
-    overflow:hidden!important;
-  }
-
-  #driver-profile-content #profile-bio{
-    flex:1 1 0!important;
-    min-height:0!important;
-    max-height:none!important;
-    overflow-y:auto!important;
-    overflow-x:hidden!important;
-    scrollbar-width:thin!important;
-    scrollbar-color:#3a4049 transparent!important;
-  }
-
-  #driver-profile-content #profile-career.profile-career-list{
-    flex:1 1 0!important;
-    min-height:0!important;
-    height:auto!important;
-    max-height:none!important;
-    overflow-y:auto!important;
-    overflow-x:hidden!important;
-    scrollbar-width:thin!important;
-    scrollbar-color:#3a4049 transparent!important;
-  }
-}
-
-/* Mobile: stack normally; each information card owns its own scroll area. */
-@media (max-width:820px){
-  #driver-profile-content{
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    overflow:visible!important;
-  }
-  .profile-driver-visual{
-    overflow:hidden!important;
-  }
-  #profile-driver-image{
-    position:absolute!important;
-    left:50%!important;
-    top:0!important;
-    bottom:0!important;
-    width:auto!important;
-    height:100%!important;
-    max-width:100%!important;
-    max-height:100%!important;
-    transform:translateX(-50%)!important;
-    object-fit:contain!important;
-    object-position:center top!important;
-  }
-  #driver-profile-content #profile-bio,
-  #driver-profile-content #profile-career.profile-career-list{
-    min-height:0!important;
-    overflow-y:auto!important;
-    overflow-x:hidden!important;
-    scrollbar-width:thin!important;
-    scrollbar-color:#3a4049 transparent!important;
-  }
-}
-</style>
-
-<style id="driver-profile-hard-fix">
-/* FINAL DRIVER PROFILE LAYOUT: fixed frame, independent inner scroll areas */
-@media (min-width:821px){
-  #profile-modal .modal-box{overflow-y:auto!important;}
-  #driver-profile-content{
-    display:grid!important;
-    grid-template-columns:minmax(0,1.34fr) minmax(380px,.66fr)!important;
-    grid-template-rows:172px 82px minmax(0,1fr)!important;
-    gap:14px!important;
-    height:760px!important;
-    min-height:760px!important;
-    max-height:760px!important;
-    overflow:hidden!important;
-    box-sizing:border-box!important;
-  }
-  #driver-profile-content > .grid:first-of-type{
-    grid-column:1!important;grid-row:1!important;
-    height:172px!important;min-height:172px!important;max-height:172px!important;
-  }
-  #profile-number-box,#driver-profile-content .profile-constructor-box{
-    height:172px!important;min-height:172px!important;max-height:172px!important;
-  }
-  #driver-stats{
-    grid-column:1!important;grid-row:2!important;
-    height:82px!important;min-height:82px!important;max-height:82px!important;
-  }
-  .profile-driver-visual{
-    grid-column:2!important;grid-row:1 / 4!important;
-    height:760px!important;min-height:760px!important;max-height:760px!important;
-    overflow:hidden!important;box-sizing:border-box!important;
-  }
-  #profile-driver-image{
-    position:absolute!important;left:50%!important;top:0!important;
-    width:auto!important;height:100%!important;
-    max-width:100%!important;max-height:100%!important;
-    transform:translateX(-50%)!important;
-    object-fit:contain!important;object-position:center top!important;
-  }
-  .driver-profile-about{
-    grid-column:1!important;grid-row:3!important;
-    display:grid!important;
-    grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr)!important;
-    gap:14px!important;
-    height:100%!important;min-height:0!important;max-height:none!important;
-    overflow:hidden!important;box-sizing:border-box!important;
-  }
-  .profile-info-card{
-    height:100%!important;min-height:0!important;max-height:none!important;
-    overflow:hidden!important;display:flex!important;flex-direction:column!important;
-    box-sizing:border-box!important;
-  }
-  #driver-profile-content #profile-bio{
-    display:block!important;flex:1 1 0!important;
-    height:0!important;min-height:0!important;max-height:none!important;
-    overflow-y:auto!important;overflow-x:hidden!important;
-    scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important;
-  }
-  #driver-profile-content #profile-career.profile-career-list{
-    display:block!important;flex:1 1 0!important;
-    height:0!important;min-height:0!important;max-height:none!important;
-    overflow-y:auto!important;overflow-x:hidden!important;
-    scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important;
-  }
-}
-@media (max-width:820px){
-  #driver-profile-content{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;}
-  .profile-driver-visual{overflow:hidden!important;}
-  .driver-profile-about{min-height:0!important;overflow:visible!important;}
-  .profile-info-card{display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important;}
-  #driver-profile-content #profile-bio,
-  #driver-profile-content #profile-career.profile-career-list{
-    display:block!important;flex:1 1 0!important;height:0!important;min-height:0!important;
-    overflow-y:auto!important;overflow-x:hidden!important;
-    scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important;
-  }
-  #profile-driver-image{width:auto!important;max-width:100%!important;height:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center top!important;}
-}
-</style>
 
 </head>
 
