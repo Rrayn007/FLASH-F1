@@ -347,6 +347,29 @@ button{font-family:inherit}
 .driver-card{cursor:pointer;pointer-events:auto;}
 .driver-card *{pointer-events:auto;}
 
+
+/* CONSTRUCTOR HEADER — full team name, never truncate */
+#profile-modal.team-profile-active #profile-name{
+  max-width:calc(100% - 58px)!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  overflow-wrap:break-word!important;
+  word-break:normal!important;
+  line-height:.95!important;
+  font-size:clamp(34px,5vw,60px)!important;
+  letter-spacing:-.035em!important;
+}
+#profile-modal.team-profile-active .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{
+  min-height:64px!important;
+}
+@media(max-width:640px){
+  #profile-modal.team-profile-active #profile-name{
+    max-width:calc(100% - 50px)!important;
+    font-size:clamp(30px,10vw,46px)!important;
+  }
+}
+
 /* =========================================================
    DRIVER PROFILE — CLEAN BASE
    One layout system only. Desktop keeps the original 3-level
@@ -2632,6 +2655,8 @@ function setProfilePanel(mode){
   const teamPanel=document.getElementById('team-profile-content');
   if(!driverPanel||!teamPanel)return;
   const showDriver=mode==='driver';
+  const modal=document.getElementById('profile-modal');
+  if(modal) modal.classList.toggle('team-profile-active',!showDriver);
   driverPanel.classList.toggle('hidden',!showDriver);
   teamPanel.classList.toggle('hidden',showDriver);
   driverPanel.setAttribute('aria-hidden',String(!showDriver));
