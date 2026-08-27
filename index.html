@@ -460,11 +460,16 @@ button{font-family:inherit}
 .profile-fact{background:#101010;padding:11px 12px}
 .profile-fact-label{font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#555b66}
 .profile-fact-value{font-size:10px;font-weight:800;color:#e8e8ea;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.profile-career-list{display:grid;gap:8px;margin-top:12px}
-.profile-career-item{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #1c1c20}
-.profile-career-year{font:900 10px/1 Inter,Arial,sans-serif;color:#e7e7e9}
-.profile-career-copy{font-size:9px;line-height:1.45;color:#8d9199}
-.profile-career-copy strong{display:block;color:#e8e8ea;font-size:10px;margin-bottom:2px}
+.profile-career-list{position:relative;display:grid;gap:0;margin-top:16px;padding-left:76px}
+.profile-career-list:before{content:"";position:absolute;left:31px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,#3b3d43,#1c1d21)}
+.profile-career-item{position:relative;display:grid;grid-template-columns:1fr;gap:3px;min-height:62px;padding:0 0 18px;border:0}
+.profile-career-item:before{content:"";position:absolute;left:-49px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--team-color,#fff);box-shadow:0 0 0 4px rgba(255,255,255,.035)}
+.profile-career-year{position:absolute;left:-76px;top:0;width:55px;text-align:right;font:900 9px/1 Inter,Arial,sans-serif;letter-spacing:.04em;color:#e7e7e9}
+.profile-career-copy{font-size:9px;line-height:1.55;color:#8d9199;padding-right:4px}
+.profile-career-copy strong{display:block;color:#f0f0f2;font-size:10px;line-height:1.2;margin-bottom:4px}
+.profile-career-copy .career-detail{display:block;color:#707580}
+.profile-career-empty{font-size:9px;color:#666;line-height:1.6}
+@media(max-width:560px){.profile-career-list{padding-left:62px}.profile-career-list:before{left:23px}.profile-career-item:before{left:-38px}.profile-career-year{left:-62px;width:43px;font-size:8px}.profile-career-item{min-height:58px;padding-bottom:15px}}
 .profile-loading{color:#555;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
 @media(max-width:900px){.driver-profile-about{grid-template-columns:1fr}}
 @media(max-width:560px){.driver-profile-about{grid-template-columns:1fr}.profile-info-card{padding:17px}.profile-section-title{font-size:16px}.profile-bio{font-size:10px}.profile-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -864,6 +869,134 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </style>
 
 <link rel="preload" as="image" href="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" fetchpriority="high">
+
+<style id="f1hub-profile-final-optimization">
+/* F1 HUB FINAL LAYOUT PASS — removes cumulative spacing/width overrides */
+#profile-modal{padding:16px!important;}
+#profile-modal > .modal-box{width:min(1100px,100%);max-height:92vh;overflow-y:auto;overflow-x:hidden;}
+#profile-modal .p-6.md\:p-8{padding:22px!important;}
+
+#driver-profile-content{
+  box-sizing:border-box;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)!important;
+  grid-template-rows:auto auto minmax(0,1fr)!important;
+  gap:14px!important;
+  min-height:560px!important;
+  overflow:hidden!important;
+}
+#driver-profile-content > .grid:first-of-type{
+  grid-column:1!important;
+  grid-row:1!important;
+  grid-template-columns:minmax(0,.47fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+#driver-profile-content > .grid:first-of-type > *{min-width:0;}
+#driver-stats{
+  grid-column:1!important;
+  grid-row:2!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+.driver-profile-about,
+.driver-profile-about.mt-4{
+  grid-column:1!important;
+  grid-row:3!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.42fr) minmax(0,.82fr)!important;
+  gap:14px!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  align-self:stretch!important;
+}
+.profile-info-card{
+  box-sizing:border-box;
+  min-width:0!important;
+  min-height:0!important;
+  height:100%;
+  padding:18px!important;
+}
+.profile-bio{max-width:none!important;}
+.profile-facts{margin-top:12px!important;}
+
+/* True timeline: consistent vertical rhythm and no fake table rows */
+.profile-career-list{
+  margin-top:14px!important;
+  padding-left:68px!important;
+  display:grid!important;
+  gap:0!important;
+}
+.profile-career-list:before{left:27px!important;top:6px!important;bottom:8px!important;}
+.profile-career-item{
+  min-height:0!important;
+  padding:0 0 17px!important;
+  margin:0!important;
+  display:block!important;
+}
+.profile-career-item:last-child{padding-bottom:0!important;}
+.profile-career-item:before{left:-45px!important;top:4px!important;width:8px;height:8px;}
+.profile-career-year{left:-68px!important;width:48px!important;top:0!important;text-align:right!important;}
+.profile-career-copy{padding:0!important;line-height:1.45!important;}
+.profile-career-copy strong{margin-bottom:3px!important;}
+
+/* Equal, compact stat cells */
+#driver-stats>div{min-height:78px!important;padding:15px 16px!important;}
+#driver-stats .text-xl{font-size:21px!important;}
+
+/* Avoid oversized visual area at medium widths */
+@media (max-width:1100px){
+  #profile-modal .p-6.md\:p-8{padding:18px!important;}
+  #driver-profile-content{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)!important;min-height:520px!important;}
+  .profile-driver-visual{height:520px!important;}
+}
+@media (max-width:900px){
+  #profile-modal{padding:10px!important;}
+  #profile-modal > .modal-box{max-height:94vh;}
+  #driver-profile-content{
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+  }
+  #driver-profile-content > .grid:first-of-type{
+    grid-column:1!important;grid-row:1!important;
+    grid-template-columns:minmax(0,.47fr) minmax(0,1fr)!important;
+  }
+  .profile-driver-visual{
+    grid-column:1!important;grid-row:2!important;
+    height:340px!important;
+    order:0;
+  }
+  #driver-stats{grid-column:1!important;grid-row:3!important;}
+  .driver-profile-about{
+    grid-column:1!important;grid-row:4!important;
+    grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)!important;
+    margin-top:0!important;
+  }
+}
+@media (max-width:560px){
+  #profile-modal .p-6.md\:p-8{padding:14px!important;}
+  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr!important;gap:10px!important;}
+  .profile-number-box,.profile-constructor-box{min-height:132px!important;}
+  #driver-stats>div{min-height:72px!important;padding:13px 12px!important;}
+  #driver-stats .text-xl{font-size:20px!important;}
+  .profile-driver-visual{height:300px!important;}
+  .driver-profile-about{grid-template-columns:1fr!important;gap:12px!important;}
+  .profile-info-card{height:auto;padding:15px!important;}
+  .profile-bio{font-size:10px!important;line-height:1.6!important;}
+  .profile-facts{gap:1px!important;}
+  .profile-fact{padding:9px!important;}
+  .profile-career-list{padding-left:60px!important;}
+  .profile-career-list:before{left:23px!important;}
+  .profile-career-item:before{left:-37px!important;}
+  .profile-career-year{left:-60px!important;width:42px!important;font-size:8px!important;}
+}
+</style>
+
 </head>
 
 <body>
@@ -2411,17 +2544,59 @@ function renderDriverCareer(driver){
   const el=document.getElementById('profile-career');
   if(!el)return;
   const id=driver.Driver?.driverId||'';
-  const currentYear=driver.season||SEASON;
+  const currentTeam=driver.Constructors?.[0]?.name||'Formula 1';
+  const currentYear=String(driver.season||SEASON);
   const wins=Number(driver.wins||0);
   const podiums=getDriverPodiums(id);
   const position=driver.position||'--';
   const points=driver.points||0;
-  el.innerHTML=`
-    <div class="profile-career-item"><div class="profile-career-year">${escapeHTML(String(currentYear))}</div><div class="profile-career-copy"><strong>${escapeHTML(driver.Constructors?.[0]?.name||'Formula 1')}</strong>Vị trí hiện tại P${escapeHTML(String(position))} · ${escapeHTML(String(points))} điểm.</div></div>
-    <div class="profile-career-item"><div class="profile-career-year">2026</div><div class="profile-career-copy"><strong>Thành tích mùa giải</strong>${wins} chiến thắng · ${podiums} podium trong dữ liệu mùa giải hiện tại.</div></div>
-    <div class="profile-career-item"><div class="profile-career-year">PROFILE</div><div class="profile-career-copy"><strong>${escapeHTML(driver.Driver?.nationality||'--')}</strong>${escapeHTML(driver.Driver?.givenName||'')} ${escapeHTML(driver.Driver?.familyName||'')} · #${escapeHTML(String(driver.Driver?.permanentNumber||DRIVER_NUMBER_MAP[id]||'--'))}</div></div>`;
-}
+  const name=`${driver.Driver?.givenName||''} ${driver.Driver?.familyName||''}`.trim();
 
+  const careerMap={
+    hamilton:[
+      ['2007','McLaren','F1 debut — bước vào Formula 1 với McLaren.'],
+      ['2008','McLaren','Giành chức vô địch thế giới đầu tiên.'],
+      ['2013','Mercedes','Chuyển sang Mercedes và bắt đầu kỷ nguyên thành công mới.'],
+      ['2014–20','Mercedes','Giành 6 chức vô địch thế giới cùng Mercedes.'],
+      ['2025','Ferrari','Gia nhập Ferrari, mở ra chương mới trong sự nghiệp.'],
+      ['2026','Ferrari',`Mùa giải hiện tại — P${position} với ${points} điểm.`]
+    ],
+    leclerc:[['2018','Sauber','Ra mắt Formula 1.'],['2019','Ferrari','Gia nhập Ferrari và trở thành tay đua chủ lực.'],['2026','Ferrari',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    russell:[['2019','Williams','Ra mắt Formula 1.'],['2022','Mercedes','Gia nhập Mercedes.'],['2026','Mercedes',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    antonelli:[['2025','Mercedes','Ra mắt Formula 1 với Mercedes.'],['2026','Mercedes',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    norris:[['2019','McLaren','Ra mắt Formula 1.'],['2021','McLaren','Giành chiến thắng F1 đầu tiên.'],['2026','McLaren',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    piastri:[['2023','McLaren','Ra mắt Formula 1.'],['2024','McLaren','Bước lên nhóm chiến thắng và trở thành nhân tố chủ lực.'],['2026','McLaren',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    max_verstappen:[['2015','Toro Rosso','Ra mắt Formula 1 ở tuổi 17.'],['2016','Red Bull Racing','Chuyển lên Red Bull và giành chiến thắng F1 đầu tiên.'],['2021–24','Red Bull Racing','Giai đoạn thống trị và nhiều chức vô địch thế giới.'],['2026','Red Bull Racing',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    gasly:[['2017','Toro Rosso','Ra mắt Formula 1.'],['2019','Red Bull Racing','Thi đấu cho Red Bull Racing.'],['2020','AlphaTauri','Giành chiến thắng F1 đầu tiên.'],['2023','Alpine','Gia nhập Alpine.'],['2026','Alpine',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    alonso:[['2001','Minardi','Ra mắt Formula 1.'],['2005–06','Renault','Giành 2 chức vô địch thế giới liên tiếp.'],['2015','McLaren','Trở lại McLaren.'],['2023','Aston Martin','Gia nhập Aston Martin.'],['2026','Aston Martin',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    sainz:[['2015','Toro Rosso','Ra mắt Formula 1.'],['2019','McLaren','Gia nhập McLaren.'],['2021','Ferrari','Gia nhập Ferrari.'],['2025','Williams','Chuyển sang Williams.'],['2026','Williams',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    albon:[['2019','Toro Rosso','Ra mắt Formula 1.'],['2019','Red Bull Racing','Được đôn lên Red Bull Racing.'],['2022','Williams','Trở lại F1 cùng Williams.'],['2026','Williams',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    stroll:[['2017','Williams','Ra mắt Formula 1.'],['2019','Racing Point','Gia nhập Racing Point.'],['2021','Aston Martin','Tiếp tục sự nghiệp cùng Aston Martin.'],['2026','Aston Martin',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    ocon:[['2016','Manor','Ra mắt Formula 1.'],['2017','Force India','Thi đấu thường xuyên tại F1.'],['2020','Renault','Gia nhập Renault.'],['2023','Alpine','Tiếp tục cùng Alpine.'],['2026','Haas F1 Team',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    hulkenberg:[['2010','Williams','Ra mắt Formula 1.'],['2013','Sauber','Thi đấu cho Sauber.'],['2020','Racing Point','Trở lại F1 trong vai trò thay thế.'],['2025','Sauber','Trở lại toàn thời gian.'],['2026','Audi',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    bortoleto:[['2025','Sauber','Ra mắt Formula 1.'],['2026','Audi',`Tiếp tục thi đấu tại F1 — P${position} với ${points} điểm.`]],
+    bearman:[['2024','Ferrari / Haas','Ra mắt F1 và thi đấu thay thế trong mùa giải.'],['2025','Haas F1 Team','Gia nhập đội hình chính thức.'],['2026','Haas F1 Team',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    colapinto:[['2024','Williams','Ra mắt Formula 1.'],['2025','Alpine','Gia nhập Alpine.'],['2026','Alpine',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    lawson:[['2023','AlphaTauri','Ra mắt Formula 1.'],['2025','Racing Bulls / Red Bull','Tiếp tục thi đấu trong hệ thống Red Bull.'],['2026','Racing Bulls',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
+    hadjar:[['2025','Racing Bulls','Ra mắt Formula 1.'],['2026','Red Bull Racing',`Bước vào mùa giải thứ hai tại F1 — P${position} với ${points} điểm.`]],
+    lindblad:[['2026','Racing Bulls','Ra mắt Formula 1.'],['2026','Racing Bulls',`Mùa giải tân binh — P${position} với ${points} điểm.`]],
+    perez:[['2011','Sauber','Ra mắt Formula 1.'],['2014','Force India','Gia nhập Force India.'],['2021','Red Bull Racing','Gia nhập Red Bull Racing.'],['2026','Cadillac',`Chương mới tại Cadillac — P${position} với ${points} điểm.`]],
+    bottas:[['2013','Williams','Ra mắt Formula 1.'],['2017','Mercedes','Gia nhập Mercedes.'],['2022','Alfa Romeo','Chuyển sang Alfa Romeo.'],['2026','Cadillac',`Chương mới tại Cadillac — P${position} với ${points} điểm.`]]
+  };
+
+  let items=careerMap[id];
+  if(!items){
+    items=[
+      [currentYear,currentTeam,`Mùa giải hiện tại — P${position} với ${points} điểm.`],
+      ['2026','Season record',`${wins} chiến thắng · ${podiums} podium trong dữ liệu mùa giải hiện tại.`]
+    ];
+  }
+  el.innerHTML=items.map(([year,team,detail])=>`
+    <div class="profile-career-item">
+      <div class="profile-career-year">${escapeHTML(String(year))}</div>
+      <div class="profile-career-copy"><strong>${escapeHTML(team)}</strong><span class="career-detail">${escapeHTML(detail)}</span></div>
+    </div>`).join('');
+}
 async function enrichDriverProfile(driver){
   const bio=document.getElementById('profile-bio');
   const dob=document.getElementById('profile-dob');
