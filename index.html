@@ -1042,6 +1042,151 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   .profile-career-item:before{left:-20px!important;}
 }
 </style>
+
+<style id="f1hub-profile-v11-final-clean">
+/* =========================================================
+   DRIVER PROFILE V11 — final spacing + compact scroll timeline
+   Replaces the accumulated timeline overrides from V4–V10.
+   ========================================================= */
+#driver-profile-content{
+  grid-template-columns:minmax(0,1.28fr) minmax(320px,.92fr)!important;
+  grid-template-rows:auto auto auto!important;
+  gap:14px!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+#driver-profile-content>.grid:first-of-type{
+  gap:14px!important;
+}
+#driver-stats{
+  margin:0!important;
+}
+.driver-profile-about{
+  grid-column:1 / -1!important;
+  grid-row:3!important;
+  grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr)!important;
+  gap:14px!important;
+  align-items:start!important;
+  margin:0!important;
+}
+.profile-info-card{
+  height:auto!important;
+  min-height:0!important;
+  align-self:start!important;
+}
+
+/* ---- Career timeline: year / dot / content ---- */
+.profile-career-list{
+  position:relative!important;
+  margin:14px 0 0!important;
+  padding:0 4px 0 76px!important;
+  max-height:360px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  display:block!important;
+  scrollbar-width:thin;
+  scrollbar-color:#45484f transparent;
+}
+.profile-career-list::-webkit-scrollbar{width:5px}
+.profile-career-list::-webkit-scrollbar-track{background:transparent}
+.profile-career-list::-webkit-scrollbar-thumb{background:#45484f;border-radius:99px}
+.profile-career-list:before{
+  content:""!important;
+  position:absolute!important;
+  left:61px!important;
+  top:8px!important;
+  bottom:8px!important;
+  width:2px!important;
+  background:#292c32!important;
+}
+.profile-career-item{
+  position:relative!important;
+  display:block!important;
+  min-height:0!important;
+  padding:0 0 18px!important;
+  margin:0!important;
+}
+.profile-career-item:last-child{padding-bottom:2px!important}
+.profile-career-item:before{
+  content:""!important;
+  position:absolute!important;
+  left:-20px!important;
+  top:4px!important;
+  width:9px!important;
+  height:9px!important;
+  border-radius:50%!important;
+  background:var(--team-color,#fff)!important;
+  box-shadow:0 0 0 5px rgba(255,255,255,.035)!important;
+}
+.profile-career-year{
+  position:absolute!important;
+  left:-76px!important;
+  top:0!important;
+  width:55px!important;
+  text-align:right!important;
+  margin:0!important;
+  font:800 10px/1.2 Inter,Arial,sans-serif!important;
+  letter-spacing:.02em!important;
+  color:#f1f1f3!important;
+  white-space:nowrap!important;
+}
+.profile-career-copy{
+  min-width:0!important;
+  padding:0!important;
+  font-size:10px!important;
+  line-height:1.45!important;
+}
+.profile-career-copy strong{
+  display:block!important;
+  margin:0 0 3px!important;
+  font-size:11px!important;
+  line-height:1.25!important;
+  color:#f2f2f4!important;
+}
+.profile-career-copy .career-detail{
+  display:block!important;
+  color:#777d87!important;
+  line-height:1.45!important;
+}
+
+/* Don't stretch the right card just because the dossier is taller. */
+.driver-profile-about>.profile-info-card:nth-child(2){
+  height:auto!important;
+  align-self:start!important;
+}
+
+/* Compact dossier: use the available space for actual information. */
+.profile-dossier-extra{margin-top:12px!important}
+.profile-highlight{margin-top:12px!important;padding-top:12px!important}
+
+@media(max-width:900px){
+  .driver-profile-about{
+    grid-template-columns:1fr 1fr!important;
+    align-items:start!important;
+  }
+  .profile-career-list{max-height:330px!important}
+}
+@media(max-width:640px){
+  .driver-profile-about{grid-template-columns:1fr!important}
+  .profile-career-list{
+    max-height:340px!important;
+    padding-left:68px!important;
+  }
+  .profile-career-list:before{left:53px!important}
+  .profile-career-year{
+    left:-68px!important;
+    width:48px!important;
+    font-size:9px!important;
+  }
+  .profile-career-item:before{left:-19px!important}
+}
+@media(max-width:380px){
+  .profile-career-list{max-height:310px!important;padding-left:62px!important}
+  .profile-career-list:before{left:47px!important}
+  .profile-career-year{left:-62px!important;width:43px!important;font-size:8px!important}
+}
+</style>
+
 </head>
 
 <body>
@@ -2621,7 +2766,7 @@ function renderDriverCareer(driver){
     colapinto:[['2024','Williams','F1 debut.'],['2025','Alpine','Joined Alpine.'],['2026','Alpine',`Current season — P${position}, ${points} points.`]],
     lawson:[['2023','AlphaTauri','F1 debut as a substitute driver.'],['2025','Racing Bulls / Red Bull','Continued in the Red Bull system.'],['2026','Racing Bulls',`Current season — P${position}, ${points} points.`]],
     hadjar:[['2025','Racing Bulls','F1 debut.'],['2026','Red Bull Racing',`Second F1 season — P${position}, ${points} points.`]],
-    lindblad:[['2026','Racing Bulls','F1 debut and rookie season.'],['2026','Racing Bulls',`Current season — P${position}, ${points} points.`]],
+    lindblad:[['2026','Racing Bulls',`F1 debut and rookie season — P${position}, ${points} points.`]],
     perez:[['2011','Sauber','F1 debut.'],['2014','Force India','Joined Force India.'],['2021','Red Bull Racing','Joined Red Bull Racing.'],['2026','Cadillac',`New chapter with Cadillac — P${position}, ${points} points.`]],
     bottas:[['2013','Williams','F1 debut.'],['2017','Mercedes','Joined Mercedes.'],['2022','Alfa Romeo','Moved to Alfa Romeo.'],['2026','Cadillac',`New chapter with Cadillac — P${position}, ${points} points.`]]
   };
@@ -2633,7 +2778,12 @@ function renderDriverCareer(driver){
     const existing=merged.find(x=>x[0]===year);
     if(existing){
       if(existing[1]!==team && !existing[1].includes(team)) existing[1]=`${existing[1]} → ${team}`;
-      if(existing[2]!==detail && !existing[2].includes(detail)) existing[2]=`${existing[2]} ${detail}`;
+      if(detail && existing[2]!==detail && !existing[2].includes(detail)){
+        const parts=existing[2].split(' — ');
+        const incoming=detail.split(' — ');
+        const base=parts[0]===incoming[0] ? parts[0] : `${existing[2]} ${detail}`;
+        existing[2]=base;
+      }
     }else merged.push([year,team,detail]);
   });
   el.innerHTML=merged.map(([year,team,detail])=>`
