@@ -1011,6 +1011,180 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 </style>
 <link rel="preload" as="image" href="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" fetchpriority="high">
+
+<style id="career-timeline-final-fix">
+/* =========================================================
+   CAREER TIMELINE — FINAL PRODUCTION LAYOUT
+   Fixed viewport + scroll + per-team colored rail segments.
+   ========================================================= */
+.profile-info-card:has(#profile-career){
+  overflow:hidden !important;
+  min-width:0 !important;
+}
+
+.profile-info-card:has(#profile-career) .profile-section-kicker{
+  margin:0 !important;
+  line-height:1 !important;
+}
+
+.profile-info-card:has(#profile-career) .profile-section-title{
+  margin-top:10px !important;
+  line-height:1 !important;
+}
+
+#profile-career.profile-career-list{
+  --career-year-col:54px;
+  --career-rail-col:22px;
+  --career-gap:10px;
+  position:relative !important;
+  height:300px !important;
+  max-height:300px !important;
+  min-height:0 !important;
+  margin-top:18px !important;
+  padding:2px 6px 2px 0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  box-sizing:border-box !important;
+  scrollbar-width:thin;
+  scrollbar-color:#3a4049 transparent;
+}
+
+#profile-career.profile-career-list::-webkit-scrollbar{width:5px}
+#profile-career.profile-career-list::-webkit-scrollbar-track{background:transparent}
+#profile-career.profile-career-list::-webkit-scrollbar-thumb{
+  background:#3a4049;
+  border-radius:999px;
+}
+#profile-career.profile-career-list::-webkit-scrollbar-thumb:hover{background:#505762}
+
+/* Remove the old single-color full-length rail. */
+#profile-career.profile-career-list:before{display:none !important}
+
+#profile-career .profile-career-item{
+  --event-color:#00d7b6;
+  position:relative !important;
+  display:grid !important;
+  grid-template-columns:var(--career-year-col) var(--career-rail-col) minmax(0,1fr) !important;
+  column-gap:var(--career-gap) !important;
+  align-items:start !important;
+  min-height:76px !important;
+  padding:0 0 14px !important;
+  margin:0 !important;
+  box-sizing:border-box !important;
+}
+
+/* Each segment inherits THIS event's team color. */
+#profile-career .profile-career-item::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  top:10px;
+  bottom:-10px;
+  left:calc(var(--career-year-col) + var(--career-gap) + (var(--career-rail-col) / 2));
+  width:2px;
+  transform:translateX(-1px);
+  background:var(--event-color) !important;
+  opacity:.52;
+  border-radius:99px;
+  pointer-events:none;
+}
+
+#profile-career .profile-career-item:last-child::after{display:none}
+
+#profile-career .profile-career-year{
+  grid-column:1 !important;
+  align-self:start !important;
+  padding-top:3px !important;
+  text-align:right !important;
+  font-family:Inter,Arial,sans-serif !important;
+  font-size:10px !important;
+  font-weight:900 !important;
+  line-height:1.15 !important;
+  letter-spacing:-.02em !important;
+  color:#edf0f3 !important;
+  white-space:nowrap !important;
+  position:relative !important;
+  z-index:2 !important;
+}
+
+#profile-career .profile-career-marker{
+  grid-column:2 !important;
+  width:var(--career-rail-col) !important;
+  height:20px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  position:relative !important;
+  z-index:3 !important;
+  box-sizing:border-box !important;
+}
+
+#profile-career .profile-career-marker span{
+  width:10px !important;
+  height:10px !important;
+  flex:0 0 10px !important;
+  border-radius:50% !important;
+  background:var(--event-color) !important;
+  border:2px solid #0d0f12 !important;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--event-color) 45%,transparent),0 0 12px color-mix(in srgb,var(--event-color) 38%,transparent) !important;
+  box-sizing:border-box !important;
+}
+
+#profile-career .profile-career-item:last-child .profile-career-marker span{
+  width:11px !important;
+  height:11px !important;
+  flex-basis:11px !important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--event-color) 12%,transparent),0 0 16px color-mix(in srgb,var(--event-color) 45%,transparent) !important;
+}
+
+#profile-career .profile-career-copy{
+  grid-column:3 !important;
+  min-width:0 !important;
+  padding:1px 2px 0 0 !important;
+  position:relative !important;
+  z-index:2 !important;
+  box-sizing:border-box !important;
+}
+
+#profile-career .profile-career-copy strong{
+  display:block !important;
+  margin:0 !important;
+  font-size:12px !important;
+  line-height:1.2 !important;
+  font-weight:850 !important;
+  letter-spacing:-.015em !important;
+  color:#f5f6f7 !important;
+}
+
+#profile-career .profile-career-copy .career-detail{
+  display:block !important;
+  margin-top:4px !important;
+  max-width:100% !important;
+  color:#747d88 !important;
+  font-size:9px !important;
+  font-weight:500 !important;
+  line-height:1.45 !important;
+}
+
+#profile-career .profile-career-item:hover .profile-career-year,
+#profile-career .profile-career-item:hover .profile-career-copy strong{color:#fff !important}
+
+@media(max-width:560px){
+  #profile-career.profile-career-list{
+    --career-year-col:46px;
+    --career-rail-col:22px;
+    --career-gap:8px;
+    height:270px !important;
+    max-height:270px !important;
+    margin-top:16px !important;
+  }
+  #profile-career .profile-career-item{
+    min-height:72px !important;
+    padding-bottom:12px !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -2748,15 +2922,34 @@ function renderDriverCareer(driver){
       }
     }else merged.push([year,team,detail]);
   });
-  el.innerHTML=merged.map(([year,team,detail])=>`
-    <div class="profile-career-item">
+  const careerTeamColors={
+    mercedes:'#00D7B6', ferrari:'#ED1131', mclaren:'#F47600', williams:'#1868DB',
+    red_bull:'#4781D7', 'red bull racing':'#4781D7', alpine:'#00A1E8',
+    'racing bulls':'#6C98FF', rb:'#6C98FF', aston_martin:'#229971',
+    'aston martin':'#229971', haas:'#B6BABD', 'haas f1 team':'#B6BABD',
+    audi:'#BB0A30', sauber:'#52B6E8', cadillac:'#D7D9DC',
+    'racing point':'#F596C8', renault:'#FFF500', 'toro rosso':'#469BFF',
+    alphatauri:'#5E8FAA', minardi:'#D0D0D0', ferrari_haas:'#ED1131'
+  };
+  const normalizeCareerTeam=(name='')=>String(name).trim().toLowerCase().replace(/\s+/g,'_');
+  const getCareerColor=(name='')=>{
+    const raw=String(name).trim().toLowerCase();
+    const key=normalizeCareerTeam(name);
+    return careerTeamColors[raw]||careerTeamColors[key]||getTeamMeta(teamKey(name)).color||'#00D7B6';
+  };
+
+  el.innerHTML=merged.map(([year,team,detail])=>{
+    const color=getCareerColor(team);
+    return `
+    <div class="profile-career-item" style="--event-color:${escapeHTML(color)}">
       <div class="profile-career-year">${escapeHTML(String(year))}</div>
       <div class="profile-career-marker" aria-hidden="true"><span></span></div>
       <div class="profile-career-copy">
         <strong>${escapeHTML(team)}</strong>
         <span class="career-detail">${escapeHTML(detail)}</span>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 async function enrichDriverProfile(driver){
