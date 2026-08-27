@@ -446,6 +446,25 @@ button{font-family:inherit}
 #driver-profile-content > .grid:last-child>div{min-height:112px;padding:18px 20px!important;background:linear-gradient(145deg,#111113,#0e0e10)!important;border:1px solid #1c1e23}
 #profile-position,#profile-points{font-size:40px!important;line-height:1!important;font-weight:950}
 
+/* DRIVER PROFILE V4 — compact editorial layout */
+.driver-profile-about{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.75fr);gap:14px;margin-top:0}
+.profile-info-card{background:linear-gradient(145deg,#111113,#0d0d0f);border:1px solid #1c1e23;border-radius:9px;padding:20px 22px;min-height:150px}
+.profile-section-kicker{font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:#61708a;font-weight:700}
+.profile-section-title{font-size:18px;font-weight:900;margin-top:7px;color:#f5f5f5}
+.profile-bio{font-size:11px;line-height:1.75;color:#9a9da5;margin-top:12px;max-width:760px}
+.profile-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:#222;border:1px solid #222;border-radius:7px;overflow:hidden;margin-top:14px}
+.profile-fact{background:#101010;padding:11px 12px}
+.profile-fact-label{font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#555b66}
+.profile-fact-value{font-size:10px;font-weight:800;color:#e8e8ea;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-career-list{display:grid;gap:8px;margin-top:12px}
+.profile-career-item{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #1c1c20}
+.profile-career-year{font:900 10px/1 Inter,Arial,sans-serif;color:#e7e7e9}
+.profile-career-copy{font-size:9px;line-height:1.45;color:#8d9199}
+.profile-career-copy strong{display:block;color:#e8e8ea;font-size:10px;margin-bottom:2px}
+.profile-loading{color:#555;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:900px){.driver-profile-about{grid-template-columns:1fr}}
+@media(max-width:560px){.driver-profile-about{grid-template-columns:1fr}.profile-info-card{padding:17px}.profile-section-title{font-size:16px}.profile-bio{font-size:10px}.profile-facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 @media(max-width:900px){
   #driver-profile-content{grid-template-columns:1fr;min-height:0;overflow:visible}
   #driver-profile-content > .grid:first-of-type{grid-column:1;grid-row:2;grid-template-columns:34% 66%}
@@ -1165,6 +1184,24 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 </div>
 <div id="driver-stats" class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#202020] mt-4 rounded overflow-hidden"></div>
+<div class="driver-profile-about mt-4">
+  <div class="profile-info-card">
+    <div class="profile-section-kicker">Driver dossier</div>
+    <div class="profile-section-title">Giới thiệu</div>
+    <div id="profile-bio" class="profile-bio"><span class="profile-loading">Đang tải hồ sơ...</span></div>
+    <div class="profile-facts">
+      <div class="profile-fact"><div class="profile-fact-label">Ngày sinh</div><div id="profile-dob" class="profile-fact-value">--</div></div>
+      <div class="profile-fact"><div class="profile-fact-label">Quốc tịch</div><div id="profile-nationality-fact" class="profile-fact-value">--</div></div>
+      <div class="profile-fact"><div class="profile-fact-label">Số xe</div><div id="profile-number-fact" class="profile-fact-value">--</div></div>
+      <div class="profile-fact"><div class="profile-fact-label">Đội hiện tại</div><div id="profile-team-fact" class="profile-fact-value">--</div></div>
+    </div>
+  </div>
+  <div class="profile-info-card">
+    <div class="profile-section-kicker">Career timeline</div>
+    <div class="profile-section-title">Sự nghiệp</div>
+    <div id="profile-career" class="profile-career-list"><span class="profile-loading">Đang tổng hợp...</span></div>
+  </div>
+</div>
 <div class="grid md:grid-cols-2 gap-4 mt-4">
 <div class="bg-[#101010] rounded p-5">
 <div class="text-[8px] uppercase tracking-widest text-gray-600">Championship Position</div>
@@ -2331,6 +2368,57 @@ function setProfilePanel(mode){
   teamPanel.setAttribute('aria-hidden',String(showDriver));
 }
 
+async function fetchDriverWikiSummary(driver){
+  const first=driver.Driver?.givenName||'';
+  const last=driver.Driver?.familyName||'';
+  const title=encodeURIComponent(`${first}_${last}`);
+  try{
+    const res=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${title}`,{headers:{accept:'application/json'}});
+    if(!res.ok)return null;
+    const data=await res.json();
+    return data.extract||null;
+  }catch{return null;}
+}
+
+function formatDriverDob(value){
+  if(!value)return '--';
+  const d=new Date(`${value}T00:00:00`);
+  if(Number.isNaN(d.getTime()))return value;
+  return d.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric'});
+}
+
+function renderDriverCareer(driver){
+  const el=document.getElementById('profile-career');
+  if(!el)return;
+  const id=driver.Driver?.driverId||'';
+  const currentYear=driver.season||SEASON;
+  const wins=Number(driver.wins||0);
+  const podiums=getDriverPodiums(id);
+  const position=driver.position||'--';
+  const points=driver.points||0;
+  el.innerHTML=`
+    <div class="profile-career-item"><div class="profile-career-year">${escapeHTML(String(currentYear))}</div><div class="profile-career-copy"><strong>${escapeHTML(driver.Constructors?.[0]?.name||'Formula 1')}</strong>Vị trí hiện tại P${escapeHTML(String(position))} · ${escapeHTML(String(points))} điểm.</div></div>
+    <div class="profile-career-item"><div class="profile-career-year">2026</div><div class="profile-career-copy"><strong>Thành tích mùa giải</strong>${wins} chiến thắng · ${podiums} podium trong dữ liệu mùa giải hiện tại.</div></div>
+    <div class="profile-career-item"><div class="profile-career-year">PROFILE</div><div class="profile-career-copy"><strong>${escapeHTML(driver.Driver?.nationality||'--')}</strong>${escapeHTML(driver.Driver?.givenName||'')} ${escapeHTML(driver.Driver?.familyName||'')} · #${escapeHTML(String(driver.Driver?.permanentNumber||DRIVER_NUMBER_MAP[id]||'--'))}</div></div>`;
+}
+
+async function enrichDriverProfile(driver){
+  const bio=document.getElementById('profile-bio');
+  const dob=document.getElementById('profile-dob');
+  const nat=document.getElementById('profile-nationality-fact');
+  const num=document.getElementById('profile-number-fact');
+  const team=document.getElementById('profile-team-fact');
+  if(dob)dob.textContent=formatDriverDob(driver.Driver?.dateOfBirth);
+  if(nat)nat.textContent=driver.Driver?.nationality||'--';
+  if(num)num.textContent=driver.Driver?.permanentNumber||DRIVER_NUMBER_MAP[driver.Driver?.driverId]||'--';
+  if(team)team.textContent=driver.Constructors?.[0]?.name||'--';
+  renderDriverCareer(driver);
+  const extract=await fetchDriverWikiSummary(driver);
+  if(bio){
+    bio.textContent=extract||`${driver.Driver?.givenName||''} ${driver.Driver?.familyName||''} đang thi đấu tại Formula 1 cho ${driver.Constructors?.[0]?.name||'đội hiện tại'}, với hồ sơ mùa giải 2026 được cập nhật từ dữ liệu F1 HUB.`;
+  }
+}
+
 function openDriverProfile(driverId){
 const id=String(driverId||'').trim();
 const driver=standings.find(d=>String(d.Driver?.driverId||'')===id);
@@ -2368,6 +2456,7 @@ setProfilePanel('driver');
 profileModal.classList.remove('hidden');
 profileModal.setAttribute('aria-hidden','false');
 document.body.classList.add('modal-open');
+enrichDriverProfile(driver);
 }
 
 function getDriverPodiums(driverId){
