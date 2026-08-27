@@ -1154,6 +1154,86 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   }
 }
 </style>
+
+<style id="driver-profile-hard-fix">
+/* FINAL DRIVER PROFILE LAYOUT: fixed frame, independent inner scroll areas */
+@media (min-width:821px){
+  #profile-modal .modal-box{overflow-y:auto!important;}
+  #driver-profile-content{
+    display:grid!important;
+    grid-template-columns:minmax(0,1.34fr) minmax(380px,.66fr)!important;
+    grid-template-rows:172px 82px minmax(0,1fr)!important;
+    gap:14px!important;
+    height:760px!important;
+    min-height:760px!important;
+    max-height:760px!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+  #driver-profile-content > .grid:first-of-type{
+    grid-column:1!important;grid-row:1!important;
+    height:172px!important;min-height:172px!important;max-height:172px!important;
+  }
+  #profile-number-box,#driver-profile-content .profile-constructor-box{
+    height:172px!important;min-height:172px!important;max-height:172px!important;
+  }
+  #driver-stats{
+    grid-column:1!important;grid-row:2!important;
+    height:82px!important;min-height:82px!important;max-height:82px!important;
+  }
+  .profile-driver-visual{
+    grid-column:2!important;grid-row:1 / 4!important;
+    height:760px!important;min-height:760px!important;max-height:760px!important;
+    overflow:hidden!important;box-sizing:border-box!important;
+  }
+  #profile-driver-image{
+    position:absolute!important;left:50%!important;top:0!important;
+    width:auto!important;height:100%!important;
+    max-width:100%!important;max-height:100%!important;
+    transform:translateX(-50%)!important;
+    object-fit:contain!important;object-position:center top!important;
+  }
+  .driver-profile-about{
+    grid-column:1!important;grid-row:3!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr)!important;
+    gap:14px!important;
+    height:100%!important;min-height:0!important;max-height:none!important;
+    overflow:hidden!important;box-sizing:border-box!important;
+  }
+  .profile-info-card{
+    height:100%!important;min-height:0!important;max-height:none!important;
+    overflow:hidden!important;display:flex!important;flex-direction:column!important;
+    box-sizing:border-box!important;
+  }
+  #driver-profile-content #profile-bio{
+    display:block!important;flex:1 1 0!important;
+    height:0!important;min-height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+    scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important;
+  }
+  #driver-profile-content #profile-career.profile-career-list{
+    display:block!important;flex:1 1 0!important;
+    height:0!important;min-height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+    scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important;
+  }
+}
+@media (max-width:820px){
+  #driver-profile-content{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;}
+  .profile-driver-visual{overflow:hidden!important;}
+  .driver-profile-about{min-height:0!important;overflow:visible!important;}
+  .profile-info-card{display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important;}
+  #driver-profile-content #profile-bio,
+  #driver-profile-content #profile-career.profile-career-list{
+    display:block!important;flex:1 1 0!important;height:0!important;min-height:0!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+    scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important;
+  }
+  #profile-driver-image{width:auto!important;max-width:100%!important;height:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center top!important;}
+}
+</style>
+
 </head>
 
 <body>
