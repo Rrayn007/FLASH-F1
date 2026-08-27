@@ -344,7 +344,8 @@ button{font-family:inherit}
 /* PROFILE MODAL — visibility fix */
 #profile-modal:not(.hidden){display:flex !important;}
 #profile-modal.hidden{display:none !important;}
-.driver-card{cursor:pointer;}
+.driver-card{cursor:pointer;pointer-events:auto;}
+.driver-card *{pointer-events:auto;}
 
 /* PROFILE VISIBILITY CONTRACT */
 #driver-profile-content.hidden,
@@ -2458,8 +2459,11 @@ const ghostNumber=document.getElementById('profile-ghost-number'); if(ghostNumbe
 document.getElementById('profile-number-box').style.borderBottom=`3px solid ${meta.color}`;
 document.getElementById('profile-team').textContent=constructor?.name||meta.name;
 document.getElementById('profile-nationality').textContent=driver.Driver.nationality||'--';
-document.getElementById('profile-position').textContent=`P${driver.position||'--'}`;
-document.getElementById('profile-points').textContent=driver.points||0;
+// Position/points are already shown in the stats grid; keep compatibility if legacy elements exist.
+const legacyPosition=document.getElementById('profile-position');
+const legacyPoints=document.getElementById('profile-points');
+if(legacyPosition) legacyPosition.textContent=`P${driver.position||'--'}`;
+if(legacyPoints) legacyPoints.textContent=driver.points||0;
 const logo=document.getElementById('profile-team-logo');
 logo.src=meta.logo||''; logo.alt=`${constructor?.name||meta.name} logo`; logo.style.display=meta.logo?'block':'none';
 setProfileImageWithFallback(profileImage,getDriverImageCandidates(driver),driver);
