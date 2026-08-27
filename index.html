@@ -1009,6 +1009,10 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 
 
+
+.driver-image-failed{background:linear-gradient(180deg,rgba(255,255,255,.015),rgba(0,0,0,.22));}
+.driver-image-failed::after{content:'F1 DRIVER';position:absolute;inset:auto 0 18%;text-align:center;font-size:8px;letter-spacing:.22em;color:rgba(255,255,255,.16);font-weight:800;}
+.driver-photo-wrap.driver-image-failed::after{bottom:18%;}
 </style>
 
 <style id="driver-profile-system">
@@ -2342,14 +2346,10 @@ return img;
 }catch{return''}
 }
 async function fetchDriverWikiFallbacks(){
-const jobs=standings.map(async d=>{
-const id=d.Driver?.driverId;
-if(!id)return;
-const page=(d.Driver?.givenName+'_'+d.Driver?.familyName).replaceAll(' ','_');
-driverWikiImages[id]=await fetchWikipediaSummaryImage(page);
-if(!driverWikiImages[id]) driverWikiImages[id]=await fetchWikipediaImageSearch(`${d.Driver?.givenName||''} ${d.Driver?.familyName||''} Formula 1`);
-});
-await Promise.all(jobs);
+// Intentionally disabled for driver cards. Wikipedia/editorial images are not
+// compatible with the full-body F1 card visual system. Keep this function as a
+// no-op so older initialization calls remain harmless.
+return;
 }
 async function fetchCarImages(){
 try{
@@ -2372,14 +2372,26 @@ ocon:'haasf1team',bearman:'haasf1team',hulkenberg:'audi',bortoleto:'audi',
 sainz:'williams',albon:'williams',alonso:'astonmartin',stroll:'astonmartin',
 perez:'cadillac',bottas:'cadillac'
 };
-function officialDriverMediaImage(d){
+function getOfficialDriverMediaCandidates(d){
 const raw=(d.Driver?.driverId||'').toLowerCase();
 const id=F1_DRIVER_ASSET_META[raw]?raw:(Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===raw)||raw);
 const team=F1_DRIVER_TEAM_2026[id];
 const m=F1_DRIVER_ASSET_META[id];
-if(!team||!m)return'';
+if(!team||!m)return[];
 const code=String(m[2]||'').toLowerCase();
-return `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}/${code}/2026${team}${code}right.webp`;
+const base='https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000001/common/f1/2026';
+const root=`${base}/${team}/${code}`;
+const stem=`2026${team}${code}`;
+return [
+  `${root}/${stem}right.webp`,
+  `${root}/${stem}left.webp`,
+  `${root}/${stem}.webp`,
+  `${root}/${stem}right.png`,
+  `${root}/${stem}.png`
+];
+}
+function officialDriverMediaImage(d){
+return getOfficialDriverMediaCandidates(d)[0]||'';
 }
 
 function getLegacyDriverImageCandidates(d){
@@ -2403,24 +2415,20 @@ return driverImages[code]||driverImages[id]||'';
 }
 
 function getDriverImageCandidates(d){
-const id=(d.Driver?.driverId||'').toLowerCase();
 const candidates=[];
 const push=(value)=>{
 if(!value)return;
 if(!candidates.includes(value))candidates.push(value);
 };
 
-// 1) Preferred F1 Media asset — keeps the existing full-body visual style.
-push(officialDriverMediaImage(d));
+// STRICT DRIVER CARD IMAGE POLICY:
+// Every driver card must use a full-body/official F1 asset. Do not fall back to
+// editorial portraits, Wikipedia article images, or arbitrary headshots because
+// those break the visual system (as happened with Lindblad).
+getOfficialDriverMediaCandidates(d).forEach(push);
 
-// 2) Legacy F1.com DAM assets — same official ecosystem, useful when the new CDN path is missing.
+// Official F1 legacy DAM variants are the only secondary source allowed.
 getLegacyDriverImageCandidates(d).forEach(push);
-
-// 3) OpenF1 headshot — reliable structured fallback for all 22 drivers.
-push(getOpenF1DriverImage(d));
-
-// 4) Wikipedia cached image, then a live Wikipedia lookup is added by driverImageOnError().
-push(driverWikiImages[id]);
 
 return candidates;
 }
@@ -2429,34 +2437,20 @@ function getDriverImage(d){
 return getDriverImageCandidates(d)[0]||'';
 }
 
-async function driverImageOnError(img){
+function driverImageOnError(img){
 try{
  const list=JSON.parse(img.dataset.srcList||'[]');
  const next=Number(img.dataset.srcIndex||0)+1;
  if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
- const page=img.dataset.wikiPage||'';
- if(page){
-   const wiki=await fetchWikipediaSummaryImage(page);
-   if(wiki && !list.includes(wiki)){
-     const updated=[...list,wiki];
-     img.dataset.srcIndex=String(updated.length-1);
-     img.dataset.srcList=JSON.stringify(updated);
-     img.src=wiki;
-     return;
-   }
-   const search=await fetchWikipediaImageSearch(page.replaceAll('_',' ')+' Formula 1');
-   if(search && !list.includes(search)){
-     const updated=[...list,search];
-     img.dataset.srcIndex=String(updated.length-1);
-     img.dataset.srcList=JSON.stringify(updated);
-     img.src=search;
-     return;
-   }
- }
 }catch(e){}
+// No editorial/Wikipedia fallback for driver cards. Keep the card geometry intact
+// and show the existing visual placeholder instead of an unrelated portrait.
 img.onerror=null;
 img.style.display='none';
+const wrap=img.closest('.driver-photo-wrap, .team-card-driver-mini, .team-driver-mini');
+if(wrap){wrap.classList.add('driver-image-failed');}
 }
+
 
 function officialDriverImageCandidates(d){
 return getDriverImageCandidates(d);
@@ -2635,13 +2629,11 @@ const list=[...new Set((candidates||[]).filter(Boolean))];
 img.dataset.srcList=JSON.stringify(list);
 img.dataset.srcIndex='0';
 img.style.display='block';
-img.onerror=async function(){
+img.onerror=function(){
   const next=Number(img.dataset.srcIndex||0)+1;
   if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
-  const page=(driver.Driver?.givenName+'_'+driver.Driver?.familyName).replaceAll(' ','_');
-  const wiki=await fetchWikipediaSummaryImage(page);
-  if(wiki && !list.includes(wiki)){list.push(wiki);img.dataset.srcList=JSON.stringify(list);img.dataset.srcIndex=String(list.length-1);img.src=wiki;return;}
   img.onerror=null;
+  img.style.display='none';
 };
 if(list[0])img.src=list[0];
 else img.removeAttribute('src');
