@@ -348,27 +348,13 @@ button{font-family:inherit}
 .driver-card *{pointer-events:auto;}
 
 
-/* CONSTRUCTOR HEADER — full team name, never truncate */
-#profile-modal.team-profile-active #profile-name{
-  max-width:calc(100% - 58px)!important;
-  white-space:normal!important;
-  overflow:visible!important;
-  text-overflow:clip!important;
-  overflow-wrap:break-word!important;
-  word-break:normal!important;
-  line-height:.95!important;
-  font-size:clamp(34px,5vw,60px)!important;
-  letter-spacing:-.035em!important;
-}
-#profile-modal.team-profile-active .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{
-  min-height:64px!important;
-}
-@media(max-width:640px){
-  #profile-modal.team-profile-active #profile-name{
-    max-width:calc(100% - 50px)!important;
-    font-size:clamp(30px,10vw,46px)!important;
-  }
-}
+/* PROFILE HEADER — full names use all available width; wrap only when genuinely necessary */
+#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{width:100%!important;min-width:0!important;min-height:58px!important;gap:20px!important}
+#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start > div:first-child{flex:1 1 auto!important;min-width:0!important;width:auto!important}
+#profile-modal #profile-name{display:block!important;width:100%!important;max-width:none!important;min-width:0!important;margin-right:0!important;overflow:visible!important;text-overflow:clip!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important;line-height:.92!important;font-size:clamp(34px,5vw,60px)!important;letter-spacing:-.045em!important}
+#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start > button{flex:0 0 44px!important;width:44px!important;height:44px!important;margin-top:0!important}
+@media(max-width:820px){#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{gap:14px!important}#profile-modal #profile-name{font-size:clamp(30px,7vw,48px)!important}}
+@media(max-width:560px){#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{gap:10px!important}#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start > button{flex-basis:40px!important;width:40px!important;height:40px!important}#profile-modal #profile-name{font-size:clamp(25px,8.5vw,40px)!important}}
 
 /* =========================================================
    DRIVER PROFILE — CLEAN BASE
@@ -697,6 +683,20 @@ button{font-family:inherit}
 }
 #profile-career .profile-career-item:hover .profile-career-year,
 #profile-career .profile-career-item:hover .profile-career-copy strong{color:#fff}
+
+/* TEAM PROFILE — structured information, balanced spacing and independent scroll */
+.team-profile-shell{display:flex;flex-direction:column;gap:14px;width:100%;min-width:0}
+.team-profile-overview,.team-profile-info,.team-profile-car-section,.team-profile-lineup-section{width:100%;min-width:0;border:1px solid #1c1e23;border-radius:10px;background:linear-gradient(145deg,#111113,#0d0d0f);box-sizing:border-box}
+.team-profile-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,300px);gap:20px;align-items:center;padding:22px}
+.team-profile-brand{display:flex;align-items:center;gap:16px;min-width:0}.team-profile-logo-box{width:88px;height:66px;display:flex;align-items:center;justify-content:center;flex:0 0 88px;border:1px solid #24272c;border-radius:8px;background:#0a0b0d}.team-profile-logo-box img{width:74px;height:52px;object-fit:contain}
+.team-profile-shortname{margin-top:6px;font-size:24px;line-height:1;font-weight:900;letter-spacing:-.045em;text-transform:uppercase;color:#f4f5f6}.team-profile-official{display:inline-block;margin-top:9px;font-size:7px;line-height:1;letter-spacing:.16em;color:#69717c;text-decoration:none}.team-profile-official:hover{color:#fff}
+.team-profile-champ{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:end;padding-left:18px;border-left:1px solid #24272c}.team-profile-position{margin-top:6px;font-size:52px;line-height:.82;font-weight:950;letter-spacing:-.065em;color:#f5f5f6}.team-profile-points{margin-top:6px;font-size:30px;line-height:.9;font-weight:900;letter-spacing:-.045em;color:#f5f5f6}
+.team-profile-info{padding:18px 20px}.team-profile-info-head,.team-profile-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:13px}.team-profile-info-head h3,.team-profile-section-head h3{margin:5px 0 0;font-size:18px;line-height:1;font-weight:900;letter-spacing:-.035em;color:#f1f2f3}.team-profile-info-head>span,.team-profile-section-head>span{font-size:7px;letter-spacing:.18em;color:#505760}
+.team-profile-info-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid #24272c;border-radius:8px;overflow:hidden}.team-profile-info-item{min-width:0;min-height:70px;padding:13px 14px;background:rgba(255,255,255,.012);border-right:1px solid #24272c}.team-profile-info-item:last-child{border-right:0}.team-profile-info-item span{display:block;font-size:6.5px;line-height:1.2;letter-spacing:.18em;color:#626a75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.team-profile-info-item strong{display:block;margin-top:9px;font-size:11px;line-height:1.25;font-weight:800;color:#eef0f2;overflow-wrap:normal;word-break:normal}
+.team-profile-car-section{overflow:hidden;padding:0}.team-profile-car-section .profile-car-card{width:100%;padding:18px 20px;box-sizing:border-box}.team-profile-car-section .profile-car-head{display:flex;justify-content:space-between;align-items:center;gap:14px}.team-profile-car-section .profile-car-name{font-size:25px;line-height:.95;font-weight:900;letter-spacing:-.045em;color:#f4f5f6}.team-profile-car-section .profile-car-link{font-size:7px;letter-spacing:.16em;color:#646b74;text-decoration:none}.team-profile-car-section .profile-car-link:hover{color:#fff}.team-profile-car-section .profile-car-visual{height:230px;margin-top:8px}
+.team-profile-lineup-section{padding:18px 20px 20px}.team-profile-lineup-section #team-profile-drivers{min-width:0}.team-profile-lineup-section .team-driver-mini{min-height:300px;height:300px}
+@media(max-width:820px){.team-profile-overview{grid-template-columns:1fr;gap:16px;padding:18px}.team-profile-champ{padding:14px 0 0;border-left:0;border-top:1px solid #24272c}.team-profile-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.team-profile-info-item:nth-child(2){border-right:0}.team-profile-info-item:nth-child(-n+2){border-bottom:1px solid #24272c}}
+@media(max-width:560px){.team-profile-brand{gap:12px}.team-profile-logo-box{width:68px;height:54px;flex-basis:68px}.team-profile-logo-box img{width:58px;height:42px}.team-profile-shortname{font-size:20px}.team-profile-overview,.team-profile-info,.team-profile-lineup-section{padding:15px}.team-profile-info-grid{grid-template-columns:1fr}.team-profile-info-item{border-right:0!important;border-bottom:1px solid #24272c!important}.team-profile-info-item:last-child{border-bottom:0!important}.team-profile-car-section .profile-car-card{padding:15px}.team-profile-car-section .profile-car-visual{height:170px}.team-profile-lineup-section .team-driver-mini{min-height:250px;height:250px}}
 
 /* TEAM PROFILE — same fixed modal shell, internal content scrolls. */
 #team-profile-content{
@@ -1508,26 +1508,15 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 </div>
 
 <div id="team-profile-content" class="hidden mt-8">
-<div class="bg-[#101010] rounded-lg p-6">
-<div class="flex justify-between items-start">
-<div>
-<div class="text-[8px] uppercase tracking-widest text-gray-600">Constructor Championship</div>
-<div id="team-profile-position" class="text-6xl font-black mt-3">--</div>
-</div>
-<div class="text-right">
-<div class="text-[8px] uppercase tracking-widest text-gray-600">Points</div>
-<div id="team-profile-points" class="text-4xl font-black mt-2">--</div>
-</div>
-</div>
-</div>
-<div id="team-profile-car" class="mt-5"></div>
-<div class="mt-5">
-<div class="text-[8px] uppercase tracking-widest text-gray-600 mb-3">Driver Lineup</div>
-<div id="team-profile-drivers" class="grid md:grid-cols-2 gap-3"></div>
-</div>
-</div>
-
-</div>
+  <div class="team-profile-shell">
+    <section class="team-profile-overview">
+      <div class="team-profile-brand"><div class="team-profile-logo-box"><img id="team-profile-logo" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="min-w-0"><div class="text-[8px] uppercase tracking-[.28em] text-gray-600">2026 CONSTRUCTOR</div><div id="team-profile-shortname" class="team-profile-shortname">--</div><a id="team-profile-link" class="team-profile-official" target="_blank" rel="noopener noreferrer">OFFICIAL TEAM PAGE →</a></div></div>
+      <div class="team-profile-champ"><div><div class="text-[8px] uppercase tracking-widest text-gray-600">Championship</div><div id="team-profile-position" class="team-profile-position">--</div></div><div class="text-right"><div class="text-[8px] uppercase tracking-widest text-gray-600">Points</div><div id="team-profile-points" class="team-profile-points">--</div></div></div>
+    </section>
+    <section class="team-profile-info"><div class="team-profile-info-head"><div><div class="text-[8px] uppercase tracking-[.25em] text-gray-600">TEAM INFORMATION</div><h3>Constructor Details</h3></div><span>2026</span></div><div class="team-profile-info-grid"><div class="team-profile-info-item"><span>HEADQUARTERS</span><strong id="team-profile-base">--</strong></div><div class="team-profile-info-item"><span>TEAM PRINCIPAL</span><strong id="team-profile-principal">--</strong></div><div class="team-profile-info-item"><span>POWER UNIT</span><strong id="team-profile-power">--</strong></div><div class="team-profile-info-item"><span>FOUNDED</span><strong id="team-profile-founded">--</strong></div></div></section>
+    <section id="team-profile-car" class="team-profile-car-section"></section>
+    <section class="team-profile-lineup-section"><div class="team-profile-section-head"><div><div class="text-[8px] uppercase tracking-[.25em] text-gray-600">DRIVER LINEUP</div><h3>2026 Race Drivers</h3></div><span>2 DRIVERS</span></div><div id="team-profile-drivers" class="grid md:grid-cols-2 gap-3"></div></section>
+  </div>
 </div>
 
 <script>
@@ -1583,17 +1572,17 @@ bottas:'bottas'
 };
 
 const TEAM_META={
-mclaren:{name:'McLaren',color:'#F47600',chassis:'MCL40',logo:'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000000/common/f1/2025/mclaren/2025mclarenlogowhite.webp',url:'https://www.formula1.com/en/teams/mclaren'},
-mercedes:{name:'Mercedes',color:'#00D7B6',chassis:'W17',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/mercedes/2025mercedeslogowhite.webp',url:'https://www.formula1.com/en/teams/mercedes'},
-ferrari:{name:'Ferrari',color:'#ED1131',chassis:'SF-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/ferrari/2025ferrarilogowhite.webp',url:'https://www.formula1.com/en/teams/ferrari'},
-red_bull:{name:'Red Bull Racing',color:'#4781D7',chassis:'RB22',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/redbullracing/2025redbullracinglogowhite.webp',url:'https://www.formula1.com/en/teams/red-bull-racing'},
-aston_martin:{name:'Aston Martin',color:'#229971',chassis:'AMR26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/astonmartin/2025astonmartinlogowhite.webp',url:'https://www.formula1.com/en/teams/aston-martin'},
-alpine:{name:'Alpine',color:'#00A1E8',chassis:'A526',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/alpine/2026alpinelogowhite.webp',url:'https://www.formula1.com/en/teams/alpine'},
-williams:{name:'Williams',color:'#1868DB',chassis:'FW48',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/williams/2026williamslogowhite.webp',url:'https://www.formula1.com/en/teams/williams'},
-rb:{name:'Racing Bulls',color:'#6C98FF',chassis:'VCARB 03',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/racingbulls/2025racingbullslogowhite.webp',url:'https://www.formula1.com/en/teams/racing-bulls'},
-haas:{name:'Haas F1 Team',color:'#9C9FA2',chassis:'VF-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/haasf1team/2026haasf1teamlogowhite.webp',url:'https://www.formula1.com/en/teams/haas'},
-audi:{name:'Audi',color:'#F50537',chassis:'R26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/audi/2026audilogowhite.webp',url:'https://www.formula1.com/en/teams/audi'},
-cadillac:{name:'Cadillac',color:'#909090',chassis:'MAC-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/cadillac/2026cadillaclogowhite.webp',url:'https://www.formula1.com/en/teams/cadillac'}
+ mclaren:{name:'McLaren',color:'#F47600',chassis:'MCL40',logo:'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000000/common/f1/2025/mclaren/2025mclarenlogowhite.webp',url:'https://www.formula1.com/en/teams/mclaren',base:'Woking, United Kingdom',principal:'Andrea Stella',powerUnit:'Mercedes',founded:'1963'},
+ mercedes:{name:'Mercedes',color:'#00D7B6',chassis:'W17',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/mercedes/2025mercedeslogowhite.webp',url:'https://www.formula1.com/en/teams/mercedes',base:'Brackley, United Kingdom',principal:'Toto Wolff',powerUnit:'Mercedes',founded:'2010'},
+ ferrari:{name:'Ferrari',color:'#ED1131',chassis:'SF-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/ferrari/2025ferrarilogowhite.webp',url:'https://www.formula1.com/en/teams/ferrari',base:'Maranello, Italy',principal:'Frédéric Vasseur',powerUnit:'Ferrari',founded:'1950'},
+ red_bull:{name:'Red Bull Racing',color:'#4781D7',chassis:'RB22',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/redbullracing/2025redbullracinglogowhite.webp',url:'https://www.formula1.com/en/teams/red-bull-racing',base:'Milton Keynes, United Kingdom',principal:'Laurent Mekies',powerUnit:'Red Bull Ford',founded:'2005'},
+ aston_martin:{name:'Aston Martin',color:'#229971',chassis:'AMR26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/astonmartin/2025astonmartinlogowhite.webp',url:'https://www.formula1.com/en/teams/aston-martin',base:'Silverstone, United Kingdom',principal:'Andy Cowell',powerUnit:'Honda',founded:'2021'},
+ alpine:{name:'Alpine',color:'#00A1E8',chassis:'A526',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/alpine/2026alpinelogowhite.webp',url:'https://www.formula1.com/en/teams/alpine',base:'Enstone, United Kingdom',principal:'Flavio Briatore',powerUnit:'Mercedes',founded:'2021'},
+ williams:{name:'Williams',color:'#1868DB',chassis:'FW48',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/williams/2026williamslogowhite.webp',url:'https://www.formula1.com/en/teams/williams',base:'Grove, United Kingdom',principal:'James Vowles',powerUnit:'Mercedes',founded:'1977'},
+ rb:{name:'Racing Bulls',color:'#6C98FF',chassis:'VCARB 03',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2025/racingbulls/2025racingbullslogowhite.webp',url:'https://www.formula1.com/en/teams/racing-bulls',base:'Faenza, Italy',principal:'Alan Permane',powerUnit:'Red Bull Ford',founded:'2006'},
+ haas:{name:'Haas F1 Team',color:'#9C9FA2',chassis:'VF-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/haasf1team/2026haasf1teamlogowhite.webp',url:'https://www.formula1.com/en/teams/haas',base:'Kannapolis, United States',principal:'Ayao Komatsu',powerUnit:'Ferrari',founded:'2016'},
+ audi:{name:'Audi',color:'#F50537',chassis:'R26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/audi/2026audilogowhite.webp',url:'https://www.formula1.com/en/teams/audi',base:'Hinwil, Switzerland',principal:'Jonathan Wheatley',powerUnit:'Audi',founded:'2026'},
+ cadillac:{name:'Cadillac',color:'#909090',chassis:'MAC-26',logo:'https://media.formula1.com/image/upload/c_lfill,w_160/q_auto/v1740000000/common/f1/2026/cadillac/2026cadillaclogowhite.webp',url:'https://www.formula1.com/en/teams/cadillac',base:'Fishers, United States',principal:'Graeme Lowdon',powerUnit:'Ferrari',founded:'2026'}
 };
 
 function escapeHTML(str=''){
@@ -2656,7 +2645,10 @@ function setProfilePanel(mode){
   if(!driverPanel||!teamPanel)return;
   const showDriver=mode==='driver';
   const modal=document.getElementById('profile-modal');
-  if(modal) modal.classList.toggle('team-profile-active',!showDriver);
+  if(modal){
+    modal.classList.toggle('team-profile-active',!showDriver);
+    modal.classList.toggle('driver-profile-active',showDriver);
+  }
   driverPanel.classList.toggle('hidden',!showDriver);
   teamPanel.classList.toggle('hidden',showDriver);
   driverPanel.setAttribute('aria-hidden',String(!showDriver));
@@ -2845,17 +2837,16 @@ document.getElementById('profile-name').textContent=team.name;
 document.getElementById('team-profile-position').textContent=`P${position}`;
 document.getElementById('team-profile-points').textContent=team.points||0;
 
+document.getElementById('team-profile-logo').src=meta.logo||'';
+document.getElementById('team-profile-logo').alt=`${team.name} logo`;
+document.getElementById('team-profile-shortname').textContent=team.name;
+document.getElementById('team-profile-link').href=safeUrl(meta.url);
+document.getElementById('team-profile-base').textContent=meta.base||'--';
+document.getElementById('team-profile-principal').textContent=meta.principal||'--';
+document.getElementById('team-profile-power').textContent=meta.powerUnit||'--';
+document.getElementById('team-profile-founded').textContent=meta.founded||'--';
 document.getElementById('team-profile-car').innerHTML=`
-<div class="bg-[#101010] rounded-lg p-5">
-<div class="flex justify-between items-center">
-<div><div class="text-[8px] uppercase tracking-widest text-gray-600">2026 Challenger</div><div class="text-2xl font-black mt-2">${escapeHTML(meta.chassis)}</div></div>
-<a href="${escapeHTML(safeUrl(meta.url))}" target="_blank" rel="noopener" class="text-[8px] uppercase tracking-widest text-gray-600 hover:text-white">F1.COM →</a>
-</div>
-<div class="car-visual profile-car-visual mt-3">
-${carCandidates.length?`<img src="${escapeHTML(safeUrl(carCandidates[0]))}" data-src-list='${escapeHTML(JSON.stringify(carCandidates))}' data-src-index="0" class="team-car-image absolute" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">`:''}
-<div class="car-image-empty ${carCandidates.length?'hidden':''} absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div>
-</div>
-</div>`;
+<div class="profile-car-card"><div class="profile-car-head"><div><div class="text-[8px] uppercase tracking-widest text-gray-600">2026 Challenger</div><div class="profile-car-name mt-2">${escapeHTML(meta.chassis)}</div></div><a class="profile-car-link" href="${escapeHTML(safeUrl(meta.url))}" target="_blank" rel="noopener noreferrer">F1.COM →</a></div><div class="car-visual profile-car-visual">${carCandidates.length?`<img src="${escapeHTML(safeUrl(carCandidates[0]))}" data-src-list='${escapeHTML(JSON.stringify(carCandidates))}' data-src-index="0" class="team-car-image absolute" alt="${escapeHTML(team.name)} ${escapeHTML(meta.chassis)} 2026 car" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">`:''}<div class="car-image-empty ${carCandidates.length?'hidden':''} absolute inset-0 flex items-center justify-center text-[9px] uppercase tracking-[.2em] text-gray-700">2026 CAR IMAGE UNAVAILABLE</div><div class="absolute left-3 bottom-3 z-10 text-[8px] tracking-[.2em] uppercase text-gray-600">${escapeHTML(meta.chassis)} · 2026</div></div></div>`;
 
 document.getElementById('team-profile-drivers').innerHTML=team.drivers.slice(0,2).map(driver=>{
 const candidates=getDriverImageCandidates(driver);
