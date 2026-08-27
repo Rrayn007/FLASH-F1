@@ -2381,54 +2381,54 @@ if(!team||!m)return'';
 const code=String(m[2]||'').toLowerCase();
 return `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}/${code}/2026${team}${code}right.webp`;
 }
-async function fetchDriverImages(){
-try{
-const data=await fetchJSON(`${OPENF1_API}/drivers?session_key=latest`,'f1hub_driver_images',86400000);
-(data||[]).forEach(d=>{
-if(d.name_acronym&&d.headshot_url)driverImages[d.name_acronym.toLowerCase()]=d.headshot_url;
-});
-renderDrivers();
-}catch(error){
-console.warn('OpenF1 images unavailable');
+
+function getLegacyDriverImageCandidates(d){
+const driver=d?.Driver||d||{};
+const first=(driver.givenName||'').replace(/[^A-Za-z]/g,'');
+const last=(driver.familyName||'').replace(/[^A-Za-z]/g,'');
+const id=(driver.driverId||'').toLowerCase();
+if(!id||!first||!last)return[];
+const upperId=id.toUpperCase();
+return [
+`https://www.formula1.com/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${upperId}_${first}_${last}/${id}.png.transform/2col/image.png`,
+`https://www.formula1.com/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${upperId}_${first}_${last}/${id}.png`,
+`https://www.formula1.com/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${upperId}_${first}_${last}/image.png`
+];
 }
+
+function getOpenF1DriverImage(d){
+const id=(d.Driver?.driverId||'').toLowerCase();
+const code=d.Driver?.code?.toLowerCase()||'';
+return driverImages[code]||driverImages[id]||'';
+}
+
+function getDriverImageCandidates(d){
+const id=(d.Driver?.driverId||'').toLowerCase();
+const candidates=[];
+const push=(value)=>{
+if(!value)return;
+if(!candidates.includes(value))candidates.push(value);
+};
+
+// 1) Preferred F1 Media asset — keeps the existing full-body visual style.
+push(officialDriverMediaImage(d));
+
+// 2) Legacy F1.com DAM assets — same official ecosystem, useful when the new CDN path is missing.
+getLegacyDriverImageCandidates(d).forEach(push);
+
+// 3) OpenF1 headshot — reliable structured fallback for all 22 drivers.
+push(getOpenF1DriverImage(d));
+
+// 4) Wikipedia cached image, then a live Wikipedia lookup is added by driverImageOnError().
+push(driverWikiImages[id]);
+
+return candidates;
 }
 
 function getDriverImage(d){
-const id=(d.Driver?.driverId||'').toLowerCase();
-const code=d.Driver?.code?.toLowerCase()||'';
-const official=officialDriverMediaImage(d);
-const openf1=driverImages[code]||driverImages[id]||'';
-const wiki=driverWikiImages[id]||'';
-if(id==='lindblad'){
-  return official||openf1||wiki||'';
+return getDriverImageCandidates(d)[0]||'';
 }
-return official||openf1||wiki||'';
-}
-function getDriverImageCandidates(d){
-const id=(d.Driver?.driverId||'').toLowerCase();
-const code=d.Driver?.code?.toLowerCase()||'';
-const candidates=[];
-const push=(v)=>{if(v && !candidates.includes(v))candidates.push(v)};
-push(officialDriverMediaImage(d));
-if(id==='lindblad'){
-  const team='racingbulls';
-  const code='arvlin01';
-  const roots=[
-    `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}/${code}`,
-    `https://media.formula1.com/image/upload/c_fill,w_720/q_auto/v1740000000/common/f1/2026/${team}`
-  ];
-  roots.forEach(base=>{
-    push(`${base}/2026${team}${code}right.webp`);
-    push(`${base}/2026${team}${code}.webp`);
-  });
-  push(`https://media.formula1.com/image/upload/c_fill,w_720/q_auto/common/f1/2026/${team}/${code}/2026${team}${code}right.webp`);
-  push(`https://media.formula1.com/image/upload/c_fill,w_720/q_auto/common/f1/2026/${team}/${code}/2026${team}${code}.webp`);
-}
-push(driverImages[code]);
-push(driverImages[id]);
-push(driverWikiImages[id]);
-return candidates.filter(Boolean);
-}
+
 async function driverImageOnError(img){
 try{
  const list=JSON.parse(img.dataset.srcList||'[]');
@@ -2444,6 +2444,14 @@ try{
      img.src=wiki;
      return;
    }
+   const search=await fetchWikipediaImageSearch(page.replaceAll('_',' ')+' Formula 1');
+   if(search && !list.includes(search)){
+     const updated=[...list,search];
+     img.dataset.srcIndex=String(updated.length-1);
+     img.dataset.srcList=JSON.stringify(updated);
+     img.src=search;
+     return;
+   }
  }
 }catch(e){}
 img.onerror=null;
@@ -2451,7 +2459,7 @@ img.style.display='none';
 }
 
 function officialDriverImageCandidates(d){
-return [officialDriverMediaImage(d),getDriverImage(d),driverWikiImages[(d.Driver?.driverId||'').toLowerCase()],driverImageFallback(d.Driver)].filter(Boolean);
+return getDriverImageCandidates(d);
 }
 
 function renderStandings(){
@@ -3068,7 +3076,7 @@ fetchNews();
 fetchSchedule();
 fetchResults();
 fetchStandings();
-fetchDriverImages().then(fetchDriverWikiFallbacks).then(()=>renderDrivers());
+fetchDriverImages().then(fetchDriverWikiFallbacks).then(()=>{renderDrivers();renderTeams();});
 fetchCarImages();
 });
 </script>
