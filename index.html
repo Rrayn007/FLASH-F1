@@ -997,17 +997,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .profile-career-item:last-child .career-event-tag{
   border-color:color-mix(in srgb,var(--team-color,#00d7c4) 32%,#283039);
   color:color-mix(in srgb,var(--team-color,#00d7c4) 72%,#9aa1aa);
-  background:color-mix(in srgb,var(--team-color,#00d7c4) 5%,#11151a);
-}
-.profile-career-copy .career-detail{
-  display:block;
-  margin-top:5px;
-  color:#747d88;
-  font-size:9px;
-  line-height:1.5;
-  max-width:34ch;
-}
-.profile-career-item:hover .profile-career-copy strong{color:#fff}
 .profile-career-item:hover .profile-career-year{color:#fff}
 .profile-career-item:hover .profile-career-marker span{box-shadow:0 0 0 4px color-mix(in srgb,var(--team-color,#00d7c4) 9%,transparent),0 0 16px color-mix(in srgb,var(--team-color,#00d7c4) 34%,transparent)}
 .profile-facts-compact{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -1266,7 +1255,147 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div>
 <a href="/" aria-label="F1HUB" class="footer-brand-logo" style="display: inline-block; line-height: 0;">
   <svg id="footer-f1hub-logo" data-name="Footer F1HUB logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
-    <defs><style>.cls-1 { fill: #ed1c24; } .cls-1, .cls-2 { stroke-width: 0px; } .cls-2 { fill: #fff; }</style></defs>
+    <defs><style>.cls-1 { fill: #ed1c24; } .cls-1, .cls-2 { stroke-width: 0px; } .cls-2 { fill: #fff; }
+/* =========================================================
+   CAREER TIMELINE — FINAL ALIGNED LAYOUT
+   Fixed columns + fixed rhythm. No floating labels or uneven gaps.
+   ========================================================= */
+.profile-info-card:has(.profile-career-list){
+  padding:22px 20px 18px;
+}
+.profile-info-card:has(.profile-career-list) .profile-section-kicker{
+  margin:0;
+  line-height:1;
+}
+.profile-info-card:has(.profile-career-list) .profile-section-title{
+  margin-top:10px;
+  font-size:25px;
+  line-height:1;
+  letter-spacing:-.045em;
+}
+.profile-career-list{
+  --career-year-col:52px;
+  --career-rail-col:24px;
+  --career-gap:10px;
+  position:relative;
+  height:calc(100% - 62px);
+  min-height:0;
+  margin-top:18px;
+  padding:0 4px 2px 0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:thin;
+  scrollbar-color:#343a43 transparent;
+}
+.profile-career-list::-webkit-scrollbar{width:4px}
+.profile-career-list::-webkit-scrollbar-track{background:transparent}
+.profile-career-list::-webkit-scrollbar-thumb{background:#343a43;border-radius:999px}
+.profile-career-list:before{
+  content:"";
+  position:absolute;
+  left:calc(var(--career-year-col) + var(--career-gap) + (var(--career-rail-col) / 2));
+  top:10px;
+  bottom:10px;
+  width:1px;
+  background:linear-gradient(to bottom,rgba(0,215,182,.62),rgba(72,79,89,.55) 38%,rgba(44,49,57,.35));
+  transform:translateX(-.5px);
+  pointer-events:none;
+}
+.profile-career-item{
+  position:relative;
+  display:grid;
+  grid-template-columns:var(--career-year-col) var(--career-rail-col) minmax(0,1fr);
+  column-gap:var(--career-gap);
+  align-items:start;
+  min-height:76px;
+  padding:0 0 14px;
+  box-sizing:border-box;
+}
+.profile-career-item:last-child{
+  min-height:0;
+  padding-bottom:0;
+}
+.profile-career-item:before{display:none!important}
+.profile-career-year{
+  grid-column:1;
+  align-self:start;
+  padding-top:3px;
+  text-align:right;
+  font-family:Inter,Arial,sans-serif;
+  font-size:10px;
+  font-weight:900;
+  line-height:1.15;
+  letter-spacing:-.02em;
+  color:#edf0f3;
+  white-space:nowrap;
+}
+.profile-career-marker{
+  grid-column:2;
+  width:var(--career-rail-col);
+  height:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  z-index:2;
+  box-sizing:border-box;
+}
+.profile-career-marker span{
+  width:9px;
+  height:9px;
+  flex:0 0 9px;
+  border-radius:50%;
+  background:var(--team-color,#00d7b6);
+  border:2px solid #0d0f12;
+  box-shadow:0 0 0 1px rgba(0,215,182,.28),0 0 10px rgba(0,215,182,.20);
+  box-sizing:border-box;
+}
+.profile-career-item:last-child .profile-career-marker span{
+  width:11px;
+  height:11px;
+  flex-basis:11px;
+  box-shadow:0 0 0 3px rgba(0,215,182,.08),0 0 15px rgba(0,215,182,.32);
+}
+.profile-career-copy{
+  grid-column:3;
+  min-width:0;
+  padding:1px 2px 0 0;
+  box-sizing:border-box;
+}
+.profile-career-copy strong{
+  display:block;
+  margin:0;
+  font-size:12px;
+  font-weight:850;
+  line-height:1.2;
+  letter-spacing:-.015em;
+  color:#f5f6f7;
+}
+.profile-career-copy .career-detail{
+  display:block;
+  margin-top:4px;
+  max-width:100%;
+  color:#747d88;
+  font-size:9px;
+  font-weight:500;
+  line-height:1.45;
+}
+.profile-career-item:last-child .profile-career-copy strong{color:#fff}
+.profile-career-item:hover .profile-career-copy strong,
+.profile-career-item:hover .profile-career-year{color:#fff}
+@media(max-width:560px){
+  .profile-career-list{
+    --career-year-col:46px;
+    --career-rail-col:22px;
+    --career-gap:8px;
+    height:285px;
+    margin-top:16px;
+    padding-right:3px;
+  }
+  .profile-career-item{min-height:74px;padding-bottom:12px}
+  .profile-career-copy .career-detail{font-size:9px;line-height:1.42}
+}
+</style></defs>
     <g id="footer-f1hub-logo-shape" data-name="Footer logo shape"><g>
       <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
       <path class="cls-2" d="m123.4,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99h-34.28V13.71h34.28v34.27Z"/>
@@ -2624,7 +2753,7 @@ function renderDriverCareer(driver){
       <div class="profile-career-year">${escapeHTML(String(year))}</div>
       <div class="profile-career-marker" aria-hidden="true"><span></span></div>
       <div class="profile-career-copy">
-        <div class="career-event-head"><strong>${escapeHTML(team)}</strong><span class="career-event-tag">${String(year).includes('2026') ? 'CURRENT' : 'MILESTONE'}</span></div>
+        <strong>${escapeHTML(team)}</strong>
         <span class="career-detail">${escapeHTML(detail)}</span>
       </div>
     </div>`).join('');
@@ -2644,7 +2773,7 @@ async function enrichDriverProfile(driver){
   const debut=document.getElementById('profile-f1-debut');
   const seasonSummary=document.getElementById('profile-season-summary');
   if(debut)debut.textContent=debutMap[driver.Driver?.driverId]||'--';
-  if(seasonSummary)seasonSummary.textContent=`P${driver.position||'--'} · ${driver.points||0} pts · ${driver.wins||0} wins`;
+  if(seasonSummary)seasonSummary.textContent=`P${driver.position||'--'} · ${driver.points||0} points · ${driver.wins||0} wins`;
   renderDriverCareer(driver);
   const extract=await fetchDriverWikiSummary(driver);
   if(bio){
