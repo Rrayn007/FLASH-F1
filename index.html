@@ -870,259 +870,118 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 
 <link rel="preload" as="image" href="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" fetchpriority="high">
 
-<style id="f1hub-profile-final-optimization">
-/* F1 HUB FINAL LAYOUT PASS — removes cumulative spacing/width overrides */
-#profile-modal{padding:16px!important;}
-#profile-modal > .modal-box{width:min(1100px,100%);max-height:92vh;overflow-y:auto;overflow-x:hidden;}
-#profile-modal .p-6.md\:p-8{padding:22px!important;}
+
+
+
+
+
+
+
+
+
+<style id="f1hub-profile-clean-layout-v14">
+/* PROFILE CLEANUP V14 — one authoritative layout block; replaces the stacked V4/V5/V10/V13 overrides. */
+#profile-modal{padding:16px!important}
+#profile-modal>.modal-box{width:min(1100px,100%);max-height:92vh;overflow-y:auto;overflow-x:hidden}
+#profile-modal .p-6.md\\:p-8{padding:22px!important}
 
 #driver-profile-content{
   box-sizing:border-box;
   display:grid!important;
-  grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)!important;
+  grid-template-columns:minmax(0,1.28fr) minmax(300px,.92fr)!important;
   grid-template-rows:auto auto minmax(0,1fr)!important;
   gap:14px!important;
-  min-height:560px!important;
-  overflow:hidden!important;
-}
-#driver-profile-content > .grid:first-of-type{
-  grid-column:1!important;
-  grid-row:1!important;
-  grid-template-columns:minmax(0,.47fr) minmax(0,1fr)!important;
-  gap:14px!important;
-  width:100%!important;
-  min-width:0!important;
-}
-#driver-profile-content > .grid:first-of-type > *{min-width:0;}
-#driver-stats{
-  grid-column:1!important;
-  grid-row:2!important;
-  width:100%!important;
-  min-width:0!important;
-  margin:0!important;
-}
-.driver-profile-about,
-.driver-profile-about.mt-4{
-  grid-column:1!important;
-  grid-row:3!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1.42fr) minmax(0,.82fr)!important;
-  gap:14px!important;
-  width:100%!important;
-  min-width:0!important;
-  margin:0!important;
-  align-self:stretch!important;
-}
-.profile-info-card{
-  box-sizing:border-box;
-  min-width:0!important;
-  min-height:0!important;
-  height:100%;
-  padding:18px!important;
-}
-.profile-bio{max-width:none!important;}
-.profile-facts{margin-top:12px!important;}
-
-/* True timeline: consistent vertical rhythm and no fake table rows */
-.profile-career-list{
-  margin-top:14px!important;
-  padding-left:68px!important;
-  display:grid!important;
-  gap:0!important;
-}
-.profile-career-list:before{left:27px!important;top:6px!important;bottom:8px!important;}
-.profile-career-item{
-  min-height:0!important;
-  padding:0 0 17px!important;
-  margin:0!important;
-  display:block!important;
-}
-.profile-career-item:last-child{padding-bottom:0!important;}
-.profile-career-item:before{left:-45px!important;top:4px!important;width:8px;height:8px;}
-.profile-career-year{left:-68px!important;width:48px!important;top:0!important;text-align:right!important;}
-.profile-career-copy{padding:0!important;line-height:1.45!important;}
-.profile-career-copy strong{margin-bottom:3px!important;}
-
-/* Equal, compact stat cells */
-#driver-stats>div{min-height:78px!important;padding:15px 16px!important;}
-#driver-stats .text-xl{font-size:21px!important;}
-
-/* Avoid oversized visual area at medium widths */
-@media (max-width:1100px){
-  #profile-modal .p-6.md\:p-8{padding:18px!important;}
-  #driver-profile-content{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)!important;min-height:520px!important;}
-  .profile-driver-visual{height:520px!important;}
-}
-@media (max-width:900px){
-  #profile-modal{padding:10px!important;}
-  #profile-modal > .modal-box{max-height:94vh;}
-  #driver-profile-content{
-    grid-template-columns:1fr!important;
-    grid-template-rows:auto auto auto!important;
-    min-height:0!important;
-    overflow:visible!important;
-  }
-  #driver-profile-content > .grid:first-of-type{
-    grid-column:1!important;grid-row:1!important;
-    grid-template-columns:minmax(0,.47fr) minmax(0,1fr)!important;
-  }
-  .profile-driver-visual{
-    grid-column:1!important;grid-row:2!important;
-    height:340px!important;
-    order:0;
-  }
-  #driver-stats{grid-column:1!important;grid-row:3!important;}
-  .driver-profile-about{
-    grid-column:1!important;grid-row:4!important;
-    grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)!important;
-    margin-top:0!important;
-  }
-}
-@media (max-width:560px){
-  #profile-modal .p-6.md\:p-8{padding:14px!important;}
-  #driver-profile-content > .grid:first-of-type{grid-template-columns:1fr!important;gap:10px!important;}
-  .profile-number-box,.profile-constructor-box{min-height:132px!important;}
-  #driver-stats>div{min-height:72px!important;padding:13px 12px!important;}
-  #driver-stats .text-xl{font-size:20px!important;}
-  .profile-driver-visual{height:300px!important;}
-  .driver-profile-about{grid-template-columns:1fr!important;gap:12px!important;}
-  .profile-info-card{height:auto;padding:15px!important;}
-  .profile-bio{font-size:10px!important;line-height:1.6!important;}
-  .profile-facts{gap:1px!important;}
-  .profile-fact{padding:9px!important;}
-  .profile-career-list{padding-left:60px!important;}
-  .profile-career-list:before{left:23px!important;}
-  .profile-career-item:before{left:-37px!important;}
-  .profile-career-year{left:-60px!important;width:42px!important;font-size:8px!important;}
-}
-</style>
-
-
-<style id="f1hub-profile-v10-final">
-/* FINAL DRIVER PROFILE CLEANUP */
-#driver-profile-content{
-  grid-template-columns:minmax(0,1.28fr) minmax(340px,.92fr)!important;
-  grid-template-rows:auto auto minmax(0,1fr)!important;
-  gap:16px!important;
   min-height:0!important;
   overflow:visible!important;
 }
-#driver-profile-content>.grid:first-of-type{grid-column:1!important;grid-row:1!important;gap:16px!important;}
-#driver-stats{grid-column:1!important;grid-row:2!important;margin:0!important;}
-.driver-profile-about{grid-column:1 / -1!important;grid-row:3!important;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;gap:16px!important;margin:0!important;align-items:stretch!important;}
-.profile-info-card{height:auto!important;min-height:0!important;padding:20px!important;}
-.profile-dossier-extra{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:14px;background:#202020;border:1px solid #202020;border-radius:9px;overflow:hidden;}
-.profile-dossier-extra .profile-fact{background:#101010;padding:11px 12px;}
-.profile-highlight{margin-top:14px;padding-top:14px;border-top:1px solid #202020;}
-.profile-highlight-title{font:700 8px/1 Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.18em;color:#65738b;margin-bottom:8px;}
-.profile-highlight-list{display:grid;gap:7px;margin:0;padding:0;list-style:none;}
-.profile-highlight-list li{font-size:10px;line-height:1.5;color:#a0a5ae;padding-left:12px;position:relative;}
-.profile-highlight-list li:before{content:"";position:absolute;left:0;top:.55em;width:4px;height:4px;border-radius:50%;background:var(--team-color,#fff);}
-.profile-career-list{position:relative!important;margin-top:16px!important;padding:0 0 0 82px!important;display:grid!important;gap:0!important;}
-.profile-career-list:before{content:"";position:absolute!important;left:66px!important;top:8px!important;bottom:8px!important;width:2px!important;background:#27292e!important;}
-.profile-career-item{position:relative!important;display:grid!important;grid-template-columns:1fr!important;gap:0!important;min-height:72px!important;padding:0 0 20px!important;margin:0!important;}
-.profile-career-item:last-child{padding-bottom:0!important;}
-.profile-career-item:before{content:"";position:absolute!important;left:-20px!important;top:4px!important;width:9px!important;height:9px!important;border-radius:50%!important;background:var(--team-color,#fff)!important;box-shadow:0 0 0 5px rgba(255,255,255,.035)!important;}
-.profile-career-year{position:static!important;width:auto!important;text-align:left!important;font:800 10px/1 Inter,Arial,sans-serif!important;letter-spacing:.08em!important;color:#f1f1f3!important;margin-bottom:5px!important;}
-.profile-career-copy strong{display:block!important;font-size:12px!important;line-height:1.25!important;color:#f2f2f4!important;margin:0 0 4px!important;}
-.profile-career-copy .career-detail{display:block!important;font-size:10px!important;line-height:1.55!important;color:#777d87!important;}
-.profile-career-list .profile-career-item:not(:last-child) .profile-career-copy{padding-bottom:0!important;}
-@media(max-width:900px){
-  #driver-profile-content{grid-template-columns:1fr!important;gap:14px!important;}
-  #driver-profile-content>.grid:first-of-type{grid-column:1!important;grid-row:1!important;}
-  .profile-driver-visual{grid-column:1!important;grid-row:2!important;}
-  #driver-stats{grid-column:1!important;grid-row:3!important;}
-  .driver-profile-about{grid-column:1!important;grid-row:4!important;grid-template-columns:1fr 1fr!important;gap:14px!important;}
+#driver-profile-content>.grid:first-of-type{
+  grid-column:1!important;grid-row:1!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,.47fr) minmax(0,1fr)!important;
+  gap:14px!important;width:100%!important;margin:0!important;min-width:0!important;
 }
-@media(max-width:640px){
-  .driver-profile-about{grid-template-columns:1fr!important;}
-  .profile-info-card{padding:16px!important;}
-  .profile-career-list{padding-left:64px!important;}
-  .profile-career-list:before{left:48px!important;}
-  .profile-career-item:before{left:-20px!important;}
-}
-</style>
-
-<style id="f1hub-profile-v13-final-layout">
-/* FINAL DRIVER PROFILE LAYOUT — compact, readable timeline */
-#driver-profile-content{
-  grid-template-columns:minmax(0,1.28fr) minmax(300px,.92fr)!important;
-  gap:14px!important;
-  min-height:0!important;
-}
-#driver-stats{margin:0!important}
+#driver-profile-content>.grid:first-of-type>*{min-width:0}
+#driver-stats{grid-column:1!important;grid-row:2!important;width:100%!important;margin:0!important}
 .driver-profile-about{
-  grid-column:1 / -1!important;
-  grid-row:3!important;
+  grid-column:1 / -1!important;grid-row:3!important;
+  display:grid!important;
   grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr)!important;
-  gap:14px!important;
+  gap:14px!important;width:100%!important;margin:0!important;min-width:0!important;
   align-items:start!important;
-  margin:0!important;
 }
-.profile-info-card{height:auto!important;min-height:0!important;align-self:start!important}
-.driver-profile-about>.profile-info-card:nth-child(2){height:auto!important;align-self:start!important}
+.profile-info-card{box-sizing:border-box;min-width:0!important;height:auto!important;min-height:0!important;padding:20px!important}
+.profile-bio{max-width:none!important;font-size:10.5px!important;line-height:1.62!important;margin-top:10px!important}
+.profile-facts{margin-top:12px!important}
 .profile-dossier-extra{margin-top:12px!important}
-.profile-highlight{margin-top:12px!important;padding-top:12px!important}
 
-/* Timeline: year | rail | event. Never stack the year over the event. */
+/* Timeline: fixed year column | centered rail | event column. */
 .profile-career-list{
   position:relative!important;
-  margin:12px 0 0!important;
+  margin:14px 0 0!important;
   padding:2px 4px 2px 0!important;
   max-height:320px!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
+  overflow-y:auto!important;overflow-x:hidden!important;
   display:block!important;
-  scrollbar-width:thin;
-  scrollbar-color:#45484f transparent;
+  scrollbar-width:thin;scrollbar-color:#45484f transparent;
 }
 .profile-career-list::-webkit-scrollbar{width:5px}
 .profile-career-list::-webkit-scrollbar-track{background:transparent}
 .profile-career-list::-webkit-scrollbar-thumb{background:#45484f;border-radius:99px}
 .profile-career-list:before{
-  content:""!important;position:absolute!important;
-  left:59px!important;top:10px!important;bottom:10px!important;width:2px!important;
-  background:#292c32!important;
+  content:"";position:absolute!important;left:61px!important;top:9px!important;bottom:9px!important;width:2px!important;
+  background:linear-gradient(to bottom,#30333a,#24262b)!important;
 }
 .profile-career-item{
   position:relative!important;
   display:grid!important;
-  grid-template-columns:50px minmax(0,1fr)!important;
-  column-gap:26px!important;
+  grid-template-columns:48px 18px minmax(0,1fr)!important;
+  column-gap:8px!important;
   align-items:start!important;
   min-height:0!important;
-  padding:0 0 15px!important;
-  margin:0!important;
+  padding:0 0 16px!important;margin:0!important;
 }
-.profile-career-item:last-child{padding-bottom:3px!important}
+.profile-career-item:last-child{padding-bottom:2px!important}
 .profile-career-item:before{
-  content:""!important;position:absolute!important;
-  left:54px!important;top:4px!important;width:10px!important;height:10px!important;
-  border-radius:50%!important;background:var(--team-color,#fff)!important;
-  box-shadow:0 0 0 5px rgba(255,255,255,.035)!important;
-  z-index:2!important;
+  content:"";position:absolute!important;left:57px!important;top:4px!important;
+  width:10px!important;height:10px!important;border-radius:50%!important;
+  background:var(--team-color,#fff)!important;
+  box-shadow:0 0 0 5px rgba(255,255,255,.035)!important;z-index:2!important;
 }
 .profile-career-year{
   position:static!important;width:auto!important;text-align:right!important;
   margin:0!important;padding:0!important;
   font:800 10px/1.3 Inter,Arial,sans-serif!important;
-  letter-spacing:.02em!important;color:#f1f1f3!important;
-  white-space:nowrap!important;
+  letter-spacing:.02em!important;color:#f1f1f3!important;white-space:nowrap!important;
 }
-.profile-career-copy{min-width:0!important;padding:0!important;font-size:10px!important;line-height:1.4!important}
+.profile-career-copy{grid-column:3!important;min-width:0!important;padding:0!important;font-size:10px!important;line-height:1.4!important}
 .profile-career-copy strong{display:block!important;margin:0 0 3px!important;font-size:11px!important;line-height:1.2!important;color:#f2f2f4!important}
-.profile-career-copy .career-detail{display:block!important;color:#777d87!important;line-height:1.4!important}
+.profile-career-copy .career-detail{display:block!important;color:#777d87!important;line-height:1.42!important}
 
 @media(max-width:900px){
-  .driver-profile-about{grid-template-columns:1fr 1fr!important}
-  .profile-career-list{max-height:300px!important}
+  #profile-modal{padding:10px!important}
+  #profile-modal>.modal-box{max-height:94vh}
+  #profile-modal .p-6.md\\:p-8{padding:18px!important}
+  #driver-profile-content{grid-template-columns:1fr!important;grid-template-rows:auto auto auto auto!important;gap:14px!important}
+  #driver-profile-content>.grid:first-of-type{grid-column:1!important;grid-row:1!important}
+  .profile-driver-visual{grid-column:1!important;grid-row:2!important;height:340px!important}
+  #driver-stats{grid-column:1!important;grid-row:3!important}
+  .driver-profile-about{grid-column:1!important;grid-row:4!important;grid-template-columns:1fr 1fr!important;gap:14px!important}
 }
 @media(max-width:640px){
-  .driver-profile-about{grid-template-columns:1fr!important}
-  .profile-career-list{max-height:300px!important;padding-right:3px!important}
+  #profile-modal .p-6.md\\:p-8{padding:14px!important}
+  #driver-profile-content>.grid:first-of-type{grid-template-columns:1fr!important;gap:10px!important}
+  .profile-number-box,.profile-constructor-box{min-height:132px!important}
+  #driver-stats>div{min-height:72px!important;padding:13px 12px!important}
+  #driver-stats .text-xl{font-size:20px!important}
+  .profile-driver-visual{height:300px!important}
+  .driver-profile-about{grid-template-columns:1fr!important;gap:12px!important}
+  .profile-info-card{padding:15px!important}
+  .profile-bio{font-size:10px!important;line-height:1.6!important}
+  .profile-fact{padding:9px!important}
+  .profile-career-list{max-height:300px!important}
   .profile-career-list:before{left:55px!important}
-  .profile-career-item{grid-template-columns:46px minmax(0,1fr)!important;column-gap:24px!important;padding-bottom:13px!important}
-  .profile-career-item:before{left:50px!important}
+  .profile-career-item{grid-template-columns:44px 18px minmax(0,1fr)!important;column-gap:7px!important;padding-bottom:13px!important}
+  .profile-career-item:before{left:51px!important;width:9px!important;height:9px!important}
   .profile-career-year{font-size:9px!important}
   .profile-career-copy strong{font-size:10px!important}
   .profile-career-copy .career-detail{font-size:9px!important;line-height:1.4!important}
@@ -1130,12 +989,11 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 @media(max-width:380px){
   .profile-career-list{max-height:280px!important}
   .profile-career-list:before{left:51px!important}
-  .profile-career-item{grid-template-columns:42px minmax(0,1fr)!important;column-gap:21px!important}
-  .profile-career-item:before{left:46px!important;width:9px!important;height:9px!important}
+  .profile-career-item{grid-template-columns:40px 16px minmax(0,1fr)!important;column-gap:6px!important}
+  .profile-career-item:before{left:47px!important}
   .profile-career-year{font-size:8px!important}
 }
 </style>
-
 
 <style id="profile-visual-final-fix-v12">
 /* FINAL PROFILE VISUAL FIX
@@ -1546,10 +1404,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     <div class="profile-dossier-extra">
       <div class="profile-fact"><div class="profile-fact-label">F1 DEBUT</div><div id="profile-f1-debut" class="profile-fact-value">--</div></div>
       <div class="profile-fact"><div class="profile-fact-label">SEASON 2026</div><div id="profile-season-summary" class="profile-fact-value">--</div></div>
-    </div>
-    <div class="profile-highlight">
-      <div class="profile-highlight-title">Điểm nổi bật</div>
-      <ul id="profile-highlights" class="profile-highlight-list"></ul>
     </div>
   </div>
   <div class="profile-info-card">
@@ -2803,24 +2657,6 @@ async function enrichDriverProfile(driver){
   const seasonSummary=document.getElementById('profile-season-summary');
   if(debut)debut.textContent=debutMap[driver.Driver?.driverId]||'--';
   if(seasonSummary)seasonSummary.textContent=`P${driver.position||'--'} · ${driver.points||0} pts · ${driver.wins||0} wins`;
-  const highlights=document.getElementById('profile-highlights');
-  if(highlights){
-    const id=driver.Driver?.driverId||'';
-    const highlightMap={
-      hamilton:['7× World Champion','Most F1 wins (career)','Ferrari driver since 2025'],
-      max_verstappen:['4× World Champion','Youngest F1 race winner','Multiple Red Bull wins'],
-      alonso:['2× World Champion','2005–06 champion','One of F1’s most experienced drivers'],
-      leclerc:['Ferrari race winner','2022 championship runner-up','Multiple pole positions'],
-      norris:['F1 race winner','McLaren lead driver','Championship contender'],
-      piastri:['F1 race winner','McLaren race winner','Championship contender'],
-      russell:['Mercedes race winner','Former Williams driver','Grand Prix winner'],
-      gasly:['Grand Prix winner','Monza 2020 winner','Alpine driver'],
-      sainz:['Grand Prix winner','Former Ferrari driver','Williams driver since 2025'],
-      albon:['Red Bull graduate','Returned to F1 with Williams','Williams lead driver']
-    };
-    const items=highlightMap[id]||[`${driver.wins||0} race wins in current data`,` ${getDriverPodiums(id)} podiums in current data`,`${driver.Constructors?.[0]?.name||'Current team'} driver`];
-    highlights.innerHTML=items.map(x=>`<li>${escapeHTML(x)}</li>`).join('');
-  }
   renderDriverCareer(driver);
   const extract=await fetchDriverWikiSummary(driver);
   if(bio){
