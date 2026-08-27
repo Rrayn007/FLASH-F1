@@ -505,6 +505,13 @@ button{font-family:inherit}
 .profile-section-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.28em;color:#58709b}
 .profile-section-title{font-size:24px;font-weight:950;line-height:1.1;margin-top:10px;color:#f4f4f5}
 .profile-bio{margin-top:18px;font-size:12px;line-height:1.62;color:#9aa9c0}
+.profile-info-card:has(#profile-bio){min-height:0 !important;overflow:hidden !important}
+#profile-bio{max-height:250px;overflow-y:auto;overflow-x:hidden;padding-right:8px;scrollbar-width:thin;scrollbar-color:#3a4049 transparent;box-sizing:border-box}
+#profile-bio::-webkit-scrollbar{width:5px}
+#profile-bio::-webkit-scrollbar-track{background:transparent}
+#profile-bio::-webkit-scrollbar-thumb{background:#3a4049;border-radius:999px}
+#profile-bio::-webkit-scrollbar-thumb:hover{background:#505762}
+
 .profile-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:16px;border:1px solid #24262b;border-radius:9px;overflow:hidden}
 .profile-fact{padding:12px;border-right:1px solid #24262b;border-bottom:1px solid #24262b;min-width:0}
 .profile-fact:nth-child(2n){border-right:0}.profile-fact:nth-last-child(-n+2){border-bottom:0}
@@ -1170,6 +1177,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #profile-career .profile-career-item:hover .profile-career-copy strong{color:#fff !important}
 
 @media(max-width:560px){
+  #profile-bio{max-height:210px}
   #profile-career.profile-career-list{
     --career-year-col:46px;
     --career-rail-col:22px;
@@ -1185,6 +1193,91 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 </style>
 
+
+<style id="driver-image-size-lock">
+/* =========================================================
+   DRIVER PROFILE IMAGE — SIZE LOCK
+   The portrait panel must never grow/shrink with biography,
+   timeline or other profile content.
+   ========================================================= */
+#driver-profile-content{
+  align-items:start !important;
+}
+
+#driver-profile-content .profile-driver-visual{
+  grid-column:2 !important;
+  grid-row:1 / span 3 !important;
+  align-self:start !important;
+  width:100% !important;
+  height:620px !important;
+  min-height:620px !important;
+  max-height:620px !important;
+  flex:none !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+}
+
+#driver-profile-content #profile-driver-image{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center top !important;
+  transform:none !important;
+  transform-origin:center top !important;
+}
+
+/* Keep the information cards independent from the portrait panel. */
+#driver-profile-content .driver-profile-about{
+  min-width:0 !important;
+  min-height:0 !important;
+  align-self:start !important;
+}
+
+#driver-profile-content .profile-info-card{
+  min-width:0 !important;
+  box-sizing:border-box !important;
+}
+
+/* Long biographies scroll inside their own card instead of
+   pushing/reshaping the driver portrait. */
+#driver-profile-content #profile-bio{
+  max-height:250px !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  box-sizing:border-box !important;
+}
+
+@media(max-width:820px){
+  #driver-profile-content .profile-driver-visual{
+    grid-column:1 !important;
+    grid-row:3 !important;
+    width:100% !important;
+    height:360px !important;
+    min-height:360px !important;
+    max-height:360px !important;
+  }
+}
+
+@media(max-width:560px){
+  #driver-profile-content .profile-driver-visual{
+    height:300px !important;
+    min-height:300px !important;
+    max-height:300px !important;
+  }
+}
+
+@media(max-width:390px){
+  #driver-profile-content .profile-driver-visual{
+    height:270px !important;
+    min-height:270px !important;
+    max-height:270px !important;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -2883,28 +2976,28 @@ function renderDriverCareer(driver){
   const points=driver.points||0;
 
   const careerMap={
-    hamilton:[['2007','McLaren','F1 debut.'],['2008','McLaren','World Champion — first title.'],['2013','Mercedes','Joined Mercedes.'],['2014–20','Mercedes','Six world titles across seven seasons.'],['2025','Ferrari','Joined Ferrari.'],['2026','Ferrari',`Current season — P${position}, ${points} points.`]],
-    leclerc:[['2018','Sauber','F1 debut.'],['2019','Ferrari','Joined Ferrari as a race driver.'],['2022','Ferrari','Finished runner-up in the championship.'],['2026','Ferrari',`Current season — P${position}, ${points} points.`]],
+    hamilton:[['2007','McLaren','F1 debut.'],['2008','McLaren','First world championship.'],['2013','Mercedes','Joined Mercedes.'],['2014–20','Mercedes','Six world titles across seven seasons.'],['2021','Mercedes','Finished runner-up in the championship.'],['2024','Mercedes','Final season with Mercedes.'],['2025','Ferrari','Joined Ferrari.'],['2026','Ferrari',`Current season — P${position}, ${points} points.`]],
+    leclerc:[['2018','Sauber','F1 debut.'],['2019','Ferrari','Joined Ferrari.'],['2022','Ferrari','Finished runner-up in the championship.'],['2026','Ferrari',`Current season — P${position}, ${points} points.`]],
     russell:[['2019','Williams','F1 debut.'],['2022','Mercedes','Joined Mercedes.'],['2025','Mercedes','Established as a championship contender.'],['2026','Mercedes',`Current season — P${position}, ${points} points.`]],
     antonelli:[['2025','Mercedes','F1 debut as a rookie.'],['2026','Mercedes',`Second F1 season — P${position}, ${points} points.`]],
     norris:[['2019','McLaren','F1 debut.'],['2021','McLaren','First F1 win at Monza.'],['2024','McLaren','First championship campaign as a leading contender.'],['2026','McLaren',`Current season — P${position}, ${points} points.`]],
     piastri:[['2023','McLaren','F1 debut.'],['2024','McLaren','First F1 wins and breakthrough season.'],['2025','McLaren','Championship title campaign.'],['2026','McLaren',`Current season — P${position}, ${points} points.`]],
     max_verstappen:[['2015','Toro Rosso','F1 debut at age 17.'],['2016','Red Bull Racing','Promoted and won on Red Bull debut.'],['2021','Red Bull Racing','First world championship.'],['2022–24','Red Bull Racing','Three consecutive world titles.'],['2026','Red Bull Racing',`Current season — P${position}, ${points} points.`]],
     gasly:[['2017','Toro Rosso','F1 debut.'],['2019','Red Bull Racing','Promoted to Red Bull Racing.'],['2020','AlphaTauri','First F1 win at Monza.'],['2023','Alpine','Joined Alpine.'],['2026','Alpine',`Current season — P${position}, ${points} points.`]],
-    alonso:[['2001','Minardi','F1 debut.'],['2005–06','Renault','Two consecutive world titles.'],['2015','McLaren','Returned to McLaren.'],['2023','Aston Martin','Joined Aston Martin.'],['2026','Aston Martin',`Current season — P${position}, ${points} points.`]],
-    sainz:[['2015','Toro Rosso','F1 debut.'],['2019','McLaren','Joined McLaren.'],['2021','Ferrari','Joined Ferrari.'],['2025','Williams','Joined Williams.'],['2026','Williams',`Current season — P${position}, ${points} points.`]],
+    alonso:[['2001','Minardi','F1 debut.'],['2003','Renault','Became a full-time Renault race driver.'],['2005–06','Renault','Won two consecutive world titles.'],['2007','McLaren','Joined McLaren.'],['2008–09','Renault','Returned to Renault for two seasons.'],['2010–14','Ferrari','Five-season Ferrari spell; runner-up in 2010, 2012 and 2013.'],['2015–18','McLaren','Returned to McLaren.'],['2021–22','Alpine','Returned to F1 with Alpine.'],['2023','Aston Martin','Joined Aston Martin.'],['2026','Aston Martin',`Current season — P${position}, ${points} points.`]],
+    sainz:[['2015','Toro Rosso','F1 debut.'],['2017','Renault','Joined Renault.'],['2019','McLaren','Joined McLaren.'],['2021','Ferrari','Joined Ferrari.'],['2025','Williams','Joined Williams.'],['2026','Williams',`Current season — P${position}, ${points} points.`]],
     albon:[['2019','Toro Rosso → Red Bull Racing','F1 debut and mid-season promotion.'],['2022','Williams','Returned to F1 with Williams.'],['2026','Williams',`Current season — P${position}, ${points} points.`]],
     stroll:[['2017','Williams','F1 debut.'],['2019','Racing Point','Joined Racing Point.'],['2021','Aston Martin','Continued with the rebranded team.'],['2026','Aston Martin',`Current season — P${position}, ${points} points.`]],
-    ocon:[['2016','Manor','F1 debut.'],['2017','Force India','Became a full-time F1 driver.'],['2020','Renault','Joined Renault.'],['2026','Haas F1 Team',`Current season — P${position}, ${points} points.`]],
-    hulkenberg:[['2010','Williams','F1 debut and pole position in Brazil.'],['2013','Sauber','Joined Sauber.'],['2020','Racing Point','Returned as a substitute driver.'],['2025','Sauber','Returned full-time.'],['2026','Audi',`Current season — P${position}, ${points} points.`]],
+    ocon:[['2016','Manor','F1 debut.'],['2017','Force India','Joined Force India full-time.'],['2020','Renault','Returned to the grid with Renault.'],['2021','Alpine','Continued after Renault became Alpine.'],['2025','Haas F1 Team','Joined Haas.'],['2026','Haas F1 Team',`Current season — P${position}, ${points} points.`]],
+    hulkenberg:[['2010','Williams','F1 debut and pole position in Brazil.'],['2011–12','Force India','Joined Force India.'],['2013','Sauber','Joined Sauber.'],['2014–16','Force India','Returned to Force India.'],['2017–19','Renault','Joined Renault.'],['2020','Racing Point','Returned as a substitute driver.'],['2022','Aston Martin','Returned as a reserve driver.'],['2023–24','Haas F1 Team','Returned to a full-time race seat.'],['2025','Sauber','Joined Sauber for its final season before Audi.'],['2026','Audi',`Current season — P${position}, ${points} points.`]],
     bortoleto:[['2025','Sauber','F1 debut.'],['2026','Audi',`Second F1 season — P${position}, ${points} points.`]],
     bearman:[['2024','Ferrari / Haas','F1 debut as a substitute driver.'],['2025','Haas F1 Team','Joined full-time.'],['2026','Haas F1 Team',`Current season — P${position}, ${points} points.`]],
     colapinto:[['2024','Williams','F1 debut.'],['2025','Alpine','Joined Alpine.'],['2026','Alpine',`Current season — P${position}, ${points} points.`]],
-    lawson:[['2023','AlphaTauri','F1 debut as a substitute driver.'],['2025','Racing Bulls / Red Bull','Continued in the Red Bull system.'],['2026','Racing Bulls',`Current season — P${position}, ${points} points.`]],
+    lawson:[['2023','AlphaTauri','F1 debut as a substitute driver.'],['2025','Racing Bulls / Red Bull','Continued within the Red Bull system.'],['2026','Racing Bulls',`Current season — P${position}, ${points} points.`]],
     hadjar:[['2025','Racing Bulls','F1 debut.'],['2026','Red Bull Racing',`Second F1 season — P${position}, ${points} points.`]],
     lindblad:[['2026','Racing Bulls',`F1 debut and rookie season — P${position}, ${points} points.`]],
-    perez:[['2011','Sauber','F1 debut.'],['2014','Force India','Joined Force India.'],['2021','Red Bull Racing','Joined Red Bull Racing.'],['2026','Cadillac',`New chapter with Cadillac — P${position}, ${points} points.`]],
-    bottas:[['2013','Williams','F1 debut.'],['2017','Mercedes','Joined Mercedes.'],['2022','Alfa Romeo','Moved to Alfa Romeo.'],['2026','Cadillac',`New chapter with Cadillac — P${position}, ${points} points.`]]
+    perez:[['2011','Sauber','F1 debut.'],['2013','McLaren','Joined McLaren.'],['2014','Force India','Joined Force India.'],['2021','Red Bull Racing','Joined Red Bull Racing.'],['2026','Cadillac',`Returned to F1 with Cadillac — P${position}, ${points} points.`]],
+    bottas:[['2013','Williams','F1 debut.'],['2017','Mercedes','Joined Mercedes.'],['2022–24','Alfa Romeo / Kick Sauber','Three seasons with the Hinwil-based team.'],['2025','Mercedes','Returned as a reserve driver.'],['2026','Cadillac',`Returned to the grid with Cadillac — P${position}, ${points} points.`]]
   };
 
   let raw=careerMap[id]||[[String(driver.season||SEASON),currentTeam,`Current season — P${position}, ${points} points.`]];
