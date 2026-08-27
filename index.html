@@ -1197,239 +1197,78 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 
 
 
-<style id="driver-profile-layout-final">
+
+
+
+<style id="driver-profile-layout-final-clean">
 /* =========================================================
-   DRIVER PROFILE — STABLE ORIGINAL GRID
-   Keep the original composition:
-   top info + stats on the left, Overview/Career below,
-   and ONE driver image card spanning the full left cluster.
-   The right visual is always exactly the same total height
-   as the complete left cluster.
+   DRIVER PROFILE — SINGLE SOURCE OF TRUTH
+   Desktop: original 3-level left stack + one fixed-height image card.
+   The image card is NEVER sized by biography/timeline content.
+   Overview and Career scroll independently inside their cards.
    ========================================================= */
-#driver-profile-content{
-  display:grid !important;
-  grid-template-columns:minmax(0,1.34fr) minmax(380px,.66fr) !important;
-  grid-template-rows:auto auto minmax(0,1fr) !important;
-  gap:14px !important;
-  min-height:620px !important;
-  height:auto !important;
-  overflow:visible !important;
-  align-items:stretch !important;
-}
-
-/* TOP: car number + constructor — unchanged */
-#driver-profile-content > .grid:first-of-type{
-  grid-column:1 !important;
-  grid-row:1 !important;
-  min-width:0 !important;
-  width:100% !important;
-}
-
-/* STATS — unchanged */
-#driver-stats{
-  grid-column:1 !important;
-  grid-row:2 !important;
-  min-width:0 !important;
-  width:100% !important;
-}
-
-/* RIGHT: driver image spans the COMPLETE left-side cluster. */
-#driver-profile-content .profile-driver-visual{
-  grid-column:2 !important;
-  grid-row:1 / 4 !important;
-  width:100% !important;
-  height:auto !important;
-  min-height:0 !important;
-  max-height:none !important;
-  align-self:stretch !important;
-  overflow:hidden !important;
-  box-sizing:border-box !important;
-}
-
-#driver-profile-content #profile-driver-image{
-  position:absolute !important;
-  inset:0 !important;
-  width:100% !important;
-  height:100% !important;
-  max-width:none !important;
-  max-height:none !important;
-  object-fit:contain !important;
-  object-position:center top !important;
-  transform:none !important;
-}
-
-/* LOWER LEFT: Overview + Career share the remaining height equally.
-   Their contents scroll internally instead of changing the cluster height. */
-#driver-profile-content .driver-profile-about{
-  grid-column:1 !important;
-  grid-row:3 !important;
-  display:grid !important;
-  grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr) !important;
-  gap:14px !important;
-  width:100% !important;
-  height:100% !important;
-  min-height:0 !important;
-  max-height:none !important;
-  min-width:0 !important;
-  align-self:stretch !important;
-  overflow:hidden !important;
-}
-
-#driver-profile-content .profile-info-card{
-  height:100% !important;
-  min-height:0 !important;
-  max-height:none !important;
-  min-width:0 !important;
-  box-sizing:border-box !important;
-  overflow:hidden !important;
-  display:flex !important;
-  flex-direction:column !important;
-}
-
-/* Biography gets its own scroll area. */
-#driver-profile-content #profile-bio{
-  flex:1 1 auto !important;
-  min-height:0 !important;
-  max-height:none !important;
-  overflow-y:auto !important;
-  overflow-x:hidden !important;
-  box-sizing:border-box !important;
-  padding-right:8px !important;
-}
-
-/* Career gets its own scroll area. */
-#driver-profile-content #profile-career.profile-career-list{
-  flex:1 1 auto !important;
-  min-height:0 !important;
-  height:auto !important;
-  max-height:none !important;
-  overflow-y:auto !important;
-  overflow-x:hidden !important;
-  box-sizing:border-box !important;
-}
-
-/* Keep the compact fact blocks visible at the bottom of Overview. */
-#driver-profile-content .profile-info-card:first-child #profile-bio{
-  flex:1 1 auto !important;
-}
-
-/* Tablet/mobile: preserve the same logical order, but stack columns. */
-@media(max-width:820px){
-  #driver-profile-content{
-    grid-template-columns:1fr !important;
-    grid-template-rows:auto auto 360px auto !important;
-    min-height:0 !important;
-  }
-  #driver-profile-content .profile-driver-visual{
-    grid-column:1 !important;
-    grid-row:3 !important;
-    height:360px !important;
-    min-height:360px !important;
-    max-height:360px !important;
-  }
-  #driver-profile-content .driver-profile-about{
-    grid-column:1 !important;
-    grid-row:4 !important;
-    grid-template-columns:1fr 1fr !important;
-    height:520px !important;
-    min-height:520px !important;
-    max-height:520px !important;
-  }
-  #driver-profile-content .profile-info-card{
-    height:520px !important;
-    min-height:520px !important;
-    max-height:520px !important;
-  }
-}
-
-@media(max-width:560px){
-  #driver-profile-content{
-    grid-template-rows:auto auto 300px auto !important;
-  }
-  #driver-profile-content .profile-driver-visual{
-    height:300px !important;
-    min-height:300px !important;
-    max-height:300px !important;
-  }
-  #driver-profile-content .driver-profile-about{
-    grid-template-columns:1fr !important;
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-  }
-  #driver-profile-content .profile-info-card{
-    height:430px !important;
-    min-height:430px !important;
-    max-height:430px !important;
-  }
-}
-
-@media(max-width:390px){
-  #driver-profile-content{
-    grid-template-rows:auto auto 270px auto !important;
-  }
-  #driver-profile-content .profile-driver-visual{
-    height:270px !important;
-    min-height:270px !important;
-    max-height:270px !important;
-  }
-}
-</style>
-
-<style id="driver-profile-cluster-final-fix">
-/* FINAL DRIVER PROFILE CLUSTER: preserve the original left stack and make
-   the single driver visual exactly the full height of that stack. */
 @media (min-width:821px){
   #driver-profile-content{
+    --profile-height:760px;
+    --profile-gap:14px;
     position:relative !important;
     display:grid !important;
     grid-template-columns:minmax(0,1.34fr) minmax(380px,.66fr) !important;
     grid-template-rows:auto auto minmax(0,1fr) !important;
-    column-gap:14px !important;
-    row-gap:14px !important;
-    height:auto !important;
-    min-height:620px !important;
+    column-gap:var(--profile-gap) !important;
+    row-gap:var(--profile-gap) !important;
+    width:100% !important;
+    height:var(--profile-height) !important;
+    min-height:var(--profile-height) !important;
+    max-height:var(--profile-height) !important;
     overflow:visible !important;
     align-items:stretch !important;
   }
 
-  /* Keep the complete original left-side stack in column 1. */
+  /* Left stack: keep the existing visual order. */
   #driver-profile-content > .grid:first-of-type{
     grid-column:1 !important;
     grid-row:1 !important;
+    width:100% !important;
     min-width:0 !important;
+    min-height:0 !important;
   }
   #driver-profile-content > #driver-stats{
     grid-column:1 !important;
     grid-row:2 !important;
+    width:100% !important;
     min-width:0 !important;
+    min-height:0 !important;
   }
   #driver-profile-content > .driver-profile-about{
     grid-column:1 !important;
     grid-row:3 !important;
+    width:100% !important;
+    height:100% !important;
     min-width:0 !important;
     min-height:0 !important;
-    height:100% !important;
+    max-height:none !important;
     display:grid !important;
     grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr) !important;
-    gap:14px !important;
-  }
-
-  /* The image card is the ONLY element in the right column and stretches
-     from the very top of row 1 to the bottom of row 3. */
-  #driver-profile-content > .profile-driver-visual{
-    grid-column:2 !important;
-    grid-row:1 / 4 !important;
-    align-self:stretch !important;
-    justify-self:stretch !important;
-    width:100% !important;
-    height:auto !important;
-    min-height:0 !important;
-    max-height:none !important;
-    box-sizing:border-box !important;
+    gap:var(--profile-gap) !important;
     overflow:hidden !important;
   }
 
+  /* Right card: fixed to the SAME full height as the left cluster. */
+  #driver-profile-content > .profile-driver-visual{
+    grid-column:2 !important;
+    grid-row:1 / 4 !important;
+    width:100% !important;
+    height:var(--profile-height) !important;
+    min-height:var(--profile-height) !important;
+    max-height:var(--profile-height) !important;
+    align-self:stretch !important;
+    justify-self:stretch !important;
+    overflow:hidden !important;
+    box-sizing:border-box !important;
+  }
+
+  /* Image fills the fixed card without changing card dimensions. */
   #driver-profile-content > .profile-driver-visual #profile-driver-image{
     position:absolute !important;
     inset:0 !important;
@@ -1439,29 +1278,97 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     max-height:none !important;
     object-fit:contain !important;
     object-position:center top !important;
+    transform:none !important;
   }
 
-  /* Both lower cards consume only the remaining row height and scroll inside. */
-  #driver-profile-content .driver-profile-about > .profile-info-card{
-    min-height:0 !important;
+  /* Lower cards fill only row 3; their content cannot push the layout. */
+  #driver-profile-content > .driver-profile-about > .profile-info-card{
+    width:100% !important;
     height:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    max-height:none !important;
     overflow:hidden !important;
     display:flex !important;
     flex-direction:column !important;
     box-sizing:border-box !important;
   }
+
   #driver-profile-content #profile-bio{
-    min-height:0 !important;
     flex:1 1 auto !important;
+    min-height:0 !important;
+    max-height:none !important;
     overflow-y:auto !important;
     overflow-x:hidden !important;
+    box-sizing:border-box !important;
+    padding-right:8px !important;
   }
+
   #driver-profile-content #profile-career.profile-career-list{
+    flex:1 1 auto !important;
+    width:100% !important;
     min-height:0 !important;
     height:auto !important;
-    flex:1 1 auto !important;
+    max-height:none !important;
+    margin-top:18px !important;
     overflow-y:auto !important;
     overflow-x:hidden !important;
+    box-sizing:border-box !important;
+  }
+}
+
+@media (max-width:820px){
+  #driver-profile-content{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+  #driver-profile-content > .profile-driver-visual{
+    grid-column:1 !important;
+    grid-row:3 !important;
+    height:360px !important;
+    min-height:360px !important;
+    max-height:360px !important;
+  }
+  #driver-profile-content > .driver-profile-about{
+    grid-column:1 !important;
+    grid-row:4 !important;
+    height:520px !important;
+    min-height:520px !important;
+    max-height:520px !important;
+  }
+  #driver-profile-content > .driver-profile-about > .profile-info-card{
+    height:100% !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+}
+
+@media (max-width:560px){
+  #driver-profile-content > .profile-driver-visual{
+    height:300px !important;
+    min-height:300px !important;
+    max-height:300px !important;
+  }
+  #driver-profile-content > .driver-profile-about{
+    grid-template-columns:1fr !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #driver-profile-content > .driver-profile-about > .profile-info-card{
+    height:430px !important;
+    min-height:430px !important;
+    max-height:430px !important;
+  }
+}
+
+@media (max-width:390px){
+  #driver-profile-content > .profile-driver-visual{
+    height:270px !important;
+    min-height:270px !important;
+    max-height:270px !important;
   }
 }
 </style>
