@@ -675,10 +675,32 @@ button{font-family:inherit}
 #profile-career .profile-career-item:hover .profile-career-year,
 #profile-career .profile-career-item:hover .profile-career-copy strong{color:#fff}
 
-/* TEAM PROFILE */
+/* TEAM PROFILE — same fixed modal shell, internal content scrolls. */
 #team-profile-content{
-  position:relative;
+  position:relative!important;
+  flex:1 1 0!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:none!important;
+  width:100%!important;
+  min-width:0!important;
+  margin-top:32px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+  scrollbar-width:thin!important;
+  scrollbar-color:#3a4049 transparent!important;
+  box-sizing:border-box!important;
 }
+#team-profile-content::-webkit-scrollbar{width:6px}
+#team-profile-content::-webkit-scrollbar-track{background:transparent}
+#team-profile-content::-webkit-scrollbar-thumb{background:#3a4049;border-radius:999px}
+#team-profile-content::-webkit-scrollbar-thumb:hover{background:#505762}
+#team-profile-content > .bg\[\#101010\]{
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
 #team-profile-content .team-profile-hero{
   display:grid;
   grid-template-columns:minmax(0,1fr) 180px;
@@ -964,11 +986,10 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 
 
-<style id="driver-profile-final-clean">
+<style id="driver-profile-system">
 /* =========================================================
-   DRIVER PROFILE — SINGLE SOURCE OF TRUTH
-   Outer modal NEVER scrolls. Only Overview biography and
-   Career timeline scroll inside their own cards.
+   DRIVER PROFILE — CANONICAL LAYOUT SYSTEM
+   One source of truth. Fixed geometry; text never changes it.
    ========================================================= */
 #profile-modal .modal-box{
   width:100%!important;
@@ -983,6 +1004,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #profile-modal .modal-box > .p-6.md\:p-8{
   flex:1 1 auto!important;
   min-height:0!important;
+  height:0!important;
   overflow:hidden!important;
   display:flex!important;
   flex-direction:column!important;
@@ -993,23 +1015,23 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   min-height:0!important;
 }
 
+/* Master desktop grid: 2 fixed header rows + 1 fixed remaining content row. */
 #driver-profile-content{
-  --profile-gap:14px;
-  flex:1 1 auto!important;
+  flex:1 1 0!important;
   width:100%!important;
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
+  height:0!important;
   min-width:0!important;
+  min-height:0!important;
   margin-top:32px!important;
   display:grid!important;
   grid-template-columns:minmax(0,1fr) 340px!important;
   grid-template-rows:154px 76px minmax(0,1fr)!important;
-  gap:var(--profile-gap)!important;
+  gap:14px!important;
   overflow:hidden!important;
   box-sizing:border-box!important;
 }
 
+/* Number + constructor: fixed and equal height. */
 #driver-profile-content > .grid:first-of-type{
   grid-column:1!important;
   grid-row:1!important;
@@ -1026,330 +1048,35 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 #driver-profile-content .profile-constructor-box{
   width:100%!important;
   height:154px!important;
+  min-width:0!important;
   min-height:154px!important;
   max-height:154px!important;
   box-sizing:border-box!important;
+  overflow:hidden!important;
 }
 
+/* Stats: fixed row. */
 #driver-stats{
   grid-column:1!important;
   grid-row:2!important;
   width:100%!important;
   height:76px!important;
+  min-width:0!important;
   min-height:76px!important;
   max-height:76px!important;
   box-sizing:border-box!important;
-}
-#driver-stats>div{
-  height:100%!important;
-  min-height:0!important;
-  box-sizing:border-box!important;
-}
-
-.profile-driver-visual{
-  grid-column:2!important;
-  grid-row:1 / 4!important;
-  position:relative!important;
-  width:340px!important;
-  height:auto!important;
-  min-width:340px!important;
-  max-width:340px!important;
-  min-height:0!important;
-  max-height:none!important;
-  align-self:stretch!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-}
-#profile-driver-image{
-  position:absolute!important;
-  inset:0 auto auto 50%!important;
-  width:auto!important;
-  height:100%!important;
-  max-width:none!important;
-  max-height:100%!important;
-  transform:translateX(-50%)!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  display:block!important;
-  pointer-events:none!important;
-}
-
-.driver-profile-about{
-  grid-column:1!important;
-  grid-row:3!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr)!important;
-  gap:14px!important;
-  width:100%!important;
-  height:auto!important;
-  min-width:0!important;
-  min-height:0!important;
-  max-height:none!important;
-  margin:0!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-}
-.profile-info-card{
-  display:flex!important;
-  flex-direction:column!important;
-  width:100%!important;
-  height:auto!important;
-  min-width:0!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-}
-
-/* The only scrollable areas in the driver profile. */
-#driver-profile-content #profile-bio{
-  flex:1 1 0!important;
-  height:0!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  scrollbar-width:thin!important;
-  scrollbar-color:#3a4049 transparent!important;
-  overscroll-behavior:contain!important;
-}
-#driver-profile-content #profile-career.profile-career-list{
-  flex:1 1 0!important;
-  height:0!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  scrollbar-width:thin!important;
-  scrollbar-color:#3a4049 transparent!important;
-  overscroll-behavior:contain!important;
-}
-
-/* No outer modal scrollbar at any desktop/tablet size. */
-@media (max-width:820px){
-  #profile-modal .modal-box{
-    max-width:calc(100vw - 16px)!important;
-    height:calc(100vh - 16px)!important;
-    max-height:calc(100vh - 16px)!important;
-    overflow:hidden!important;
-  }
-  #profile-modal .modal-box > .p-6.md\:p-8{
-    padding:18px!important;
-  }
-  #driver-profile-content{
-    margin-top:18px!important;
-    grid-template-columns:1fr!important;
-    grid-template-rows:110px 64px 190px minmax(0,1fr)!important;
-    gap:10px!important;
-  }
-  #driver-profile-content > .grid:first-of-type{
-    grid-column:1!important;
-    grid-row:1!important;
-    grid-template-columns:120px minmax(0,1fr)!important;
-    gap:10px!important;
-    height:110px!important;
-    min-height:110px!important;
-    max-height:110px!important;
-  }
-  #profile-number-box,
-  #driver-profile-content .profile-constructor-box{
-    height:110px!important;
-    min-height:110px!important;
-    max-height:110px!important;
-    padding:14px!important;
-  }
-  #profile-number{font-size:52px!important}
-  .profile-number{font-size:70px!important}
-  .profile-team-logo{width:62px!important;height:50px!important}
-  #driver-stats{
-    grid-column:1!important;
-    grid-row:2!important;
-    height:64px!important;
-    min-height:64px!important;
-    max-height:64px!important;
-  }
-  .profile-driver-visual{
-    grid-column:1!important;
-    grid-row:3!important;
-    width:100%!important;
-    min-width:0!important;
-    max-width:none!important;
-    height:190px!important;
-    min-height:190px!important;
-    max-height:190px!important;
-  }
-  #profile-driver-image{
-    height:100%!important;
-    width:auto!important;
-  }
-  .driver-profile-about{
-    grid-column:1!important;
-    grid-row:4!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:10px!important;
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-  }
-  .profile-info-card{min-height:0!important}
-}
-@media (max-width:560px){
-  #driver-profile-content{
-    grid-template-rows:96px 60px 150px minmax(0,1fr)!important;
-  }
-  #driver-profile-content > .grid:first-of-type{
-    grid-template-columns:105px minmax(0,1fr)!important;
-    height:96px!important;
-    min-height:96px!important;
-    max-height:96px!important;
-  }
-  #profile-number-box,
-  #driver-profile-content .profile-constructor-box{
-    height:96px!important;
-    min-height:96px!important;
-    max-height:96px!important;
-    padding:12px!important;
-  }
-  #driver-stats{
-    height:60px!important;
-    min-height:60px!important;
-    max-height:60px!important;
-  }
-  #driver-stats>div{padding:10px 9px!important}
-  #driver-stats .text-xl{font-size:18px!important}
-  .profile-driver-visual{
-    height:150px!important;
-    min-height:150px!important;
-    max-height:150px!important;
-  }
-  .driver-profile-about{
-    grid-template-columns:1fr!important;
-    grid-template-rows:minmax(0,1fr) minmax(0,1fr)!important;
-  }
-}
-@media (max-width:390px){
-  #profile-modal .modal-box > .p-6.md\:p-8{padding:14px!important}
-  #driver-profile-content{margin-top:12px!important}
-  .profile-section-title{font-size:21px!important}
-}
-</style>
-<link rel="preload" as="image" href="https://lh3.googleusercontent.com/d/1NrS7TaghH2DIOp3WKrhQNpyr5Yqcahzu=w2000" fetchpriority="high">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="driver-profile-layout-final">
-/* =========================================================
-   DRIVER PROFILE — FINAL FIXED LAYOUT
-   - Modal/content height is fixed by viewport, never by text.
-   - Driver image + Overview + Career share the same fixed grid height.
-   - Overview/Career cards are equal width and equal height.
-   - Only Biography and Career list can scroll.
-   - Text wraps naturally; no card is resized/scaled because of text.
-   ========================================================= */
-
-#profile-modal .modal-box{
-  height:calc(100vh - 32px)!important;
-  max-height:calc(100vh - 32px)!important;
-  overflow:hidden!important;
-  display:flex!important;
-  flex-direction:column!important;
-}
-
-#profile-modal .modal-box > .p-6.md\:p-8{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  height:0!important;
-  overflow:hidden!important;
-  display:flex!important;
-  flex-direction:column!important;
-}
-
-#profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start{
-  flex:0 0 auto!important;
-  min-height:0!important;
-}
-
-/* Desktop/tablet master grid.
-   The first two rows never grow/shrink because of content.
-   The third row receives all remaining height. */
-#driver-profile-content{
-  --profile-gap:14px;
-  flex:1 1 0!important;
-  width:100%!important;
-  height:0!important;
-  min-height:0!important;
-  max-height:none!important;
-  margin-top:32px!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) 340px!important;
-  grid-template-rows:154px 76px minmax(0,1fr)!important;
-  gap:var(--profile-gap)!important;
-  overflow:hidden!important;
-  box-sizing:border-box!important;
-}
-
-/* Number + constructor row: fixed height */
-#driver-profile-content > .grid:first-of-type{
-  grid-column:1!important;
-  grid-row:1!important;
-  display:grid!important;
-  grid-template-columns:160px minmax(0,1fr)!important;
-  gap:14px!important;
-  width:100%!important;
-  height:154px!important;
-  min-height:154px!important;
-  max-height:154px!important;
-  margin:0!important;
-}
-
-#profile-number-box,
-#driver-profile-content .profile-constructor-box{
-  width:100%!important;
-  height:154px!important;
-  min-height:154px!important;
-  max-height:154px!important;
-  min-width:0!important;
-  box-sizing:border-box!important;
   overflow:hidden!important;
 }
-
-/* Stats row: fixed height */
-#driver-stats{
-  grid-column:1!important;
-  grid-row:2!important;
-  width:100%!important;
-  height:76px!important;
-  min-height:76px!important;
-  max-height:76px!important;
-  min-width:0!important;
-  box-sizing:border-box!important;
-  overflow:hidden!important;
-}
-
 #driver-stats>div{
   width:100%!important;
   height:100%!important;
-  min-height:0!important;
   min-width:0!important;
+  min-height:0!important;
   box-sizing:border-box!important;
   overflow:hidden!important;
 }
 
-/* Driver image is locked to the complete left-stack height.
-   It cannot become taller/shorter because Overview or Career text changes. */
+/* Driver image: spans exactly the same master grid height. */
 .profile-driver-visual{
   grid-column:2!important;
   grid-row:1 / 4!important;
@@ -1363,7 +1090,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   overflow:hidden!important;
   box-sizing:border-box!important;
 }
-
 #profile-driver-image{
   position:absolute!important;
   left:50%!important;
@@ -1379,7 +1105,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   object-position:center top!important;
 }
 
-/* Bottom information row: BOTH cards are exactly the same width + height. */
+/* Overview + Career: exactly equal columns and exactly equal height. */
 .driver-profile-about{
   grid-column:1!important;
   grid-row:3!important;
@@ -1391,29 +1117,29 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   height:100%!important;
   min-width:0!important;
   min-height:0!important;
-  max-height:none!important;
   margin:0!important;
   overflow:hidden!important;
-  box-sizing:border-box!important;
   align-items:stretch!important;
+  box-sizing:border-box!important;
 }
-
 .profile-info-card{
   width:100%!important;
   height:100%!important;
   min-width:0!important;
   min-height:0!important;
   max-height:none!important;
+  padding:20px!important;
   overflow:hidden!important;
-  box-sizing:border-box!important;
   display:flex!important;
   flex-direction:column!important;
   align-self:stretch!important;
+  box-sizing:border-box!important;
 }
 
-/* The text areas consume available space instead of changing card height. */
-#driver-profile-content #profile-bio,
-#driver-profile-content #profile-career.profile-career-list{
+/* Overview header is fixed; biography owns the flexible space. */
+.profile-section-kicker,
+.profile-section-title{flex:0 0 auto!important}
+#driver-profile-content #profile-bio{
   flex:1 1 0!important;
   height:0!important;
   min-height:0!important;
@@ -1424,79 +1150,99 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   box-sizing:border-box!important;
 }
 
-/* Overview facts always use a rigid 2 x 1 grid. */
+/* Fact rows are rigid 2-column grids. Every cell has identical geometry. */
+/* All four Overview facts use one identical card geometry. */
 .profile-facts{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   grid-template-rows:60px!important;
+  gap:10px!important;
+  width:100%!important;
   height:60px!important;
+  min-width:0!important;
   min-height:60px!important;
   max-height:60px!important;
   margin-top:16px!important;
   flex:0 0 60px!important;
-  min-width:0!important;
-  overflow:hidden!important;
-}
-
-.profile-fact{
-  width:100%!important;
-  height:100%!important;
-  min-width:0!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow:hidden!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
+  border:0!important;
+  border-radius:0!important;
+  overflow:visible!important;
   box-sizing:border-box!important;
 }
-
-.profile-fact-value{
-  min-width:0!important;
-  max-width:100%!important;
-  line-height:1.25!important;
-  white-space:normal!important;
-  overflow-wrap:anywhere!important;
-  word-break:normal!important;
-}
-
-/* Second Overview row: same two equal boxes, same fixed height. */
 .profile-dossier-extra{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   grid-template-rows:60px!important;
+  gap:10px!important;
+  width:100%!important;
   height:60px!important;
+  min-width:0!important;
   min-height:60px!important;
   max-height:60px!important;
-  gap:10px!important;
   margin-top:10px!important;
   flex:0 0 60px!important;
-  min-width:0!important;
+  box-sizing:border-box!important;
 }
-
+.profile-facts .profile-fact,
 .profile-dossier-extra .profile-fact{
   width:100%!important;
   height:60px!important;
+  min-width:0!important;
   min-height:60px!important;
   max-height:60px!important;
+  padding:12px!important;
   border:1px solid #24262b!important;
   border-radius:8px!important;
+  background:rgba(255,255,255,.012)!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+}
+.profile-fact-value{
+  min-width:0!important;
+  max-width:100%!important;
+  line-height:1.2!important;
+  min-height:13px!important;
+  max-height:26px!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  hyphens:none!important;
+  overflow:hidden!important;
+}
+/* The compact season line is treated as one semantic unit: it may wrap to
+   a second line, but never changes font size or card dimensions. */
+#profile-season-summary{
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  overflow:hidden!important;
 }
 
-/* Career entries: width is fixed; long detail text wraps/clips inside its own
-   scrollable list instead of increasing the parent card. */
+/* Career is independently scrollable; entries never resize the card. */
+#driver-profile-content #profile-career.profile-career-list{
+  flex:1 1 0!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin-top:18px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+  box-sizing:border-box!important;
+}
 #profile-career .profile-career-item{
   width:100%!important;
   min-width:0!important;
   box-sizing:border-box!important;
 }
-
 #profile-career .profile-career-copy{
   min-width:0!important;
   max-width:100%!important;
   overflow:hidden!important;
 }
-
 #profile-career .profile-career-copy strong,
 #profile-career .profile-career-copy .career-detail{
   max-width:100%!important;
@@ -1504,49 +1250,41 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   word-break:normal!important;
 }
 
-/* Prevent flex/grid children from forcing a row wider/taller than the master grid. */
 #driver-profile-content > *,
-#driver-profile-content .driver-profile-about > *{
-  min-width:0!important;
-  min-height:0!important;
+#driver-profile-content .driver-profile-about > *{min-width:0!important;min-height:0!important}
+
+/* Team profile keeps the same fixed modal and scrolls only its own content. */
+@media(max-width:820px){
+  #team-profile-content{
+    margin-top:18px!important;
+  }
 }
 
-/* =========================================================
-   MOBILE — STILL FIXED, NEVER TEXT-DRIVEN
-   ========================================================= */
+/* Mobile: geometry remains fixed. At narrow widths the two information cards
+   stack into equal-height rows; no card is allowed to grow with text. */
 @media(max-width:820px){
   #profile-modal .modal-box{
     width:calc(100vw - 16px)!important;
     max-width:calc(100vw - 16px)!important;
     height:calc(100vh - 16px)!important;
     max-height:calc(100vh - 16px)!important;
-    overflow:hidden!important;
   }
-
-  #profile-modal .modal-box > .p-6.md\:p-8{
-    padding:18px!important;
-    height:0!important;
-  }
-
+  #profile-modal .modal-box > .p-6.md\:p-8{padding:18px!important}
   #driver-profile-content{
     margin-top:18px!important;
     grid-template-columns:1fr!important;
     grid-template-rows:110px 64px 190px minmax(0,1fr)!important;
     gap:10px!important;
-    height:0!important;
   }
-
   #driver-profile-content > .grid:first-of-type{
     grid-column:1!important;
     grid-row:1!important;
     grid-template-columns:120px minmax(0,1fr)!important;
     gap:10px!important;
-    width:100%!important;
     height:110px!important;
     min-height:110px!important;
     max-height:110px!important;
   }
-
   #profile-number-box,
   #driver-profile-content .profile-constructor-box{
     height:110px!important;
@@ -1554,7 +1292,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     max-height:110px!important;
     padding:14px!important;
   }
-
   #driver-stats{
     grid-column:1!important;
     grid-row:2!important;
@@ -1562,7 +1299,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     min-height:64px!important;
     max-height:64px!important;
   }
-
   .profile-driver-visual{
     grid-column:1!important;
     grid-row:3!important;
@@ -1573,31 +1309,22 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     min-height:190px!important;
     max-height:190px!important;
   }
-
   .driver-profile-about{
     grid-column:1!important;
     grid-row:4!important;
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
     grid-template-rows:minmax(0,1fr)!important;
     gap:10px!important;
-    width:100%!important;
-    height:100%!important;
-    min-height:0!important;
   }
 }
-
 @media(max-width:560px){
-  #driver-profile-content{
-    grid-template-rows:96px 60px 150px minmax(0,1fr)!important;
-  }
-
+  #driver-profile-content{grid-template-rows:96px 60px 150px minmax(0,1fr)!important}
   #driver-profile-content > .grid:first-of-type{
     grid-template-columns:105px minmax(0,1fr)!important;
     height:96px!important;
     min-height:96px!important;
     max-height:96px!important;
   }
-
   #profile-number-box,
   #driver-profile-content .profile-constructor-box{
     height:96px!important;
@@ -1605,28 +1332,22 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     max-height:96px!important;
     padding:12px!important;
   }
-
   #driver-stats{
     height:60px!important;
     min-height:60px!important;
     max-height:60px!important;
   }
-
   .profile-driver-visual{
     height:150px!important;
     min-height:150px!important;
     max-height:150px!important;
   }
-
-  /* On narrow phones, Overview and Career stack, but each receives exactly
-     half of the remaining fixed height. */
   .driver-profile-about{
     grid-template-columns:1fr!important;
     grid-template-rows:repeat(2,minmax(0,1fr))!important;
     gap:10px!important;
   }
 }
-
 @media(max-width:390px){
   #profile-modal .modal-box > .p-6.md\:p-8{padding:14px!important}
   #driver-profile-content{margin-top:12px!important}
@@ -3276,7 +2997,7 @@ async function enrichDriverProfile(driver){
   const debut=document.getElementById('profile-f1-debut');
   const seasonSummary=document.getElementById('profile-season-summary');
   if(debut)debut.textContent=debutMap[driver.Driver?.driverId]||'--';
-  if(seasonSummary)seasonSummary.textContent=`P${driver.position||'--'} · ${driver.points||0} points · ${driver.wins||0} wins`;
+  if(seasonSummary){const wins=Number(driver.wins||0);seasonSummary.textContent=`P${driver.position||'--'} · ${driver.points||0} points · ${wins} ${wins===1?'win':'wins'}`;}
   renderDriverCareer(driver);
   const extract=await fetchDriverWikiSummary(driver);
   if(bio){
