@@ -997,6 +997,51 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 </style>
 
+
+<style id="f1hub-profile-v10-final">
+/* FINAL DRIVER PROFILE CLEANUP */
+#driver-profile-content{
+  grid-template-columns:minmax(0,1.28fr) minmax(340px,.92fr)!important;
+  grid-template-rows:auto auto minmax(0,1fr)!important;
+  gap:16px!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+#driver-profile-content>.grid:first-of-type{grid-column:1!important;grid-row:1!important;gap:16px!important;}
+#driver-stats{grid-column:1!important;grid-row:2!important;margin:0!important;}
+.driver-profile-about{grid-column:1 / -1!important;grid-row:3!important;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;gap:16px!important;margin:0!important;align-items:stretch!important;}
+.profile-info-card{height:auto!important;min-height:0!important;padding:20px!important;}
+.profile-dossier-extra{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:14px;background:#202020;border:1px solid #202020;border-radius:9px;overflow:hidden;}
+.profile-dossier-extra .profile-fact{background:#101010;padding:11px 12px;}
+.profile-highlight{margin-top:14px;padding-top:14px;border-top:1px solid #202020;}
+.profile-highlight-title{font:700 8px/1 Inter,Arial,sans-serif;text-transform:uppercase;letter-spacing:.18em;color:#65738b;margin-bottom:8px;}
+.profile-highlight-list{display:grid;gap:7px;margin:0;padding:0;list-style:none;}
+.profile-highlight-list li{font-size:10px;line-height:1.5;color:#a0a5ae;padding-left:12px;position:relative;}
+.profile-highlight-list li:before{content:"";position:absolute;left:0;top:.55em;width:4px;height:4px;border-radius:50%;background:var(--team-color,#fff);}
+.profile-career-list{position:relative!important;margin-top:16px!important;padding:0 0 0 82px!important;display:grid!important;gap:0!important;}
+.profile-career-list:before{content:"";position:absolute!important;left:66px!important;top:8px!important;bottom:8px!important;width:2px!important;background:#27292e!important;}
+.profile-career-item{position:relative!important;display:grid!important;grid-template-columns:1fr!important;gap:0!important;min-height:72px!important;padding:0 0 20px!important;margin:0!important;}
+.profile-career-item:last-child{padding-bottom:0!important;}
+.profile-career-item:before{content:"";position:absolute!important;left:-20px!important;top:4px!important;width:9px!important;height:9px!important;border-radius:50%!important;background:var(--team-color,#fff)!important;box-shadow:0 0 0 5px rgba(255,255,255,.035)!important;}
+.profile-career-year{position:static!important;width:auto!important;text-align:left!important;font:800 10px/1 Inter,Arial,sans-serif!important;letter-spacing:.08em!important;color:#f1f1f3!important;margin-bottom:5px!important;}
+.profile-career-copy strong{display:block!important;font-size:12px!important;line-height:1.25!important;color:#f2f2f4!important;margin:0 0 4px!important;}
+.profile-career-copy .career-detail{display:block!important;font-size:10px!important;line-height:1.55!important;color:#777d87!important;}
+.profile-career-list .profile-career-item:not(:last-child) .profile-career-copy{padding-bottom:0!important;}
+@media(max-width:900px){
+  #driver-profile-content{grid-template-columns:1fr!important;gap:14px!important;}
+  #driver-profile-content>.grid:first-of-type{grid-column:1!important;grid-row:1!important;}
+  .profile-driver-visual{grid-column:1!important;grid-row:2!important;}
+  #driver-stats{grid-column:1!important;grid-row:3!important;}
+  .driver-profile-about{grid-column:1!important;grid-row:4!important;grid-template-columns:1fr 1fr!important;gap:14px!important;}
+}
+@media(max-width:640px){
+  .driver-profile-about{grid-template-columns:1fr!important;}
+  .profile-info-card{padding:16px!important;}
+  .profile-career-list{padding-left:64px!important;}
+  .profile-career-list:before{left:48px!important;}
+  .profile-career-item:before{left:-20px!important;}
+}
+</style>
 </head>
 
 <body>
@@ -1357,6 +1402,14 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
       <div class="profile-fact"><div class="profile-fact-label">Quốc tịch</div><div id="profile-nationality-fact" class="profile-fact-value">--</div></div>
       <div class="profile-fact"><div class="profile-fact-label">Số xe</div><div id="profile-number-fact" class="profile-fact-value">--</div></div>
       <div class="profile-fact"><div class="profile-fact-label">Đội hiện tại</div><div id="profile-team-fact" class="profile-fact-value">--</div></div>
+    </div>
+    <div class="profile-dossier-extra">
+      <div class="profile-fact"><div class="profile-fact-label">F1 DEBUT</div><div id="profile-f1-debut" class="profile-fact-value">--</div></div>
+      <div class="profile-fact"><div class="profile-fact-label">SEASON 2026</div><div id="profile-season-summary" class="profile-fact-value">--</div></div>
+    </div>
+    <div class="profile-highlight">
+      <div class="profile-highlight-title">Điểm nổi bật</div>
+      <ul id="profile-highlights" class="profile-highlight-list"></ul>
     </div>
   </div>
   <div class="profile-info-card">
@@ -2545,58 +2598,51 @@ function renderDriverCareer(driver){
   if(!el)return;
   const id=driver.Driver?.driverId||'';
   const currentTeam=driver.Constructors?.[0]?.name||'Formula 1';
-  const currentYear=String(driver.season||SEASON);
-  const wins=Number(driver.wins||0);
-  const podiums=getDriverPodiums(id);
   const position=driver.position||'--';
   const points=driver.points||0;
-  const name=`${driver.Driver?.givenName||''} ${driver.Driver?.familyName||''}`.trim();
 
   const careerMap={
-    hamilton:[
-      ['2007','McLaren','F1 debut — bước vào Formula 1 với McLaren.'],
-      ['2008','McLaren','Giành chức vô địch thế giới đầu tiên.'],
-      ['2013','Mercedes','Chuyển sang Mercedes và bắt đầu kỷ nguyên thành công mới.'],
-      ['2014–20','Mercedes','Giành 6 chức vô địch thế giới cùng Mercedes.'],
-      ['2025','Ferrari','Gia nhập Ferrari, mở ra chương mới trong sự nghiệp.'],
-      ['2026','Ferrari',`Mùa giải hiện tại — P${position} với ${points} điểm.`]
-    ],
-    leclerc:[['2018','Sauber','Ra mắt Formula 1.'],['2019','Ferrari','Gia nhập Ferrari và trở thành tay đua chủ lực.'],['2026','Ferrari',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    russell:[['2019','Williams','Ra mắt Formula 1.'],['2022','Mercedes','Gia nhập Mercedes.'],['2026','Mercedes',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    antonelli:[['2025','Mercedes','Ra mắt Formula 1 với Mercedes.'],['2026','Mercedes',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    norris:[['2019','McLaren','Ra mắt Formula 1.'],['2021','McLaren','Giành chiến thắng F1 đầu tiên.'],['2026','McLaren',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    piastri:[['2023','McLaren','Ra mắt Formula 1.'],['2024','McLaren','Bước lên nhóm chiến thắng và trở thành nhân tố chủ lực.'],['2026','McLaren',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    max_verstappen:[['2015','Toro Rosso','Ra mắt Formula 1 ở tuổi 17.'],['2016','Red Bull Racing','Chuyển lên Red Bull và giành chiến thắng F1 đầu tiên.'],['2021–24','Red Bull Racing','Giai đoạn thống trị và nhiều chức vô địch thế giới.'],['2026','Red Bull Racing',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    gasly:[['2017','Toro Rosso','Ra mắt Formula 1.'],['2019','Red Bull Racing','Thi đấu cho Red Bull Racing.'],['2020','AlphaTauri','Giành chiến thắng F1 đầu tiên.'],['2023','Alpine','Gia nhập Alpine.'],['2026','Alpine',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    alonso:[['2001','Minardi','Ra mắt Formula 1.'],['2005–06','Renault','Giành 2 chức vô địch thế giới liên tiếp.'],['2015','McLaren','Trở lại McLaren.'],['2023','Aston Martin','Gia nhập Aston Martin.'],['2026','Aston Martin',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    sainz:[['2015','Toro Rosso','Ra mắt Formula 1.'],['2019','McLaren','Gia nhập McLaren.'],['2021','Ferrari','Gia nhập Ferrari.'],['2025','Williams','Chuyển sang Williams.'],['2026','Williams',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    albon:[['2019','Toro Rosso','Ra mắt Formula 1.'],['2019','Red Bull Racing','Được đôn lên Red Bull Racing.'],['2022','Williams','Trở lại F1 cùng Williams.'],['2026','Williams',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    stroll:[['2017','Williams','Ra mắt Formula 1.'],['2019','Racing Point','Gia nhập Racing Point.'],['2021','Aston Martin','Tiếp tục sự nghiệp cùng Aston Martin.'],['2026','Aston Martin',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    ocon:[['2016','Manor','Ra mắt Formula 1.'],['2017','Force India','Thi đấu thường xuyên tại F1.'],['2020','Renault','Gia nhập Renault.'],['2023','Alpine','Tiếp tục cùng Alpine.'],['2026','Haas F1 Team',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    hulkenberg:[['2010','Williams','Ra mắt Formula 1.'],['2013','Sauber','Thi đấu cho Sauber.'],['2020','Racing Point','Trở lại F1 trong vai trò thay thế.'],['2025','Sauber','Trở lại toàn thời gian.'],['2026','Audi',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    bortoleto:[['2025','Sauber','Ra mắt Formula 1.'],['2026','Audi',`Tiếp tục thi đấu tại F1 — P${position} với ${points} điểm.`]],
-    bearman:[['2024','Ferrari / Haas','Ra mắt F1 và thi đấu thay thế trong mùa giải.'],['2025','Haas F1 Team','Gia nhập đội hình chính thức.'],['2026','Haas F1 Team',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    colapinto:[['2024','Williams','Ra mắt Formula 1.'],['2025','Alpine','Gia nhập Alpine.'],['2026','Alpine',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    lawson:[['2023','AlphaTauri','Ra mắt Formula 1.'],['2025','Racing Bulls / Red Bull','Tiếp tục thi đấu trong hệ thống Red Bull.'],['2026','Racing Bulls',`Mùa giải hiện tại — P${position} với ${points} điểm.`]],
-    hadjar:[['2025','Racing Bulls','Ra mắt Formula 1.'],['2026','Red Bull Racing',`Bước vào mùa giải thứ hai tại F1 — P${position} với ${points} điểm.`]],
-    lindblad:[['2026','Racing Bulls','Ra mắt Formula 1.'],['2026','Racing Bulls',`Mùa giải tân binh — P${position} với ${points} điểm.`]],
-    perez:[['2011','Sauber','Ra mắt Formula 1.'],['2014','Force India','Gia nhập Force India.'],['2021','Red Bull Racing','Gia nhập Red Bull Racing.'],['2026','Cadillac',`Chương mới tại Cadillac — P${position} với ${points} điểm.`]],
-    bottas:[['2013','Williams','Ra mắt Formula 1.'],['2017','Mercedes','Gia nhập Mercedes.'],['2022','Alfa Romeo','Chuyển sang Alfa Romeo.'],['2026','Cadillac',`Chương mới tại Cadillac — P${position} với ${points} điểm.`]]
+    hamilton:[['2007','McLaren','F1 debut.'],['2008','McLaren','World Champion — first title.'],['2013','Mercedes','Joined Mercedes.'],['2014–20','Mercedes','Six world titles across seven seasons.'],['2025','Ferrari','Joined Ferrari.'],['2026','Ferrari',`Current season — P${position}, ${points} points.`]],
+    leclerc:[['2018','Sauber','F1 debut.'],['2019','Ferrari','Joined Ferrari as a race driver.'],['2022','Ferrari','Finished runner-up in the championship.'],['2026','Ferrari',`Current season — P${position}, ${points} points.`]],
+    russell:[['2019','Williams','F1 debut.'],['2022','Mercedes','Joined Mercedes.'],['2025','Mercedes','Established as a championship contender.'],['2026','Mercedes',`Current season — P${position}, ${points} points.`]],
+    antonelli:[['2025','Mercedes','F1 debut as a rookie.'],['2026','Mercedes',`Second F1 season — P${position}, ${points} points.`]],
+    norris:[['2019','McLaren','F1 debut.'],['2021','McLaren','First F1 win at Monza.'],['2024','McLaren','First championship campaign as a leading contender.'],['2026','McLaren',`Current season — P${position}, ${points} points.`]],
+    piastri:[['2023','McLaren','F1 debut.'],['2024','McLaren','First F1 wins and breakthrough season.'],['2025','McLaren','Championship title campaign.'],['2026','McLaren',`Current season — P${position}, ${points} points.`]],
+    max_verstappen:[['2015','Toro Rosso','F1 debut at age 17.'],['2016','Red Bull Racing','Promoted and won on Red Bull debut.'],['2021','Red Bull Racing','First world championship.'],['2022–24','Red Bull Racing','Three consecutive world titles.'],['2026','Red Bull Racing',`Current season — P${position}, ${points} points.`]],
+    gasly:[['2017','Toro Rosso','F1 debut.'],['2019','Red Bull Racing','Promoted to Red Bull Racing.'],['2020','AlphaTauri','First F1 win at Monza.'],['2023','Alpine','Joined Alpine.'],['2026','Alpine',`Current season — P${position}, ${points} points.`]],
+    alonso:[['2001','Minardi','F1 debut.'],['2005–06','Renault','Two consecutive world titles.'],['2015','McLaren','Returned to McLaren.'],['2023','Aston Martin','Joined Aston Martin.'],['2026','Aston Martin',`Current season — P${position}, ${points} points.`]],
+    sainz:[['2015','Toro Rosso','F1 debut.'],['2019','McLaren','Joined McLaren.'],['2021','Ferrari','Joined Ferrari.'],['2025','Williams','Joined Williams.'],['2026','Williams',`Current season — P${position}, ${points} points.`]],
+    albon:[['2019','Toro Rosso → Red Bull Racing','F1 debut and mid-season promotion.'],['2022','Williams','Returned to F1 with Williams.'],['2026','Williams',`Current season — P${position}, ${points} points.`]],
+    stroll:[['2017','Williams','F1 debut.'],['2019','Racing Point','Joined Racing Point.'],['2021','Aston Martin','Continued with the rebranded team.'],['2026','Aston Martin',`Current season — P${position}, ${points} points.`]],
+    ocon:[['2016','Manor','F1 debut.'],['2017','Force India','Became a full-time F1 driver.'],['2020','Renault','Joined Renault.'],['2026','Haas F1 Team',`Current season — P${position}, ${points} points.`]],
+    hulkenberg:[['2010','Williams','F1 debut and pole position in Brazil.'],['2013','Sauber','Joined Sauber.'],['2020','Racing Point','Returned as a substitute driver.'],['2025','Sauber','Returned full-time.'],['2026','Audi',`Current season — P${position}, ${points} points.`]],
+    bortoleto:[['2025','Sauber','F1 debut.'],['2026','Audi',`Second F1 season — P${position}, ${points} points.`]],
+    bearman:[['2024','Ferrari / Haas','F1 debut as a substitute driver.'],['2025','Haas F1 Team','Joined full-time.'],['2026','Haas F1 Team',`Current season — P${position}, ${points} points.`]],
+    colapinto:[['2024','Williams','F1 debut.'],['2025','Alpine','Joined Alpine.'],['2026','Alpine',`Current season — P${position}, ${points} points.`]],
+    lawson:[['2023','AlphaTauri','F1 debut as a substitute driver.'],['2025','Racing Bulls / Red Bull','Continued in the Red Bull system.'],['2026','Racing Bulls',`Current season — P${position}, ${points} points.`]],
+    hadjar:[['2025','Racing Bulls','F1 debut.'],['2026','Red Bull Racing',`Second F1 season — P${position}, ${points} points.`]],
+    lindblad:[['2026','Racing Bulls','F1 debut and rookie season.'],['2026','Racing Bulls',`Current season — P${position}, ${points} points.`]],
+    perez:[['2011','Sauber','F1 debut.'],['2014','Force India','Joined Force India.'],['2021','Red Bull Racing','Joined Red Bull Racing.'],['2026','Cadillac',`New chapter with Cadillac — P${position}, ${points} points.`]],
+    bottas:[['2013','Williams','F1 debut.'],['2017','Mercedes','Joined Mercedes.'],['2022','Alfa Romeo','Moved to Alfa Romeo.'],['2026','Cadillac',`New chapter with Cadillac — P${position}, ${points} points.`]]
   };
 
-  let items=careerMap[id];
-  if(!items){
-    items=[
-      [currentYear,currentTeam,`Mùa giải hiện tại — P${position} với ${points} điểm.`],
-      ['2026','Season record',`${wins} chiến thắng · ${podiums} podium trong dữ liệu mùa giải hiện tại.`]
-    ];
-  }
-  el.innerHTML=items.map(([year,team,detail])=>`
+  let raw=careerMap[id]||[[String(driver.season||SEASON),currentTeam,`Current season — P${position}, ${points} points.`]];
+  // Merge duplicate year entries so the same year never appears twice.
+  const merged=[];
+  raw.forEach(([year,team,detail])=>{
+    const existing=merged.find(x=>x[0]===year);
+    if(existing){
+      if(existing[1]!==team && !existing[1].includes(team)) existing[1]=`${existing[1]} → ${team}`;
+      if(existing[2]!==detail && !existing[2].includes(detail)) existing[2]=`${existing[2]} ${detail}`;
+    }else merged.push([year,team,detail]);
+  });
+  el.innerHTML=merged.map(([year,team,detail])=>`
     <div class="profile-career-item">
       <div class="profile-career-year">${escapeHTML(String(year))}</div>
       <div class="profile-career-copy"><strong>${escapeHTML(team)}</strong><span class="career-detail">${escapeHTML(detail)}</span></div>
     </div>`).join('');
 }
+
 async function enrichDriverProfile(driver){
   const bio=document.getElementById('profile-bio');
   const dob=document.getElementById('profile-dob');
@@ -2607,6 +2653,29 @@ async function enrichDriverProfile(driver){
   if(nat)nat.textContent=driver.Driver?.nationality||'--';
   if(num)num.textContent=driver.Driver?.permanentNumber||DRIVER_NUMBER_MAP[driver.Driver?.driverId]||'--';
   if(team)team.textContent=driver.Constructors?.[0]?.name||'--';
+  const debutMap={hamilton:'2007',leclerc:'2018',russell:'2019',antonelli:'2025',norris:'2019',piastri:'2023',max_verstappen:'2015',gasly:'2017',alonso:'2001',sainz:'2015',albon:'2019',stroll:'2017',ocon:'2016',hulkenberg:'2010',bortoleto:'2025',bearman:'2024',colapinto:'2024',lawson:'2023',hadjar:'2025',lindblad:'2026',perez:'2011',bottas:'2013'};
+  const debut=document.getElementById('profile-f1-debut');
+  const seasonSummary=document.getElementById('profile-season-summary');
+  if(debut)debut.textContent=debutMap[driver.Driver?.driverId]||'--';
+  if(seasonSummary)seasonSummary.textContent=`P${driver.position||'--'} · ${driver.points||0} pts · ${driver.wins||0} wins`;
+  const highlights=document.getElementById('profile-highlights');
+  if(highlights){
+    const id=driver.Driver?.driverId||'';
+    const highlightMap={
+      hamilton:['7× World Champion','Most F1 wins (career)','Ferrari driver since 2025'],
+      max_verstappen:['4× World Champion','Youngest F1 race winner','Multiple Red Bull wins'],
+      alonso:['2× World Champion','2005–06 champion','One of F1’s most experienced drivers'],
+      leclerc:['Ferrari race winner','2022 championship runner-up','Multiple pole positions'],
+      norris:['F1 race winner','McLaren lead driver','Championship contender'],
+      piastri:['F1 race winner','McLaren race winner','Championship contender'],
+      russell:['Mercedes race winner','Former Williams driver','Grand Prix winner'],
+      gasly:['Grand Prix winner','Monza 2020 winner','Alpine driver'],
+      sainz:['Grand Prix winner','Former Ferrari driver','Williams driver since 2025'],
+      albon:['Red Bull graduate','Returned to F1 with Williams','Williams lead driver']
+    };
+    const items=highlightMap[id]||[`${driver.wins||0} race wins in current data`,` ${getDriverPodiums(id)} podiums in current data`,`${driver.Constructors?.[0]?.name||'Current team'} driver`];
+    highlights.innerHTML=items.map(x=>`<li>${escapeHTML(x)}</li>`).join('');
+  }
   renderDriverCareer(driver);
   const extract=await fetchDriverWikiSummary(driver);
   if(bio){
