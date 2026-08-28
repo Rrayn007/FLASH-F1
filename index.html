@@ -16,7 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<style>
+<style id="f1hub-optimized-styles">
+
+/* ===== consolidated source block 0 ===== */
 :root{--red:#e10600;--bg:#080808;--panel:#0d0d0f;--panel2:#111114;--border:#222225;--ui-border:#272b31;--ui-cyan:#00d7c4;--ui-blue:#3f82ff;--ui-muted:#777d86;--ad-ease:cubic-bezier(.22,1,.36,1);--side-ad-width:150px;--side-ad-height:560px;--side-ad-edge:10px}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -318,9 +320,9 @@ button{font-family:inherit}
 .completed-card:hover{background:linear-gradient(145deg,color-mix(in srgb,var(--accent,#333) 9%,#111113),#151517)}
 .result-podium{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
 .result-podium-item{background:#19191c;border:1px solid #303035;border-radius:6px;padding:8px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
-.result-podium-item.gold{border-color:#a78b3b;background:#211d14}
-.result-podium-item.silver{border-color:#707070;background:#1c1c1e}
-.result-podium-item.bronze{border-color:#805d3d;background:#201915}
+.result-podium-item.gold{border-color:#a78b3b;background:#211d14}.result-podium-item.gold .result-position{color:#d8b85a}.result-podium-item.gold .result-driver{color:#fff5d2}
+.result-podium-item.silver{border-color:#707070;background:#1c1c1e}.result-podium-item.silver .result-position{color:#c7cbd0}.result-podium-item.silver .result-driver{color:#eef0f2}
+.result-podium-item.bronze{border-color:#805d3d;background:#201915}.result-podium-item.bronze .result-position{color:#c88758}.result-podium-item.bronze .result-driver{color:#f0d1bb}
 .result-position{font-size:8px;color:#85858b;font-weight:900}
 .result-driver{font-size:10px;font-weight:850;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f2f2f2}
 .result-team{font-size:6px;color:#777;text-transform:uppercase;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1002,6 +1004,80 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   }
 }
 
+/* =========================================================
+   RESPONSIVE CARD HARDENING
+   Preserve the existing visual design while preventing clipping,
+   collapsed stat rows, and broken card proportions on small widths.
+   ========================================================= */
+#drivers-grid{min-width:0}
+#drivers-grid>.driver-card,
+#teams-grid>.team-card,
+#calendar-grid>.calendar-card{min-width:0;width:100%}
+.driver-card .driver-content,
+.driver-card .driver-name-zone,
+.driver-card .driver-stats-row{min-width:0}
+.driver-card .driver-lastname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.driver-card .driver-stats-row>div{min-width:0}
+.driver-card .driver-stats-row .timing-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.driver-card .driver-stats-row .timing-value{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+@media (max-width:1023px){
+  #drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  #calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .driver-card{border-radius:9px}
+  .driver-card .driver-content{padding:13px 13px 11px!important}
+  .driver-card .driver-number{top:11px!important;right:12px!important;font-size:34px!important}
+  .driver-card .driver-name-zone{min-height:64px!important;margin-bottom:7px!important;padding:6px 0}
+  .driver-card .driver-firstname{font-size:9px!important}
+  .driver-card .driver-lastname{font-size:clamp(18px,3.1vw,25px)!important}
+  .driver-card .driver-stats-row{padding-top:8px!important}
+  .driver-card .driver-stats-row .timing-label{font-size:6px!important}
+  .driver-card .driver-stats-row .timing-value{font-size:10px!important}
+}
+
+@media (max-width:640px){
+  #drivers-grid,#calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .driver-card .driver-content{padding:11px 11px 10px!important}
+  .driver-card .team-stripe{width:2px;height:30px!important}
+  .driver-card .timing-label{font-size:6.5px!important}
+  .driver-card .driver-rank{font-size:9px!important}
+  .driver-card .driver-name-zone{min-height:58px!important}
+  .driver-card .driver-firstname{font-size:8px!important}
+  .driver-card .driver-lastname{font-size:clamp(17px,5.2vw,22px)!important;letter-spacing:-.045em!important}
+  .driver-card .driver-stats-row .timing-value{font-size:9px!important}
+}
+
+@media (max-width:390px){
+  #drivers-grid,#calendar-grid{gap:6px!important}
+  .driver-card .driver-content{padding:9px 9px 8px!important}
+  .driver-card .driver-number{top:9px!important;right:9px!important;font-size:29px!important}
+  .driver-card .driver-name-zone{min-height:54px!important;margin-bottom:5px!important}
+  .driver-card .driver-firstname{font-size:7px!important}
+  .driver-card .driver-lastname{font-size:clamp(15px,5vw,19px)!important}
+  .driver-card .driver-stats-row{padding-top:6px!important}
+  .driver-card .driver-stats-row .timing-label{font-size:5.5px!important;letter-spacing:.12em!important}
+  .driver-card .driver-stats-row .timing-value{font-size:8px!important}
+  .calendar-card{border-radius:8px}
+}
+
+@media (max-width:340px){
+  #drivers-grid,#calendar-grid{grid-template-columns:1fr!important}
+  .driver-card{aspect-ratio:1.08/1!important}
+}
+
+/* Profile Overview: stable short values at every phone width. */
+@media(max-width:560px){
+  .driver-profile-about>.profile-info-card:first-child{column-gap:8px!important;row-gap:8px!important}
+  .profile-fact{padding:9px 10px!important}
+  .profile-fact-value{font-size:10px!important;line-height:1.15!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+}
+@media(max-width:390px){
+  .driver-profile-about>.profile-info-card:first-child{column-gap:7px!important;row-gap:7px!important}
+  .profile-fact{padding:8px 9px!important}
+  .profile-fact-label{font-size:6px!important;letter-spacing:.12em!important}
+  .profile-fact-value{font-size:9.5px!important}
+}
+
 @media(prefers-reduced-motion:reduce){
   #ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{animation:none!important;transition:none!important}
   #ad-container.is-shining:after,#sponsor-slot.is-shining .card:after,#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{animation:none!important}
@@ -1009,9 +1085,60 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 }
 
 
-</style>
 
-<style id="driver-profile-system">
+
+/* =========================================================
+   FINAL RESPONSIVE POLISH — preserve desktop layout
+   ========================================================= */
+.calendar-card,.driver-card,.team-card,.sidebar-standing-card,.profile-info-card{min-width:0;overflow:hidden}
+.calendar-race-title{min-width:0;line-height:1.28;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-height:2.56em}
+.calendar-circuit{min-width:0;line-height:1.35;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-height:2.7em}
+.calendar-card .text-right{min-width:82px;max-width:46%}
+.calendar-card .calendar-date{white-space:nowrap}
+.calendar-card .calendar-status{flex:none;white-space:nowrap}
+.result-podium-item{min-width:0}
+.result-podium-item .result-position{font-weight:950}
+.profile-fact{min-width:0}
+.profile-fact-value{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.driver-profile-about .profile-info-card{min-width:0}
+
+@media (max-width: 640px){
+  #calendar-grid,#drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .calendar-card{padding:13px!important}
+  .calendar-race-title{font-size:17px!important;line-height:1.24!important;min-height:2.48em!important;margin-top:13px!important;letter-spacing:-.03em!important}
+  .calendar-card>.mt-6{margin-top:14px!important;gap:8px!important}
+  .calendar-card .text-right{min-width:72px;max-width:44%}
+  .calendar-card .calendar-circuit{font-size:10px!important;line-height:1.25!important;min-height:2.5em!important;margin-top:6px!important}
+  .calendar-card .calendar-date{font-size:10px!important}
+  .calendar-card .text-right .text-[8px]{font-size:6.5px!important;line-height:1.15!important;white-space:normal!important}
+  .calendar-card .mt-5{margin-top:13px!important}
+  .result-podium{gap:3px}
+  .result-podium-item{padding:6px 4px}
+  .result-position{font-size:7px}
+  .result-driver{font-size:9px}
+  .result-team{font-size:5.5px}
+  .profile-dossier-extra,.profile-facts-compact{gap:7px!important}
+  .profile-fact{padding:8px 9px!important}
+  .profile-fact-label{font-size:6.5px!important}
+  .profile-fact-value{font-size:10px!important;line-height:1.15!important;white-space:nowrap!important}
+}
+
+@media (max-width: 390px){
+  #calendar-grid,#drivers-grid{gap:6px!important}
+  .calendar-card{padding:11px!important}
+  .calendar-race-title{font-size:15px!important;line-height:1.22!important;min-height:2.44em!important}
+  .calendar-card .text-right{min-width:67px;max-width:45%}
+  .calendar-card .calendar-circuit{font-size:9px!important}
+  .calendar-card .calendar-date{font-size:9px!important}
+  .calendar-card .text-right .text-[8px]{font-size:6px!important}
+}
+
+@media (max-width: 340px){
+  #calendar-grid,#drivers-grid{grid-template-columns:1fr!important}
+  .calendar-card .calendar-race-title{font-size:18px!important}
+}
+
+/* ===== consolidated source block 1 ===== */
 /* =========================================================
    F1 HUB PROFILE — FINAL / SINGLE SOURCE OF TRUTH
    Fixed modal geometry • independent scroll regions • no
@@ -1073,7 +1200,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 .profile-fact{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;margin:0!important;padding:12px 14px!important;border:1px solid #24262b!important;border-radius:9px!important;background:rgba(255,255,255,.012)!important;display:flex!important;flex-direction:column!important;justify-content:center!important;overflow:hidden!important;box-sizing:border-box!important}
 .profile-fact-label{flex:0 0 auto!important;min-width:0!important;font-size:7px!important;text-transform:uppercase!important;letter-spacing:.18em!important;line-height:1.2!important;color:#5d6674!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
 .profile-fact-value{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;min-height:14px!important;max-height:30px!important;margin-top:7px!important;font-size:11px!important;line-height:1.28!important;font-weight:800!important;color:#f2f2f4!important;white-space:normal!important;overflow:hidden!important;overflow-wrap:normal!important;word-break:normal!important}
-#profile-season-summary{display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;overflow:hidden!important;overflow-wrap:normal!important;word-break:normal!important}
+#profile-f1-debut,#profile-height{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
 
 /* Career: only the timeline list scrolls. */
 .driver-profile-about>.profile-info-card:nth-child(2){display:flex!important;flex-direction:column!important;min-height:0!important}
@@ -1128,7 +1255,1633 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
   .profile-fact-value{font-size:10px!important;line-height:1.28!important}
   .profile-fact-label{font-size:6.5px!important}
 }
+
+/* ===== consolidated source block 2 ===== */
+/* =========================================================
+   MOBILE FIX — Team cards + Driver profile constructor box
+   Preserve desktop/tablet layout; only correct narrow widths.
+   ========================================================= */
+@media (max-width:640px){
+  /* TEAM CARDS: keep both drivers readable inside the small cards. */
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:50%!important;
+    right:5%!important;
+    bottom:10px!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-name{
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    white-space:normal!important;
+    word-break:normal!important;
+    overflow-wrap:anywhere!important;
+    font-size:9px!important;
+    line-height:1.02!important;
+    letter-spacing:-.035em!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-label{
+    font-size:5.5px!important;
+    line-height:1!important;
+    margin-bottom:4px!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-points{
+    font-size:6.5px!important;
+    line-height:1!important;
+    margin-top:4px!important;
+    white-space:nowrap!important;
+  }
+
+  /* DRIVER PROFILE: constructor name must wrap instead of being truncated. */
+  #driver-profile-content .profile-constructor-box{
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  #driver-profile-content .profile-constructor-info,
+  #driver-profile-content .profile-constructor-info > .flex,
+  #driver-profile-content .profile-constructor-info > .flex > div:last-child{
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  #driver-profile-content #profile-team{
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    word-break:normal!important;
+    font-size:17px!important;
+    line-height:1.02!important;
+    letter-spacing:-.035em!important;
+    margin-top:7px!important;
+  }
+  #driver-profile-content #profile-team-logo{
+    flex:0 0 auto!important;
+    width:48px!important;
+    height:34px!important;
+    object-fit:contain!important;
+  }
+  #driver-profile-content #profile-nationality{
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    max-width:100%!important;
+    font-size:8px!important;
+    margin-top:5px!important;
+  }
+}
+
+@media (max-width:390px){
+  .team-card .team-card-driver-mini .driver-mini-name{
+    font-size:8.5px!important;
+  }
+  #driver-profile-content #profile-team{
+    font-size:15.5px!important;
+  }
+  #driver-profile-content #profile-team-logo{
+    width:44px!important;
+    height:31px!important;
+  }
+}
+
+/* ===== consolidated source block 3 ===== */
+/* =========================================================
+   MOBILE FINAL PRECISION FIX
+   Only narrow/mobile layouts. Desktop remains untouched.
+   ========================================================= */
+@media (max-width:640px){
+  /* Team cards: show the complete driver figure without cutting
+     the lower body at the mini-card edge. */
+  .team-card .team-card-driver-mini{
+    height:88px!important;
+    min-height:88px!important;
+    overflow:hidden!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-image{
+    left:-8%!important;
+    top:-1%!important;
+    width:57%!important;
+    height:112%!important;
+    transform:scale(1)!important;
+    transform-origin:center top!important;
+  }
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:51%!important;
+    right:4%!important;
+    bottom:9px!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:45%!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-name{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    font-size:8.5px!important;
+    line-height:1.02!important;
+    letter-spacing:-.025em!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    word-break:normal!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-label{
+    font-size:5.5px!important;
+    margin-bottom:3px!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-points{
+    font-size:6.5px!important;
+    margin-top:4px!important;
+  }
+
+  /* Driver profile header: never squeeze the driver's full name
+     into one line. Keep the close button in its own fixed column. */
+  #profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{
+    align-items:flex-start!important;
+    gap:10px!important;
+  }
+  #profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start > div:first-child{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    width:auto!important;
+  }
+  #profile-modal #profile-name{
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin-top:5px!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    line-height:.94!important;
+    letter-spacing:-.045em!important;
+    font-size:clamp(21px,6.2vw,29px)!important;
+  }
+
+  /* Constructor block: use the available width instead of clipping
+     long names such as ASTON MARTIN. */
+  #driver-profile-content .profile-constructor-info{
+    width:100%!important;
+    min-width:0!important;
+  }
+  #driver-profile-content .profile-constructor-info > .flex{
+    width:100%!important;
+    min-width:0!important;
+    gap:10px!important;
+  }
+  #driver-profile-content .profile-constructor-info > .flex > div:last-child{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    width:auto!important;
+  }
+  #driver-profile-content #profile-team{
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    font-size:16px!important;
+    line-height:.98!important;
+    letter-spacing:-.035em!important;
+  }
+  #driver-profile-content #profile-team-logo{
+    flex:0 0 42px!important;
+    width:42px!important;
+    height:30px!important;
+  }
+
+  /* Keep every profile section on one clean left edge. */
+  #profile-modal .modal-box>.p-6.md\:p-8,
+  #driver-profile-content,
+  .driver-profile-about,
+  .driver-profile-about>.profile-info-card{
+    box-sizing:border-box!important;
+  }
+}
+
+@media (max-width:390px){
+  .team-card .team-card-driver-mini .driver-mini-image{
+    left:-10%!important;
+    width:56%!important;
+    height:110%!important;
+  }
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:50%!important;
+    right:3%!important;
+    max-width:47%!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-name{font-size:8px!important}
+  #profile-modal #profile-name{font-size:20px!important}
+  #driver-profile-content #profile-team{font-size:15px!important}
+  #driver-profile-content #profile-team-logo{flex-basis:40px!important;width:40px!important;height:29px!important}
+}
+
+/* ===== consolidated source block 4 ===== */
+/* =========================================================
+   MOBILE LAYOUT CORRECTION — FINAL
+   Keep desktop/tablet unchanged.
+   ========================================================= */
+@media (max-width:640px){
+  /* TEAM CARD DRIVER MINI: image left + text left, both smaller. */
+  .team-card .team-card-driver-mini{
+    height:92px!important;
+    min-height:92px!important;
+    padding:4px 6px!important;
+    overflow:hidden!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-image{
+    left:-5%!important;
+    top:0!important;
+    width:48%!important;
+    height:100%!important;
+    max-height:100%!important;
+    object-fit:contain!important;
+    object-position:center bottom!important;
+    transform:none!important;
+    -webkit-mask-image:none!important;
+    mask-image:none!important;
+  }
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:43%!important;
+    right:3%!important;
+    bottom:8px!important;
+    width:auto!important;
+    max-width:54%!important;
+    min-width:0!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-label{
+    font-size:5px!important;
+    line-height:1!important;
+    margin-bottom:3px!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-name{
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+    width:100%!important;
+    max-width:100%!important;
+    font-size:7.6px!important;
+    line-height:1.05!important;
+    letter-spacing:-.02em!important;
+    white-space:normal!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-points{
+    font-size:6px!important;
+    line-height:1!important;
+    margin-top:3px!important;
+  }
+
+  /* DRIVER PROFILE HEADER: full name gets a clean 2-line area. */
+  #profile-modal .modal-box>.p-6.md\\:p-8>.flex.justify-between.items-start{
+    min-height:50px!important;
+    height:auto!important;
+    align-items:flex-start!important;
+    gap:8px!important;
+  }
+  #profile-modal .modal-box>.p-6.md\\:p-8>.flex.justify-between.items-start>div:first-child{
+    flex:1 1 auto!important;
+    min-width:0!important;
+    width:auto!important;
+  }
+  #profile-modal #profile-name{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    font-size:clamp(19px,5.8vw,25px)!important;
+    line-height:.96!important;
+    letter-spacing:-.04em!important;
+    margin-top:2px!important;
+  }
+
+  /* Top profile cards: stop the car number / constructor from being squeezed. */
+  #driver-profile-content{
+    grid-template-rows:100px 60px minmax(0,1fr)!important;
+    gap:9px!important;
+  }
+  #driver-profile-content>.grid:first-of-type{
+    grid-template-columns:108px minmax(0,1fr)!important;
+    height:100px!important;
+    min-height:100px!important;
+    max-height:100px!important;
+    gap:9px!important;
+  }
+  #profile-number-box,#driver-profile-content .profile-constructor-box{
+    height:100px!important;
+    min-height:100px!important;
+    max-height:100px!important;
+    padding:11px!important;
+    overflow:hidden!important;
+  }
+  #profile-number-box .text-7xl{
+    font-size:56px!important;
+    line-height:.82!important;
+    margin-top:8px!important;
+  }
+  #driver-profile-content .profile-constructor-info,
+  #driver-profile-content .profile-constructor-info>.flex{
+    min-width:0!important;
+    width:100%!important;
+    gap:8px!important;
+  }
+  #driver-profile-content #profile-team-logo{
+    flex:0 0 40px!important;
+    width:40px!important;
+    height:29px!important;
+  }
+  #driver-profile-content #profile-team{
+    display:-webkit-box!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    font-size:14px!important;
+    line-height:1.02!important;
+    letter-spacing:-.025em!important;
+    white-space:normal!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    overflow-wrap:normal!important;
+  }
+  #driver-profile-content #profile-nationality{
+    font-size:7px!important;
+    margin-top:4px!important;
+  }
+
+  /* THE IMPORTANT PART: mobile profile lower area is 2 columns.
+     LEFT = Overview + Career timeline. RIGHT = driver visual. */
+  #driver-profile-content{
+    grid-template-columns:minmax(0,1.18fr) minmax(120px,.82fr)!important;
+    grid-template-rows:100px 60px minmax(0,1fr)!important;
+  }
+  #driver-profile-content>.grid:first-of-type{grid-column:1 / -1!important;grid-row:1!important}
+  #driver-stats{grid-column:1 / -1!important;grid-row:2!important}
+  .driver-profile-about{
+    grid-column:1!important;
+    grid-row:3!important;
+    display:flex!important;
+    flex-direction:column!important;
+    min-width:0!important;
+    min-height:0!important;
+    gap:9px!important;
+    overflow:hidden!important;
+  }
+  .profile-driver-visual{
+    grid-column:2!important;
+    grid-row:3!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:hidden!important;
+  }
+  .driver-profile-about>.profile-info-card{
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  .driver-profile-about>.profile-info-card:first-child{
+    flex:1.05 1 0!important;
+    min-height:0!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-rows:auto auto minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-areas:"kicker kicker" "title title" "fact1 fact2" "fact3 fact4"!important;
+    column-gap:7px!important;
+    row-gap:7px!important;
+    padding:13px 12px!important;
+  }
+  .driver-profile-about>.profile-info-card:nth-child(2){
+    flex:.95 1 0!important;
+    min-height:0!important;
+    padding:13px 12px!important;
+  }
+  .profile-section-kicker{font-size:6.5px!important;letter-spacing:.22em!important}
+  .profile-section-title{font-size:20px!important;line-height:1!important;margin-top:7px!important}
+  .profile-fact{
+    padding:7px 8px!important;
+    justify-content:flex-start!important;
+    min-height:0!important;
+  }
+  .profile-fact-label{
+    font-size:5.5px!important;
+    line-height:1.15!important;
+    letter-spacing:.12em!important;
+    white-space:nowrap!important;
+  }
+  .profile-fact-value{
+    margin-top:6px!important;
+    font-size:9px!important;
+    line-height:1.15!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+  }
+  #driver-profile-content #profile-career.profile-career-list{
+    margin-top:8px!important;
+    padding-right:2px!important;
+  }
+  #profile-career .profile-career-item{font-size:9px!important}
+  #profile-career .profile-career-copy strong{font-size:10px!important}
+  #profile-career .profile-career-copy .career-detail{font-size:7px!important}
+}
+
+@media(max-width:390px){
+  #driver-profile-content{
+    grid-template-columns:minmax(0,1.16fr) minmax(112px,.84fr)!important;
+  }
+  #driver-profile-content>.grid:first-of-type{
+    grid-template-columns:102px minmax(0,1fr)!important;
+  }
+  #profile-number-box .text-7xl{font-size:52px!important}
+  #driver-profile-content #profile-team{font-size:13px!important}
+  #driver-profile-content #profile-team-logo{flex-basis:36px!important;width:36px!important;height:27px!important}
+  .driver-profile-about>.profile-info-card:first-child,
+  .driver-profile-about>.profile-info-card:nth-child(2){padding:11px 10px!important}
+  .profile-section-title{font-size:18px!important}
+  .profile-fact{padding:6px 7px!important}
+  .profile-fact-value{font-size:8.5px!important;margin-top:5px!important}
+  .profile-fact-label{font-size:5px!important}
+  .team-card .team-card-driver-mini .driver-mini-image{left:-7%!important;width:49%!important}
+  .team-card .team-card-driver-mini .team-driver-copy{left:41%!important;max-width:56%!important}
+  .team-card .team-card-driver-mini .driver-mini-name{font-size:7.2px!important}
+}
+
+/* ===== consolidated source block 5 ===== */
+/* =========================================================
+   LAST RESPONSIVE FIXES — KEEP THE EXISTING LAYOUT
+   1) Team profile: don't force a short content set into a
+      huge fixed-height modal, eliminating the dead area.
+   2) Team cards: don't let the driver mini rows get clipped
+      by the card's aspect-ratio height.
+   ========================================================= */
+
+/* TEAM PROFILE — content-sized when this is the active profile.
+   Driver profile keeps its existing fixed geometry. */
+#profile-modal:has(#team-profile-content:not(.hidden)) .modal-box{
+  height:auto!important;
+  max-height:calc(100vh - 40px)!important;
+}
+
+#profile-modal:has(#team-profile-content:not(.hidden)) .modal-box>.p-6.md\:p-8{
+  flex:0 1 auto!important;
+  height:auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+
+#profile-modal:has(#team-profile-content:not(.hidden)) #team-profile-content{
+  height:auto!important;
+  flex:0 1 auto!important;
+  max-height:calc(100vh - 150px)!important;
+  overflow-y:auto!important;
+}
+
+#profile-modal:has(#team-profile-content:not(.hidden)) .team-profile-shell{
+  height:auto!important;
+  min-height:0!important;
+}
+
+/* TEAM CARDS — preserve the existing card/grid arrangement.
+   Give the internal driver rows enough room and let the parent
+   card grow from its actual content instead of clipping the
+   bottom border/points. */
+.team-card{
+  aspect-ratio:auto!important;
+  min-height:0!important;
+}
+
+.team-card .team-card-driver-mini{
+  flex:0 0 92px!important;
+  height:92px!important;
+  min-height:92px!important;
+  max-height:92px!important;
+  box-sizing:border-box!important;
+}
+
+.team-card .team-card-driver-mini .team-driver-copy{
+  min-width:0!important;
+  max-width:54%!important;
+  bottom:8px!important;
+}
+
+.team-card .team-card-driver-mini .driver-mini-name{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+@media(max-width:640px){
+  .team-card .team-card-driver-mini{
+    flex-basis:92px!important;
+    height:92px!important;
+    min-height:92px!important;
+    max-height:92px!important;
+  }
+
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:43%!important;
+    right:3%!important;
+    bottom:8px!important;
+    max-width:54%!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-name{
+    font-size:8.5px!important;
+    line-height:1.05!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-points{
+    font-size:6.5px!important;
+    line-height:1!important;
+    margin-top:4px!important;
+  }
+}
+
+@media(max-width:390px){
+  .team-card .team-card-driver-mini{
+    flex-basis:92px!important;
+    height:92px!important;
+    min-height:92px!important;
+    max-height:92px!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-name{
+    font-size:8px!important;
+  }
+}
+
+/* ===== consolidated source block 6 ===== */
+/*
+ FINAL ALIGNMENT POLISH — NO LAYOUT CHANGE
+ -----------------------------------------
+ Chỉ chuẩn hóa lề trong Stats + Constructor.
+ Không thay đổi grid, thứ tự, card proportions hay responsive layout.
+*/
+
+/* Shared horizontal rhythm for the two blocks. */
+#driver-stats,
+#driver-profile-content>.grid:first-of-type{
+  min-width:0!important;
+}
+
+/* STATS: every cell uses the exact same left/right inset,
+   and label/value share one vertical axis. */
+#driver-stats>div{
+  min-width:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  padding:14px 16px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  text-align:left!important;
+  box-sizing:border-box!important;
+}
+
+#driver-stats>div .timing-label{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  line-height:1.15!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+#driver-stats>div .text-xl{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:7px 0 0!important;
+  line-height:.95!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+}
+
+/* CONSTRUCTOR: make the logo + text a single stable left-aligned row.
+   The row is vertically centered, but its horizontal origin never moves. */
+#driver-profile-content .profile-constructor-box{
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+
+#driver-profile-content .profile-constructor-info{
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  box-sizing:border-box!important;
+}
+
+#driver-profile-content .profile-constructor-info>.flex{
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  box-sizing:border-box!important;
+}
+
+#driver-profile-content .profile-constructor-info>.flex>div:last-child{
+  flex:1 1 auto!important;
+  min-width:0!important;
+  max-width:100%!important;
+  text-align:left!important;
+}
+
+#driver-profile-content #profile-team{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin-top:6px!important;
+  line-height:1.05!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+}
+
+#driver-profile-content #profile-nationality{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin-top:5px!important;
+  line-height:1.15!important;
+  text-align:left!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+/* Keep the logo optically aligned with the text block. */
+#driver-profile-content #profile-team-logo{
+  display:block!important;
+  flex:0 0 44px!important;
+  width:44px!important;
+  height:36px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:0!important;
+}
+
+/* The number block follows the same internal vertical rhythm. */
+#profile-number-box{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+}
+
+#profile-number-box>.text-\[8px\]{
+  width:100%!important;
+  margin:0!important;
+  line-height:1.15!important;
+  text-align:left!important;
+}
+
+#profile-number{
+  margin-top:8px!important;
+  line-height:.84!important;
+}
+
+/* Tablet: identical 16px horizontal inset. */
+@media (max-width:820px){
+  #driver-stats>div{
+    padding:12px 14px!important;
+  }
+
+  #driver-profile-content .profile-constructor-info>.flex{
+    gap:10px!important;
+  }
+}
+
+/* Mobile: never compress the internal alignment into tiny gutters. */
+@media (max-width:560px){
+  #driver-stats>div{
+    padding:10px 12px!important;
+  }
+
+  #driver-stats>div .timing-label{
+    font-size:7px!important;
+  }
+
+  #driver-stats>div .text-xl{
+    font-size:20px!important;
+    margin-top:6px!important;
+  }
+
+  #driver-profile-content .profile-constructor-info>.flex{
+    gap:9px!important;
+  }
+
+  #driver-profile-content #profile-team-logo{
+    flex-basis:42px!important;
+    width:42px!important;
+    height:32px!important;
+  }
+
+  #driver-profile-content #profile-team{
+    font-size:16px!important;
+  }
+}
+
+@media (max-width:390px){
+  #driver-stats>div{
+    padding:9px 10px!important;
+  }
+
+  #driver-stats>div .timing-label{
+    font-size:6.5px!important;
+  }
+
+  #driver-stats>div .text-xl{
+    font-size:18px!important;
+  }
+
+  #driver-profile-content .profile-constructor-info>.flex{
+    gap:8px!important;
+  }
+
+  #driver-profile-content #profile-team-logo{
+    flex-basis:40px!important;
+    width:40px!important;
+    height:30px!important;
+  }
+
+  #driver-profile-content #profile-team{
+    font-size:15px!important;
+  }
+}
+
+/* ===== consolidated source block 7 ===== */
+/* =========================================================
+   641–820px — SAME DRIVER PROFILE STRUCTURE AS MOBILE
+   Keep the existing visual design; only make this breakpoint
+   use the same stacking/grid structure as <=640px.
+   ========================================================= */
+@media (min-width:641px) and (max-width:820px){
+  #profile-modal{padding:8px!important}
+  #profile-modal .modal-box{
+    width:100%!important;
+    max-width:100%!important;
+    height:calc(100vh - 16px)!important;
+    max-height:calc(100vh - 16px)!important;
+  }
+  #profile-modal .modal-box>.p-6.md\\:p-8{padding:18px!important}
+  #profile-modal .modal-box>.p-6.md\\:p-8>.flex.justify-between.items-start{
+    min-height:50px!important;height:auto!important;align-items:flex-start!important;gap:8px!important
+  }
+  #profile-modal .modal-box>.p-6.md\\:p-8>.flex.justify-between.items-start>div:first-child{
+    flex:1 1 auto!important;min-width:0!important;width:auto!important
+  }
+  #profile-modal #profile-name{
+    width:100%!important;max-width:100%!important;min-width:0!important;
+    display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;
+    overflow:hidden!important;text-overflow:clip!important;white-space:normal!important;
+    overflow-wrap:normal!important;word-break:normal!important;
+    font-size:clamp(24px,3.8vw,30px)!important;line-height:.96!important;letter-spacing:-.04em!important;
+  }
+
+  /* SAME 3-row profile structure as mobile:
+     row 1 = number + constructor (full width)
+     row 2 = stats (full width)
+     row 3 = overview/career left + driver visual right */
+  #driver-profile-content{
+    grid-template-columns:minmax(0,1.18fr) minmax(150px,.82fr)!important;
+    grid-template-rows:100px 60px minmax(0,1fr)!important;
+    gap:9px!important;
+    margin-top:14px!important;
+  }
+  #driver-profile-content>.grid:first-of-type{
+    grid-column:1 / -1!important;grid-row:1!important;
+    grid-template-columns:108px minmax(0,1fr)!important;
+    height:100px!important;min-height:100px!important;max-height:100px!important;gap:9px!important;
+  }
+  #profile-number-box,#driver-profile-content .profile-constructor-box{
+    height:100px!important;min-height:100px!important;max-height:100px!important;
+    padding:11px!important;overflow:hidden!important;
+  }
+  #profile-number-box .text-7xl{font-size:56px!important;line-height:.82!important;margin-top:8px!important}
+  #driver-stats{grid-column:1 / -1!important;grid-row:2!important;height:60px!important;min-height:60px!important;max-height:60px!important}
+
+  #driver-profile-content .profile-constructor-info,
+  #driver-profile-content .profile-constructor-info>.flex{
+    min-width:0!important;width:100%!important;gap:8px!important
+  }
+  #driver-profile-content #profile-team-logo{
+    flex:0 0 40px!important;width:40px!important;height:29px!important
+  }
+  #driver-profile-content #profile-team{
+    min-width:0!important;max-width:100%!important;width:100%!important;
+    font-size:14px!important;line-height:1.02!important;letter-spacing:-.025em!important;
+    white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;
+  }
+  #driver-profile-content #profile-nationality{font-size:7px!important;margin-top:4px!important}
+
+  .driver-profile-about{
+    grid-column:1!important;grid-row:3!important;
+    display:flex!important;flex-direction:column!important;
+    min-width:0!important;min-height:0!important;gap:9px!important;overflow:hidden!important;
+  }
+  .profile-driver-visual{
+    grid-column:2!important;grid-row:3!important;
+    width:100%!important;min-width:0!important;max-width:none!important;
+    height:100%!important;min-height:0!important;max-height:none!important;overflow:hidden!important;
+  }
+  .driver-profile-about>.profile-info-card{min-width:0!important;overflow:hidden!important}
+  .driver-profile-about>.profile-info-card:first-child{
+    flex:1.05 1 0!important;min-height:0!important;display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-rows:auto auto minmax(0,1fr) minmax(0,1fr)!important;
+    grid-template-areas:"kicker kicker" "title title" "fact1 fact2" "fact3 fact4"!important;
+    column-gap:10px!important;row-gap:10px!important;padding:14px!important;
+  }
+  .driver-profile-about>.profile-info-card:nth-child(2){
+    flex:.95 1 0!important;min-height:0!important;padding:14px!important
+  }
+  .profile-section-kicker{font-size:7px!important;letter-spacing:.22em!important}
+  .profile-section-title{font-size:21px!important;line-height:1.05!important;margin-top:7px!important}
+  .profile-fact{padding:8px 10px!important;justify-content:center!important;min-height:0!important}
+  .profile-fact-label{font-size:6px!important;line-height:1.15!important;letter-spacing:.13em!important;white-space:nowrap!important}
+  .profile-fact-value{margin-top:6px!important;font-size:10px!important;line-height:1.18!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  #driver-profile-content #profile-career.profile-career-list{margin-top:9px!important;padding-right:3px!important}
+  #profile-career .profile-career-item{font-size:9px!important}
+  #profile-career .profile-career-copy strong{font-size:10px!important}
+  #profile-career .profile-career-copy .career-detail{font-size:7.5px!important}
+}
+
+/* ===== consolidated source block 8 ===== */
+/* =========================================================
+   DRIVER CARD — MOVE DRIVER + NAME LEFT
+   Keep #NUMBER exactly in its existing top-right position.
+   Give long names more horizontal room.
+   ========================================================= */
+@media (max-width:1023px){
+  .driver-card .driver-photo{
+    left:-2%!important;
+    width:108%!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:72%!important;
+    max-width:72%!important;
+    align-items:flex-start!important;
+    text-align:left!important;
+    margin-left:0!important;
+    margin-right:auto!important;
+  }
+
+  .driver-card .driver-firstname,
+  .driver-card .driver-lastname{
+    width:100%!important;
+    max-width:100%!important;
+    text-align:left!important;
+  }
+
+  /* #12 / driver number stays exactly on the right */
+  .driver-card .driver-number{
+    right:12px!important;
+    left:auto!important;
+  }
+}
+
+@media (max-width:640px){
+  .driver-card .driver-photo{
+    left:-5%!important;
+    width:108%!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:76%!important;
+    max-width:76%!important;
+    min-width:0!important;
+  }
+
+  .driver-card .driver-firstname{
+    font-size:8px!important;
+    line-height:1.1!important;
+  }
+
+  .driver-card .driver-lastname{
+    font-size:clamp(17px,5.2vw,22px)!important;
+    line-height:.9!important;
+    letter-spacing:-.045em!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+  }
+
+  .driver-card .driver-number{
+    top:11px!important;
+    right:12px!important;
+    left:auto!important;
+  }
+}
+
+@media (max-width:390px){
+  .driver-card .driver-photo{
+    left:-7%!important;
+    width:108%!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:78%!important;
+    max-width:78%!important;
+  }
+
+  .driver-card .driver-lastname{
+    font-size:clamp(15px,5vw,19px)!important;
+  }
+
+  .driver-card .driver-number{
+    top:9px!important;
+    right:9px!important;
+    left:auto!important;
+  }
+}
+
+/* ===== consolidated source block 9 ===== */
+/* =========================================================
+   DRIVER + TEAM CARD RESPONSIVE FINAL
+   - Driver image: slightly right on tablet/mobile
+   - 641–820px: restore stronger desktop-like typography
+   - <=640px: keep Max/other names compact and readable
+   - Team mini drivers: move image/text left and crop at hip/thigh
+   - One final authoritative block to override earlier responsive patches
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   DRIVER CARD — common tablet/mobile positioning
+   --------------------------------------------------------- */
+@media (max-width:1023px){
+  .driver-card .driver-photo{
+    left:15%!important;
+    width:108%!important;
+  }
+}
+
+/* ---------------------------------------------------------
+   DRIVER CARD — 641–820px
+   Typography was previously inheriting the small tablet/mobile
+   scale, so this breakpoint gets its own balanced scale.
+   --------------------------------------------------------- */
+@media (min-width:641px) and (max-width:820px){
+  .driver-card .driver-content{
+    padding:15px 15px 12px!important;
+  }
+
+  .driver-card .driver-photo{
+    left:15%!important;
+    width:108%!important;
+  }
+
+  .driver-card .team-stripe{
+    width:3px!important;
+    height:36px!important;
+  }
+
+  .driver-card .timing-label{
+    font-size:8px!important;
+    letter-spacing:.19em!important;
+  }
+
+  .driver-card .driver-rank{
+    font-size:12px!important;
+  }
+
+  /* Large ghost number in the top-right */
+  .driver-card .driver-number{
+    top:12px!important;
+    right:14px!important;
+    font-size:50px!important;
+    line-height:.92!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:78%!important;
+    max-width:78%!important;
+    min-height:72px!important;
+    margin-bottom:8px!important;
+    padding:8px 0 7px!important;
+  }
+
+  .driver-card .driver-firstname{
+    font-size:11px!important;
+    line-height:1.08!important;
+    letter-spacing:.08em!important;
+  }
+
+  .driver-card .driver-lastname{
+    margin-top:4px!important;
+    font-size:clamp(24px,3.7vw,31px)!important;
+    line-height:.92!important;
+    letter-spacing:-.055em!important;
+    white-space:nowrap!important;
+  }
+
+  .driver-card .driver-stats-row{
+    padding-top:10px!important;
+  }
+
+  .driver-card .driver-stats-row .timing-label{
+    font-size:7px!important;
+  }
+
+  .driver-card .driver-stats-row .timing-value{
+    font-size:12px!important;
+  }
+}
+
+/* ---------------------------------------------------------
+   DRIVER CARD — <=640px
+   Compact enough for two-column mobile cards, but do not
+   over-scale long names such as VERSTAPPEN.
+   --------------------------------------------------------- */
+@media (max-width:640px){
+  .driver-card .driver-photo{
+    left:7%!important;
+    width:108%!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:76%!important;
+    max-width:76%!important;
+    min-width:0!important;
+  }
+
+  .driver-card .driver-firstname{
+    font-size:8px!important;
+    line-height:1.08!important;
+  }
+
+  .driver-card .driver-lastname{
+    margin-top:3px!important;
+    font-size:clamp(16px,4.7vw,20px)!important;
+    line-height:.92!important;
+    letter-spacing:-.04em!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  .driver-card .driver-number{
+    top:10px!important;
+    right:11px!important;
+    font-size:31px!important;
+  }
+
+  .driver-card .driver-stats-row .timing-label{
+    font-size:5.8px!important;
+  }
+
+  .driver-card .driver-stats-row .timing-value{
+    font-size:9px!important;
+  }
+}
+
+@media (max-width:390px){
+  .driver-card .driver-photo{
+    left:7%!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:78%!important;
+    max-width:78%!important;
+  }
+
+  .driver-card .driver-lastname{
+    font-size:clamp(15.5px,4.8vw,18px)!important;
+  }
+
+  .driver-card .driver-number{
+    top:9px!important;
+    right:9px!important;
+    font-size:29px!important;
+  }
+}
+
+/* ---------------------------------------------------------
+   TEAM CARD — desktop/tablet mini driver cards
+   Larger upper body + left-aligned copy + hip/thigh fade.
+   --------------------------------------------------------- */
+.team-card .team-card-driver-mini{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+}
+
+.team-card .team-card-driver-mini .driver-mini-image{
+  left:-5%!important;
+  top:-2%!important;
+  width:55%!important;
+  height:126%!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:scale(1.02)!important;
+  transform-origin:center top!important;
+  filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
+  -webkit-mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 56%,
+    rgba(0,0,0,.98) 64%,
+    rgba(0,0,0,.82) 72%,
+    rgba(0,0,0,.48) 82%,
+    rgba(0,0,0,.16) 91%,
+    transparent 100%
+  )!important;
+  mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 56%,
+    rgba(0,0,0,.98) 64%,
+    rgba(0,0,0,.82) 72%,
+    rgba(0,0,0,.48) 82%,
+    rgba(0,0,0,.16) 91%,
+    transparent 100%
+  )!important;
+}
+
+.team-card .team-card-driver-mini .team-driver-copy{
+  left:42%!important;
+  right:4%!important;
+  bottom:10px!important;
+  width:auto!important;
+  max-width:54%!important;
+  min-width:0!important;
+  z-index:7!important;
+}
+
+.team-card .team-card-driver-mini .driver-mini-label{
+  font-size:6px!important;
+  line-height:1!important;
+  margin:0 0 4px!important;
+}
+
+.team-card .team-card-driver-mini .driver-mini-name{
+  font-size:10px!important;
+  line-height:1.02!important;
+  letter-spacing:-.025em!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+.team-card .team-card-driver-mini .driver-mini-points{
+  margin-top:5px!important;
+  font-size:7px!important;
+  line-height:1!important;
+}
+
+/* ---------------------------------------------------------
+   TEAM CARD — mobile
+   Keep the driver visually dominant without allowing the image
+   to push the text toward the center/right.
+   --------------------------------------------------------- */
+@media (max-width:640px){
+  .team-card .team-card-driver-mini{
+    height:92px!important;
+    min-height:92px!important;
+    max-height:92px!important;
+    padding:4px 6px!important;
+    overflow:hidden!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-image{
+    left:-7%!important;
+    top:-3%!important;
+    width:57%!important;
+    height:128%!important;
+    object-fit:contain!important;
+    object-position:center top!important;
+    transform:scale(1.01)!important;
+    -webkit-mask-image:linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 55%,
+      rgba(0,0,0,.97) 64%,
+      rgba(0,0,0,.76) 73%,
+      rgba(0,0,0,.40) 84%,
+      transparent 100%
+    )!important;
+    mask-image:linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 55%,
+      rgba(0,0,0,.97) 64%,
+      rgba(0,0,0,.76) 73%,
+      rgba(0,0,0,.40) 84%,
+      transparent 100%
+    )!important;
+  }
+
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:41%!important;
+    right:3%!important;
+    bottom:8px!important;
+    max-width:56%!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-label{
+    font-size:5px!important;
+    line-height:1!important;
+    margin-bottom:3px!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-name{
+    font-size:7.8px!important;
+    line-height:1.04!important;
+    letter-spacing:-.02em!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-points{
+    font-size:6px!important;
+    margin-top:3px!important;
+  }
+}
+
+@media (max-width:390px){
+  .team-card .team-card-driver-mini .driver-mini-image{
+    left:-8%!important;
+    width:58%!important;
+  }
+
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:40%!important;
+    right:3%!important;
+    max-width:57%!important;
+  }
+
+  .team-card .team-card-driver-mini .driver-mini-name{
+    font-size:7.5px!important;
+  }
+}
+
+/* ===== consolidated source block 12 ===== */
+/* =========================================================
+   RESPONSIVE FINAL — 641–820px
+   Keep the original profile composition: LEFT information,
+   RIGHT driver visual. The previous max-820 rule collapsed
+   this area to one column too early, causing the screenshot
+   shown by the user.
+   ========================================================= */
+@media (min-width:641px) and (max-width:820px){
+  #profile-modal{padding:8px!important}
+  #profile-modal .modal-box{
+    width:100%!important;
+    max-width:100%!important;
+    height:calc(100vh - 16px)!important;
+    max-height:calc(100vh - 16px)!important;
+  }
+
+  #profile-modal .modal-box>.p-6.md\\:p-8{
+    padding:18px!important;
+  }
+
+  #profile-modal #profile-name{
+    max-width:calc(100% - 52px)!important;
+    font-size:30px!important;
+  }
+
+  /* Original 2-column composition restored. */
+  #driver-profile-content{
+    margin-top:18px!important;
+    grid-template-columns:minmax(0,1fr) minmax(220px,340px)!important;
+    grid-template-rows:110px 64px minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+
+  #driver-profile-content>.grid:first-of-type{
+    grid-column:1!important;
+    grid-row:1!important;
+    grid-template-columns:120px minmax(0,1fr)!important;
+    gap:10px!important;
+    height:110px!important;
+    min-height:110px!important;
+    max-height:110px!important;
+  }
+
+  #profile-number-box,
+  #driver-profile-content .profile-constructor-box{
+    height:110px!important;
+    min-height:110px!important;
+    max-height:110px!important;
+    padding:14px!important;
+  }
+
+  #driver-stats{
+    grid-column:1!important;
+    grid-row:2!important;
+    height:64px!important;
+    min-height:64px!important;
+    max-height:64px!important;
+  }
+
+  .profile-driver-visual{
+    grid-column:2!important;
+    grid-row:1 / 4!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+  }
+
+  .driver-profile-about{
+    grid-column:1!important;
+    grid-row:3!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+
+  /* Prevent the two left cards from becoming visually cramped. */
+  .profile-info-card{
+    min-width:0!important;
+    padding:16px!important;
+  }
+
+  .driver-profile-about>.profile-info-card:first-child{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    column-gap:9px!important;
+    row-gap:9px!important;
+  }
+
+  .profile-fact{
+    min-width:0!important;
+    padding:9px 10px!important;
+  }
+
+  .profile-fact-label{
+    font-size:6.5px!important;
+  }
+
+  .profile-fact-value{
+    font-size:10px!important;
+  }
+
+  #profile-career .profile-career-copy strong{
+    font-size:10px!important;
+  }
+
+  #profile-career .profile-career-copy .career-detail{
+    font-size:7.5px!important;
+  }
+}
+
+/* ===== consolidated source block 13 ===== */
+/* =========================================================
+   DRIVER CARD — AUTHORITATIVE RESPONSIVE V5
+   The card itself is the responsive unit. This avoids the
+   previous viewport-only overrides fighting each other.
+   ========================================================= */
+
+.driver-card{
+  container-type:inline-size!important;
+}
+
+/* ---------- 641–820px viewport / normal tablet cards ---------- */
+@media (min-width:641px) and (max-width:820px){
+  .driver-card .driver-photo{
+    left:22%!important;
+    width:108%!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:61%!important;
+    max-width:61%!important;
+    min-height:76px!important;
+    margin-bottom:8px!important;
+    padding:7px 0 8px!important;
+    align-items:flex-start!important;
+    text-align:left!important;
+    overflow:hidden!important;
+    z-index:12!important;
+  }
+
+  .driver-card .driver-firstname{
+    font-size:12px!important;
+    line-height:1.08!important;
+    letter-spacing:.075em!important;
+    white-space:nowrap!important;
+  }
+
+  .driver-card .driver-lastname{
+    margin-top:4px!important;
+    font-size:clamp(27px,4vw,34px)!important;
+    line-height:.94!important;
+    letter-spacing:-.06em!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  .driver-card .driver-number{
+    top:11px!important;
+    right:14px!important;
+    font-size:56px!important;
+    line-height:.9!important;
+  }
+
+  .driver-card .driver-rank{
+    font-size:13px!important;
+  }
+
+  .driver-card .driver-stats-row{
+    padding-top:11px!important;
+  }
+
+  .driver-card .driver-stats-row .timing-label{
+    font-size:7.5px!important;
+    letter-spacing:.18em!important;
+  }
+
+  .driver-card .driver-stats-row .timing-value{
+    font-size:13px!important;
+  }
+}
+
+/* ---------- Narrow two-column cards: this is the important fix.
+   The name gets a hard horizontal boundary BEFORE the driver,
+   so long surnames can never paint across the face/body. ---------- */
+@container (max-width:420px){
+  .driver-card .driver-photo{
+    left:15%!important;
+    width:108%!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:55%!important;
+    max-width:55%!important;
+    min-height:56px!important;
+    margin-bottom:6px!important;
+    padding:5px 0 6px!important;
+    align-items:flex-start!important;
+    text-align:left!important;
+    overflow:hidden!important;
+    z-index:12!important;
+  }
+
+  .driver-card .driver-firstname{
+    font-size:clamp(7px,3.1cqw,9px)!important;
+    line-height:1.08!important;
+    letter-spacing:.07em!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  .driver-card .driver-lastname{
+    margin-top:3px!important;
+    font-size:clamp(14px,5.0cqw,18px)!important;
+    line-height:.94!important;
+    letter-spacing:-.035em!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  .driver-card .driver-number{
+    top:9px!important;
+    right:9px!important;
+    font-size:31px!important;
+  }
+
+  .driver-card .driver-rank{
+    font-size:8px!important;
+  }
+
+  .driver-card .driver-stats-row{
+    padding-top:6px!important;
+  }
+
+  .driver-card .driver-stats-row .timing-label{
+    font-size:5.5px!important;
+    letter-spacing:.12em!important;
+  }
+
+  .driver-card .driver-stats-row .timing-value{
+    font-size:9px!important;
+  }
+}
+
+/* ---------- Very small cards: prioritize full surname readability. ---------- */
+@container (max-width:230px){
+  .driver-card .driver-photo{
+    left:18%!important;
+    width:108%!important;
+  }
+
+  .driver-card .driver-name-zone{
+    width:57%!important;
+    max-width:57%!important;
+  }
+
+  .driver-card .driver-firstname{
+    font-size:7px!important;
+  }
+
+  .driver-card .driver-lastname{
+    font-size:clamp(13px,5.1cqw,16px)!important;
+    letter-spacing:-.03em!important;
+  }
+}
+
+/* ---------- Tablet cards wider than 420px.
+   Keep typography strong without allowing the name area to
+   enter the driver's face. ---------- */
+@container (min-width:421px){
+  .driver-card .driver-name-zone{
+    width:61%!important;
+    max-width:61%!important;
+    overflow:hidden!important;
+    z-index:12!important;
+  }
+
+  .driver-card .driver-lastname{
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+}
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </head>
 
@@ -1289,7 +3042,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
       <div class="sidebar-standing-card">
         <div class="standing-head">
           <h3>Drivers Championship</h3>
-          <span>22 DRIVERS</span>
+          <span id="drivers-count">-- DRIVERS</span>
         </div>
         <div class="standings-scroll">
           <div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
@@ -1495,7 +3248,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
       </div>
       <div class="profile-dossier-extra">
         <div class="profile-fact"><div class="profile-fact-label">F1 Debut</div><div id="profile-f1-debut" class="profile-fact-value">--</div></div>
-        <div class="profile-fact"><div class="profile-fact-label">Season 2026</div><div id="profile-season-summary" class="profile-fact-value">--</div></div>
+        <div class="profile-fact"><div class="profile-fact-label">Height</div><div id="profile-height" class="profile-fact-value">--</div></div>
       </div>
     </div>
 
@@ -1522,7 +3275,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <script>
 const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbwGJfMLmxZ9KO-9wIqfqBUMAa7ZNXSaw30aTAtAvW1YQQ5TRSJQh6jZXyzmo6k3OyVN/exec';
 const F1_API='https://api.jolpi.ca/ergast/f1';
-const OPENF1_API='https://api.openf1.org/v1';
 const F1_NEWS_API='https://api.rss2json.com/v1/api.json?rss_url=https://www.motorsport.com/rss/f1/news/';
 const SEASON='2026';
 
@@ -1532,15 +3284,10 @@ let standings=[];
 let constructorStandings=[];
 let seasonResults=[];
 let qualifyingResults=[];
-let driverImages={};
 let nextRace=null;
 let countdownTimer=null;
 let siteConfig={};
-let teamCarImages={};
 
-const OFFICIAL_DRIVERS=[
-'georuss','antkin','leclerc','hamilton','norris','piastri','max_verstappen','hadjar','lawson','lindblad','gasly','colapinto','ocon','bearman','hulkenberg','bortoleto','sainz','albon','alonso','stroll','perez','bottas'
-];
 
 const DRIVER_NUMBER_MAP={
 georuss:'63',antkin:'12',leclerc:'16',hamilton:'44',norris:'1',piastri:'81',max_verstappen:'3',hadjar:'6',lawson:'30',lindblad:'41',gasly:'10',colapinto:'43',ocon:'31',bearman:'87',hulkenberg:'27',bortoleto:'5',sainz:'55',albon:'23',alonso:'14',stroll:'18',perez:'11',bottas:'77'
@@ -1556,7 +3303,7 @@ piastri:'piastri',
 max_verstappen:'max_verstappen',
 hadjar:'hadjar',
 lawson:'lawson',
-lindblad:'lindblad',
+lindblad:'arvid_lindblad',
 gasly:'gasly',
 colapinto:'colapinto',
 ocon:'ocon',
@@ -1570,6 +3317,37 @@ stroll:'stroll',
 perez:'perez',
 bottas:'bottas'
 };
+
+const DRIVER_HEIGHT_MAP={
+russell:'1.85 m',
+antonelli:'1.72 m',
+leclerc:'1.80 m',
+hamilton:'1.74 m',
+norris:'1.74 m',
+piastri:'1.78 m',
+max_verstappen:'1.81 m',
+hadjar:'1.67 m',
+lawson:'1.74 m',
+arvid_lindblad:'1.73 m',
+gasly:'1.77 m',
+colapinto:'1.74 m',
+ocon:'1.86 m',
+bearman:'1.84 m',
+hulkenberg:'1.84 m',
+bortoleto:'1.84 m',
+sainz:'1.78 m',
+albon:'1.86 m',
+alonso:'1.71 m',
+stroll:'1.82 m',
+perez:'1.73 m',
+bottas:'1.73 m'
+};
+
+function getDriverHeight(driver){
+  const id=String(driver?.Driver?.driverId||'').toLowerCase();
+  const canonical=DRIVER_ALIASES[id]||id;
+  return DRIVER_HEIGHT_MAP[id]||DRIVER_HEIGHT_MAP[canonical]||'--';
+}
 
 const TEAM_META={
  mclaren:{name:'McLaren',color:'#F47600',chassis:'MCL40',logo:'https://media.formula1.com/image/upload/c_fit,h_64/q_auto/v1740000000/common/f1/2025/mclaren/2025mclarenlogowhite.webp',url:'https://www.formula1.com/en/teams/mclaren',base:'Woking, United Kingdom',principal:'Andrea Stella',powerUnit:'Mercedes',founded:'1963'},
@@ -1649,13 +3427,6 @@ function getTeamMeta(id){
 return TEAM_META[teamKey(id)]||{name:id||'Unknown',color:'#e10600',chassis:'F1',logo:'',url:'https://www.formula1.com/en/teams'};
 }
 
-function driverImageFallback(driver){
-const first=(driver.givenName||'').replace(/[^A-Za-z]/g,'');
-const last=(driver.familyName||'').replace(/[^A-Za-z]/g,'');
-const id=(driver.driverId||'').toLowerCase();
-if(!id)return'';
-return `https://www.formula1.com/content/dam/fom-website/drivers/${first.charAt(0).toUpperCase()}/${id.toUpperCase()}_${first}_${last}/${id}.png.transform/2col/image.png`;
-}
 
 async function fetchJSON(url,cacheKey='',ttl=300000){
 if(cacheKey){
@@ -1889,8 +3660,6 @@ async function fetchConfigAndTrack(){
       const sideEnabled = data.sideAdEnabled === undefined ? true : isConfigOn(data.sideAdEnabled);
       loadImageAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
       loadImageAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
-
-      if(data.carImages&&typeof data.carImages==='object')teamCarImages=data.carImages;
     }catch(error){
       console.warn('GAS config unavailable',error);
       hideAd(document.getElementById('ad-container'));
@@ -2277,11 +4046,17 @@ fetchJSON(`${F1_API}/${SEASON}/driverStandings.json`,'f1hub_driver_standings',60
 fetchJSON(`${F1_API}/${SEASON}/constructorStandings.json`,'f1hub_constructor_standings',60000)
 ]);
 const rawDrivers=driverData.MRData.StandingsTable.StandingsLists?.[0]?.DriverStandings||[];
-standings=OFFICIAL_DRIVERS.map((officialId,index)=>{
-const aliases=[officialId,DRIVER_ALIASES[officialId],DRIVER_NUMBER_MAP[officialId]].filter(Boolean);
-return rawDrivers.find(d=>aliases.includes(d.Driver?.driverId)||aliases.includes(d.Driver?.permanentNumber))||null;
-}).filter(Boolean);
-standings.sort((a,b)=>Number(a.position||999)-Number(b.position||999));
+
+/*
+ * Keep every driver returned by the championship API.
+ * The previous whitelist could silently drop a driver when the API used
+ * a different driverId (for example arvid_lindblad).
+ */
+standings=[...rawDrivers].sort((a,b)=>{
+const pa=Number(a.position||999);
+const pb=Number(b.position||999);
+return pa-pb;
+});
 constructorStandings=constructorData.MRData.StandingsTable.StandingsLists?.[0]?.ConstructorStandings||[];
 renderStandings();
 renderDrivers();
@@ -2341,26 +4116,6 @@ if(img)try{sessionStorage.setItem(key,img)}catch{}
 return img;
 }catch{return''}
 }
-async function fetchDriverWikiFallbacks(){
-const jobs=standings.map(async d=>{
-const id=d.Driver?.driverId;
-if(!id)return;
-const page=(d.Driver?.givenName+'_'+d.Driver?.familyName).replaceAll(' ','_');
-driverWikiImages[id]=await fetchWikipediaSummaryImage(page);
-if(!driverWikiImages[id]) driverWikiImages[id]=await fetchWikipediaImageSearch(`${d.Driver?.givenName||''} ${d.Driver?.familyName||''} Formula 1`);
-});
-await Promise.all(jobs);
-}
-async function fetchCarImages(){
-try{
-await Promise.all(Object.entries(CAR_WIKI_PAGES).map(async([id,page])=>{
-let img=await fetchWikipediaSummaryImage(page);
-if(!img)img=await fetchWikipediaImageSearch(`${getTeamMeta(id).chassis} Formula 1 2026`);
-carWikiImages[id]=img;
-}));
-renderTeams();
-}catch(e){console.warn('Car image fallbacks unavailable')}
-}
 const F1_DRIVER_ASSET_META={
 georuss:['G','GEORUS01_George_Russell','georus01'],antkin:['A','ANDANT01_Andrea_Kimi_Antonelli','andant01'],leclerc:['C','CHALEC01_Charles_Leclerc','chalec01'],hamilton:['L','LEWHAM01_Lewis_Hamilton','lewham01'],norris:['L','LANNOR01_Lando_Norris','lannor01'],piastri:['O','OSCPIA01_Oscar_Piastri','oscpia01'],max_verstappen:['M','MAXVER01_Max_Verstappen','maxver01'],hadjar:['I','ISAHAD01_Isack_Hadjar','isahad01'],lawson:['L','LIALAW01_Liam_Lawson','lialaw01'],lindblad:['A','ARVLIN01_Arvid_Lindblad','arvlin01'],gasly:['P','PIEGAS01_Pierre_Gasly','piegas01'],colapinto:['F','FRACOL01_Franco_Colapinto','fracol01'],ocon:['E','ESTOCO01_Esteban_Ocon','estoco01'],bearman:['O','OLIBEA01_Oliver_Bearman','olibea01'],hulkenberg:['N','NICHUL01_Nico_Hulkenberg','nichul01'],bortoleto:['G','GABBOR01_Gabriel_Bortoleto','gabbor01'],sainz:['C','CARSAI01_Carlos_Sainz','carsai01'],albon:['A','ALEALB01_Alexander_Albon','alealb01'],alonso:['F','FERALO01_Fernando_Alonso','feralo01'],stroll:['L','LANSTR01_Lance_Stroll','lanstr01'],perez:['S','SERPER01_Sergio_Perez','serper01'],bottas:['V','VALBOT01_Valtteri_Bottas','valbot01']
 };
@@ -2396,11 +4151,6 @@ return [
 ];
 }
 
-function getOpenF1DriverImage(d){
-const id=(d.Driver?.driverId||'').toLowerCase();
-const code=d.Driver?.code?.toLowerCase()||'';
-return driverImages[code]||driverImages[id]||'';
-}
 
 function getDriverImageCandidates(d){
 const id=(d.Driver?.driverId||'').toLowerCase();
@@ -2416,8 +4166,7 @@ push(officialDriverMediaImage(d));
 // 2) Legacy F1.com DAM assets — same official ecosystem, useful when the new CDN path is missing.
 getLegacyDriverImageCandidates(d).forEach(push);
 
-// 3) OpenF1 headshot — reliable structured fallback for all 22 drivers.
-push(getOpenF1DriverImage(d));
+// 3) OpenF1 headshot — reliable structured fallback for the current driver roster.
 
 // 4) Wikipedia cached image, then a live Wikipedia lookup is added by driverImageOnError().
 push(driverWikiImages[id]);
@@ -2431,9 +4180,11 @@ return getDriverImageCandidates(d)[0]||'';
 
 async function driverImageOnError(img){
 try{
+  if(img.dataset.fallbackBusy==='1')return;
+  img.dataset.fallbackBusy='1';
  const list=JSON.parse(img.dataset.srcList||'[]');
  const next=Number(img.dataset.srcIndex||0)+1;
- if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
+ if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];img.dataset.fallbackBusy='0';return;}
  const page=img.dataset.wikiPage||'';
  if(page){
    const wiki=await fetchWikipediaSummaryImage(page);
@@ -2458,12 +4209,11 @@ img.onerror=null;
 img.style.display='none';
 }
 
-function officialDriverImageCandidates(d){
-return getDriverImageCandidates(d);
-}
 
 function renderStandings(){
 const board=document.getElementById('standings-board');
+const count=document.getElementById('drivers-count');
+if(count)count.textContent=`${standings.length} DRIVERS`;
 board.innerHTML=standings.map((d,index)=>{
 const constructor=d.Constructors?.[0];
 const meta=getTeamMeta(constructor?.constructorId);
@@ -2516,7 +4266,8 @@ return `<div class="standing-row cursor-pointer" onclick="openTeamProfile('${esc
 
 function renderDrivers(){
 if(!standings.length)return;
-const sorted=[...standings].sort((a,b)=>Number(a.position||999)-Number(b.position||999));
+const sorted=[...standings]
+  .sort((a,b)=>Number(a.position||999)-Number(b.position||999));
 document.getElementById('drivers-grid').innerHTML=sorted.map((d,index)=>{
 const constructor=d.Constructors?.[0];
 const meta=getTeamMeta(constructor?.constructorId);
@@ -2535,12 +4286,8 @@ return `<article class="driver-card rounded-lg p-5" data-driver-id="${escapeHTML
 <div class="driver-stats-row relative pt-4 grid grid-cols-2"><div><div class="timing-label">Points</div><div class="timing-value text-sm mt-1">${escapeHTML(d.points||0)}</div></div><div class="text-right"><div class="timing-label">Number</div><div class="timing-value text-sm mt-1">#${escapeHTML(number)}</div></div></div>
 </div></article>`;
 }).join('');
-bindDriverCardClicks();
 }
 
-function bindDriverCardClicks(){
-  // Intentionally empty: #drivers-grid uses one delegated click handler below.
-}
 
 const F1_CAR_MEDIA={
 mercedes:['mercedes','mercedes'],mclaren:['mclaren','mclaren'],ferrari:['ferrari','ferrari'],
@@ -2564,16 +4311,53 @@ if(carWikiImages[key])urls.push(carWikiImages[key]);
 return [...new Set(urls)];
 }
 function getCarImage(team){return getCarImageCandidates(team)[0]||carWikiImages[teamKey(team.id)]||'';}
-function carImageOnError(img){
-try{
- const list=JSON.parse(img.dataset.srcList||'[]');
- const next=Number(img.dataset.srcIndex||0)+1;
- if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];return;}
-}catch{}
-img.onerror=null;
-img.style.display='none';
-const holder=img.parentElement?.querySelector('.car-image-empty');
-if(holder)holder.classList.remove('hidden');
+async function carImageOnError(img){
+  try{
+    const list=JSON.parse(img.dataset.srcList||'[]');
+    const next=Number(img.dataset.srcIndex||0)+1;
+
+    if(next<list.length){
+      img.dataset.srcIndex=String(next);
+      img.src=list[next];
+      return;
+    }
+
+    if(img.dataset.wikiTried!=='1'){
+      img.dataset.wikiTried='1';
+      const alt=String(img.alt||'');
+      const match=alt.match(/^(.+?)\s+([A-Z0-9-]+)\s+2026 car$/i);
+      const teamName=match?.[1]||'';
+      const chassis=match?.[2]||'';
+      const teamKeyValue=Object.keys(TEAM_META).find(k=>TEAM_META[k].chassis===chassis)||'';
+      const wikiPage=CAR_WIKI_PAGES[teamKeyValue]||'';
+
+      const wiki=wikiPage
+        ? await fetchWikipediaSummaryImage(wikiPage)
+        : await fetchWikipediaImageSearch(`${teamName} ${chassis} Formula 1 2026`);
+
+      if(wiki){
+        const updated=[...list,wiki];
+        img.dataset.srcList=JSON.stringify(updated);
+        img.dataset.srcIndex=String(updated.length-1);
+        img.src=wiki;
+        return;
+      }
+
+      const search=await fetchWikipediaImageSearch(`${teamName} ${chassis} Formula 1 2026`);
+      if(search){
+        const updated=[...list,search];
+        img.dataset.srcList=JSON.stringify(updated);
+        img.dataset.srcIndex=String(updated.length-1);
+        img.src=search;
+        return;
+      }
+    }
+  }catch(e){}
+
+  img.onerror=null;
+  img.style.display='none';
+  const holder=img.parentElement?.querySelector('.car-image-empty');
+  if(holder)holder.classList.remove('hidden');
 }
 
 function renderTeams(){
@@ -2770,11 +4554,13 @@ async function enrichDriverProfile(driver){
   if(nat)nat.textContent=driver.Driver?.nationality||'--';
   if(num)num.textContent=driver.Driver?.permanentNumber||DRIVER_NUMBER_MAP[driver.Driver?.driverId]||'--';
   if(team)team.textContent=driver.Constructors?.[0]?.name||'--';
-  const debutMap={hamilton:'2007',leclerc:'2018',russell:'2019',antonelli:'2025',norris:'2019',piastri:'2023',max_verstappen:'2015',gasly:'2017',alonso:'2001',sainz:'2015',albon:'2019',stroll:'2017',ocon:'2016',hulkenberg:'2010',bortoleto:'2025',bearman:'2024',colapinto:'2024',lawson:'2023',hadjar:'2025',lindblad:'2026',perez:'2011',bottas:'2013'};
+  const debutMap={hamilton:'2007',leclerc:'2018',russell:'2019',antonelli:'2025',norris:'2019',piastri:'2023',max_verstappen:'2015',gasly:'2017',alonso:'2001',sainz:'2015',albon:'2019',stroll:'2017',ocon:'2016',hulkenberg:'2010',bortoleto:'2025',bearman:'2024',colapinto:'2024',lawson:'2023',hadjar:'2025',lindblad:'2026',arvid_lindblad:'2026',perez:'2011',bottas:'2013'};
   const debut=document.getElementById('profile-f1-debut');
-  const seasonSummary=document.getElementById('profile-season-summary');
-  if(debut)debut.textContent=debutMap[driver.Driver?.driverId]||'--';
-  if(seasonSummary){const wins=Number(driver.wins||0);seasonSummary.textContent=`P${driver.position||'--'} · ${driver.points||0} points · ${wins} ${wins===1?'win':'wins'}`;}
+  const height=document.getElementById('profile-height');
+  const driverId=String(driver.Driver?.driverId||'').toLowerCase();
+  const canonical=DRIVER_ALIASES[driverId]||driverId;
+  if(debut)debut.textContent=debutMap[driverId]||debutMap[canonical]||'--';
+  if(height)height.textContent=getDriverHeight(driver);
   renderDriverCareer(driver);
   const extract=await fetchDriverWikiSummary(driver);
   if(bio){
@@ -3070,16 +4856,34 @@ document.addEventListener('keydown',function(e){
 },true);
 
 document.addEventListener('DOMContentLoaded',async()=>{
-setupAnchorNavigation();
-fetchConfigAndTrack();
-fetchNews();
-fetchSchedule();
-fetchResults();
-fetchStandings();
-fetchDriverImages().then(fetchDriverWikiFallbacks).then(()=>{renderDrivers();renderTeams();});
-fetchCarImages();
+  setupAnchorNavigation();
+
+  // Load independent resources together.
+  await Promise.allSettled([
+    fetchConfigAndTrack(),
+    fetchNews(),
+    fetchSchedule(),
+    fetchResults(),
+    fetchStandings()
+  ]);
+
+  // Driver/team cards depend on standings being available.
+  renderDrivers();
+  renderTeams();
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
