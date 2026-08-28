@@ -2855,6 +2855,29 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     text-overflow:ellipsis!important;
   }
 }
+
+/* =========================================================
+   FINAL DRIVER IMAGE FIX — KEEP THE TOP OF THE HEAD VISIBLE
+   The previous image positioning touched the card's top edge.
+   Move the portrait down slightly while keeping the existing
+   scale, fade, colors and hover effect unchanged.
+   ========================================================= */
+.driver-card .driver-photo{
+  top:8px!important;
+}
+
+@media (max-width:640px){
+  .driver-card .driver-photo{
+    top:5px!important;
+  }
+}
+
+@media (max-width:390px){
+  .driver-card .driver-photo{
+    top:4px!important;
+  }
+}
+
 </style>
 
 
@@ -3128,6 +3151,47 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <a href="/" aria-label="F1HUB" class="footer-brand-logo" style="display: inline-block; line-height: 0;">
   <svg id="footer-f1hub-logo" data-name="Footer F1HUB logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
     <defs><style>.cls-1 { fill: #ed1c24; } .cls-1, .cls-2 { stroke-width: 0px; } .cls-2 { fill: #fff; }
+
+/* =========================================================
+   FINAL DRIVER HEAD VISIBILITY FIX
+   The previous mobile rules still placed/scaled the portrait
+   against the top edge. Keep the full head inside the crop.
+   ========================================================= */
+@media (max-width:640px){
+  .team-card .team-card-driver-mini .driver-mini-image{
+    top:6px!important;
+    height:104%!important;
+    object-fit:contain!important;
+    object-position:center top!important;
+    transform:scale(1)!important;
+    transform-origin:center top!important;
+  }
+}
+
+@media (max-width:390px){
+  .team-card .team-card-driver-mini .driver-mini-image{
+    top:5px!important;
+    height:104%!important;
+    transform:scale(1)!important;
+  }
+}
+
+/* Main driver cards: give the portrait a small safe area above the hair. */
+@media (max-width:1023px){
+  .driver-card .driver-photo{
+    top:5px!important;
+    transform:scale(1)!important;
+    transform-origin:center top!important;
+  }
+}
+
+@media (min-width:1024px){
+  .driver-card .driver-photo{
+    top:4px!important;
+    transform-origin:center top!important;
+  }
+}
+
 </style></defs>
     <g id="footer-f1hub-logo-shape" data-name="Footer logo shape"><g>
       <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
@@ -3151,6 +3215,11 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <div>
 <div class="text-[9px] uppercase tracking-widest text-gray-600 mb-4">Data</div>
 <p class="text-xs text-gray-600 leading-relaxed">This is a fan-made website and is not affiliated with Formula 1, FOM or FIA. Data is aggregated from public APIs; imagery prioritizes F1 Media with automatic fallbacks.</p>
+</div>
+<div>
+<div class="text-[9px] uppercase tracking-widest text-gray-600 mb-4">Contact</div>
+<a id="contact-email" href="#" class="text-xs text-gray-500 hover:text-white transition-colors" style="display:none"></a>
+<span id="contact-email-empty" class="text-xs text-gray-700">--</span>
 </div>
 </div>
 <div class="border-t border-gray-900 mt-10 pt-6 text-[10px] text-gray-700 flex justify-between">
@@ -3476,6 +3545,17 @@ async function fetchConfigAndTrack(){
       if(!response.ok)throw new Error(`GAS CONFIG HTTP ${response.status}`);
       const data=await response.json();
       siteConfig=data||{};
+
+      // Contact email: read directly from the Sheet config JSON.
+      const contactEmail=String(data.email||data.contactEmail||data.contact_email||data.mail||'').trim();
+      const contactEl=document.getElementById('contact-email');
+      const contactEmpty=document.getElementById('contact-email-empty');
+      if(contactEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)){
+        contactEl.textContent=contactEmail;
+        contactEl.href=`mailto:${contactEmail}`;
+        contactEl.style.display='inline-block';
+        if(contactEmpty)contactEmpty.style.display='none';
+      }
 
       const logoEl=document.getElementById('brand-logo');
       const footerLogoEl=document.getElementById('footer-brand-logo');
@@ -4872,18 +4952,5 @@ document.addEventListener('DOMContentLoaded',async()=>{
   renderTeams();
 });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
