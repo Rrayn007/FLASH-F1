@@ -2855,29 +2855,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
     text-overflow:ellipsis!important;
   }
 }
-
-/* =========================================================
-   FINAL DRIVER IMAGE FIX — KEEP THE TOP OF THE HEAD VISIBLE
-   The previous image positioning touched the card's top edge.
-   Move the portrait down slightly while keeping the existing
-   scale, fade, colors and hover effect unchanged.
-   ========================================================= */
-.driver-card .driver-photo{
-  top:8px!important;
-}
-
-@media (max-width:640px){
-  .driver-card .driver-photo{
-    top:5px!important;
-  }
-}
-
-@media (max-width:390px){
-  .driver-card .driver-photo{
-    top:4px!important;
-  }
-}
-
 </style>
 
 
@@ -2906,6 +2883,116 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 
 
 
+<style id="team-card-driver-responsive-final">
+/* =========================================================
+   TEAM CARD MINI DRIVER — RESPONSIVE FINAL
+   ONLY affects the small driver portraits INSIDE team cards.
+   Standalone .driver-card is intentionally untouched.
+   ========================================================= */
+.team-card .team-card-driver-mini{
+  overflow:hidden!important;
+}
+.team-card .team-card-driver-mini .driver-mini-image{
+  position:absolute!important;
+  left:-4%!important;
+  top:0!important;
+  width:72%!important;
+  height:190%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center top!important;
+  transform:none!important;
+  transform-origin:center top!important;
+  filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
+}
+
+/* Tablet / compact desktop: the screenshot-sized layout. */
+@media (min-width:641px) and (max-width:1100px){
+  .team-card .team-card-driver-mini .driver-mini-image{
+    left:-4%!important;
+    width:72%!important;
+    height:190%!important;
+    object-fit:contain!important;
+    object-position:center top!important;
+  }
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:46%!important;
+    right:4%!important;
+    max-width:50%!important;
+  }
+}
+
+/* Mobile */
+@media (max-width:640px){
+  .team-card .team-card-driver-mini{
+    height:92px!important;
+    min-height:92px!important;
+    max-height:92px!important;
+    overflow:hidden!important;
+  }
+  .team-card .team-card-driver-mini .driver-mini-image{
+    left:-5%!important;
+    top:0!important;
+    width:72%!important;
+    height:190%!important;
+    object-fit:contain!important;
+    object-position:center top!important;
+    transform:none!important;
+  }
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:46%!important;
+    right:3%!important;
+    max-width:51%!important;
+  }
+}
+
+@media (max-width:390px){
+  .team-card .team-card-driver-mini .driver-mini-image{
+    left:-6%!important;
+    width:74%!important;
+    height:190%!important;
+  }
+  .team-card .team-card-driver-mini .team-driver-copy{
+    left:47%!important;
+    right:3%!important;
+    max-width:50%!important;
+  }
+}
+</style>
+
+
+<style id="team-driver-bottom-up-fade-final">
+/* TEAM CARD DRIVER MINI ONLY — fade must finish at the visible card bottom.
+   The portrait is 190% tall, so the previous 0-100% mask faded below the
+   clipped area and looked like no fade. */
+.team-card .team-card-driver-mini .driver-mini-image{
+  -webkit-mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 31%,
+    rgba(0,0,0,.98) 38%,
+    rgba(0,0,0,.82) 44%,
+    rgba(0,0,0,.48) 49%,
+    transparent 53%
+  )!important;
+  mask-image:linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 31%,
+    rgba(0,0,0,.98) 38%,
+    rgba(0,0,0,.82) 44%,
+    rgba(0,0,0,.48) 49%,
+    transparent 53%
+  )!important;
+  -webkit-mask-repeat:no-repeat!important;
+  mask-repeat:no-repeat!important;
+  -webkit-mask-size:100% 100%!important;
+  mask-size:100% 100%!important;
+  -webkit-mask-position:top center!important;
+  mask-position:top center!important;
+}
+</style>
 </head>
 
 <body>
@@ -3151,47 +3238,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
 <a href="/" aria-label="F1HUB" class="footer-brand-logo" style="display: inline-block; line-height: 0;">
   <svg id="footer-f1hub-logo" data-name="Footer F1HUB logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
     <defs><style>.cls-1 { fill: #ed1c24; } .cls-1, .cls-2 { stroke-width: 0px; } .cls-2 { fill: #fff; }
-
-/* =========================================================
-   FINAL DRIVER HEAD VISIBILITY FIX
-   The previous mobile rules still placed/scaled the portrait
-   against the top edge. Keep the full head inside the crop.
-   ========================================================= */
-@media (max-width:640px){
-  .team-card .team-card-driver-mini .driver-mini-image{
-    top:6px!important;
-    height:104%!important;
-    object-fit:contain!important;
-    object-position:center top!important;
-    transform:scale(1)!important;
-    transform-origin:center top!important;
-  }
-}
-
-@media (max-width:390px){
-  .team-card .team-card-driver-mini .driver-mini-image{
-    top:5px!important;
-    height:104%!important;
-    transform:scale(1)!important;
-  }
-}
-
-/* Main driver cards: give the portrait a small safe area above the hair. */
-@media (max-width:1023px){
-  .driver-card .driver-photo{
-    top:5px!important;
-    transform:scale(1)!important;
-    transform-origin:center top!important;
-  }
-}
-
-@media (min-width:1024px){
-  .driver-card .driver-photo{
-    top:4px!important;
-    transform-origin:center top!important;
-  }
-}
-
 </style></defs>
     <g id="footer-f1hub-logo-shape" data-name="Footer logo shape"><g>
       <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
@@ -4952,5 +4998,18 @@ document.addEventListener('DOMContentLoaded',async()=>{
   renderTeams();
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
