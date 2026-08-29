@@ -393,7 +393,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 #side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.012);filter:brightness(1.04);}
 #side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0;}
 #side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both;}
-@media(min-width:1450px){  #side-ad-left,#side-ad-right{position:fixed !important;top:50% !important;width:clamp(110px,8.6vw,190px) !important;height:clamp(400px,31vw,610px) !important;z-index:30;border-radius:5px;transform:translateY(-50%);}
+@media(min-width:1600px){  #side-ad-left,#side-ad-right{position:fixed !important;top:50% !important;width:clamp(110px,8.6vw,190px) !important;height:clamp(400px,31vw,610px) !important;z-index:30;border-radius:5px;transform:translateY(-50%);}
   #side-ad-left{left:clamp(12px,calc((100vw - 1280px)/2 - 8.6vw - 8px),calc((100vw - 1280px)/2 - 8px)) !important;}
   #side-ad-right{right:clamp(12px,calc((100vw - 1280px)/2 - 8.6vw - 8px),calc((100vw - 1280px)/2 - 8px)) !important;}
   #side-ad-left.ad-ready{animation:sideAdRevealLeft .7s var(--ad-ease) both;}
@@ -908,15 +908,14 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 #driver-profile-content .profile-constructor-info > .flex > .profile-team-logo { flex: 0 0 auto !important; width: 92px !important; height: 72px !important; }
 #driver-profile-content .profile-constructor-info > .flex > div:last-child { flex: 1 1 auto !important; min-width: 0 !important; max-width: none !important; text-align: left !important; }
 
-/* --- SIDE ADS --- */
-#side-ad-left, #side-ad-right { display: none; }
-@media (min-width: 1450px) {
-  #side-ad-left, #side-ad-right { display: block !important; position: fixed !important; top: 50%; width: clamp(110px, 8.6vw, 190px) !important; height: clamp(400px, 31vw, 610px) !important; z-index: 30; transform: translateY(-50%); }
-  #side-ad-left { left: clamp(12px, calc((100vw - 1280px)/2 - 8.6vw - 8px), calc((100vw - 1280px)/2 - 8px)) !important; }
-  #side-ad-right { right: clamp(12px, calc((100vw - 1280px)/2 - 8.6vw - 8px), calc((100vw - 1280px)/2 - 8px)) !important; }
+/* --- SIDE ADS: one authoritative responsive rule --- */
+#side-ad-left,#side-ad-right{display:none !important;}
+@media (min-width:1600px){
+  #side-ad-left,#side-ad-right{display:block !important;position:fixed !important;top:50%;width:clamp(110px,8.6vw,190px) !important;height:clamp(400px,31vw,610px) !important;z-index:30;transform:translateY(-50%);}
+  #side-ad-left{left:clamp(12px,calc((100vw - 1280px)/2 - 8.6vw - 8px),calc((100vw - 1280px)/2 - 8px)) !important;}
+  #side-ad-right{right:clamp(12px,calc((100vw - 1280px)/2 - 8.6vw - 8px),calc((100vw - 1280px)/2 - 8px)) !important;}
 }
-@media (min-width: 1024px) and (max-width: 1449px) { #side-ad-left, #side-ad-right { display: block !important; position: sticky !important; top: 92px !important; width: clamp(100px, 7.5vw, 150px) !important; height: clamp(400px, 38vw, 560px) !important; } }
-@media (max-width: 1023px) { #side-ad-left, #side-ad-right { display: none !important; } #ad-container, #sponsor-slot { width: 100%; } }
+@media (max-width:1599px){#ad-container,#sponsor-slot{width:100%;}}
 
 /* --- CẤU TRÚC LƯỚI GRID & BREAKPOINTS GỘP --- */
 @media (min-width: 1024px) {
@@ -1030,7 +1029,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     </svg>
   </a>
   <span class="hidden sm:block w-[1px] h-[22px] bg-[#1f2937]" aria-hidden="true"></span>
-  <span class="hidden sm:block text-[11px] uppercase tracking-[0.32em] text-[#4b5563] font-normal select-none">Formula 1</span>
+  <span class="text-[9px] sm:text-[11px] uppercase tracking-[0.22em] sm:tracking-[0.32em] text-[#4b5563] font-normal select-none">Formula 1</span>
 </div>
 <nav class="hidden lg:flex items-center gap-8 text-[10px] font-bold tracking-wider text-gray-500">
 <a class="nav-link hover:text-white transition" href="#news">NEWS</a>
@@ -1672,12 +1671,16 @@ async function fetchConfigAndTrack(){
 
       const isConfigOn=value=>value===true||['ON','TRUE','YES','1','Y','ENABLE','ENABLED'].includes(String(value??'').trim().toUpperCase());
       const adShineTimers=new WeakMap();
+      const adShineEndTimers=new WeakMap();
 
       function stopAdShine(el){
         if(!el)return;
         const timer=adShineTimers.get(el);
+        const endTimer=adShineEndTimers.get(el);
         if(timer)clearTimeout(timer);
+        if(endTimer)clearTimeout(endTimer);
         adShineTimers.delete(el);
+        adShineEndTimers.delete(el);
         el.classList.remove('is-shining');
       }
 
@@ -1685,15 +1688,32 @@ async function fetchConfigAndTrack(){
         if(!el)return;
         stopAdShine(el);
         const run=()=>{
-          if(!el.classList.contains('ad-ready'))return;
+          if(document.hidden||!el.classList.contains('ad-ready'))return;
           el.classList.remove('is-shining');
           void el.offsetWidth;
           el.classList.add('is-shining');
-          setTimeout(()=>el.classList.remove('is-shining'),1500);
+          adShineEndTimers.set(el,setTimeout(()=>{
+            el.classList.remove('is-shining');
+            adShineEndTimers.delete(el);
+          },1500));
           adShineTimers.set(el,setTimeout(run,9000+Math.random()*8000));
         };
         adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
       }
+
+      function stopAllAdShine(){
+        sideAds.forEach(({el})=>stopAdShine(el));
+      }
+
+      document.addEventListener('visibilitychange',()=>{
+        if(document.hidden){
+          stopAllAdShine();
+        }else{
+          sideAds.forEach(({el})=>{
+            if(el?.classList.contains('ad-ready')) scheduleAdShine(el);
+          });
+        }
+      });
 
       function revealAd(el){
         if(!el)return;
@@ -2318,35 +2338,53 @@ function getDriverImage(d){
 return getDriverImageCandidates(d)[0]||'';
 }
 
+async function handleImageFallback(img,{searchQuery='',onExhausted}={}){
+  try{
+    if(img.dataset.fallbackBusy==='1')return;
+    img.dataset.fallbackBusy='1';
+    const list=JSON.parse(img.dataset.srcList||'[]');
+    const next=Number(img.dataset.srcIndex||0)+1;
+    if(next<list.length){
+      img.dataset.srcIndex=String(next);
+      img.src=list[next];
+      img.dataset.fallbackBusy='0';
+      return;
+    }
+    const page=img.dataset.wikiPage||'';
+    if(page){
+      const wiki=await fetchWikipediaSummaryImage(page);
+      if(wiki&&!list.includes(wiki)){
+        const updated=[...list,wiki];
+        img.dataset.srcIndex=String(updated.length-1);
+        img.dataset.srcList=JSON.stringify(updated);
+        img.src=wiki;
+        img.dataset.fallbackBusy='0';
+        return;
+      }
+      if(searchQuery){
+        const search=await fetchWikipediaImageSearch(searchQuery);
+        if(search&&!list.includes(search)){
+          const updated=[...list,search];
+          img.dataset.srcIndex=String(updated.length-1);
+          img.dataset.srcList=JSON.stringify(updated);
+          img.src=search;
+          img.dataset.fallbackBusy='0';
+          return;
+        }
+      }
+    }
+  }catch(e){}
+  img.dataset.fallbackBusy='0';
+  img.onerror=null;
+  if(typeof onExhausted==='function')onExhausted(img);
+  else img.style.display='none';
+}
+
 async function driverImageOnError(img){
-try{
-  if(img.dataset.fallbackBusy==='1')return;
-  img.dataset.fallbackBusy='1';
- const list=JSON.parse(img.dataset.srcList||'[]');
- const next=Number(img.dataset.srcIndex||0)+1;
- if(next<list.length){img.dataset.srcIndex=String(next);img.src=list[next];img.dataset.fallbackBusy='0';return;}
- const page=img.dataset.wikiPage||'';
- if(page){
-   const wiki=await fetchWikipediaSummaryImage(page);
-   if(wiki && !list.includes(wiki)){
-     const updated=[...list,wiki];
-     img.dataset.srcIndex=String(updated.length-1);
-     img.dataset.srcList=JSON.stringify(updated);
-     img.src=wiki;
-     return;
-   }
-   const search=await fetchWikipediaImageSearch(page.replaceAll('_',' ')+' Formula 1');
-   if(search && !list.includes(search)){
-     const updated=[...list,search];
-     img.dataset.srcIndex=String(updated.length-1);
-     img.dataset.srcList=JSON.stringify(updated);
-     img.src=search;
-     return;
-   }
- }
-}catch(e){}
-img.onerror=null;
-img.style.display='none';
+  const page=img.dataset.wikiPage||'';
+  return handleImageFallback(img,{
+    searchQuery:page?`${page.replaceAll('_',' ')} Formula 1`:''
+  });
 }
 
 function renderStandings(){
@@ -2413,8 +2451,8 @@ const meta=getTeamMeta(constructor?.constructorId);
 const firstName=d.Driver.givenName||'';
 const lastName=d.Driver.familyName||'';
 const number=d.Driver.permanentNumber||DRIVER_NUMBER_MAP[Object.keys(DRIVER_ALIASES).find(k=>DRIVER_ALIASES[k]===d.Driver.driverId)]||'--';
-const image=getDriverImage(d);
 const imageCandidates=getDriverImageCandidates(d);
+const image=imageCandidates[0]||'';
 return `<article class="driver-card rounded-lg p-5" data-driver-id="${escapeHTML(d.Driver.driverId)}" role="button" tabindex="0" aria-label="Open ${escapeHTML(firstName+' '+lastName)} profile" style="--team-color:${meta.color}">
 <div class="driver-gradient"></div>
 <div class="driver-photo-wrap"><img src="${escapeHTML(image)}" data-src-list='${escapeHTML(JSON.stringify(imageCandidates))}' data-src-index="0" data-wiki-page="${escapeHTML((firstName+'_'+lastName).replaceAll(' ','_'))}" class="driver-photo" alt="${escapeHTML(firstName+' '+lastName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)"></div>
@@ -2450,52 +2488,21 @@ return [...new Set(urls)];
 }
 function getCarImage(team){return getCarImageCandidates(team)[0]||carWikiImages[teamKey(team.id)]||'';}
 async function carImageOnError(img){
-  try{
-    const list=JSON.parse(img.dataset.srcList||'[]');
-    const next=Number(img.dataset.srcIndex||0)+1;
-
-    if(next<list.length){
-      img.dataset.srcIndex=String(next);
-      img.src=list[next];
-      return;
+  const alt=String(img.alt||'');
+  const match=alt.match(/^(.+?)\s+([A-Z0-9-]+)\s+2026 car$/i);
+  const teamName=match?.[1]||'';
+  const chassis=match?.[2]||'';
+  const teamKeyValue=Object.keys(TEAM_META).find(k=>TEAM_META[k].chassis===chassis)||'';
+  const wikiPage=CAR_WIKI_PAGES[teamKeyValue]||'';
+  img.dataset.wikiPage=wikiPage;
+  return handleImageFallback(img,{
+    searchQuery:`${teamName} ${chassis} Formula 1 2026`,
+    onExhausted:image=>{
+      image.style.display='none';
+      const holder=image.parentElement?.querySelector('.car-image-empty');
+      if(holder)holder.classList.remove('hidden');
     }
-
-    if(img.dataset.wikiTried!=='1'){
-      img.dataset.wikiTried='1';
-      const alt=String(img.alt||'');
-      const match=alt.match(/^(.+?)\s+([A-Z0-9-]+)\s+2026 car$/i);
-      const teamName=match?.[1]||'';
-      const chassis=match?.[2]||'';
-      const teamKeyValue=Object.keys(TEAM_META).find(k=>TEAM_META[k].chassis===chassis)||'';
-      const wikiPage=CAR_WIKI_PAGES[teamKeyValue]||'';
-
-      const wiki=wikiPage
-        ? await fetchWikipediaSummaryImage(wikiPage)
-        : await fetchWikipediaImageSearch(`${teamName} ${chassis} Formula 1 2026`);
-
-      if(wiki){
-        const updated=[...list,wiki];
-        img.dataset.srcList=JSON.stringify(updated);
-        img.dataset.srcIndex=String(updated.length-1);
-        img.src=wiki;
-        return;
-      }
-
-      const search=await fetchWikipediaImageSearch(`${teamName} ${chassis} Formula 1 2026`);
-      if(search){
-        const updated=[...list,search];
-        img.dataset.srcList=JSON.stringify(updated);
-        img.dataset.srcIndex=String(updated.length-1);
-        img.src=search;
-        return;
-      }
-    }
-  }catch(e){}
-
-  img.onerror=null;
-  img.style.display='none';
-  const holder=img.parentElement?.querySelector('.car-image-empty');
-  if(holder)holder.classList.remove('hidden');
+  });
 }
 
 function renderTeams(){
@@ -2918,35 +2925,38 @@ if(e.target===this)closeProfile();
 });
 
 document.addEventListener('keydown',function(e){
-if(e.key==='Escape'){
-const raceModal=document.getElementById('race-modal');
-const profileModal=document.getElementById('profile-modal');
-if(raceModal && !raceModal.classList.contains('hidden')) closeRaceModal();
-else if(profileModal && !profileModal.classList.contains('hidden')) closeProfile();
-}
-});
+  const key=String(e.key||'').toLowerCase();
+  const ctrl=e.ctrlKey;
+
+  // Keyboard shortcuts / DevTools guard.
+  if(e.key==='F12'||(ctrl&&key==='u')||(ctrl&&e.shiftKey&&(key==='i'||key==='j'||key==='c'))){
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+
+  // Escape closes the active modal/search panel.
+  if(e.key==='Escape'){
+    const raceModal=document.getElementById('race-modal');
+    const profileModal=document.getElementById('profile-modal');
+    if(raceModal && !raceModal.classList.contains('hidden')) closeRaceModal();
+    if(profileModal && !profileModal.classList.contains('hidden')) closeProfile();
+    document.getElementById('search-panel')?.classList.add('hidden');
+    return;
+  }
+
+  // Enter / Space opens dynamically rendered driver cards.
+  if(e.key==='Enter'||e.key===' '){
+    const card=e.target.closest('.driver-card[data-driver-id], .team-card-driver-mini[data-driver-id], .team-driver-mini[data-driver-id]');
+    if(!card)return;
+    e.preventDefault();
+    const id=card.dataset.driverId;
+    if(id)openDriverProfile(id);
+  }
+},true);
 
 document.addEventListener('contextmenu',function(e){
 e.preventDefault();
-});
-
-document.addEventListener('keydown',function(e){
-const key=String(e.key||'').toLowerCase();
-const ctrl=e.ctrlKey;
-if(
-e.key==='F12' ||
-(ctrl&&key==='u') ||
-(ctrl&&e.shiftKey&&(key==='i'||key==='j'||key==='c'))
-){
-e.preventDefault();
-e.stopPropagation();
-return false;
-}
-if(e.key==='Escape'){
-closeRaceModal();
-closeProfile();
-document.getElementById('search-panel').classList.add('hidden');
-}
 });
 
 function setupAnchorNavigation(){
@@ -2980,15 +2990,6 @@ function setupAnchorNavigation(){
 document.addEventListener('click',function(e){
   const card=e.target.closest('.driver-card[data-driver-id], .team-card-driver-mini[data-driver-id], .team-driver-mini[data-driver-id]');
   if(!card || e.target.closest('a,button')) return;
-  const id=card.dataset.driverId;
-  if(id) openDriverProfile(id);
-},true);
-
-document.addEventListener('keydown',function(e){
-  if(e.key!=='Enter' && e.key!==' ') return;
-  const card=e.target.closest('.driver-card[data-driver-id], .team-card-driver-mini[data-driver-id], .team-driver-mini[data-driver-id]');
-  if(!card) return;
-  e.preventDefault();
   const id=card.dataset.driverId;
   if(id) openDriverProfile(id);
 },true);
