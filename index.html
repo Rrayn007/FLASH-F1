@@ -619,8 +619,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
   #profile-modal #profile-name{font-size:20px !important;}
   #driver-profile-content #profile-team{font-size:15px !important;}
   #driver-profile-content #profile-team-logo{flex-basis:40px !important;width:40px !important;height:29px !important;}}
-@media(max-width:640px){  .team-card .team-card-driver-mini{height:92px !important;min-height:92px !important;padding:4px 6px !important;overflow:hidden !important;}
-  .team-card .team-card-driver-mini .driver-mini-image{left:-5% !important;top:0 !important;width:48% !important;height:100% !important;max-height:100% !important;object-fit:contain !important;object-position:center bottom !important;transform:none !important;-webkit-mask-image:none !important;mask-image:none !important;}
+@media(max-width:640px){  .team-card .team-card-driver-mini .driver-mini-image{left:-4% !important;top:0 !important;width:72% !important;height:190% !important;max-height:none !important;object-fit:contain !important;object-position:center top !important;}
   .team-card .team-card-driver-mini .team-driver-copy{left:43% !important;right:3% !important;bottom:8px !important;width:auto !important;max-width:54% !important;min-width:0 !important;}
   .team-card .team-card-driver-mini .driver-mini-label{font-size:5px !important;line-height:1 !important;margin-bottom:3px !important;}
   .team-card .team-card-driver-mini .driver-mini-name{display:-webkit-box !important;-webkit-box-orient:vertical !important;-webkit-line-clamp:2 !important;width:100% !important;max-width:100% !important;font-size:7.6px !important;line-height:1.05 !important;letter-spacing:-.02em !important;white-space:normal !important;overflow:hidden !important;text-overflow:clip !important;overflow-wrap:normal !important;word-break:normal !important;}
@@ -979,13 +978,14 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 .team-card .team-card-driver-mini .driver-mini-image{
   position:absolute;
   left:-4%;
-  bottom:0;
-  top:auto;
-  width:min(62%,180px);
-  max-width:62%;
-  height:128%;
+  top:0;
+  bottom:auto;
+  width:72%;
+  max-width:none;
+  height:190%;
+  max-height:none;
   object-fit:contain;
-  object-position:left bottom;
+  object-position:center top;
   transform:none;
   filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
 }
