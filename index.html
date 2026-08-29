@@ -258,18 +258,15 @@ button{font-family:inherit;}
 #mobile-menu-toggle{transition:transform .25s ease;}
 #mobile-menu-toggle[aria-expanded="true"]{transform:rotate(90deg);}
 
-.standing-row{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:14px;min-height:52px;padding:10px 18px;border-bottom:1px solid #20242a;transition:.16s;}
-.standing-row:hover{background:#13161a;}
-
 section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 #news{scroll-margin-top:96px;}
 .sidebar-standing-card, .standings-panel .card, .news-card, .calendar-card, .pole-chip, .result-podium-item{border-color:#25292f !important;background:#0d0f12 !important;}
 
 /* --- ZERO-GAP ADS SYSTEM --- */
-.side-banner-outer, #ad-container, #sponsor-slot {display:none;opacity:0;margin:0;padding:0;}
-.side-banner-outer.ad-ready {display:block;opacity:1;animation:fadeIn .3s ease-out forwards;}
-#ad-container.ad-ready {display:block;opacity:1;animation:adReveal .72s var(--ad-ease) both;}
-#sponsor-slot.ad-ready {display:block;opacity:1;animation:adReveal .72s var(--ad-ease) both;}
+.side-banner-outer, #ad-container, #sponsor-slot {display:none !important;opacity:0;margin:0 !important;padding:0 !important;height:0 !important;visibility:hidden;}
+.side-banner-outer.ad-ready {display:none;}
+#ad-container.ad-ready {display:block !important;opacity:1;height:auto !important;margin-top:12px !important;visibility:visible;animation:adReveal .72s var(--ad-ease) both;}
+#sponsor-slot.ad-ready {display:block !important;opacity:1;height:auto !important;margin-top:3.5rem !important;visibility:visible;animation:adReveal .72s var(--ad-ease) both;}
 
 .side-banner-outer a {display:block;width:100%;height:100%;position:relative;z-index:1;}
 .side-banner-outer img {display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ad-ease),filter .45s ease;}
@@ -290,8 +287,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 
 @container (min-width: 421px) { .driver-card .driver-photo { width: min(100%, 82%); max-width: 82%; } .driver-card .driver-name-zone { width: 61%; max-width: 61%; } }
 @container (max-width: 420px) { .driver-card .driver-photo { width: min(100%, 76%); max-width: 76%; right: -1%; } .driver-card .driver-name-zone { width: 64%; max-width: 64%; } }
-@container (max-width: 300px) { .driver-card .driver-photo { width: min(100%, 72%); max-width: 72%; } .driver-card .driver-name-zone { width: 66%; max-width: 66%; } }
-@container (max-width: 230px) { .driver-card .driver-photo { width: min(100%, 68%); max-width: 68%; } .driver-card .driver-name-zone { width: 69%; max-width: 69%; } .driver-card .driver-lastname { font-size: clamp(13px, 5.1cqw, 16px); } }
+@container (max-width: 300px) { .driver-card .driver-photo { width: min(100%, 72%); max-width: 72%; } .driver-card .driver-name-zone { width: 66%; max-width: 66%; } .driver-card .driver-lastname { font-size: clamp(13px, 5.1cqw, 16px); } }
 
 #driver-profile-content .profile-constructor-info > .flex { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: flex-start !important; gap: 10px !important; width: 100% !important; min-width: 0 !important; }
 #driver-profile-content .profile-constructor-info > .flex > .profile-team-logo { flex: 0 0 auto !important; width: 92px !important; height: 72px !important; }
@@ -310,12 +306,12 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     border-radius: 6px;
     background: #0d0f12;
     border: 1px solid #25292f;
+    visibility: visible;
   }
   #side-ad-left.ad-ready { left: clamp(10px, calc((100vw - 1280px) / 2 - clamp(120px, 8.5vw, 160px) - 16px), calc((100vw - 1280px) / 2 - 16px)) !important; }
   #side-ad-right.ad-ready { right: clamp(10px, calc((100vw - 1280px) / 2 - clamp(120px, 8.5vw, 160px) - 16px), calc((100vw - 1280px) / 2 - 16px)) !important; }
 }
 
-/* Ẩn hoàn toàn side ads trên màn hình < 1450px */
 @media (max-width: 1449px) { 
   .side-banner-outer { display: none !important; } 
 }
@@ -434,7 +430,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
   </symbol>
 </svg>
 
-<!-- Outer Side Banners (Rendered outside main layout to avoid gaps) -->
+<!-- Outer Side Banners -->
 <aside id="side-ad-left" class="side-banner-outer" aria-hidden="true">
   <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
     <img id="side-ad-left-img" alt="Advertisement">
@@ -450,12 +446,12 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 <header class="sticky top-0 z-50 border-b border-[#19191b] glass">
 <div class="max-w-7xl mx-auto px-5 lg:px-8">
 <div class="h-20 flex items-center justify-between">
-<div class="flex items-center gap-3 sm:gap-5 min-w-0">
+<div class="flex items-center gap-2 sm:gap-4 min-w-0 shrink-0">
   <a href="/" aria-label="007" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
-    <svg id="header-007-logo" style="height: 28px; width: 90px; display: block;" class="sm:h-[32px] sm:w-[103px]"><use href="#icon-007-logo"></use></svg>
+    <svg id="header-007-logo" class="h-6 sm:h-8 w-auto aspect-[199/62] block"><use href="#icon-007-logo"></use></svg>
   </a>
-  <span class="w-[1px] h-[18px] sm:h-[22px] bg-[#1f2937]" aria-hidden="true"></span>
-  <span class="text-[9px] sm:text-[11px] uppercase tracking-[0.22em] sm:tracking-[0.32em] text-[#4b5563] font-normal select-none whitespace-nowrap">Formula 1</span>
+  <span class="w-[1px] h-4 sm:h-5 bg-[#25292f] shrink-0" aria-hidden="true"></span>
+  <span class="text-[8.5px] sm:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.28em] text-[#777d86] font-medium select-none whitespace-nowrap shrink-0">Formula 1</span>
 </div>
 <nav class="hidden lg:flex items-center gap-8 text-[10px] font-bold tracking-wider text-gray-500">
 <a class="nav-link hover:text-white transition" href="#news">NEWS</a>
@@ -606,7 +602,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     </div>
   </div>
 
-  <!-- Inline Banner (Appears cleanly below Standings with zero initial gap) -->
+  <!-- Inline Banner -->
   <div id="ad-container" class="ad-shell mt-3" aria-hidden="true">
     <div class="flex justify-between mb-1.5"><span class="sponsor-label">Sponsored</span></div>
     <a id="ad-link" aria-label="Advertisement">
@@ -666,7 +662,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 <div class="grid md:grid-cols-3 gap-10">
 <div>
 <a href="/" aria-label="007" class="footer-brand-logo inline-block" style="line-height: 0;">
-  <svg id="footer-007-logo" style="height: 32px; width: 103px; display: block;"><use href="#icon-007-logo"></use></svg>
+  <svg id="footer-007-logo" class="h-8 w-auto aspect-[199/62] block"><use href="#icon-007-logo"></use></svg>
 </a>
 <p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">A Formula 1 news and data hub with a broadcast-inspired interface.</p>
 </div>
@@ -1776,7 +1772,7 @@ function renderDriverCareer(driver){
     }else merged.push([year,team,detail]);
   });
   
-  const careerTeamColors={mercedes:'#00D7B6', ferrari:'#ED1131', mclaren:'#F47600', williams:'#1868DB', red_bull:'#4781D7', 'red bull racing':'#4781D7', alpine:'#00A1E8', 'racing bulls':'#6C98FF', rb:'#6C98FF', aston_martin:'#229971', 'aston martin':'#229971', haas:'#B6BABD', 'haas f1 team':'#B6BABD', audi:'#BB0A30', sauber:'#52B6E8', cadillac:'#D7D9DC', 'racing point':'#F596C8', renault:'#FFF500', 'toro rosso':'#469BFF', alphatauri:'#5E8FAA', minardi:'#D0D0D0', ferrari_haas:'#ED1131'};
+  const careerTeamColors={mercedes:'#00D7B6', ferrari:'#ED1131', mclaren:'#F47600', williams:'#1868DB', red_bull:'#4781D7', 'red bull racing':'#4781D7', alpine:'#00A1E8', 'racing bulls':'#6C98FF', rb:#6C98FF', aston_martin:'#229971', 'aston martin':'#229971', haas:'#B6BABD', 'haas f1 team':'#B6BABD', audi:'#BB0A30', sauber:'#52B6E8', cadillac:'#D7D9DC', 'racing point':'#F596C8', renault:'#FFF500', 'toro rosso':'#469BFF', alphatauri:'#5E8FAA', minardi:'#D0D0D0', ferrari_haas:'#ED1131'};
   const getCareerColor=(name='')=>{
     const raw=String(name).trim().toLowerCase();
     const key=raw.replace(/\s+/g,'_');
@@ -1900,7 +1896,7 @@ function openTeamProfile(teamId){
     return`
     <div class="team-driver-mini" data-driver-id="${escapeHTML(driver.Driver?.driverId||'')}" role="button" tabindex="0" aria-label="Open ${escapeHTML(fullName)} profile" style="--team-color:${meta.color}">
       <div class="driver-mini-photo-wrap">
-        <img src="${escapeHTML(candidates[0]||'')}" data-src-list='${escapeHTML(JSON.stringify(candidates))}' data-src-index="0" class="driver-mini-image" alt="${escapeHTML(fullName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="driverImageOnError(this)">
+        <img src="${escapeHTML(candidates[0]||'')}" data-src-list='${escapeHTML(JSON.stringify(candidates))}' data-src-index="0" class="driver-mini-image" alt="${escapeHTML(fullName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="carImageOnError(this)">
       </div>
       <div class="driver-mini-number">#${escapeHTML(number)}</div>
       <div class="team-driver-copy">
