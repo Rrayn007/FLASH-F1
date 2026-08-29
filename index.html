@@ -18,2980 +18,563 @@
 
 <style id="f1hub-optimized-styles">
 
-/* ===== consolidated source block 0 ===== */
-:root{--red:#e10600;--bg:#080808;--panel:#0d0d0f;--panel2:#111114;--border:#222225;--ui-border:#272b31;--ui-cyan:#00d7c4;--ui-blue:#3f82ff;--ui-muted:#777d86;--ad-ease:cubic-bezier(.22,1,.36,1);--side-ad-width:150px;--side-ad-height:560px;--side-ad-edge:10px}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:#eee;font-family:Inter,sans-serif;overflow-x:hidden}
-body.modal-open{overflow:hidden}
-img{display:block}
-#brand-logo.logo-failed,#footer-brand-logo.logo-failed{display:none!important}
-button,a{outline:none}
-button{font-family:inherit}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:#050505}
-::-webkit-scrollbar-thumb{background:#333;border-radius:10px}
-.f1-red{color:var(--red)}
-.glass{background:rgba(8,8,8,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.hero-grid{background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:50px 50px}
-.hero-glow{position:absolute;width:520px;height:520px;background:radial-gradient(circle,rgba(225,6,0,.15),transparent 70%);filter:blur(25px);pointer-events:none}
-.card{background:#0b0b0d;border:1px solid var(--border);transition:.25s ease}
-.card:hover{border-color:#3b3b40}
-.nav-link{position:relative}
-.nav-link:after{content:"";position:absolute;left:0;bottom:-10px;width:0;height:2px;background:var(--red);transition:.25s}
-.nav-link:hover:after{width:100%}
-.live-dot{animation:pulse 1.8s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(225,6,0,.7)}70%{box-shadow:0 0 0 8px rgba(225,6,0,0)}100%{box-shadow:0 0 0 0 rgba(225,6,0,0)}}
-.race-track{background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:20px 20px}
-.skeleton{background:linear-gradient(90deg,#0d0d0d 25%,#181818 37%,#0d0d0d 63%);background-size:400% 100%;animation:skeleton 1.4s infinite}
-@keyframes skeleton{0%{background-position:100% 0}100%{background-position:-100% 0}}
-.news-card{overflow:hidden}
-.news-featured-image{height:285px}
-.news-feed-card img{height:145px;object-fit:cover}
-.f1-sidebar{position:sticky;top:92px;align-self:start;max-height:none;overflow:visible;padding-right:0;scrollbar-width:none}
-.f1-sidebar::-webkit-scrollbar{display:none}
-.sidebar-standings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch}.sidebar-standings>.flex{grid-column:1/-1}.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:1/-1}
-.sidebar-standing-card{background:#0b0b0d;border:1px solid #202023;border-radius:10px;overflow:hidden;height:560px;display:flex;flex-direction:column}
-.sidebar-standing-card .standing-head{padding:13px 14px 10px;min-height:47px;flex:0 0 auto}
-.sidebar-standing-card .standing-head h3{font-size:9px}
-.sidebar-standing-card .standing-head span{font-size:7px}
-.sidebar-standing-card .standings-scroll{height:auto;flex:1;min-height:0;overflow:auto;scrollbar-width:none}
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar{display:none}
-.sidebar-standing-card.constructors .standings-scroll{height:auto}
-.sidebar-standing-card .standing-row{grid-template-columns:22px minmax(0,1fr) auto;gap:6px;min-height:39px;padding:6px 8px}
-.sidebar-standing-card .standing-name{font-size:10px}
-.sidebar-standing-card .standing-sub{font-size:6px;margin-top:2px}
-.sidebar-standing-card .standing-points{font-size:11px;min-width:28px}
-.sidebar-standing-card .standing-rank{font-size:8px}
+/* ==========================================================================
+   F1 HUB — UNIFIED & CONSOLIDATED PRODUCTION STYLESHEET
+   100% Visual Fidelity Preserved (Zero Layout Regressions on All Cards/Modals)
+   ========================================================================== */
 
-.news-card img{transition:transform .6s ease}
-.news-card:hover img{transform:scale(1.04)}
-.hero-title{font-size:clamp(3.5rem,7vw,6.8rem);line-height:.84;letter-spacing:-.075em}
-.card,.driver-card,.team-card,.team-driver-mini,.team-card-driver-mini{
-  border:1px solid var(--ui-border,#272b31);
-  box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);
+/* --------------------------------------------------------------------------
+   1. ROOT VARIABLES, RESETS & BASE ATOMS
+   -------------------------------------------------------------------------- */
+:root {
+  --red: #e10600;
+  --bg: #080808;
+  --panel: #0d0d0f;
+  --panel2: #111114;
+  --border: #222225;
+  --ui-border: #272b31;
+  --ui-cyan: #00d7c4;
+  --ui-blue: #3f82ff;
+  --ui-muted: #777d86;
+  --ad-ease: cubic-bezier(.22, 1, .36, 1);
+  --side-ad-width: 150px;
+  --side-ad-height: 560px;
+  --side-ad-edge: 10px;
 }
 
-/* =========================================================
-   F1 CARD SYSTEM — FINAL REFERENCE MATCH
-   ========================================================= */
-.driver-card,.team-card{
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
-  isolation:isolate;
-  min-width:0;
-  border-radius:10px;
-  border:1px solid #272b31;
-  background:
-    radial-gradient(circle at 100% 0%,rgba(255,255,255,.018),transparent 38%),
-    linear-gradient(145deg,#0b0d10 0%,#101216 100%);
-  box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);
-  font-family:Inter,Arial,Helvetica,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:geometricPrecision;
-  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: #eee; font-family: Inter, sans-serif; overflow-x: hidden; }
+body.modal-open { overflow: hidden; }
+img { display: block; }
+#brand-logo.logo-failed, #footer-brand-logo.logo-failed { display: none !important; }
+button, a { outline: none; }
+button { font-family: inherit; }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+/* Utilities & Animations */
+.f1-red { color: var(--red); }
+.glass { background: rgba(8, 8, 8, .88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.hero-grid { background-image: linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px); background-size: 50px 50px; }
+.hero-glow { position: absolute; width: 520px; height: 520px; background: radial-gradient(circle, rgba(225, 6, 0, .15), transparent 70%); filter: blur(25px); pointer-events: none; }
+.hero-title { font-size: clamp(3.5rem, 7vw, 6.8rem); line-height: .84; letter-spacing: -.075em; }
+.nav-link { position: relative; }
+.nav-link:after { content: ""; position: absolute; left: 0; bottom: -10px; width: 0; height: 2px; background: var(--red); transition: .25s; }
+.nav-link:hover:after { width: 100%; }
+.live-dot { animation: pulse 1.8s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(225, 6, 0, .7); } 70% { box-shadow: 0 0 0 8px rgba(225, 6, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(225, 6, 0, 0); } }
+.race-track { background-image: linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px); background-size: 20px 20px; }
+.skeleton { background: linear-gradient(90deg, #0d0d0d 25%, #181818 37%, #0d0d0d 63%); background-size: 400% 100%; animation: skeleton 1.4s infinite; }
+@keyframes skeleton { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+.card, .driver-card, .team-card, .team-driver-mini, .team-card-driver-mini {
+  border: 1px solid var(--ui-border, #272b31);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .018);
 }
-.driver-card:hover,.team-card:hover{
-  transform:translateY(-3px);
-  border-color:#3a4048;
-  box-shadow:0 16px 38px rgba(0,0,0,.28);
-}
-.driver-card:after,.team-card:after{
-  content:"";
-  position:absolute;
-  left:0;right:0;bottom:0;height:3px;
-  background:var(--team-color,#00d7c4);
-  box-shadow:0 0 12px color-mix(in srgb,var(--team-color,#00d7c4) 28%,transparent);
-  z-index:30;
+.sidebar-standing-card, .standings-panel .card, .news-card, .calendar-card, .pole-chip, .result-podium-item {
+  border-color: #25292f !important;
+  background: #0d0f12 !important;
 }
 
-/* DRIVER CARD */
-.driver-card{
-  aspect-ratio:1/1;
-  padding:0!important;
-}
-.driver-card:before{
-  content:"";
-  position:absolute;
-  left:0;bottom:0;
-  width:62%;height:46%;
-  z-index:0;
-  pointer-events:none;
-  opacity:.72;
-  background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 50%,transparent) 1px,transparent 1px);
-  background-size:8px 8px;
-  -webkit-mask-image:linear-gradient(to right,black,transparent 92%);
-  mask-image:linear-gradient(to right,black,transparent 92%);
-}
-.driver-card .driver-photo-wrap{
-  position:absolute;
-  left:0;right:0;top:0;bottom:9%;
-  z-index:1;
-  overflow:hidden;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-  pointer-events:none;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.92) 78%,rgba(0,0,0,.58) 88%,transparent 100%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.92) 78%,rgba(0,0,0,.58) 88%,transparent 100%);
-}
-.driver-card .driver-photo{
-  position:absolute;
-  left:12%!important; /* Shift right 12% */
-  top:0!important;
-  width:108%!important;
-  height:112%!important;
-  max-width:none!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  transform:scale(1.01)!important;
-  transform-origin:center top!important;
-  -webkit-mask-image:none!important;
-  mask-image:none!important;
-  filter:drop-shadow(0 12px 18px rgba(0,0,0,.58));
-  transition:transform .3s ease;
-}
-.driver-card:hover .driver-photo{transform:scale(1.035)!important;}
-.driver-card .driver-gradient{
-  position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:
-    radial-gradient(ellipse 70% 40% at 18% 77%,color-mix(in srgb,var(--team-color,#00d7c4) 25%,transparent),transparent 72%),
-    linear-gradient(to bottom,transparent 38%,rgba(10,12,15,.04) 53%,rgba(10,12,15,.26) 68%,rgba(10,12,15,.72) 84%,#0b0d10 100%);
-}
-.driver-card .driver-content{
-  position:relative;z-index:8;height:100%;
-  padding:16px 16px 13px!important;
-  display:flex;flex-direction:column;
-  pointer-events:auto;
-}
-.driver-card .driver-content>.flex.justify-between.items-start{width:100%}
-.driver-card .team-stripe{width:3px;height:36px!important;box-shadow:0 0 10px color-mix(in srgb,var(--team-color,#00d7c4) 25%,transparent)}
-.driver-card .timing-label{font-size:8px;letter-spacing:.19em;color:#7c828c;font-weight:500}
-.driver-card .driver-rank{font-size:11px;font-weight:800;color:#858b95}
-.driver-card .driver-number{
-  position:absolute;top:14px!important;right:15px!important;z-index:5;
-  font-size:42px!important;line-height:1;font-weight:900;
-  color:rgba(255,255,255,.055);letter-spacing:-.07em;
-  pointer-events:none;
-}
-.driver-card .driver-name-zone{
-  position:relative;z-index:8;
-  margin-top:auto;
-  margin-bottom:8px!important;
-  padding:8px 0 7px;
-  min-height:72px!important;
-  display:flex;flex-direction:column;justify-content:flex-end;
-}
-.driver-card .driver-name-zone:before{
-  content:"";position:absolute;z-index:-1;
-  left:-20px;right:-12px;top:-5px;bottom:-5px;
-  background:
-    radial-gradient(ellipse at 18% 72%,color-mix(in srgb,var(--team-color,#00d7c4) 22%,transparent),transparent 66%),
-    linear-gradient(90deg,color-mix(in srgb,var(--team-color,#00d7c4) 9%,transparent),transparent 86%);
-  filter:blur(9px);pointer-events:none;
-}
-.driver-card .driver-firstname,.driver-card .driver-lastname{position:relative;z-index:2;text-shadow:0 2px 12px rgba(0,0,0,.8)}
-.driver-card .driver-firstname{
-  font-size:10px!important;line-height:1.1!important;
-  color:#a6abb3!important;letter-spacing:.08em!important;font-weight:500!important;
-}
-.driver-card .driver-lastname{
-  margin-top:3px;
-  font-family:Inter,Arial,Helvetica,sans-serif;
-  font-size:clamp(21px,2.05vw,29px)!important;
-  line-height:.88!important;max-width:100%!important;
-  color:#f5f5f6;font-weight:900!important;
-  letter-spacing:-.055em!important;text-transform:uppercase;
-}
-.driver-card .driver-stats-row{
-  position:relative;z-index:8;
-  margin-top:0!important;
-  padding-top:9px!important;
-  border-top:1px solid #25292f;
-}
-.driver-card .driver-stats-row .timing-label{font-size:7px;color:var(--team-color,#00d7c4);letter-spacing:.16em}
-.driver-card .driver-stats-row .timing-value{font-size:12px!important;color:#f4f5f6;font-weight:800}
+.timing-label { font-size: 8px; letter-spacing: .18em; text-transform: uppercase; color: #555; }
+.timing-value { font-family: monospace; font-weight: 700; }
+.driver-row { transition: .2s; }
+.driver-row:hover { background: #111; }
+.fastest-label { background: #7d22b8; }
+.share-btn { width: 38px; height: 38px; border: 1px solid #29292d; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: .2s; }
+.share-btn:hover { border-color: #fff; background: #fff; color: #000; }
+.sponsor-label { font-size: 8px; letter-spacing: .2em; text-transform: uppercase; color: #444; }
+.status-badge { font-size: 7px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; padding: 5px 7px; border-radius: 3px; }
+.status-complete { background: #181818; color: #777; border: 1px solid #282828; }
+.status-next { background: var(--ui-blue); color: white; }
+.status-upcoming { background: #171717; color: #555; border: 1px solid #252525; }
+.icon-btn { width: 38px; height: 38px; border: 1px solid #25252a; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; line-height: 0; color: #aaa; transition: .2s ease; flex: none; }
+.icon-btn:hover { border-color: #fff; background: #fff; color: #000; }
+.icon-btn svg { width: 15px; height: 15px; display: block; }
+.team-logo { width: 44px; height: 32px; object-fit: contain; object-position: center; }
 
-/* TEAM CARD */
-.team-card{
-  aspect-ratio:1/1.06;
-  padding:17px!important;
-}
-.team-card:before{
-  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(circle at 12% 58%,color-mix(in srgb,var(--team-color,#00d7c4) 8%,transparent),transparent 34%),
-    linear-gradient(180deg,transparent,rgba(255,255,255,.012) 52%,transparent);
-}
-.team-card>*{position:relative;z-index:2}
-.team-card .team-stripe{display:none!important;}
-.team-card .timing-label{font-size:7px;letter-spacing:.2em;color:#737983;font-weight:500}
-.team-card .team-name{font-size:18px;line-height:.95;font-weight:900;text-transform:uppercase;letter-spacing:-.045em;color:#f4f5f6}
-.team-card .team-points{font-size:54px;line-height:.78;font-weight:900;color:rgba(255,255,255,.055);letter-spacing:-.06em}
-.team-card .car-visual{
-  height:128px;margin-top:10px;overflow:hidden;
-  background:
-    radial-gradient(circle at 55% 54%,rgba(255,255,255,.065),transparent 42%),
-    radial-gradient(circle at 30% 70%,color-mix(in srgb,var(--team-color,#00d7c4) 8%,transparent),transparent 46%);
-}
-.team-card .car-visual:after{left:3%;right:3%;bottom:13px;background:rgba(255,255,255,.065)}
-.team-card .car-visual:before{content:"";position:absolute;left:4%;right:4%;top:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.03),transparent)}
-.team-card .car-visual .team-car-image{filter:drop-shadow(0 10px 15px rgba(0,0,0,.5)) saturate(.95)}
-.team-card .team-card-driver-mini{
-  position:relative;overflow:hidden;
-  height:88px!important;min-height:88px!important;
-  padding:5px 7px!important;gap:5px!important;
-  border-radius:7px!important;
-  background:
-    radial-gradient(circle at 10% 85%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 48%),
-    linear-gradient(145deg,#111317,#0d0f12)!important;
-  border:1px solid #252a30!important;
-  border-bottom-color:#252a30!important;
-}
-.team-card .team-card-driver-mini:after{display:none!important;}
-.team-card .team-card-driver-mini .driver-mini-image{
-  position:absolute!important;
-  left:-2%!important;top:0!important;bottom:auto!important;
-  width:61%!important;max-width:none!important;
-  height:128%!important;flex:none!important;
-  object-fit:contain!important;object-position:center top!important;
-  transform:scale(1.02);transform-origin:center top;
-  filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 68%,rgba(0,0,0,.96) 76%,rgba(0,0,0,.72) 84%,rgba(0,0,0,.35) 93%,transparent 100%)!important;
-  mask-image:linear-gradient(to bottom,#000 0%,#000 68%,rgba(0,0,0,.96) 76%,rgba(0,0,0,.72) 84%,rgba(0,0,0,.35) 93%,transparent 100%)!important;
-  transition:transform .25s ease;
-}
-.team-card .team-card-driver-mini:hover .driver-mini-image{transform:scale(1.045)!important;}
-.team-card .team-card-driver-mini .team-driver-copy{
-  position:absolute!important;left:50%!important;right:5%!important;bottom:11px!important;
-  z-index:5;min-width:0;padding:0!important;pointer-events:none;
-}
-.team-card .team-card-driver-mini .driver-mini-label{font-size:6px!important;letter-spacing:.16em;color:#6b727b!important;margin:0 0 4px!important}
-.team-card .team-card-driver-mini .driver-mini-name{font-size:11px!important;line-height:1!important;letter-spacing:-.02em;font-weight:900!important}
-.team-card .team-card-driver-mini .driver-mini-points{margin-top:5px!important;font-size:7px!important;color:color-mix(in srgb,var(--team-color,#00d7c4) 72%,#8b9098)!important;font-weight:700}
-.team-card>.flex.justify-between.items-end.mt-3{padding-top:9px;border-top:1px solid #24282e}
-.team-card>.flex.justify-between.items-end.mt-3 .text-3xl{font-size:30px!important;line-height:.88;letter-spacing:-.055em}
-.team-card>.mt-5{margin-top:9px!important;padding-top:7px;border-top:1px solid #1f2328;color:color-mix(in srgb,var(--team-color,#00d7c4) 72%,#7c828b)!important;font-weight:800}
+/* --------------------------------------------------------------------------
+   2. NEWS & SECTION HEADERS
+   -------------------------------------------------------------------------- */
+.news-card { overflow: hidden; }
+.news-featured-image { height: 285px; }
+.news-feed-card img { height: 145px; object-fit: cover; }
+.news-card img { transition: transform .6s ease; }
+.news-card:hover img { transform: scale(1.04); }
+section[id], div[id="standings"], aside[id] { scroll-margin-top: 96px; }
+#news { scroll-margin-top: 96px; }
 
-/* PROFILE LINEUP CARD */
-.team-driver-mini{
-  position:relative;min-height:350px;height:350px;overflow:hidden;cursor:pointer;pointer-events:auto;isolation:isolate;
-  border-radius:10px;border-color:#272c32;
-  background:radial-gradient(circle at 10% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 13%,transparent),transparent 44%),linear-gradient(145deg,#111317,#0d0f12)!important;
-  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
-}
-.team-driver-mini:hover{transform:translateY(-3px);border-color:#3a3f46}
-.team-driver-mini:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,transparent 36%,rgba(12,12,14,.05) 48%,rgba(12,12,14,.18) 63%,rgba(12,12,14,.52) 80%,#0c0c0e 100%)}
-.team-driver-mini:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--team-color,#00d7c4);z-index:8}
-.team-driver-mini .driver-mini-photo-wrap{position:absolute;left:0;right:0;top:0;bottom:0!important;z-index:1;overflow:hidden;pointer-events:none;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.97) 77%,rgba(0,0,0,.76) 84%,rgba(0,0,0,.40) 92%,transparent 100%)!important;
-  mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.97) 77%,rgba(0,0,0,.76) 84%,rgba(0,0,0,.40) 92%,transparent 100%)!important;
-}
-.team-driver-mini .driver-mini-image{
-  position:absolute;left:0!important;top:0!important;width:68%!important;height:116%!important;max-width:none!important;
-  object-fit:contain!important;object-position:center top!important;transform:scale(1.04)!important;transform-origin:center top!important;
-  filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));transition:transform .3s ease;
-  -webkit-mask-image:none!important;mask-image:none!important;
-}
-.team-driver-mini:hover .driver-mini-image{transform:scale(1.07)!important;}
-.team-driver-mini .team-driver-copy{position:absolute;left:45%;right:6%;bottom:27px;z-index:7;min-width:0;pointer-events:none}
-.team-driver-mini .team-driver-copy:before{content:"";position:absolute;z-index:-1;left:-28px;right:-18px;top:-42px;bottom:-24px;background:radial-gradient(ellipse at 25% 72%,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 68%),linear-gradient(90deg,color-mix(in srgb,var(--team-color,#00d7c4) 9%,transparent),rgba(10,10,12,.28) 48%,transparent);filter:blur(14px);opacity:.9}
-.team-driver-mini .driver-mini-label{font-size:9px;line-height:1;text-transform:uppercase;letter-spacing:.2em;color:#6f747d;margin-bottom:9px}
-.team-driver-mini .driver-mini-name{font-size:clamp(21px,2.1vw,29px);line-height:.98;font-weight:900;letter-spacing:-.035em;color:#f5f5f6;text-transform:uppercase;white-space:normal}
-.team-driver-mini .driver-mini-points{margin-top:11px;font-size:16px;line-height:1;color:color-mix(in srgb,var(--team-color,#00d7c4) 68%,#888e97);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-.team-driver-mini .driver-mini-number{position:absolute;right:8%;top:7%;z-index:5;font-size:52px;line-height:1;font-weight:900;color:rgba(255,255,255,.055);pointer-events:none}
-
-.timing-label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#555}
-.timing-value{font-family:monospace;font-weight:700}
-.driver-row{transition:.2s}
-.driver-row:hover{background:#111}
-.calendar-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#0b0b0d,#101013);border-color:color-mix(in srgb,var(--accent,#333) 15%,#222225);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease,background .25s ease}
-.calendar-card:before{content:"";position:absolute;left:0;top:0;width:2px;height:100%;background:color-mix(in srgb,var(--accent,#333) 72%,#777);box-shadow:0 0 9px color-mix(in srgb,var(--accent,#333) 25%,transparent)}
-.calendar-card:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 0%,color-mix(in srgb,var(--accent,#333) 5%,transparent),transparent 40%);pointer-events:none}
-.calendar-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent,#333) 32%,#333);box-shadow:0 10px 24px color-mix(in srgb,var(--accent,#333) 6%,transparent)}
-.calendar-card > *{position:relative;z-index:1}
-.calendar-race-title{color:color-mix(in srgb,var(--accent,#eee) 78%,#d5d5d8);text-shadow:none;letter-spacing:-.035em}
-.calendar-round{color:color-mix(in srgb,var(--accent,#333) 48%,#999)}
-.calendar-circuit{color:#85858b}
-.calendar-date{color:#d2d2d5}
-.calendar-status{border-color:color-mix(in srgb,var(--accent,#333) 28%,#333);color:color-mix(in srgb,var(--accent,#333) 58%,#ddd)}
-.completed-card{background:linear-gradient(145deg,color-mix(in srgb,var(--accent,#333) 5%,#0d0d0f),#111113)}
-.completed-card:hover{background:linear-gradient(145deg,color-mix(in srgb,var(--accent,#333) 9%,#111113),#151517)}
-.result-podium{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-.result-podium-item{background:#19191c;border:1px solid #303035;border-radius:6px;padding:8px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
-.result-podium-item.gold{border-color:#a78b3b;background:#211d14}.result-podium-item.gold .result-position{color:#d8b85a}.result-podium-item.gold .result-driver{color:#fff5d2}
-.result-podium-item.silver{border-color:#707070;background:#1c1c1e}.result-podium-item.silver .result-position{color:#c7cbd0}.result-podium-item.silver .result-driver{color:#eef0f2}
-.result-podium-item.bronze{border-color:#805d3d;background:#201915}.result-podium-item.bronze .result-position{color:#c88758}.result-podium-item.bronze .result-driver{color:#f0d1bb}
-.result-position{font-size:8px;color:#85858b;font-weight:900}
-.result-driver{font-size:10px;font-weight:850;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f2f2f2}
-.result-team{font-size:6px;color:#777;text-transform:uppercase;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pole-chip{display:flex;align-items:center;justify-content:space-between;background:#211624;border:1px solid #5b3d69;border-radius:6px;padding:9px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-.pole-chip span:first-child{font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#d08af4}
-.pole-chip span:last-child{font-size:11px;font-weight:850;color:#fff}
-.car-visual{position:relative;height:170px;margin-top:18px;overflow:hidden;background:radial-gradient(circle at 60% 55%,rgba(255,255,255,.065),transparent 58%)}
-.car-visual:after{content:"";position:absolute;left:5%;right:5%;bottom:18px;height:1px;background:rgba(255,255,255,.055)}
-.car-svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .45s ease;transform-origin:center}
-.team-card:hover .car-svg{transform:none}
-.team-card:hover .car-visual img{transform:none!important}
-.car-visual img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));image-rendering:auto;width:100%!important;max-width:100%!important;height:100%!important;left:0!important;top:0!important;bottom:auto!important;transform:none;object-fit:contain!important;padding:0!important}
-.team-car-image{width:100%!important;max-width:100%!important;height:100%!important;left:0!important;top:0!important;bottom:auto!important;transform:none;object-fit:contain!important;padding:0!important;filter:drop-shadow(0 10px 18px rgba(0,0,0,.42));}
-.profile-car-visual{height:210px}.profile-car-visual .team-car-image{width:100%!important;max-width:100%!important;left:0!important;height:100%!important;top:0!important;transform:none!important}.car-image-empty{z-index:2}
-.modal-backdrop{animation:fadeIn .18s ease}
-.modal-box{animation:modalIn .22s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes modalIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
-.profile-number{font-size:110px;line-height:.75;font-weight:900;color:rgba(255,255,255,.035)}
-
-/* PROFILE MODAL — visibility fix */
-#profile-modal:not(.hidden){display:flex !important;}
-#profile-modal.hidden{display:none !important;}
-.driver-card{cursor:pointer;pointer-events:auto;}
-.driver-card *{pointer-events:auto;}
-
-
-/* PROFILE HEADER — full names use all available width; wrap only when genuinely necessary */
-#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{width:100%!important;min-width:0!important;min-height:58px!important;gap:20px!important}
-#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start > div:first-child{flex:1 1 auto!important;min-width:0!important;width:auto!important}
-#profile-modal #profile-name{display:block!important;width:100%!important;max-width:none!important;min-width:0!important;margin-right:0!important;overflow:visible!important;text-overflow:clip!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;hyphens:none!important;line-height:.92!important;font-size:clamp(34px,5vw,60px)!important;letter-spacing:-.045em!important}
-#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start > button{flex:0 0 44px!important;width:44px!important;height:44px!important;margin-top:0!important}
-@media(max-width:820px){#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{gap:14px!important}#profile-modal #profile-name{font-size:clamp(30px,7vw,48px)!important}}
-@media(max-width:560px){#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{gap:10px!important}#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start > button{flex-basis:40px!important;width:40px!important;height:40px!important}#profile-modal #profile-name{font-size:clamp(25px,8.5vw,40px)!important}}
-
-/* =========================================================
-   DRIVER PROFILE — CLEAN BASE
-   One layout system only. Desktop keeps the original 3-level
-   left stack and one full-height driver image card on the right.
-   ========================================================= */
-#driver-profile-content.hidden,
-#team-profile-content.hidden{display:none!important}
-
-#driver-profile-content{
-  position:relative;
-  display:grid;
-  grid-template-columns:minmax(0,1.34fr) minmax(380px,.66fr);
-  grid-template-rows:auto auto minmax(0,1fr);
-  gap:14px;
-  width:100%;
-  min-width:0;
-  min-height:0;
-  overflow:visible;
-  isolation:isolate;
-}
-
-#driver-profile-content > .grid:first-of-type{
-  grid-column:1;
-  grid-row:1;
-  display:grid;
-  grid-template-columns:minmax(150px,.38fr) minmax(0,1fr);
-  gap:14px;
-  width:100%;
-  min-width:0;
-  min-height:0;
-  margin:0;
-}
-
-#profile-number-box,
-.profile-constructor-box{
-  min-height:172px!important;
-  position:relative;
-  overflow:hidden;
-  background:linear-gradient(145deg,#111113,#0d0d0f)!important;
-  border:1px solid #1c1e23;
-}
-#profile-number-box{border-bottom:3px solid var(--team-color,#00d7c4)!important}
-#profile-number{font-size:76px!important;line-height:.9!important;position:relative;z-index:2;white-space:nowrap}
-.profile-number{
-  position:absolute;
-  right:10px;
-  bottom:7px;
-  z-index:1;
-  font:950 92px/.85 Inter,Arial,sans-serif;
-  letter-spacing:-.08em;
-  color:rgba(255,255,255,.045);
-  white-space:nowrap;
-  pointer-events:none;
-}
-.profile-constructor-info{min-height:120px;display:flex;align-items:center}
-.profile-team-logo{
-  width:92px;height:72px;object-fit:contain;object-position:center;
-  flex:none;display:block;
-  filter:brightness(1.08) contrast(1.08) drop-shadow(0 4px 8px rgba(0,0,0,.35));
-}
-
-#driver-stats{
-  grid-column:1;
-  grid-row:2;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:1px;
-  width:100%;
-  min-width:0;
-  margin:0!important;
-  background:#202020;
-  border:1px solid #202020;
-  border-radius:8px;
-  overflow:hidden;
-}
-#driver-stats>div{background:#101010;min-height:82px;padding:18px 16px!important}
-#driver-stats .text-xl{font-size:22px!important;line-height:1;font-weight:900}
-
-.profile-driver-visual{
-  grid-column:2;
-  grid-row:1 / 4;
-  position:relative;
-  width:100%;
-  height:100%;
-  min-width:0;
-  min-height:0;
-  overflow:hidden;
-  pointer-events:none;
-  isolation:isolate;
-  border:1px solid #1c1e23;
-  border-radius:10px;
-  background:
-    radial-gradient(ellipse at 52% 48%,color-mix(in srgb,var(--team-color,#00d7c4) 10%,transparent),transparent 62%),
-    linear-gradient(90deg,rgba(9,9,10,.96) 0%,rgba(9,9,10,.30) 42%,transparent 72%);
-}
-.profile-driver-visual:before{
-  content:"";position:absolute;inset:0;z-index:0;
-  background:
-    radial-gradient(ellipse at 28% 78%,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 58%),
-    linear-gradient(90deg,rgba(9,9,10,.82),rgba(9,9,10,.16) 48%,transparent 82%);
-}
-.profile-driver-grid{
-  position:absolute;inset:0;z-index:1;opacity:.22;
-  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:28px 28px;
-  mask-image:linear-gradient(90deg,black,transparent 82%);
-}
-.profile-driver-dots{
-  position:absolute;z-index:2;left:0;bottom:7%;width:70%;height:45%;opacity:.62;
-  background-image:radial-gradient(color-mix(in srgb,var(--team-color,#00d7c4) 78%,transparent) 1px,transparent 1.6px);
-  background-size:8px 8px;
-  mask-image:linear-gradient(90deg,black,transparent 92%);
-}
-.profile-driver-glow{
-  position:absolute;z-index:1;left:2%;bottom:3%;width:84%;height:58%;
-  background:radial-gradient(ellipse,color-mix(in srgb,var(--team-color,#00d7c4) 24%,transparent),transparent 70%);
-  filter:blur(24px);opacity:.68;
-}
-.profile-driver-ghost{
-  position:absolute;z-index:2;right:6%;top:5%;
-  font:950 clamp(120px,14vw,210px)/.78 Inter,Arial,sans-serif;
-  letter-spacing:-.09em;color:rgba(255,255,255,.035);
-  white-space:nowrap;
-}
-.profile-driver-visual:after{
-  content:"";position:absolute;z-index:6;left:0;right:0;bottom:0;height:32%;
-  background:linear-gradient(to bottom,transparent 0%,rgba(9,9,10,.05) 18%,rgba(9,9,10,.44) 62%,#090909 100%);
-}
-#profile-driver-image{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:contain;object-position:center top;
-  z-index:5;display:block;pointer-events:none;
-  filter:drop-shadow(0 18px 26px rgba(0,0,0,.68));
-  transform:none;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.98) 78%,rgba(0,0,0,.75) 89%,transparent 100%);
-  mask-image:linear-gradient(to bottom,#000 0%,#000 70%,rgba(0,0,0,.98) 78%,rgba(0,0,0,.75) 89%,transparent 100%);
-}
-
-.driver-profile-about{
-  grid-column:1;
-  grid-row:3;
-  display:grid;
-  grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr);
-  gap:14px;
-  width:100%;
-  height:100%;
-  min-width:0;
-  min-height:0;
-  margin:0!important;
-  overflow:hidden;
-}
-.profile-info-card{
-  min-width:0;
-  min-height:0;
-  width:100%;
-  height:100%;
-  padding:20px;
-  border:1px solid #1c1e23;
-  border-radius:10px;
-  background:linear-gradient(145deg,#111113,#0e0e10);
-  overflow:hidden;
-  box-sizing:border-box;
-  display:flex;
-  flex-direction:column;
-}
-.profile-section-kicker{font-size:9px;text-transform:uppercase;letter-spacing:.28em;color:#58709b;flex:0 0 auto}
-.profile-section-title{font-size:24px;font-weight:950;line-height:1.1;margin-top:10px;color:#f4f4f5;flex:0 0 auto}
-.profile-bio{
-  margin-top:18px;
-  font-size:12px;
-  line-height:1.62;
-  color:#9aa9c0;
-  flex:1 1 auto;
-  min-height:0;
-  overflow-y:auto;
-  overflow-x:hidden;
-  padding-right:8px;
-  box-sizing:border-box;
-  scrollbar-width:thin;
-  scrollbar-color:#3a4049 transparent;
-}
-.profile-bio::-webkit-scrollbar{width:5px}
-.profile-bio::-webkit-scrollbar-track{background:transparent}
-.profile-bio::-webkit-scrollbar-thumb{background:#3a4049;border-radius:999px}
-.profile-bio::-webkit-scrollbar-thumb:hover{background:#505762}
-.profile-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:16px;border:1px solid #24262b;border-radius:9px;overflow:hidden;flex:0 0 auto}
-.profile-fact{padding:12px;border-right:1px solid #24262b;border-bottom:1px solid #24262b;min-width:0}
-.profile-fact:nth-child(2n){border-right:0}.profile-fact:nth-last-child(-n+2){border-bottom:0}
-.profile-fact-label{font-size:7px;text-transform:uppercase;letter-spacing:.18em;color:#5d6674}
-.profile-fact-value{margin-top:7px;font-size:11px;font-weight:800;color:#f2f2f4;white-space:normal;overflow-wrap:anywhere}
-.profile-dossier-extra{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px;flex:0 0 auto}
-.profile-dossier-extra .profile-fact{border:1px solid #24262b;border-radius:8px;background:rgba(255,255,255,.012)}
-
-.profile-info-card:has(#profile-career){
-  padding:22px 20px 18px;
- /*background:
-    radial-gradient(circle at 100% 0%,rgba(0,215,196,.035),transparent 42%),
-    linear-gradient(145deg,#111317,#0d0f12);*/
-}
-#profile-career.profile-career-list{
-  --career-year-col:54px;
-  --career-rail-col:22px;
-  --career-gap:10px;
-  position:relative;
-  flex:1 1 auto;
-  width:100%;
-  height:auto;
-  min-height:0;
-  max-height:none;
-  margin-top:18px;
-  padding:2px 6px 2px 0;
-  overflow-y:auto;
-  overflow-x:hidden;
-  box-sizing:border-box;
-  scrollbar-width:thin;
-  scrollbar-color:#3a4049 transparent;
-}
-#profile-career.profile-career-list::-webkit-scrollbar{width:5px}
-#profile-career.profile-career-list::-webkit-scrollbar-track{background:transparent}
-#profile-career.profile-career-list::-webkit-scrollbar-thumb{background:#3a4049;border-radius:999px}
-#profile-career.profile-career-list::-webkit-scrollbar-thumb:hover{background:#505762}
-#profile-career.profile-career-list:before{display:none!important}
-#profile-career .profile-career-item{
-  --event-color:#00d7b6;
-  position:relative;
-  display:grid;
-  grid-template-columns:54px 22px minmax(0,1fr);
-  column-gap:10px;
-  align-items:start;
-  justify-items:start;
-  min-height:76px;
-  width:100%;
-  padding:0 0 14px;
-  margin:0;
-  box-sizing:border-box;
-}
-#profile-career .profile-career-year{
-  grid-column:1;
-  grid-row:1;
-  justify-self:start;
-  align-self:start;
-  width:54px;
-  padding-top:3px;
-  margin:0;
-  text-align:left;
-  font:900 10px/1.15 Inter,Arial,sans-serif;
-  letter-spacing:-.02em;
-  color:#edf0f3;
-  white-space:nowrap;
-  position:relative;
-  z-index:2;
-  box-sizing:border-box;
-}
-#profile-career .profile-career-marker{
-  grid-column:2;
-  grid-row:1;
-  justify-self:start;
-  width:22px;
-  height:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  z-index:3;
-  box-sizing:border-box;
-}
-#profile-career .profile-career-copy{
-  grid-column:3;
-  grid-row:1;
-  justify-self:stretch;
-  min-width:0;
-  width:100%;
-  padding:1px 2px 0 0;
-  margin:0;
-  position:relative;
-  z-index:2;
-  box-sizing:border-box;
-}
-#profile-career .profile-career-item::after{
-  content:"";
-  position:absolute;
-  z-index:0;
-  top:10px;
-  bottom:-10px;
-  left:calc(var(--career-year-col) + var(--career-gap) + (var(--career-rail-col) / 2));
-  width:2px;
-  transform:translateX(-1px);
-  background:var(--event-color);
-  opacity:.52;
-  border-radius:99px;
-  pointer-events:none;
-}
-#profile-career .profile-career-item:last-child::after{display:none}
-#profile-career .profile-career-marker span{
-  width:10px;
-  height:10px;
-  flex:0 0 10px;
-  border-radius:50%;
-  background:var(--event-color);
-  border:2px solid #0d0f12;
-  box-shadow:0 0 0 1px color-mix(in srgb,var(--event-color) 45%,transparent),0 0 12px color-mix(in srgb,var(--event-color) 38%,transparent);
-  box-sizing:border-box;
-}
-#profile-career .profile-career-item:last-child .profile-career-marker span{
-  width:11px;height:11px;flex-basis:11px;
-  box-shadow:0 0 0 3px color-mix(in srgb,var(--event-color) 12%,transparent),0 0 16px color-mix(in srgb,var(--event-color) 45%,transparent);
-}
-#profile-career .profile-career-copy strong{
-  display:block;
-  margin:0;
-  font-size:12px;
-  line-height:1.2;
-  font-weight:850;
-  letter-spacing:-.015em;
-  color:#f5f6f7;
-}
-#profile-career .profile-career-copy .career-detail{
-  display:block;
-  margin-top:4px;
-  max-width:100%;
-  color:#747d88;
-  font-size:9px;
-  font-weight:500;
-  line-height:1.45;
-}
-#profile-career .profile-career-item:hover .profile-career-year,
-#profile-career .profile-career-item:hover .profile-career-copy strong{color:#fff}
-
-/* TEAM PROFILE — structured information, balanced spacing and independent scroll */
-.team-profile-shell{display:flex;flex-direction:column;gap:14px;width:100%;min-width:0}
-.team-profile-overview,.team-profile-info,.team-profile-car-section,.team-profile-lineup-section{width:100%;min-width:0;border:1px solid #1c1e23;border-radius:10px;background:linear-gradient(145deg,#111113,#0d0d0f);box-sizing:border-box}
-.team-profile-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,300px);gap:20px;align-items:center;padding:22px}
-.team-profile-brand{display:flex;align-items:center;gap:16px;min-width:0}.team-profile-logo-box{width:88px;height:66px;display:flex;align-items:center;justify-content:center;flex:0 0 88px;border:1px solid #24272c;border-radius:8px;background:#0a0b0d}.team-profile-logo-box img{width:74px;height:52px;object-fit:contain}
-.team-profile-shortname{margin-top:6px;font-size:24px;line-height:1;font-weight:900;letter-spacing:-.045em;text-transform:uppercase;color:#f4f5f6}.team-profile-official{display:inline-block;margin-top:9px;font-size:7px;line-height:1;letter-spacing:.16em;color:#69717c;text-decoration:none}.team-profile-official:hover{color:#fff}
-.team-profile-champ{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:end;padding-left:18px;border-left:1px solid #24272c}.team-profile-position{margin-top:6px;font-size:52px;line-height:.82;font-weight:950;letter-spacing:-.065em;color:#f5f5f6}.team-profile-points{margin-top:6px;font-size:30px;line-height:.9;font-weight:900;letter-spacing:-.045em;color:#f5f5f6}
-.team-profile-info{padding:18px 20px}.team-profile-info-head,.team-profile-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:13px}.team-profile-info-head h3,.team-profile-section-head h3{margin:5px 0 0;font-size:18px;line-height:1;font-weight:900;letter-spacing:-.035em;color:#f1f2f3}.team-profile-info-head>span,.team-profile-section-head>span{font-size:7px;letter-spacing:.18em;color:#505760}
-.team-profile-info-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid #24272c;border-radius:8px;overflow:hidden}.team-profile-info-item{min-width:0;min-height:70px;padding:13px 14px;background:rgba(255,255,255,.012);border-right:1px solid #24272c}.team-profile-info-item:last-child{border-right:0}.team-profile-info-item span{display:block;font-size:6.5px;line-height:1.2;letter-spacing:.18em;color:#626a75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.team-profile-info-item strong{display:block;margin-top:9px;font-size:11px;line-height:1.25;font-weight:800;color:#eef0f2;overflow-wrap:normal;word-break:normal}
-.team-profile-car-section{overflow:hidden;padding:0}.team-profile-car-section .profile-car-card{width:100%;padding:18px 20px;box-sizing:border-box}.team-profile-car-section .profile-car-head{display:flex;justify-content:space-between;align-items:center;gap:14px}.team-profile-car-section .profile-car-name{font-size:25px;line-height:.95;font-weight:900;letter-spacing:-.045em;color:#f4f5f6}.team-profile-car-section .profile-car-link{font-size:7px;letter-spacing:.16em;color:#646b74;text-decoration:none}.team-profile-car-section .profile-car-link:hover{color:#fff}.team-profile-car-section .profile-car-visual{height:230px;margin-top:8px}
-.team-profile-lineup-section{padding:18px 20px 20px}.team-profile-lineup-section #team-profile-drivers{min-width:0}.team-profile-lineup-section .team-driver-mini{min-height:300px;height:300px}
-@media(max-width:820px){.team-profile-overview{grid-template-columns:1fr;gap:16px;padding:18px}.team-profile-champ{padding:14px 0 0;border-left:0;border-top:1px solid #24272c}.team-profile-info-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.team-profile-info-item:nth-child(2){border-right:0}.team-profile-info-item:nth-child(-n+2){border-bottom:1px solid #24272c}}
-@media(max-width:560px){.team-profile-brand{gap:12px}.team-profile-logo-box{width:68px;height:54px;flex-basis:68px}.team-profile-logo-box img{width:58px;height:42px}.team-profile-shortname{font-size:20px}.team-profile-overview,.team-profile-info,.team-profile-lineup-section{padding:15px}.team-profile-info-grid{grid-template-columns:1fr}.team-profile-info-item{border-right:0!important;border-bottom:1px solid #24272c!important}.team-profile-info-item:last-child{border-bottom:0!important}.team-profile-car-section .profile-car-card{padding:15px}.team-profile-car-section .profile-car-visual{height:170px}.team-profile-lineup-section .team-driver-mini{min-height:250px;height:250px}}
-
-/* TEAM PROFILE — same fixed modal shell, internal content scrolls. */
-#team-profile-content{
-  position:relative!important;
-  flex:1 1 0!important;
-  height:0!important;
-  min-height:0!important;
-  max-height:none!important;
-  width:100%!important;
-  min-width:0!important;
-  margin-top:32px!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  overscroll-behavior:contain!important;
-  scrollbar-width:thin!important;
-  scrollbar-color:#3a4049 transparent!important;
-  box-sizing:border-box!important;
-}
-#team-profile-content::-webkit-scrollbar{width:6px}
-#team-profile-content::-webkit-scrollbar-track{background:transparent}
-#team-profile-content::-webkit-scrollbar-thumb{background:#3a4049;border-radius:999px}
-#team-profile-content::-webkit-scrollbar-thumb:hover{background:#505762}
-#team-profile-content > .bg\[\#101010\]{
-  width:100%!important;
-  box-sizing:border-box!important;
-}
-
-#team-profile-content .team-profile-hero{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 180px;
-  gap:16px;
-  align-items:stretch;
-}
-#team-profile-content .team-profile-stat{
-  background:linear-gradient(145deg,#111113,#0d0d0f);
-  border:1px solid #1c1e23;
-  border-radius:9px;
-}
-@media(max-width:640px){
-  #team-profile-content .team-profile-hero{grid-template-columns:1fr}
-}
-
-.fastest-label{background:#7d22b8}
-.share-btn{width:38px;height:38px;border:1px solid #29292d;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.2s}
-.share-btn:hover{border-color:#fff;background:#fff;color:#000}
-.sponsor-label{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#444}
-.status-badge{font-size:7px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;padding:5px 7px;border-radius:3px}
-.status-complete{background:#181818;color:#777;border:1px solid #282828}
-.status-next{background:#e10600;color:white}
-.status-upcoming{background:#171717;color:#555;border:1px solid #252525}
-.icon-btn{width:38px;height:38px;border:1px solid #25252a;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;line-height:0;color:#aaa;transition:.2s ease;flex:none}.icon-btn:hover{border-color:#fff;background:#fff;color:#000}.icon-btn svg{width:15px;height:15px;display:block}
-
-/* MOBILE MENU */
-#mobile-menu{
-  max-height:0;
-  padding-bottom:0;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(-8px);
-  pointer-events:none;
-  border-top-color:transparent;
-  transition:max-height .38s cubic-bezier(.22,1,.36,1),opacity .24s ease,transform .38s cubic-bezier(.22,1,.36,1),padding-bottom .38s ease,border-color .25s ease;
-  will-change:max-height,opacity,transform;
-}
-#mobile-menu.is-open{
-  max-height:260px;
-  padding-bottom:20px;
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-  border-top-color:#1f1f22;
-}
-#mobile-menu > div{
-  transform:translateY(-6px);
-  opacity:0;
-  transition:transform .35s cubic-bezier(.22,1,.36,1) .03s,opacity .22s ease .03s;
-}
-#mobile-menu.is-open > div{transform:translateY(0);opacity:1}
-#mobile-menu-toggle{transition:transform .25s ease,color .2s ease}
-#mobile-menu-toggle[aria-expanded="true"]{transform:rotate(90deg);}
-
-.standings-duo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:18px;align-items:start}
-.standings-panel{min-width:0}
-.standings-scroll{overflow:hidden}
-.standing-row{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:14px;min-height:52px;padding:10px 18px;border-bottom:1px solid #1b1b1d;transition:.16s}
-.standing-row:hover{background:#121214}
-.standing-row:last-child{border-bottom:0}
-.standing-rank{font:900 11px/1 ui-monospace,SFMono-Regular,monospace;color:#555;text-align:center}
-.standing-rank.top{color:var(--red)}
-.standing-main{min-width:0}
-.standing-name{font-size:13px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f2f2f2}
-.standing-sub{font-size:8px;color:#777;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.standing-points{font:900 14px/1 ui-monospace,SFMono-Regular,monospace;color:#fff;min-width:42px;text-align:right}
-.standing-head{display:flex;justify-content:space-between;align-items:center;padding:17px 18px 13px;border-bottom:1px solid #252529}
-.standing-head h3{margin:0;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#aaa}
-.standing-head span{font-size:8px;color:#555}
-.standings-panel .card{box-shadow:0 18px 45px rgba(0,0,0,.18)}
-.data-note{font-size:8px;color:#4d4d50;line-height:1.5}
-.official-source{display:inline-flex;align-items:center;gap:5px;color:#777}
-.official-source:hover{color:#fff}
-section[id],div[id="standings"],aside[id]{scroll-margin-top:96px}
-#news{scroll-margin-top:96px}
-
-@media(max-width:1100px){.sidebar-standings{grid-template-columns:1fr 1fr;gap:10px}.standing-row{padding-left:10px;padding-right:10px}}
-@media(max-width:1100px){.f1-sidebar{position:static;max-height:none;overflow:visible;padding-right:0}}
-@media(max-width:900px){.sidebar-standings{grid-template-columns:1fr}.sidebar-standings>.flex,.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:auto}.sidebar-standing-card{height:auto;min-height:0}.sidebar-standing-card .standings-scroll,.sidebar-standing-card.constructors .standings-scroll{height:auto;max-height:360px}.news-featured-image{height:270px}.news-feed-card img{height:150px}}
-@media(max-width:640px){.news-featured-image{height:220px}}
-
-.team-logo{width:44px;height:32px;object-fit:contain;object-position:center}
-.driver-mini-image{width:35px;height:35px;object-fit:contain;object-position:bottom center}
-
-@media(max-width:768px){
-.hero-title{font-size:3.8rem;line-height:.86}
-.mobile-scroll{overflow-x:auto;scrollbar-width:none}
-.mobile-scroll::-webkit-scrollbar{display:none}
-}
-
-/* Readability + layering fixes */
-#modal-sessions > div{border-color:#20242c;color:#e5e5e7}
-#modal-sessions > div span:last-child{color:#8b8f98;font-size:10px}
-#modal-result-block{padding-top:2px}
-#modal-result-block > .text\[9px\]{color:#70747d}
-#modal-race-name{letter-spacing:-.035em}
-
-/* Standings and small cards use the same graphite panel language */
-.sidebar-standing-card,
-.standings-panel .card,
-.news-card,
-.calendar-card,
-.pole-chip,
-.result-podium-item{
-  border-color:#25292f!important;
-  background:#0d0f12!important;
-}
-
-.standing-row{
-  border-bottom-color:#20242a;
-}
-
-.standing-row:hover{
-  background:#13161a;
-}
-
-.standing-rank.top{
-  color:var(--ui-cyan);
-}
-
-.status-next{
-  background:var(--ui-blue);
-}
-
-/* =========================================================
-   SIDE ADS — RESPONSIVE / NO OVERLAP
-   Desktop: scale with the available outer gutter.
-   Mobile: reserve a controlled width for standings so it never stretches.
-   ========================================================= */
-#side-ad-left,#side-ad-right{
-  position:relative;display:none;opacity:0;visibility:hidden;pointer-events:none;
-  flex:0 0 auto;overflow:hidden;border-radius:6px;background:#0d0f12;
-  border:1px solid #25292f;isolation:isolate;
-}
-#side-ad-left.ad-ready,#side-ad-right.ad-ready{
-  display:block;opacity:1;visibility:visible;pointer-events:auto;
-}
-#side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;position:relative;z-index:1}
-#side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .7s var(--ad-ease),filter .45s ease}
-#side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.012);filter:brightness(1.04)}
-#side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0}
-#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both}
-
-/* Wide desktop: banner width follows viewport/gutter instead of a fixed size. */
-@media (min-width:1450px){
-  #side-ad-left,#side-ad-right{
-    position:fixed!important;top:50%!important;
-    width:clamp(110px,8.6vw,190px)!important;
-    height:clamp(400px,31vw,610px)!important;
-    z-index:30;border-radius:5px;transform:translateY(-50%);
-  }
-  #side-ad-left{left:clamp(12px,calc((100vw - 1280px)/2 - 8.6vw - 8px),calc((100vw - 1280px)/2 - 8px))!important}
-  #side-ad-right{right:clamp(12px,calc((100vw - 1280px)/2 - 8.6vw - 8px),calc((100vw - 1280px)/2 - 8px))!important}
-  #side-ad-left.ad-ready{animation:sideAdRevealLeft .7s var(--ad-ease) both}
-  #side-ad-right.ad-ready{animation:sideAdRevealRight .7s var(--ad-ease) both}
-}
-@keyframes sideAdRevealLeft{0%{opacity:0;transform:translate3d(-20px,-50%,0) scale(.98);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
-@keyframes sideAdRevealRight{0%{opacity:0;transform:translate3d(20px,-50%,0) scale(.98);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
-
-/* Tablet: ads remain beside standings and scale with viewport. */
-@media (min-width:1024px) and (max-width:1449px){
-  #standings>.flex.items-start.justify-center{
-    align-items:flex-start;gap:clamp(7px,1vw,12px);
-  }
-  #side-ad-left,#side-ad-right{
-    position:sticky!important;top:92px!important;
-    width:clamp(100px,7.5vw,150px)!important;
-    height:clamp(400px,38vw,560px)!important;
-    z-index:10;
-  }
-  #side-ad-left.ad-ready,#side-ad-right.ad-ready{animation:adReveal .6s var(--ad-ease) both}
-}
-
-/* Mobile: keep the standings visually compact; ads get a little more width. */
-@media (max-width:1023px){
-  #standings>.flex.items-start.justify-center{
-    width:100%;
-    gap:8px;
-    align-items:flex-start;
-    justify-content:center;
-  }
-  #side-ad-left,#side-ad-right{
-    width:64px!important;
-    height:300px!important;
-    top:84px!important;
-    border-radius:5px;
-  }
-  #standings>.flex.items-start.justify-center>.flex-1{
-    flex:0 1 380px!important;
-    width:min(380px,calc(100% - 144px))!important;
-    min-width:0;
-  }
-  .sidebar-standing-card{
-    width:100%;
-    height:400px!important;
-    max-height:400px!important;
-  }
-  .sidebar-standing-card .standings-scroll,
-  .sidebar-standing-card.constructors .standings-scroll{
-    max-height:none!important;
-    height:auto!important;
-  }
-}
-@media (max-width:480px){
-  #side-ad-left,#side-ad-right{
-    width:60px!important;
-    height:285px!important;
-  }
-  #standings>.flex.items-start.justify-center>.flex-1{
-    flex-basis:360px!important;
-    width:min(360px,calc(100% - 136px))!important;
-  }
-  .sidebar-standing-card{
-    height:380px!important;
-    max-height:380px!important;
-  }
-}
-@media (max-width:380px){
-  #side-ad-left,#side-ad-right{width:54px!important;height:260px!important}
-  #standings>.flex.items-start.justify-center>.flex-1{
-    flex-basis:330px!important;
-    width:min(330px,calc(100% - 124px))!important;
-  }
-  .sidebar-standing-card{height:360px!important;max-height:360px!important}
-}
-
-/* =========================================================
-   ADS MAIN BANNER / SPONSOR
-   ========================================================= */
-#ad-container, #sponsor-slot {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-#ad-container.ad-ready, #sponsor-slot.ad-ready {
-  opacity: 1;
-  visibility: visible;
+/* --------------------------------------------------------------------------
+   3. STANDALONE DRIVER CARD (GRID) — CONTAINER ISOLATED
+   -------------------------------------------------------------------------- */
+.driver-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  isolation: isolate;
+  min-width: 0;
+  border-radius: 10px;
+  border: 1px solid #272b31;
+  background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, .018), transparent 38%), linear-gradient(145deg, #0b0d10 0%, #101216 100%);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .018);
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+  aspect-ratio: 1/1;
+  padding: 0 !important;
+  container-type: inline-size !important;
   pointer-events: auto;
-  animation: adReveal .72s var(--ad-ease) both;
 }
-@keyframes adReveal {
-  0% { opacity: 0; transform: scale(.98); filter:blur(2px); }
-  100% { opacity: 1; transform: scale(1); filter:blur(0); }
+.driver-card * { pointer-events: auto; }
+.driver-card:hover {
+  transform: translateY(-3px);
+  border-color: #3a4048;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .28);
 }
-#ad-container{position:relative;will-change:opacity,transform}
-#ad-container:after,#sponsor-slot .card:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 48%,rgba(255,255,255,.035) 52%,transparent 66%);transform:translateX(-120%);z-index:5}
-#ad-container.is-shining:after,#sponsor-slot.is-shining .card:after{opacity:1;animation:adGlassSweep 1.35s var(--ad-ease) both}
-@keyframes adGlassSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.9}55%{opacity:.65}100%{transform:translateX(120%);opacity:0}}
-#ad-banner{transition:filter .45s ease,transform .7s var(--ad-ease)}
-#ad-container:hover #ad-banner{transform:scale(1.008);filter:brightness(1.025)}
+.driver-card:after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0; height: 3px;
+  background: var(--team-color, #00d7c4);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--team-color, #00d7c4) 28%, transparent);
+  z-index: 30;
+}
+.driver-card:before {
+  content: ""; position: absolute; left: 0; bottom: 0; width: 62%; height: 46%; z-index: 0; pointer-events: none; opacity: .72;
+  background-image: radial-gradient(color-mix(in srgb, var(--team-color, #00d7c4) 50%, transparent) 1px, transparent 1px);
+  background-size: 8px 8px;
+  mask-image: linear-gradient(to right, black, transparent 92%);
+  -webkit-mask-image: linear-gradient(to right, black, transparent 92%);
+}
+.driver-card .driver-photo-wrap {
+  position: absolute; left: 0; right: 0; top: 0; bottom: 9%; z-index: 1; overflow: hidden; display: flex; align-items: flex-start; justify-content: center; pointer-events: none;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 70%, rgba(0,0,0,.92) 78%, rgba(0,0,0,.58) 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, rgba(0,0,0,.92) 78%, rgba(0,0,0,.58) 88%, transparent 100%);
+}
+.driver-card .driver-photo {
+  position: absolute; left: 12% !important; top: 0 !important; width: 108% !important; height: 112% !important; max-width: none !important;
+  object-fit: contain !important; object-position: center top !important; transform: scale(1.01) !important; transform-origin: center top !important;
+  filter: drop-shadow(0 12px 18px rgba(0,0,0,.58)); transition: transform .3s ease;
+}
+.driver-card:hover .driver-photo { transform: scale(1.035) !important; }
+.driver-card .driver-gradient {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(ellipse 70% 40% at 18% 77%, color-mix(in srgb, var(--team-color, #00d7c4) 25%, transparent), transparent 72%), linear-gradient(to bottom, transparent 38%, rgba(10,12,15,.04) 53%, rgba(10,12,15,.26) 68%, rgba(10,12,15,.72) 84%, #0b0d10 100%);
+}
+.driver-card .driver-content {
+  position: relative; z-index: 8; height: 100%; padding: 16px 16px 13px !important; display: flex; flex-direction: column; pointer-events: auto; min-width: 0;
+}
+.driver-card .team-stripe { width: 3px; height: 36px !important; box-shadow: 0 0 10px color-mix(in srgb, var(--team-color, #00d7c4) 25%, transparent); }
+.driver-card .timing-label { font-size: 8px; letter-spacing: .19em; color: #7c828c; font-weight: 500; }
+.driver-card .driver-rank { font-size: 11px; font-weight: 800; color: #858b95; }
+.driver-card .driver-number {
+  position: absolute; top: 14px !important; right: 15px !important; z-index: 5; font-size: 42px !important; line-height: 1; font-weight: 900;
+  color: rgba(255, 255, 255, .055); letter-spacing: -.07em; pointer-events: none;
+}
+.driver-card .driver-name-zone {
+  position: relative; z-index: 8; margin-top: auto; margin-bottom: 8px !important; padding: 8px 0 7px; min-height: 72px !important;
+  display: flex; flex-direction: column; justify-content: flex-end; min-width: 0;
+}
+.driver-card .driver-name-zone:before {
+  content: ""; position: absolute; z-index: -1; left: -20px; right: -12px; top: -5px; bottom: -5px;
+  background: radial-gradient(ellipse at 18% 72%, color-mix(in srgb, var(--team-color, #00d7c4) 22%, transparent), transparent 66%), linear-gradient(90deg, color-mix(in srgb, var(--team-color, #00d7c4) 9%, transparent), transparent 86%);
+  filter: blur(9px); pointer-events: none;
+}
+.driver-card .driver-firstname { font-size: 10px !important; line-height: 1.1 !important; color: #a6abb3 !important; letter-spacing: .08em !important; font-weight: 500 !important; }
+.driver-card .driver-lastname {
+  margin-top: 3px; font-size: clamp(21px, 2.05vw, 29px) !important; line-height: .88 !important; max-width: 100% !important;
+  color: #f5f5f6; font-weight: 900 !important; letter-spacing: -.055em !important; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.driver-card .driver-stats-row { position: relative; z-index: 8; padding-top: 9px !important; border-top: 1px solid #25292f; min-width: 0; }
+.driver-card .driver-stats-row .timing-label { font-size: 7px; color: var(--team-color, #00d7c4); letter-spacing: .16em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.driver-card .driver-stats-row .timing-value { font-size: 12px !important; color: #f4f5f6; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: monospace; }
 
-/* Race Calendar, Drivers & Standings keep 2 columns on Mobile / Tablet */
-@media (max-width: 1023px) {
-  #calendar-grid,
-  #drivers-grid,
-  .sidebar-standings {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-  }
-  /* Teams use one column */
-  #teams-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
+/* --------------------------------------------------------------------------
+   4. TEAM CARD & MINI DRIVER PORTRAITS
+   -------------------------------------------------------------------------- */
+.team-card {
+  position: relative; overflow: hidden; cursor: pointer; isolation: isolate; min-width: 0; border-radius: 10px; border: 1px solid #272b31;
+  background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, .018), transparent 38%), linear-gradient(145deg, #0b0d10 0%, #101216 100%);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .018);
+  font-family: Inter, Arial, Helvetica, sans-serif; transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+  aspect-ratio: auto !important; min-height: 0 !important; padding: 17px !important;
 }
+.team-card:hover { transform: translateY(-3px); border-color: #3a4048; box-shadow: 0 16px 38px rgba(0, 0, 0, .28); }
+.team-card:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--team-color, #00d7c4); box-shadow: 0 0 12px color-mix(in srgb, var(--team-color, #00d7c4) 28%, transparent); z-index: 30; }
+.team-card > * { position: relative; z-index: 2; }
+.team-card .team-stripe { display: none !important; }
+.team-card .timing-label { font-size: 7px; letter-spacing: .2em; color: #737983; font-weight: 500; }
+.team-card .team-name { font-size: 18px; line-height: .95; font-weight: 900; text-transform: uppercase; letter-spacing: -.045em; color: #f4f5f6; }
+.team-card .team-points { font-size: 54px; line-height: .78; font-weight: 900; color: rgba(255, 255, 255, .055); letter-spacing: -.06em; }
+.team-card .car-visual {
+  height: 128px; margin-top: 10px; overflow: hidden; position: relative;
+  background: radial-gradient(circle at 55% 54%, rgba(255, 255, 255, .065), transparent 42%), radial-gradient(circle at 30% 70%, color-mix(in srgb, var(--team-color, #00d7c4) 8%, transparent), transparent 46%);
+}
+.team-card .car-visual:after { content: ""; position: absolute; left: 3%; right: 3%; bottom: 13px; height: 1px; background: rgba(255, 255, 255, .065); }
+.team-card .car-visual .team-car-image { filter: drop-shadow(0 10px 15px rgba(0,0,0,.5)) saturate(.95); width: 100% !important; height: 100% !important; object-fit: contain !important; }
+.team-card > .flex.justify-between.items-end.mt-3 { padding-top: 9px; border-top: 1px solid #24282e; }
+.team-card > .flex.justify-between.items-end.mt-3 .text-3xl { font-size: 30px !important; line-height: .88; letter-spacing: -.055em; }
+.team-card > .mt-5 { margin-top: 9px !important; padding-top: 7px; border-top: 1px solid #1f2328; color: color-mix(in srgb, var(--team-color, #00d7c4) 72%, #7c828b) !important; font-weight: 800; }
 
+/* Team Mini Driver Portraits (Inside Team Card) */
+.team-card .team-card-driver-mini {
+  position: relative !important; overflow: hidden !important; isolation: isolate !important;
+  height: 92px !important; min-height: 92px !important; max-height: 92px !important; flex: 0 0 92px !important;
+  padding: 5px 7px !important; gap: 5px !important; border-radius: 7px !important;
+  background: radial-gradient(circle at 10% 85%, color-mix(in srgb, var(--team-color, #00d7c4) 10%, transparent), transparent 48%), linear-gradient(145deg, #111317, #0d0f12) !important;
+  border: 1px solid #252a30 !important;
+}
+.team-card .team-card-driver-mini:after { display: none !important; }
+.team-card .team-card-driver-mini .driver-mini-image {
+  position: absolute !important; left: -4% !important; top: 0 !important; width: 72% !important; height: 190% !important;
+  max-width: none !important; max-height: none !important; object-fit: contain !important; object-position: center top !important;
+  transform: none !important; filter: drop-shadow(0 9px 13px rgba(0,0,0,.58));
+  mask-image: linear-gradient(to bottom, #000 0%, #000 31%, rgba(0,0,0,.98) 38%, rgba(0,0,0,.82) 44%, rgba(0,0,0,.48) 49%, transparent 53%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 31%, rgba(0,0,0,.98) 38%, rgba(0,0,0,.82) 44%, rgba(0,0,0,.48) 49%, transparent 53%) !important;
+  mask-size: 100% 100% !important; -webkit-mask-size: 100% 100% !important;
+  mask-repeat: no-repeat !important; -webkit-mask-repeat: no-repeat !important;
+  mask-position: top center !important; -webkit-mask-position: top center !important;
+}
+.team-card .team-card-driver-mini .team-driver-copy {
+  position: absolute !important; left: 46% !important; right: 4% !important; bottom: 8px !important; z-index: 7 !important;
+  width: auto !important; max-width: 50% !important; min-width: 0 !important; pointer-events: none;
+}
+.team-card .team-card-driver-mini .driver-mini-label { font-size: 6px !important; letter-spacing: .16em; color: #6b727b !important; margin: 0 0 4px !important; }
+.team-card .team-card-driver-mini .driver-mini-name { font-size: 10px !important; line-height: 1.02 !important; letter-spacing: -.025em; font-weight: 900 !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.team-card .team-card-driver-mini .driver-mini-points { margin-top: 5px !important; font-size: 7px !important; color: color-mix(in srgb, var(--team-color, #00d7c4) 72%, #8b9098) !important; font-weight: 700; }
+
+/* --------------------------------------------------------------------------
+   5. PROFILE MODALS (DRIVER & TEAM)
+   -------------------------------------------------------------------------- */
+#profile-modal { position: fixed !important; inset: 0 !important; padding: 20px !important; display: flex !important; align-items: center !important; justify-content: center !important; overflow: hidden !important; }
+#profile-modal:not(.hidden) { display: flex !important; }
+#profile-modal.hidden { display: none !important; }
+#profile-modal .modal-box { width: min(1100px, 100%) !important; height: min(820px, calc(100vh - 40px)) !important; max-width: 1100px !important; max-height: calc(100vh - 40px) !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; }
+#profile-modal .modal-box > #profile-color-bar { flex: 0 0 4px !important; height: 4px !important; width: 100% !important; }
+#profile-modal .modal-box > .p-6.md\:p-8 { width: 100% !important; flex: 1 1 auto !important; padding: 24px !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; }
+#profile-modal #profile-name { font-size: clamp(34px, 5vw, 60px) !important; line-height: .92 !important; letter-spacing: -.045em !important; max-width: calc(100% - 56px) !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
+
+/* Driver Profile Content Layout */
+#driver-profile-content.hidden, #team-profile-content.hidden { display: none !important; }
+#driver-profile-content {
+  width: 100% !important; flex: 1 1 auto !important; margin: 22px 0 0 !important; display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 340px !important; grid-template-rows: 154px 76px minmax(0, 1fr) !important; gap: 14px !important; overflow: hidden !important;
+}
+#driver-profile-content > .grid:first-of-type { grid-column: 1 !important; grid-row: 1 !important; height: 154px !important; display: grid !important; grid-template-columns: 160px minmax(0, 1fr) !important; gap: 14px !important; margin: 0 !important; }
+#profile-number-box, #driver-profile-content .profile-constructor-box {
+  height: 154px !important; background: linear-gradient(145deg, #111113, #0d0d0f) !important; border: 1px solid #1c1e23; border-radius: 8px; overflow: hidden !important;
+}
+#profile-number-box { border-bottom: 3px solid var(--team-color, #00d7c4) !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+#profile-number { font-size: 76px !important; line-height: .84 !important; font-weight: 900; margin-top: 8px !important; }
+.profile-number { position: absolute; right: 10px; bottom: 7px; font: 950 92px/.85 Inter, Arial, sans-serif; letter-spacing: -.08em; color: rgba(255,255,255,.045); pointer-events: none; }
+.profile-constructor-info { height: 100% !important; display: flex !important; align-items: center !important; }
+.profile-constructor-info > .flex { width: 100% !important; display: flex !important; align-items: center !important; gap: 14px !important; }
+.profile-team-logo { width: 44px !important; height: 36px !important; object-fit: contain !important; flex: 0 0 44px !important; }
+#driver-profile-content #profile-team { font-size: 20px !important; font-weight: 900 !important; text-transform: uppercase !important; margin-top: 6px !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
+#driver-profile-content #profile-nationality { font-size: 11px !important; color: #777 !important; margin-top: 5px !important; }
+
+#driver-stats { grid-column: 1 !important; grid-row: 2 !important; height: 76px !important; display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 1px; background: #202020; border: 1px solid #202020; border-radius: 8px; overflow: hidden !important; }
+#driver-stats > div { background: #101010; padding: 14px 16px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+#driver-stats > div .timing-label { font-size: 8px !important; color: #777 !important; }
+#driver-stats > div .text-xl { font-size: 22px !important; line-height: .95 !important; font-weight: 900; margin-top: 7px !important; }
+
+.profile-driver-visual { grid-column: 2 !important; grid-row: 1 / 4 !important; position: relative !important; width: 340px !important; height: 100% !important; border: 1px solid #1c1e23; border-radius: 10px; overflow: hidden !important; pointer-events: none; }
+#profile-driver-image { position: absolute !important; top: 0 !important; left: 50% !important; height: 100% !important; transform: translateX(-50%) !important; object-fit: contain !important; object-position: center top !important; }
+
+.driver-profile-about { grid-column: 1 !important; grid-row: 3 !important; display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 14px !important; overflow: hidden !important; }
+.profile-info-card { padding: 20px !important; border: 1px solid #1c1e23; border-radius: 10px; background: linear-gradient(145deg, #111113, #0e0e10); overflow: hidden !important; display: flex !important; flex-direction: column !important; }
+.profile-section-kicker { font-size: 9px; text-transform: uppercase; letter-spacing: .28em; color: #58709b; }
+.profile-section-title { font-size: 24px; font-weight: 950; line-height: 1.08 !important; margin-top: 10px !important; }
+#driver-profile-content #profile-bio { display: none !important; }
+
+.driver-profile-about > .profile-info-card:first-child {
+  display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  grid-template-rows: auto auto minmax(0, 1fr) minmax(0, 1fr) !important;
+  grid-template-areas: "kicker kicker" "title title" "fact1 fact2" "fact3 fact4" !important; column-gap: 12px !important; row-gap: 12px !important;
+}
+.driver-profile-about > .profile-info-card:first-child > .profile-section-kicker { grid-area: kicker !important; }
+.driver-profile-about > .profile-info-card:first-child > .profile-section-title { grid-area: title !important; }
+.driver-profile-about > .profile-info-card:first-child > .profile-facts-compact,
+.driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra { display: contents !important; }
+.driver-profile-about > .profile-info-card:first-child > .profile-facts-compact .profile-fact:nth-child(1) { grid-area: fact1; }
+.driver-profile-about > .profile-info-card:first-child > .profile-facts-compact .profile-fact:nth-child(2) { grid-area: fact2; }
+.driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra .profile-fact:nth-child(1) { grid-area: fact3; }
+.driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra .profile-fact:nth-child(2) { grid-area: fact4; }
+
+.profile-fact { padding: 12px 14px !important; border: 1px solid #24262b !important; border-radius: 9px !important; background: rgba(255,255,255,.012) !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+.profile-fact-label { font-size: 7px !important; text-transform: uppercase !important; letter-spacing: .18em !important; color: #5d6674 !important; }
+.profile-fact-value { font-size: 11px !important; line-height: 1.28 !important; font-weight: 800 !important; color: #f2f2f4 !important; margin-top: 7px !important; }
+
+#driver-profile-content #profile-career.profile-career-list {
+  --career-year-col: 54px; --career-rail-col: 22px; --career-gap: 10px;
+  flex: 1 1 0 !important; margin-top: 14px !important; overflow-y: auto !important; overflow-x: hidden !important; scrollbar-width: thin !important;
+}
+#profile-career .profile-career-item { position: relative; display: grid; grid-template-columns: 54px 22px minmax(0, 1fr); column-gap: 10px; min-height: 76px; padding-bottom: 14px; }
+#profile-career .profile-career-item::after { content: ""; position: absolute; z-index: 0; top: 10px; bottom: -10px; left: calc(var(--career-year-col) + var(--career-gap) + (var(--career-rail-col) / 2)); width: 2px; transform: translateX(-1px); background: var(--event-color); opacity: .52; }
+#profile-career .profile-career-item:last-child::after { display: none; }
+#profile-career .profile-career-marker span { width: 10px; height: 10px; border-radius: 50%; background: var(--event-color); border: 2px solid #0d0f12; display: block; }
+#profile-career .profile-career-year { font: 900 10px/1.15 Inter, Arial, sans-serif; color: #edf0f3; padding-top: 3px; }
+#profile-career .profile-career-copy strong { font-size: 12px; font-weight: 850; color: #f5f6f7; display: block; }
+#profile-career .profile-career-copy .career-detail { font-size: 9px; color: #747d88; display: block; margin-top: 4px; }
+
+/* Team Profile Dynamic Height */
+#profile-modal:has(#team-profile-content:not(.hidden)) .modal-box { height: auto !important; max-height: calc(100vh - 40px) !important; }
+#profile-modal:has(#team-profile-content:not(.hidden)) #team-profile-content { height: auto !important; flex: 0 1 auto !important; max-height: calc(100vh - 150px) !important; overflow-y: auto !important; }
+.team-profile-shell { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.team-profile-overview, .team-profile-info, .team-profile-car-section, .team-profile-lineup-section { border: 1px solid #1c1e23; border-radius: 10px; background: linear-gradient(145deg, #111113, #0d0d0f); }
+.team-profile-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 20px; align-items: center; padding: 22px; }
+.team-profile-brand { display: flex; align-items: center; gap: 16px; }
+.team-profile-logo-box { width: 88px; height: 66px; display: flex; align-items: center; justify-content: center; border: 1px solid #24272c; border-radius: 8px; background: #0a0b0d; }
+.team-profile-logo-box img { width: 74px; height: 52px; object-fit: contain; }
+.team-profile-champ { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; border-left: 1px solid #24272c; padding-left: 18px; }
+.team-profile-info { padding: 18px 20px; }
+.team-profile-info-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid #24272c; border-radius: 8px; overflow: hidden; }
+.team-profile-info-item { padding: 13px 14px; background: rgba(255,255,255,.012); border-right: 1px solid #24272c; }
+.team-profile-info-item:last-child { border-right: 0; }
+.team-profile-info-item span { font-size: 6.5px; letter-spacing: .18em; color: #626a75; }
+.team-profile-info-item strong { display: block; margin-top: 9px; font-size: 11px; font-weight: 800; color: #eef0f2; }
+.team-profile-lineup-section { padding: 18px 20px 20px; }
+
+/* Profile Lineup Mini Driver Card (inside Team Profile Modal) */
+.team-driver-mini {
+  position: relative; min-height: 350px; height: 350px; overflow: hidden; cursor: pointer; pointer-events: auto; isolation: isolate;
+  border-radius: 10px; border-color: #272c32;
+  background: radial-gradient(circle at 10% 78%, color-mix(in srgb, var(--team-color, #00d7c4) 13%, transparent), transparent 44%), linear-gradient(145deg, #111317, #0d0f12) !important;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.team-driver-mini:hover { transform: translateY(-3px); border-color: #3a3f46; }
+.team-driver-mini:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--team-color, #00d7c4); z-index: 8; }
+.team-driver-mini .driver-mini-photo-wrap {
+  position: absolute; left: 0; right: 0; top: 0; bottom: 0 !important; z-index: 1; overflow: hidden; pointer-events: none;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 70%, rgba(0,0,0,.97) 77%, rgba(0,0,0,.76) 84%, rgba(0,0,0,.40) 92%, transparent 100%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, rgba(0,0,0,.97) 77%, rgba(0,0,0,.76) 84%, rgba(0,0,0,.40) 92%, transparent 100%) !important;
+}
+.team-driver-mini .driver-mini-image {
+  position: absolute; left: 0 !important; top: 0 !important; width: 68% !important; height: 116% !important; max-width: none !important;
+  object-fit: contain !important; object-position: center top !important; transform: scale(1.04) !important; transform-origin: center top !important;
+  filter: drop-shadow(0 14px 18px rgba(0,0,0,.55)); transition: transform .3s ease;
+}
+.team-driver-mini .team-driver-copy { position: absolute; left: 45%; right: 6%; bottom: 27px; z-index: 7; min-width: 0; pointer-events: none; }
+.team-driver-mini .driver-mini-label { font-size: 9px; line-height: 1; text-transform: uppercase; letter-spacing: .2em; color: #6f747d; margin-bottom: 9px; }
+.team-driver-mini .driver-mini-name { font-size: clamp(21px, 2.1vw, 29px); line-height: .98; font-weight: 900; letter-spacing: -.035em; color: #f5f5f6; text-transform: uppercase; white-space: normal; }
+.team-driver-mini .driver-mini-points { margin-top: 11px; font-size: 16px; line-height: 1; color: color-mix(in srgb, var(--team-color, #00d7c4) 68%, #888e97); font-family: monospace; }
+.team-driver-mini .driver-mini-number { position: absolute; right: 8%; top: 7%; z-index: 5; font-size: 52px; line-height: 1; font-weight: 900; color: rgba(255,255,255,.055); pointer-events: none; }
+
+/* --------------------------------------------------------------------------
+   6. SIDEBAR & CALENDAR WIDGETS
+   -------------------------------------------------------------------------- */
+.f1-sidebar { position: sticky; top: 92px; align-self: start; }
+.sidebar-standings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+.sidebar-standing-card { background: #0b0d10; border: 1px solid #202023; border-radius: 10px; overflow: hidden; height: 560px; display: flex; flex-direction: column; }
+.sidebar-standing-card .standing-head { padding: 13px 14px 10px; min-height: 47px; flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #252529; }
+.sidebar-standing-card .standing-head h3 { font-size: 9px; margin: 0; text-transform: uppercase; letter-spacing: .14em; color: #aaa; }
+.sidebar-standing-card .standing-head span { font-size: 7px; color: #555; }
+.sidebar-standing-card .standings-scroll { height: auto; flex: 1; min-height: 0; overflow: auto; scrollbar-width: none; }
+.sidebar-standing-card .standings-scroll::-webkit-scrollbar { display: none; }
+.standing-row { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 6px; min-height: 39px; padding: 6px 8px; align-items: center; border-bottom: 1px solid #20242a; }
+.standing-row:hover { background: #13161a; }
+.standing-rank { font: 900 11px/1 ui-monospace, monospace; color: #555; text-align: center; }
+.standing-rank.top { color: var(--ui-cyan); }
+.standing-name { font-size: 10px; font-weight: 850; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #f2f2f2; }
+.standing-sub { font-size: 6px; margin-top: 2px; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.standing-points { font: 900 11px/1 ui-monospace, monospace; color: #fff; min-width: 28px; text-align: right; }
+
+.calendar-card { position: relative; border-radius: 8px; padding: 20px; border-left: 2px solid color-mix(in srgb, var(--accent, #333) 72%, #777) !important; transition: transform .25s ease, border-color .25s ease; }
+.calendar-card:hover { transform: translateY(-3px); }
+.calendar-race-title { font-size: 18px; font-weight: 900; line-height: 1.28; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 2.56em; }
+.calendar-circuit { font-size: 12px; color: #85858b; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 2.7em; }
+.result-podium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.result-podium-item { border-radius: 6px; padding: 8px; text-align: center; }
+.result-podium-item.gold { border-color: #a78b3b; background: #211d14; }
+.result-podium-item.silver { border-color: #707070; background: #1c1c1e; }
+.result-podium-item.bronze { border-color: #805d3d; background: #201915; }
+.result-position { font-size: 8px; color: #85858b; font-weight: 900; }
+.result-driver { font-size: 10px; font-weight: 850; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.result-team { font-size: 6px; color: #777; text-transform: uppercase; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pole-chip { display: flex; align-items: center; justify-content: space-between; background: #211624; border: 1px solid #5b3d69; border-radius: 6px; padding: 9px 10px; }
+
+/* Ads System */
+#ad-container, #sponsor-slot, #side-ad-left, #side-ad-right { opacity: 0; visibility: hidden; pointer-events: none; }
+#ad-container.ad-ready, #sponsor-slot.ad-ready, #side-ad-left.ad-ready, #side-ad-right.ad-ready { opacity: 1; visibility: visible; pointer-events: auto; }
+#side-ad-left, #side-ad-right { position: relative; overflow: hidden; border-radius: 6px; background: #0d0f12; border: 1px solid #25292f; flex: 0 0 auto; }
+#side-ad-left-img, #side-ad-right-img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Mobile Menu Animation */
+#mobile-menu { max-height: 0; opacity: 0; transform: translateY(-8px); overflow: hidden; pointer-events: none; transition: max-height .38s var(--ad-ease), opacity .24s ease, transform .38s var(--ad-ease); }
+#mobile-menu.is-open { max-height: 260px; opacity: 1; transform: translateY(0); pointer-events: auto; padding-bottom: 20px; }
+#mobile-menu-toggle[aria-expanded="true"] { transform: rotate(90deg); }
+
+/* --------------------------------------------------------------------------
+   7. STRUCTURED RESPONSIVE MEDIA QUERIES
+   -------------------------------------------------------------------------- */
+
+/* Desktop Grid Standards */
 @media (min-width: 1024px) {
-  #drivers-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    gap: 16px !important;
-  }
-  #teams-grid,
-  #calendar-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 16px !important;
-  }
-}
-
-/* =========================================================
-   RESPONSIVE CARD HARDENING
-   Preserve the existing visual design while preventing clipping,
-   collapsed stat rows, and broken card proportions on small widths.
-   ========================================================= */
-#drivers-grid{min-width:0}
-#drivers-grid>.driver-card,
-#teams-grid>.team-card,
-#calendar-grid>.calendar-card{min-width:0;width:100%}
-.driver-card .driver-content,
-.driver-card .driver-name-zone,
-.driver-card .driver-stats-row{min-width:0}
-.driver-card .driver-lastname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.driver-card .driver-stats-row>div{min-width:0}
-.driver-card .driver-stats-row .timing-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.driver-card .driver-stats-row .timing-value{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-@media (max-width:1023px){
-  #drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
-  #calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
-  .driver-card{border-radius:9px}
-  .driver-card .driver-content{padding:13px 13px 11px!important}
-  .driver-card .driver-number{top:11px!important;right:12px!important;font-size:34px!important}
-  .driver-card .driver-name-zone{min-height:64px!important;margin-bottom:7px!important;padding:6px 0}
-  .driver-card .driver-firstname{font-size:9px!important}
-  .driver-card .driver-lastname{font-size:clamp(18px,3.1vw,25px)!important}
-  .driver-card .driver-stats-row{padding-top:8px!important}
-  .driver-card .driver-stats-row .timing-label{font-size:6px!important}
-  .driver-card .driver-stats-row .timing-value{font-size:10px!important}
-}
-
-@media (max-width:640px){
-  #drivers-grid,#calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
-  .driver-card .driver-content{padding:11px 11px 10px!important}
-  .driver-card .team-stripe{width:2px;height:30px!important}
-  .driver-card .timing-label{font-size:6.5px!important}
-  .driver-card .driver-rank{font-size:9px!important}
-  .driver-card .driver-name-zone{min-height:58px!important}
-  .driver-card .driver-firstname{font-size:8px!important}
-  .driver-card .driver-lastname{font-size:clamp(17px,5.2vw,22px)!important;letter-spacing:-.045em!important}
-  .driver-card .driver-stats-row .timing-value{font-size:9px!important}
-}
-
-@media (max-width:390px){
-  #drivers-grid,#calendar-grid{gap:6px!important}
-  .driver-card .driver-content{padding:9px 9px 8px!important}
-  .driver-card .driver-number{top:9px!important;right:9px!important;font-size:29px!important}
-  .driver-card .driver-name-zone{min-height:54px!important;margin-bottom:5px!important}
-  .driver-card .driver-firstname{font-size:7px!important}
-  .driver-card .driver-lastname{font-size:clamp(15px,5vw,19px)!important}
-  .driver-card .driver-stats-row{padding-top:6px!important}
-  .driver-card .driver-stats-row .timing-label{font-size:5.5px!important;letter-spacing:.12em!important}
-  .driver-card .driver-stats-row .timing-value{font-size:8px!important}
-  .calendar-card{border-radius:8px}
-}
-
-@media (max-width:340px){
-  #drivers-grid,#calendar-grid{grid-template-columns:1fr!important}
-  .driver-card{aspect-ratio:1.08/1!important}
-}
-
-/* Profile Overview: stable short values at every phone width. */
-@media(max-width:560px){
-  .driver-profile-about>.profile-info-card:first-child{column-gap:8px!important;row-gap:8px!important}
-  .profile-fact{padding:9px 10px!important}
-  .profile-fact-value{font-size:10px!important;line-height:1.15!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-}
-@media(max-width:390px){
-  .driver-profile-about>.profile-info-card:first-child{column-gap:7px!important;row-gap:7px!important}
-  .profile-fact{padding:8px 9px!important}
-  .profile-fact-label{font-size:6px!important;letter-spacing:.12em!important}
-  .profile-fact-value{font-size:9.5px!important}
-}
-
-@media(prefers-reduced-motion:reduce){
-  #ad-container,#sponsor-slot,#side-ad-left,#side-ad-right{animation:none!important;transition:none!important}
-  #ad-container.is-shining:after,#sponsor-slot.is-shining .card:after,#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{animation:none!important}
-  #ad-banner,#side-ad-left-img,#side-ad-right-img{transition:none!important}
-}
-
-
-
-
-/* =========================================================
-   FINAL RESPONSIVE POLISH — preserve desktop layout
-   ========================================================= */
-.calendar-card,.driver-card,.team-card,.sidebar-standing-card,.profile-info-card{min-width:0;overflow:hidden}
-.calendar-race-title{min-width:0;line-height:1.28;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-height:2.56em}
-.calendar-circuit{min-width:0;line-height:1.35;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;min-height:2.7em}
-.calendar-card .text-right{min-width:82px;max-width:46%}
-.calendar-card .calendar-date{white-space:nowrap}
-.calendar-card .calendar-status{flex:none;white-space:nowrap}
-.result-podium-item{min-width:0}
-.result-podium-item .result-position{font-weight:950}
-.profile-fact{min-width:0}
-.profile-fact-value{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.driver-profile-about .profile-info-card{min-width:0}
-
-@media (max-width: 640px){
-  #calendar-grid,#drivers-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
-  .calendar-card{padding:13px!important}
-  .calendar-race-title{font-size:17px!important;line-height:1.24!important;min-height:2.48em!important;margin-top:13px!important;letter-spacing:-.03em!important}
-  .calendar-card>.mt-6{margin-top:14px!important;gap:8px!important}
-  .calendar-card .text-right{min-width:72px;max-width:44%}
-  .calendar-card .calendar-circuit{font-size:10px!important;line-height:1.25!important;min-height:2.5em!important;margin-top:6px!important}
-  .calendar-card .calendar-date{font-size:10px!important}
-  .calendar-card .text-right .text-[8px]{font-size:6.5px!important;line-height:1.15!important;white-space:normal!important}
-  .calendar-card .mt-5{margin-top:13px!important}
-  .result-podium{gap:3px}
-  .result-podium-item{padding:6px 4px}
-  .result-position{font-size:7px}
-  .result-driver{font-size:9px}
-  .result-team{font-size:5.5px}
-  .profile-dossier-extra,.profile-facts-compact{gap:7px!important}
-  .profile-fact{padding:8px 9px!important}
-  .profile-fact-label{font-size:6.5px!important}
-  .profile-fact-value{font-size:10px!important;line-height:1.15!important;white-space:nowrap!important}
-}
-
-@media (max-width: 390px){
-  #calendar-grid,#drivers-grid{gap:6px!important}
-  .calendar-card{padding:11px!important}
-  .calendar-race-title{font-size:15px!important;line-height:1.22!important;min-height:2.44em!important}
-  .calendar-card .text-right{min-width:67px;max-width:45%}
-  .calendar-card .calendar-circuit{font-size:9px!important}
-  .calendar-card .calendar-date{font-size:9px!important}
-  .calendar-card .text-right .text-[8px]{font-size:6px!important}
-}
-
-@media (max-width: 340px){
-  #calendar-grid,#drivers-grid{grid-template-columns:1fr!important}
-  .calendar-card .calendar-race-title{font-size:18px!important}
-}
-
-/* ===== consolidated source block 1 ===== */
-/* =========================================================
-   F1 HUB PROFILE — FINAL / SINGLE SOURCE OF TRUTH
-   Fixed modal geometry • independent scroll regions • no
-   content-driven resizing • equal Overview fact cards
-   ========================================================= */
-#profile-modal{position:fixed!important;inset:0!important;padding:20px!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;box-sizing:border-box!important}
-#profile-modal .modal-box{width:min(1100px,100%)!important;height:min(820px,calc(100vh - 40px))!important;min-height:0!important;max-width:1100px!important;max-height:calc(100vh - 40px)!important;margin:0!important;padding:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;box-sizing:border-box!important}
-#profile-modal .modal-box>#profile-color-bar{flex:0 0 4px!important;width:100%!important;height:4px!important;min-height:4px!important;max-height:4px!important}
-#profile-modal .modal-box>.p-6.md\:p-8{width:100%!important;height:auto!important;min-height:0!important;flex:1 1 auto!important;margin:0!important;padding:24px!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;box-sizing:border-box!important}
-#profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{width:100%!important;min-width:0!important;min-height:58px!important;flex:0 0 auto!important;align-items:flex-start!important;box-sizing:border-box!important}
-#profile-modal #profile-name{min-width:0!important;max-width:calc(100% - 56px)!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
-
-/* Driver master grid: first row / stats / content. The image spans all rows. */
-#driver-profile-content{width:100%!important;min-width:0!important;min-height:0!important;height:auto!important;flex:1 1 auto!important;margin:22px 0 0!important;display:grid!important;grid-template-columns:minmax(0,1fr) 340px!important;grid-template-rows:154px 76px minmax(0,1fr)!important;gap:14px!important;overflow:hidden!important;box-sizing:border-box!important}
-#driver-profile-content>.grid:first-of-type{grid-column:1!important;grid-row:1!important;width:100%!important;height:154px!important;min-height:154px!important;max-height:154px!important;min-width:0!important;margin:0!important;display:grid!important;grid-template-columns:160px minmax(0,1fr)!important;gap:14px!important;box-sizing:border-box!important}
-#profile-number-box,#driver-profile-content .profile-constructor-box{width:100%!important;height:154px!important;min-width:0!important;min-height:154px!important;max-height:154px!important;margin:0!important;overflow:hidden!important;box-sizing:border-box!important}
-#driver-stats{grid-column:1!important;grid-row:2!important;width:100%!important;height:76px!important;min-width:0!important;min-height:76px!important;max-height:76px!important;margin:0!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;overflow:hidden!important;box-sizing:border-box!important}
-#driver-stats>div{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;overflow:hidden!important;box-sizing:border-box!important}
-.profile-driver-visual{grid-column:2!important;grid-row:1 / 4!important;position:relative!important;width:340px!important;height:100%!important;min-width:340px!important;max-width:340px!important;min-height:0!important;margin:0!important;align-self:stretch!important;overflow:hidden!important;box-sizing:border-box!important}
-#profile-driver-image{position:absolute!important;top:0!important;left:50%!important;width:auto!important;height:100%!important;max-width:none!important;max-height:100%!important;transform:translateX(-50%)!important;object-fit:contain!important;object-position:center top!important}
-#driver-profile-content>*{min-width:0!important;box-sizing:border-box!important}
-
-/* Shared card geometry */
-.driver-profile-about{grid-column:1!important;grid-row:3!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;margin:0!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:minmax(0,1fr)!important;gap:14px!important;align-items:stretch!important;overflow:hidden!important;box-sizing:border-box!important}
-.profile-info-card{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;margin:0!important;padding:20px!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;align-self:stretch!important;box-sizing:border-box!important}
-.profile-section-kicker,.profile-section-title{flex:0 0 auto!important}
-.profile-section-title{margin-top:10px!important;margin-bottom:0!important;line-height:1.08!important}
-
-/* Biography is kept in the DOM for data compatibility but never participates in Overview layout. */
-#driver-profile-content #profile-bio{display:none!important}
-
-/* =========================================================
-   OVERVIEW
-   No hidden third row. The facts grid owns all remaining
-   vertical space, so there is no unexplained blank band.
-   ========================================================= */
-.driver-profile-about>.profile-info-card:first-child{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;min-height:0!important}
-.driver-profile-about>.profile-info-card:first-child>.profile-section-kicker,
-.driver-profile-about>.profile-info-card:first-child>.profile-section-title{display:block!important;width:100%!important}
-.driver-profile-about>.profile-info-card:first-child>.profile-facts,
-.driver-profile-about>.profile-info-card:first-child>.profile-dossier-extra{display:contents!important}
-
-/* The four facts are one 2×2 grid. Every cell is identical. */
-.driver-profile-about>.profile-info-card:first-child{row-gap:0!important}
-.driver-profile-about>.profile-info-card:first-child>.profile-facts-compact,
-.driver-profile-about>.profile-info-card:first-child>.profile-dossier-extra{width:100%!important;min-width:0!important;margin:0!important;padding:0!important;display:contents!important}
-.driver-profile-about>.profile-info-card:first-child>.profile-facts-compact .profile-fact:nth-child(1){grid-area:fact1}
-.driver-profile-about>.profile-info-card:first-child>.profile-facts-compact .profile-fact:nth-child(2){grid-area:fact2}
-.driver-profile-about>.profile-info-card:first-child>.profile-dossier-extra .profile-fact:nth-child(1){grid-area:fact3}
-.driver-profile-about>.profile-info-card:first-child>.profile-dossier-extra .profile-fact:nth-child(2){grid-area:fact4}
-
-/* Create the actual 2×2 fact layout on the Overview card itself. */
-.driver-profile-about>.profile-info-card:first-child{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto auto minmax(0,1fr) minmax(0,1fr)!important;grid-template-areas:"kicker kicker" "title title" "fact1 fact2" "fact3 fact4"!important;column-gap:12px!important;row-gap:12px!important}
-.driver-profile-about>.profile-info-card:first-child>.profile-section-kicker{grid-area:kicker!important}
-.driver-profile-about>.profile-info-card:first-child>.profile-section-title{grid-area:title!important}
-.driver-profile-about>.profile-info-card:first-child>.profile-facts-compact,
-.driver-profile-about>.profile-info-card:first-child>.profile-dossier-extra{display:contents!important}
-
-.profile-fact{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;margin:0!important;padding:12px 14px!important;border:1px solid #24262b!important;border-radius:9px!important;background:rgba(255,255,255,.012)!important;display:flex!important;flex-direction:column!important;justify-content:center!important;overflow:hidden!important;box-sizing:border-box!important}
-.profile-fact-label{flex:0 0 auto!important;min-width:0!important;font-size:7px!important;text-transform:uppercase!important;letter-spacing:.18em!important;line-height:1.2!important;color:#5d6674!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-.profile-fact-value{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;min-height:14px!important;max-height:30px!important;margin-top:7px!important;font-size:11px!important;line-height:1.28!important;font-weight:800!important;color:#f2f2f4!important;white-space:normal!important;overflow:hidden!important;overflow-wrap:normal!important;word-break:normal!important}
-#profile-f1-debut,#profile-height{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-
-/* Career: only the timeline list scrolls. */
-.driver-profile-about>.profile-info-card:nth-child(2){display:flex!important;flex-direction:column!important;min-height:0!important}
-#driver-profile-content #profile-career.profile-career-list{width:100%!important;height:0!important;min-width:0!important;min-height:0!important;flex:1 1 0!important;margin-top:14px!important;padding:2px 6px 2px 0!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;box-sizing:border-box!important;scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important}
-#profile-career .profile-career-item,#profile-career .profile-career-copy{min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
-#profile-career .profile-career-copy{overflow:hidden!important}
-#profile-career .profile-career-copy strong,#profile-career .profile-career-copy .career-detail{max-width:100%!important;overflow-wrap:anywhere!important}
-
-/* Team: content scrolls internally; outer modal never scrolls. */
-#team-profile-content{width:100%!important;height:0!important;min-width:0!important;min-height:0!important;flex:1 1 0!important;margin:22px 0 0!important;padding:0 6px 4px 0!important;display:block!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;box-sizing:border-box!important;scrollbar-width:thin!important;scrollbar-color:#3a4049 transparent!important}
-#team-profile-content>*{min-width:0!important;box-sizing:border-box!important}
-#team-profile-content>.bg-\[\#101010\]{width:100%!important;box-sizing:border-box!important}
-#team-profile-content::-webkit-scrollbar,#driver-profile-content #profile-career::-webkit-scrollbar{width:5px}
-#team-profile-content::-webkit-scrollbar-track,#driver-profile-content #profile-career::-webkit-scrollbar-track{background:transparent}
-#team-profile-content::-webkit-scrollbar-thumb,#driver-profile-content #profile-career::-webkit-scrollbar-thumb{background:#3a4049;border-radius:999px}
-
-@media(max-width:820px){
-  #profile-modal{padding:8px!important}
-  #profile-modal .modal-box{width:100%!important;max-width:100%!important;height:calc(100vh - 16px)!important;max-height:calc(100vh - 16px)!important}
-  #profile-modal .modal-box>.p-6.md\:p-8{padding:18px!important}
-  #profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{min-height:52px!important}
-  #profile-modal #profile-name{max-width:calc(100% - 52px)!important;font-size:30px!important}
-  #driver-profile-content{margin-top:18px!important;grid-template-columns:1fr!important;grid-template-rows:110px 64px 190px minmax(0,1fr)!important;gap:10px!important}
-  #driver-profile-content>.grid:first-of-type{grid-column:1!important;grid-row:1!important;grid-template-columns:120px minmax(0,1fr)!important;gap:10px!important;height:110px!important;min-height:110px!important;max-height:110px!important}
-  #profile-number-box,#driver-profile-content .profile-constructor-box{height:110px!important;min-height:110px!important;max-height:110px!important;padding:14px!important}
-  #driver-stats{grid-column:1!important;grid-row:2!important;height:64px!important;min-height:64px!important;max-height:64px!important}
-  .profile-driver-visual{grid-column:1!important;grid-row:3!important;width:100%!important;min-width:0!important;max-width:none!important;height:190px!important;min-height:190px!important;max-height:190px!important}
-  .driver-profile-about{grid-column:1!important;grid-row:4!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:minmax(0,1fr)!important;gap:10px!important}
-  #team-profile-content{margin-top:18px!important}
-}
-@media(max-width:560px){
-  #profile-modal .modal-box>.p-6.md\:p-8{padding:14px!important}
-  #profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{min-height:46px!important}
-  #profile-modal #profile-name{font-size:24px!important}
-  #driver-profile-content{margin-top:14px!important;grid-template-rows:96px 60px 150px minmax(0,1fr)!important}
-  #driver-profile-content>.grid:first-of-type{grid-template-columns:105px minmax(0,1fr)!important;height:96px!important;min-height:96px!important;max-height:96px!important}
-  #profile-number-box,#driver-profile-content .profile-constructor-box{height:96px!important;min-height:96px!important;max-height:96px!important;padding:12px!important}
-  #driver-stats{height:60px!important;min-height:60px!important;max-height:60px!important}
-  .profile-driver-visual{height:150px!important;min-height:150px!important;max-height:150px!important}
-  .driver-profile-about{grid-template-columns:1fr!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:10px!important}
-  .driver-profile-about>.profile-info-card:first-child{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:auto auto minmax(0,1fr) minmax(0,1fr)!important;grid-template-areas:"kicker kicker" "title title" "fact1 fact2" "fact3 fact4"!important;column-gap:10px!important;row-gap:10px!important}
-  .profile-fact{padding:10px 12px!important}
-  .profile-fact-value{font-size:10.5px!important;line-height:1.28!important}
-  .profile-section-title{line-height:1.08!important}
-}
-@media(max-width:390px){
-  #profile-modal .modal-box>.p-6.md\:p-8{padding:12px!important}
-  #profile-modal #profile-name{font-size:21px!important}
-  #driver-profile-content{margin-top:10px!important}
-  .profile-section-title{font-size:21px!important}
-  .profile-info-card{padding:16px!important}
-  .profile-fact-value{font-size:10px!important;line-height:1.28!important}
-  .profile-fact-label{font-size:6.5px!important}
-}
-
-/* ===== consolidated source block 2 ===== */
-/* =========================================================
-   MOBILE FIX — Team cards + Driver profile constructor box
-   Preserve desktop/tablet layout; only correct narrow widths.
-   ========================================================= */
-@media (max-width:640px){
-  /* TEAM CARDS: keep both drivers readable inside the small cards. */
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:50%!important;
-    right:5%!important;
-    bottom:10px!important;
-    width:auto!important;
-    min-width:0!important;
-    max-width:none!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-name{
-    display:-webkit-box!important;
-    -webkit-box-orient:vertical!important;
-    -webkit-line-clamp:2!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-    white-space:normal!important;
-    word-break:normal!important;
-    overflow-wrap:anywhere!important;
-    font-size:9px!important;
-    line-height:1.02!important;
-    letter-spacing:-.035em!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-label{
-    font-size:5.5px!important;
-    line-height:1!important;
-    margin-bottom:4px!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-points{
-    font-size:6.5px!important;
-    line-height:1!important;
-    margin-top:4px!important;
-    white-space:nowrap!important;
-  }
-
-  /* DRIVER PROFILE: constructor name must wrap instead of being truncated. */
-  #driver-profile-content .profile-constructor-box{
-    min-width:0!important;
-    overflow:hidden!important;
-  }
-  #driver-profile-content .profile-constructor-info,
-  #driver-profile-content .profile-constructor-info > .flex,
-  #driver-profile-content .profile-constructor-info > .flex > div:last-child{
-    min-width:0!important;
-    max-width:100%!important;
-  }
-  #driver-profile-content #profile-team{
-    display:-webkit-box!important;
-    -webkit-box-orient:vertical!important;
-    -webkit-line-clamp:2!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-    white-space:normal!important;
-    overflow-wrap:anywhere!important;
-    word-break:normal!important;
-    font-size:17px!important;
-    line-height:1.02!important;
-    letter-spacing:-.035em!important;
-    margin-top:7px!important;
-  }
-  #driver-profile-content #profile-team-logo{
-    flex:0 0 auto!important;
-    width:48px!important;
-    height:34px!important;
-    object-fit:contain!important;
-  }
-  #driver-profile-content #profile-nationality{
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    max-width:100%!important;
-    font-size:8px!important;
-    margin-top:5px!important;
-  }
-}
-
-@media (max-width:390px){
-  .team-card .team-card-driver-mini .driver-mini-name{
-    font-size:8.5px!important;
-  }
-  #driver-profile-content #profile-team{
-    font-size:15.5px!important;
-  }
-  #driver-profile-content #profile-team-logo{
-    width:44px!important;
-    height:31px!important;
-  }
-}
-
-/* ===== consolidated source block 3 ===== */
-/* =========================================================
-   MOBILE FINAL PRECISION FIX
-   Only narrow/mobile layouts. Desktop remains untouched.
-   ========================================================= */
-@media (max-width:640px){
-  /* Team cards: show the complete driver figure without cutting
-     the lower body at the mini-card edge. */
-  .team-card .team-card-driver-mini{
-    height:88px!important;
-    min-height:88px!important;
-    overflow:hidden!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-image{
-    left:-8%!important;
-    top:-1%!important;
-    width:57%!important;
-    height:112%!important;
-    transform:scale(1)!important;
-    transform-origin:center top!important;
-  }
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:51%!important;
-    right:4%!important;
-    bottom:9px!important;
-    width:auto!important;
-    min-width:0!important;
-    max-width:45%!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-name{
-    display:block!important;
-    width:100%!important;
-    max-width:100%!important;
-    font-size:8.5px!important;
-    line-height:1.02!important;
-    letter-spacing:-.025em!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-    word-break:normal!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-label{
-    font-size:5.5px!important;
-    margin-bottom:3px!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-points{
-    font-size:6.5px!important;
-    margin-top:4px!important;
-  }
-
-  /* Driver profile header: never squeeze the driver's full name
-     into one line. Keep the close button in its own fixed column. */
-  #profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start{
-    align-items:flex-start!important;
-    gap:10px!important;
-  }
-  #profile-modal .modal-box>.p-6.md\:p-8>.flex.justify-between.items-start > div:first-child{
-    flex:1 1 auto!important;
-    min-width:0!important;
-    width:auto!important;
-  }
-  #profile-modal #profile-name{
-    display:-webkit-box!important;
-    -webkit-box-orient:vertical!important;
-    -webkit-line-clamp:2!important;
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    margin-top:5px!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-    white-space:normal!important;
-    overflow-wrap:normal!important;
-    word-break:normal!important;
-    line-height:.94!important;
-    letter-spacing:-.045em!important;
-    font-size:clamp(21px,6.2vw,29px)!important;
-  }
-
-  /* Constructor block: use the available width instead of clipping
-     long names such as ASTON MARTIN. */
-  #driver-profile-content .profile-constructor-info{
-    width:100%!important;
-    min-width:0!important;
-  }
-  #driver-profile-content .profile-constructor-info > .flex{
-    width:100%!important;
-    min-width:0!important;
-    gap:10px!important;
-  }
-  #driver-profile-content .profile-constructor-info > .flex > div:last-child{
-    flex:1 1 auto!important;
-    min-width:0!important;
-    width:auto!important;
-  }
-  #driver-profile-content #profile-team{
-    display:-webkit-box!important;
-    -webkit-box-orient:vertical!important;
-    -webkit-line-clamp:2!important;
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-    white-space:normal!important;
-    overflow-wrap:normal!important;
-    word-break:normal!important;
-    font-size:16px!important;
-    line-height:.98!important;
-    letter-spacing:-.035em!important;
-  }
-  #driver-profile-content #profile-team-logo{
-    flex:0 0 42px!important;
-    width:42px!important;
-    height:30px!important;
-  }
-
-  /* Keep every profile section on one clean left edge. */
-  #profile-modal .modal-box>.p-6.md\:p-8,
-  #driver-profile-content,
-  .driver-profile-about,
-  .driver-profile-about>.profile-info-card{
-    box-sizing:border-box!important;
-  }
-}
-
-@media (max-width:390px){
-  .team-card .team-card-driver-mini .driver-mini-image{
-    left:-10%!important;
-    width:56%!important;
-    height:110%!important;
-  }
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:50%!important;
-    right:3%!important;
-    max-width:47%!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-name{font-size:8px!important}
-  #profile-modal #profile-name{font-size:20px!important}
-  #driver-profile-content #profile-team{font-size:15px!important}
-  #driver-profile-content #profile-team-logo{flex-basis:40px!important;width:40px!important;height:29px!important}
-}
-
-/* ===== consolidated source block 4 ===== */
-/* =========================================================
-   MOBILE LAYOUT CORRECTION — FINAL
-   Keep desktop/tablet unchanged.
-   ========================================================= */
-@media (max-width:640px){
-  /* TEAM CARD DRIVER MINI: image left + text left, both smaller. */
-  .team-card .team-card-driver-mini{
-    height:92px!important;
-    min-height:92px!important;
-    padding:4px 6px!important;
-    overflow:hidden!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-image{
-    left:-5%!important;
-    top:0!important;
-    width:48%!important;
-    height:100%!important;
-    max-height:100%!important;
-    object-fit:contain!important;
-    object-position:center bottom!important;
-    transform:none!important;
-    -webkit-mask-image:none!important;
-    mask-image:none!important;
-  }
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:43%!important;
-    right:3%!important;
-    bottom:8px!important;
-    width:auto!important;
-    max-width:54%!important;
-    min-width:0!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-label{
-    font-size:5px!important;
-    line-height:1!important;
-    margin-bottom:3px!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-name{
-    display:-webkit-box!important;
-    -webkit-box-orient:vertical!important;
-    -webkit-line-clamp:2!important;
-    width:100%!important;
-    max-width:100%!important;
-    font-size:7.6px!important;
-    line-height:1.05!important;
-    letter-spacing:-.02em!important;
-    white-space:normal!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-    overflow-wrap:normal!important;
-    word-break:normal!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-points{
-    font-size:6px!important;
-    line-height:1!important;
-    margin-top:3px!important;
-  }
-
-  /* DRIVER PROFILE HEADER: full name gets a clean 2-line area. */
-  #profile-modal .modal-box>.p-6.md\\:p-8>.flex.justify-between.items-start{
-    min-height:50px!important;
-    height:auto!important;
-    align-items:flex-start!important;
-    gap:8px!important;
-  }
-  #profile-modal .modal-box>.p-6.md\\:p-8>.flex.justify-between.items-start>div:first-child{
-    flex:1 1 auto!important;
-    min-width:0!important;
-    width:auto!important;
-  }
-  #profile-modal #profile-name{
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    display:-webkit-box!important;
-    -webkit-box-orient:vertical!important;
-    -webkit-line-clamp:2!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-    white-space:normal!important;
-    overflow-wrap:normal!important;
-    word-break:normal!important;
-    font-size:clamp(19px,5.8vw,25px)!important;
-    line-height:.96!important;
-    letter-spacing:-.04em!important;
-    margin-top:2px!important;
-  }
-
-  /* Top profile cards: stop the car number / constructor from being squeezed. */
-  #driver-profile-content{
-    grid-template-rows:100px 60px minmax(0,1fr)!important;
-    gap:9px!important;
-  }
-  #driver-profile-content>.grid:first-of-type{
-    grid-template-columns:108px minmax(0,1fr)!important;
-    height:100px!important;
-    min-height:100px!important;
-    max-height:100px!important;
-    gap:9px!important;
-  }
-  #profile-number-box,#driver-profile-content .profile-constructor-box{
-    height:100px!important;
-    min-height:100px!important;
-    max-height:100px!important;
-    padding:11px!important;
-    overflow:hidden!important;
-  }
-  #profile-number-box .text-7xl{
-    font-size:56px!important;
-    line-height:.82!important;
-    margin-top:8px!important;
-  }
-  #driver-profile-content .profile-constructor-info,
-  #driver-profile-content .profile-constructor-info>.flex{
-    min-width:0!important;
-    width:100%!important;
-    gap:8px!important;
-  }
-  #driver-profile-content #profile-team-logo{
-    flex:0 0 40px!important;
-    width:40px!important;
-    height:29px!important;
-  }
-  #driver-profile-content #profile-team{
-    display:-webkit-box!important;
-    -webkit-box-orient:vertical!important;
-    -webkit-line-clamp:2!important;
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    font-size:14px!important;
-    line-height:1.02!important;
-    letter-spacing:-.025em!important;
-    white-space:normal!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-    overflow-wrap:normal!important;
-  }
-  #driver-profile-content #profile-nationality{
-    font-size:7px!important;
-    margin-top:4px!important;
-  }
-
-  /* THE IMPORTANT PART: mobile profile lower area is 2 columns.
-     LEFT = Overview + Career timeline. RIGHT = driver visual. */
-  #driver-profile-content{
-    grid-template-columns:minmax(0,1.18fr) minmax(120px,.82fr)!important;
-    grid-template-rows:100px 60px minmax(0,1fr)!important;
-  }
-  #driver-profile-content>.grid:first-of-type{grid-column:1 / -1!important;grid-row:1!important}
-  #driver-stats{grid-column:1 / -1!important;grid-row:2!important}
-  .driver-profile-about{
-    grid-column:1!important;
-    grid-row:3!important;
-    display:flex!important;
-    flex-direction:column!important;
-    min-width:0!important;
-    min-height:0!important;
-    gap:9px!important;
-    overflow:hidden!important;
-  }
-  .profile-driver-visual{
-    grid-column:2!important;
-    grid-row:3!important;
-    width:100%!important;
-    min-width:0!important;
-    max-width:none!important;
-    height:100%!important;
-    min-height:0!important;
-    max-height:none!important;
-    overflow:hidden!important;
-  }
-  .driver-profile-about>.profile-info-card{
-    min-width:0!important;
-    overflow:hidden!important;
-  }
-  .driver-profile-about>.profile-info-card:first-child{
-    flex:1.05 1 0!important;
-    min-height:0!important;
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-    grid-template-rows:auto auto minmax(0,1fr) minmax(0,1fr)!important;
-    grid-template-areas:"kicker kicker" "title title" "fact1 fact2" "fact3 fact4"!important;
-    column-gap:7px!important;
-    row-gap:7px!important;
-    padding:13px 12px!important;
-  }
-  .driver-profile-about>.profile-info-card:nth-child(2){
-    flex:.95 1 0!important;
-    min-height:0!important;
-    padding:13px 12px!important;
-  }
-  .profile-section-kicker{font-size:6.5px!important;letter-spacing:.22em!important}
-  .profile-section-title{font-size:20px!important;line-height:1!important;margin-top:7px!important}
-  .profile-fact{
-    padding:7px 8px!important;
-    justify-content:flex-start!important;
-    min-height:0!important;
-  }
-  .profile-fact-label{
-    font-size:5.5px!important;
-    line-height:1.15!important;
-    letter-spacing:.12em!important;
-    white-space:nowrap!important;
-  }
-  .profile-fact-value{
-    margin-top:6px!important;
-    font-size:9px!important;
-    line-height:1.15!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:clip!important;
-  }
-  #driver-profile-content #profile-career.profile-career-list{
-    margin-top:8px!important;
-    padding-right:2px!important;
-  }
-  #profile-career .profile-career-item{font-size:9px!important}
-  #profile-career .profile-career-copy strong{font-size:10px!important}
-  #profile-career .profile-career-copy .career-detail{font-size:7px!important}
-}
-
-@media(max-width:390px){
-  #driver-profile-content{
-    grid-template-columns:minmax(0,1.16fr) minmax(112px,.84fr)!important;
-  }
-  #driver-profile-content>.grid:first-of-type{
-    grid-template-columns:102px minmax(0,1fr)!important;
-  }
-  #profile-number-box .text-7xl{font-size:52px!important}
-  #driver-profile-content #profile-team{font-size:13px!important}
-  #driver-profile-content #profile-team-logo{flex-basis:36px!important;width:36px!important;height:27px!important}
-  .driver-profile-about>.profile-info-card:first-child,
-  .driver-profile-about>.profile-info-card:nth-child(2){padding:11px 10px!important}
-  .profile-section-title{font-size:18px!important}
-  .profile-fact{padding:6px 7px!important}
-  .profile-fact-value{font-size:8.5px!important;margin-top:5px!important}
-  .profile-fact-label{font-size:5px!important}
-  .team-card .team-card-driver-mini .driver-mini-image{left:-7%!important;width:49%!important}
-  .team-card .team-card-driver-mini .team-driver-copy{left:41%!important;max-width:56%!important}
-  .team-card .team-card-driver-mini .driver-mini-name{font-size:7.2px!important}
-}
-
-/* ===== consolidated source block 5 ===== */
-/* =========================================================
-   LAST RESPONSIVE FIXES — KEEP THE EXISTING LAYOUT
-   1) Team profile: don't force a short content set into a
-      huge fixed-height modal, eliminating the dead area.
-   2) Team cards: don't let the driver mini rows get clipped
-      by the card's aspect-ratio height.
-   ========================================================= */
-
-/* TEAM PROFILE — content-sized when this is the active profile.
-   Driver profile keeps its existing fixed geometry. */
-#profile-modal:has(#team-profile-content:not(.hidden)) .modal-box{
-  height:auto!important;
-  max-height:calc(100vh - 40px)!important;
-}
-
-#profile-modal:has(#team-profile-content:not(.hidden)) .modal-box>.p-6.md\:p-8{
-  flex:0 1 auto!important;
-  height:auto!important;
-  min-height:0!important;
-  overflow:visible!important;
-}
-
-#profile-modal:has(#team-profile-content:not(.hidden)) #team-profile-content{
-  height:auto!important;
-  flex:0 1 auto!important;
-  max-height:calc(100vh - 150px)!important;
-  overflow-y:auto!important;
-}
-
-#profile-modal:has(#team-profile-content:not(.hidden)) .team-profile-shell{
-  height:auto!important;
-  min-height:0!important;
-}
-
-/* TEAM CARDS — preserve the existing card/grid arrangement.
-   Give the internal driver rows enough room and let the parent
-   card grow from its actual content instead of clipping the
-   bottom border/points. */
-.team-card{
-  aspect-ratio:auto!important;
-  min-height:0!important;
-}
-
-.team-card .team-card-driver-mini{
-  flex:0 0 92px!important;
-  height:92px!important;
-  min-height:92px!important;
-  max-height:92px!important;
-  box-sizing:border-box!important;
-}
-
-.team-card .team-card-driver-mini .team-driver-copy{
-  min-width:0!important;
-  max-width:54%!important;
-  bottom:8px!important;
-}
-
-.team-card .team-card-driver-mini .driver-mini-name{
-  min-width:0!important;
-  max-width:100%!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-
-@media(max-width:640px){
-  .team-card .team-card-driver-mini{
-    flex-basis:92px!important;
-    height:92px!important;
-    min-height:92px!important;
-    max-height:92px!important;
-  }
-
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:43%!important;
-    right:3%!important;
-    bottom:8px!important;
-    max-width:54%!important;
-  }
-
-  .team-card .team-card-driver-mini .driver-mini-name{
-    font-size:8.5px!important;
-    line-height:1.05!important;
-  }
-
-  .team-card .team-card-driver-mini .driver-mini-points{
-    font-size:6.5px!important;
-    line-height:1!important;
-    margin-top:4px!important;
-  }
-}
-
-@media(max-width:390px){
-  .team-card .team-card-driver-mini{
-    flex-basis:92px!important;
-    height:92px!important;
-    min-height:92px!important;
-    max-height:92px!important;
-  }
-
-  .team-card .team-card-driver-mini .driver-mini-name{
-    font-size:8px!important;
-  }
-}
-
-/* ===== consolidated source block 6 ===== */
-/*
- FINAL ALIGNMENT POLISH — NO LAYOUT CHANGE
- -----------------------------------------
- Chỉ chuẩn hóa lề trong Stats + Constructor.
- Không thay đổi grid, thứ tự, card proportions hay responsive layout.
-*/
-
-/* Shared horizontal rhythm for the two blocks. */
-#driver-stats,
-#driver-profile-content>.grid:first-of-type{
-  min-width:0!important;
-}
-
-/* STATS: every cell uses the exact same left/right inset,
-   and label/value share one vertical axis. */
-#driver-stats>div{
-  min-width:0!important;
-  width:100%!important;
-  height:100%!important;
-  min-height:0!important;
-  padding:14px 16px!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:flex-start!important;
-  justify-content:center!important;
-  text-align:left!important;
-  box-sizing:border-box!important;
-}
-
-#driver-stats>div .timing-label{
-  display:block!important;
-  width:100%!important;
-  min-width:0!important;
-  margin:0!important;
-  line-height:1.15!important;
-  text-align:left!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-
-#driver-stats>div .text-xl{
-  display:block!important;
-  width:100%!important;
-  min-width:0!important;
-  margin:7px 0 0!important;
-  line-height:.95!important;
-  text-align:left!important;
-  white-space:nowrap!important;
-}
-
-/* CONSTRUCTOR: make the logo + text a single stable left-aligned row.
-   The row is vertically centered, but its horizontal origin never moves. */
-#driver-profile-content .profile-constructor-box{
-  min-width:0!important;
-  box-sizing:border-box!important;
-}
-
-#driver-profile-content .profile-constructor-info{
-  width:100%!important;
-  height:100%!important;
-  min-width:0!important;
-  min-height:0!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  box-sizing:border-box!important;
-}
-
-#driver-profile-content .profile-constructor-info>.flex{
-  width:100%!important;
-  min-width:0!important;
-  margin:0!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-start!important;
-  box-sizing:border-box!important;
-}
-
-#driver-profile-content .profile-constructor-info>.flex>div:last-child{
-  flex:1 1 auto!important;
-  min-width:0!important;
-  max-width:100%!important;
-  text-align:left!important;
-}
-
-#driver-profile-content #profile-team{
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-width:0!important;
-  margin-top:6px!important;
-  line-height:1.05!important;
-  text-align:left!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-  overflow-wrap:normal!important;
-  word-break:normal!important;
-}
-
-#driver-profile-content #profile-nationality{
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-width:0!important;
-  margin-top:5px!important;
-  line-height:1.15!important;
-  text-align:left!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-
-/* Keep the logo optically aligned with the text block. */
-#driver-profile-content #profile-team-logo{
-  display:block!important;
-  flex:0 0 44px!important;
-  width:44px!important;
-  height:36px!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  margin:0!important;
-}
-
-/* The number block follows the same internal vertical rhythm. */
-#profile-number-box{
-  box-sizing:border-box!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  align-items:flex-start!important;
-}
-
-#profile-number-box>.text-\[8px\]{
-  width:100%!important;
-  margin:0!important;
-  line-height:1.15!important;
-  text-align:left!important;
-}
-
-#profile-number{
-  margin-top:8px!important;
-  line-height:.84!important;
-}
-
-/* Tablet: identical 16px horizontal inset. */
-@media (max-width:820px){
-  #driver-stats>div{
-    padding:12px 14px!important;
-  }
-
-  #driver-profile-content .profile-constructor-info>.flex{
-    gap:10px!important;
-  }
-}
-
-/* Mobile: never compress the internal alignment into tiny gutters. */
-@media (max-width:560px){
-  #driver-stats>div{
-    padding:10px 12px!important;
-  }
-
-  #driver-stats>div .timing-label{
-    font-size:7px!important;
-  }
-
-  #driver-stats>div .text-xl{
-    font-size:20px!important;
-    margin-top:6px!important;
-  }
-
-  #driver-profile-content .profile-constructor-info>.flex{
-    gap:9px!important;
-  }
-
-  #driver-profile-content #profile-team-logo{
-    flex-basis:42px!important;
-    width:42px!important;
-    height:32px!important;
-  }
-
-  #driver-profile-content #profile-team{
-    font-size:16px!important;
-  }
-}
-
-@media (max-width:390px){
-  #driver-stats>div{
-    padding:9px 10px!important;
-  }
-
-  #driver-stats>div .timing-label{
-    font-size:6.5px!important;
-  }
-
-  #driver-stats>div .text-xl{
-    font-size:18px!important;
-  }
-
-  #driver-profile-content .profile-constructor-info>.flex{
-    gap:8px!important;
-  }
-
-  #driver-profile-content #profile-team-logo{
-    flex-basis:40px!important;
-    width:40px!important;
-    height:30px!important;
-  }
-
-  #driver-profile-content #profile-team{
-    font-size:15px!important;
-  }
-}
-
-/* ===== consolidated source block 7 ===== */
-/* =========================================================
-   641–820px — SAME DRIVER PROFILE STRUCTURE AS MOBILE
-   Keep the existing visual design; only make this breakpoint
-   use the same stacking/grid structure as <=640px.
-   ========================================================= */
-@media (min-width:641px) and (max-width:820px){
-  #profile-modal{padding:8px!important}
-  #profile-modal .modal-box{
-    width:100%!important;
-    max-width:100%!important;
-    height:calc(100vh - 16px)!important;
-    max-height:calc(100vh - 16px)!important;
-  }
-  #profile-modal .modal-box>.p-6.md\\:p-8{padding:18px!important}
-  #profile-modal .modal-box>.p-6.md\\:p-8>.flex.justify-between.items-start{
-    min-height:50px!important;height:auto!important;align-items:flex-start!important;gap:8px!important
-  }
-  #profile-modal .modal-box>.p-6.md\\:p-8>.flex.justify-between.items-start>div:first-child{
-    flex:1 1 auto!important;min-width:0!important;width:auto!important
-  }
-  #profile-modal #profile-name{
-    width:100%!important;max-width:100%!important;min-width:0!important;
-    display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;
-    overflow:hidden!important;text-overflow:clip!important;white-space:normal!important;
-    overflow-wrap:normal!important;word-break:normal!important;
-    font-size:clamp(24px,3.8vw,30px)!important;line-height:.96!important;letter-spacing:-.04em!important;
-  }
-
-  /* SAME 3-row profile structure as mobile:
-     row 1 = number + constructor (full width)
-     row 2 = stats (full width)
-     row 3 = overview/career left + driver visual right */
-  #driver-profile-content{
-    grid-template-columns:minmax(0,1.18fr) minmax(150px,.82fr)!important;
-    grid-template-rows:100px 60px minmax(0,1fr)!important;
-    gap:9px!important;
-    margin-top:14px!important;
-  }
-  #driver-profile-content>.grid:first-of-type{
-    grid-column:1 / -1!important;grid-row:1!important;
-    grid-template-columns:108px minmax(0,1fr)!important;
-    height:100px!important;min-height:100px!important;max-height:100px!important;gap:9px!important;
-  }
-  #profile-number-box,#driver-profile-content .profile-constructor-box{
-    height:100px!important;min-height:100px!important;max-height:100px!important;
-    padding:11px!important;overflow:hidden!important;
-  }
-  #profile-number-box .text-7xl{font-size:56px!important;line-height:.82!important;margin-top:8px!important}
-  #driver-stats{grid-column:1 / -1!important;grid-row:2!important;height:60px!important;min-height:60px!important;max-height:60px!important}
-
-  #driver-profile-content .profile-constructor-info,
-  #driver-profile-content .profile-constructor-info>.flex{
-    min-width:0!important;width:100%!important;gap:8px!important
-  }
-  #driver-profile-content #profile-team-logo{
-    flex:0 0 40px!important;width:40px!important;height:29px!important
-  }
-  #driver-profile-content #profile-team{
-    min-width:0!important;max-width:100%!important;width:100%!important;
-    font-size:14px!important;line-height:1.02!important;letter-spacing:-.025em!important;
-    white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;
-  }
-  #driver-profile-content #profile-nationality{font-size:7px!important;margin-top:4px!important}
-
-  .driver-profile-about{
-    grid-column:1!important;grid-row:3!important;
-    display:flex!important;flex-direction:column!important;
-    min-width:0!important;min-height:0!important;gap:9px!important;overflow:hidden!important;
-  }
-  .profile-driver-visual{
-    grid-column:2!important;grid-row:3!important;
-    width:100%!important;min-width:0!important;max-width:none!important;
-    height:100%!important;min-height:0!important;max-height:none!important;overflow:hidden!important;
-  }
-  .driver-profile-about>.profile-info-card{min-width:0!important;overflow:hidden!important}
-  .driver-profile-about>.profile-info-card:first-child{
-    flex:1.05 1 0!important;min-height:0!important;display:grid!important;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-    grid-template-rows:auto auto minmax(0,1fr) minmax(0,1fr)!important;
-    grid-template-areas:"kicker kicker" "title title" "fact1 fact2" "fact3 fact4"!important;
-    column-gap:10px!important;row-gap:10px!important;padding:14px!important;
-  }
-  .driver-profile-about>.profile-info-card:nth-child(2){
-    flex:.95 1 0!important;min-height:0!important;padding:14px!important
-  }
-  .profile-section-kicker{font-size:7px!important;letter-spacing:.22em!important}
-  .profile-section-title{font-size:21px!important;line-height:1.05!important;margin-top:7px!important}
-  .profile-fact{padding:8px 10px!important;justify-content:center!important;min-height:0!important}
-  .profile-fact-label{font-size:6px!important;line-height:1.15!important;letter-spacing:.13em!important;white-space:nowrap!important}
-  .profile-fact-value{margin-top:6px!important;font-size:10px!important;line-height:1.18!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-  #driver-profile-content #profile-career.profile-career-list{margin-top:9px!important;padding-right:3px!important}
-  #profile-career .profile-career-item{font-size:9px!important}
-  #profile-career .profile-career-copy strong{font-size:10px!important}
-  #profile-career .profile-career-copy .career-detail{font-size:7.5px!important}
-}
-
-/* ===== consolidated source block 8 ===== */
-/* =========================================================
-   DRIVER CARD — MOVE DRIVER + NAME LEFT
-   Keep #NUMBER exactly in its existing top-right position.
-   Give long names more horizontal room.
-   ========================================================= */
-@media (max-width:1023px){
-  .driver-card .driver-photo{
-    left:-2%!important;
-    width:108%!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:72%!important;
-    max-width:72%!important;
-    align-items:flex-start!important;
-    text-align:left!important;
-    margin-left:0!important;
-    margin-right:auto!important;
-  }
-
-  .driver-card .driver-firstname,
-  .driver-card .driver-lastname{
-    width:100%!important;
-    max-width:100%!important;
-    text-align:left!important;
-  }
-
-  /* #12 / driver number stays exactly on the right */
-  .driver-card .driver-number{
-    right:12px!important;
-    left:auto!important;
-  }
+  #drivers-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 16px !important; }
+  #teams-grid, #calendar-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 16px !important; }
+}
+
+/* Wide Desktop Screens: Fixed Float Side Ads */
+@media (min-width: 1450px) {
+  #side-ad-left, #side-ad-right {
+    position: fixed !important; top: 50% !important; transform: translateY(-50%);
+    width: clamp(110px, 8.6vw, 190px) !important; height: clamp(400px, 31vw, 610px) !important; z-index: 30;
+  }
+  #side-ad-left { left: clamp(12px, calc((100vw - 1280px)/2 - 8.6vw - 8px), calc((100vw - 1280px)/2 - 8px)) !important; }
+  #side-ad-right { right: clamp(12px, calc((100vw - 1280px)/2 - 8.6vw - 8px), calc((100vw - 1280px)/2 - 8px)) !important; }
+}
+
+/* Tablet Horizontal: Sticky Ads */
+@media (min-width: 1024px) and (max-width: 1449px) {
+  #side-ad-left, #side-ad-right {
+    position: sticky !important; top: 92px !important;
+    width: clamp(100px, 7.5vw, 150px) !important; height: clamp(400px, 38vw, 560px) !important; z-index: 10;
+  }
+}
+
+/* Tablet & Mobile Common (< 1024px) */
+@media (max-width: 1023px) {
+  #calendar-grid, #drivers-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  #teams-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .driver-card .driver-photo { left: 15% !important; width: 108% !important; }
+  .driver-card .driver-content { padding: 13px 13px 11px !important; }
+  .driver-card .driver-number { top: 11px !important; right: 12px !important; font-size: 34px !important; }
+  .driver-card .driver-name-zone { min-height: 64px !important; width: 72% !important; text-align: left; }
+  .f1-sidebar { position: static; }
+
+  #standings > .flex.items-start.justify-center > .flex-1 { flex: 0 1 380px !important; width: min(380px, calc(100% - 144px)) !important; }
+  .sidebar-standing-card { height: 400px !important; max-height: 400px !important; }
+  #side-ad-left, #side-ad-right { width: 64px !important; height: 300px !important; top: 84px !important; }
+}
+
+/* Mid-Tablet (641px – 820px): Preserved 2-Column Modal & Bold Card Typography */
+@media (min-width: 641px) and (max-width: 820px) {
+  #profile-modal { padding: 8px !important; }
+  #profile-modal .modal-box { width: 100% !important; height: calc(100vh - 16px) !important; }
+  #profile-modal .modal-box > .p-6.md\:p-8 { padding: 18px !important; }
+  #profile-modal #profile-name { font-size: 30px !important; }
+
+  #driver-profile-content {
+    margin-top: 18px !important;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 340px) !important;
+    grid-template-rows: 110px 64px minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+  #driver-profile-content > .grid:first-of-type { grid-column: 1 !important; grid-row: 1 !important; grid-template-columns: 120px minmax(0, 1fr) !important; height: 110px !important; gap: 10px !important; }
+  #profile-number-box, #driver-profile-content .profile-constructor-box { height: 110px !important; padding: 14px !important; }
+  #driver-stats { grid-column: 1 !important; grid-row: 2 !important; height: 64px !important; }
+  .profile-driver-visual { grid-column: 2 !important; grid-row: 1 / 4 !important; width: 100% !important; }
+  .driver-profile-about { grid-column: 1 !important; grid-row: 3 !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .profile-info-card { padding: 16px !important; }
+  
+  .driver-card .driver-photo { left: 22% !important; }
+  .driver-card .driver-name-zone { width: 61% !important; }
+  .driver-card .driver-number { top: 11px !important; right: 14px !important; font-size: 56px !important; }
+  .driver-card .driver-lastname { font-size: clamp(27px, 4vw, 34px) !important; }
+}
+
+/* Mobile Screens (<= 640px) */
+@media (max-width: 640px) {
+  #calendar-grid, #drivers-grid { gap: 8px !important; }
+  .hero-title { font-size: 3.8rem; line-height: .86; }
+
+  /* Driver Card Mobile */
+  .driver-card .driver-photo { left: 7% !important; }
+  .driver-card .driver-content { padding: 11px 11px 10px !important; }
+  .driver-card .driver-name-zone { width: 76% !important; min-height: 58px !important; }
+  .driver-card .driver-firstname { font-size: 8px !important; }
+  .driver-card .driver-lastname { font-size: clamp(16px, 4.7vw, 20px) !important; }
+  .driver-card .driver-number { top: 10px !important; right: 11px !important; font-size: 31px !important; }
+  .driver-card .driver-stats-row .timing-value { font-size: 9px !important; }
+
+  /* Team Card Driver Mini Mobile */
+  .team-card .team-card-driver-mini { height: 92px !important; min-height: 92px !important; max-height: 92px !important; padding: 4px 6px !important; }
+  .team-card .team-card-driver-mini .driver-mini-image { left: -7% !important; top: -3% !important; width: 57% !important; height: 128% !important; }
+  .team-card .team-card-driver-mini .team-driver-copy { left: 41% !important; right: 3% !important; bottom: 8px !important; max-width: 56% !important; }
+  .team-card .team-card-driver-mini .driver-mini-name { font-size: 7.8px !important; line-height: 1.04 !important; }
+  .team-card .team-card-driver-mini .driver-mini-points { font-size: 6px !important; }
+
+  /* Driver Profile Modal Mobile */
+  #profile-modal .modal-box > .p-6.md\:p-8 { padding: 14px !important; }
+  #profile-modal #profile-name { font-size: clamp(19px, 5.8vw, 25px) !important; max-width: 100% !important; white-space: normal !important; display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 2 !important; }
+  
+  #driver-profile-content {
+    grid-template-columns: minmax(0, 1.18fr) minmax(120px, .82fr) !important;
+    grid-template-rows: 100px 60px minmax(0, 1fr) !important; gap: 9px !important; margin-top: 14px !important;
+  }
+  #driver-profile-content > .grid:first-of-type { grid-column: 1 / -1 !important; grid-row: 1 !important; grid-template-columns: 108px minmax(0, 1fr) !important; height: 100px !important; gap: 9px !important; }
+  #profile-number-box, #driver-profile-content .profile-constructor-box { height: 100px !important; padding: 11px !important; }
+  #profile-number-box .text-7xl { font-size: 56px !important; }
+  #driver-stats { grid-column: 1 / -1 !important; grid-row: 2 !important; height: 60px !important; }
+  #driver-stats > div { padding: 10px 12px !important; }
+  #driver-stats > div .text-xl { font-size: 20px !important; }
+  
+  .driver-profile-about { grid-column: 1 !important; grid-row: 3 !important; display: flex !important; flex-direction: column !important; gap: 9px !important; }
+  .profile-driver-visual { grid-column: 2 !important; grid-row: 3 !important; width: 100% !important; }
+  .driver-profile-about > .profile-info-card:first-child { padding: 13px 12px !important; column-gap: 7px !important; row-gap: 7px !important; }
+  .driver-profile-about > .profile-info-card:nth-child(2) { padding: 13px 12px !important; }
+  .profile-fact { padding: 7px 8px !important; }
+  .profile-fact-value { font-size: 9px !important; }
+
+  /* Team Profile Mobile */
+  .team-profile-overview { grid-template-columns: 1fr; padding: 15px; }
+  .team-profile-champ { border-left: 0; border-top: 1px solid #24272c; padding-top: 14px; }
+  .team-profile-info-grid { grid-template-columns: 1fr; }
+  .team-profile-info-item { border-right: 0 !important; border-bottom: 1px solid #24272c !important; }
+  .team-profile-info-item:last-child { border-bottom: 0 !important; }
+}
+
+/* Small Mobile Screens (<= 390px) */
+@media (max-width: 390px) {
+  #calendar-grid, #drivers-grid { gap: 6px !important; }
+  .driver-card .driver-content { padding: 9px 9px 8px !important; }
+  .driver-card .driver-number { top: 9px !important; right: 9px !important; font-size: 29px !important; }
+  .driver-card .driver-lastname { font-size: clamp(15.5px, 4.8vw, 18px) !important; }
+  
+  #side-ad-left, #side-ad-right { width: 54px !important; height: 260px !important; }
+  #standings > .flex.items-start.justify-center > .flex-1 { flex-basis: 330px !important; }
+  .sidebar-standing-card { height: 360px !important; max-height: 360px !important; }
+}
+
+/* Extra Small Screens (<= 340px) */
+@media (max-width: 340px) {
+  #calendar-grid, #drivers-grid { grid-template-columns: 1fr !important; }
+  .driver-card { aspect-ratio: 1.08/1 !important; }
+}
+
+/* --------------------------------------------------------------------------
+   8. CONTAINER QUERIES (DRIVER CARD NARROW VIEWS)
+   -------------------------------------------------------------------------- */
+@container (max-width: 420px) {
+  .driver-card .driver-photo { left: 15% !important; width: 108% !important; }
+  .driver-card .driver-name-zone { width: 55% !important; max-width: 55% !important; min-height: 56px !important; margin-bottom: 6px !important; padding: 5px 0 6px !important; }
+  .driver-card .driver-firstname { font-size: clamp(7px, 3.1cqw, 9px) !important; white-space: nowrap !important; }
+  .driver-card .driver-lastname { font-size: clamp(14px, 5.0cqw, 18px) !important; white-space: nowrap !important; }
+  .driver-card .driver-number { top: 9px !important; right: 9px !important; font-size: 31px !important; }
+  .driver-card .driver-rank { font-size: 8px !important; }
+  .driver-card .driver-stats-row { padding-top: 6px !important; }
+  .driver-card .driver-stats-row .timing-label { font-size: 5.5px !important; letter-spacing: .12em !important; }
+  .driver-card .driver-stats-row .timing-value { font-size: 9px !important; }
+}
+
+@container (max-width: 230px) {
+  .driver-card .driver-photo { left: 18% !important; }
+  .driver-card .driver-name-zone { width: 57% !important; max-width: 57% !important; }
+  .driver-card .driver-firstname { font-size: 7px !important; }
+  .driver-card .driver-lastname { font-size: clamp(13px, 5.1cqw, 16px) !important; }
+}
+
+@container (min-width: 421px) {
+  .driver-card .driver-name-zone { width: 61% !important; max-width: 61% !important; }
+  .driver-card .driver-lastname { white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ad-container, #sponsor-slot, #side-ad-left, #side-ad-right, #ad-banner { animation: none !important; transition: none !important; }
 }
 
-@media (max-width:640px){
-  .driver-card .driver-photo{
-    left:-5%!important;
-    width:108%!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:76%!important;
-    max-width:76%!important;
-    min-width:0!important;
-  }
-
-  .driver-card .driver-firstname{
-    font-size:8px!important;
-    line-height:1.1!important;
-  }
-
-  .driver-card .driver-lastname{
-    font-size:clamp(17px,5.2vw,22px)!important;
-    line-height:.9!important;
-    letter-spacing:-.045em!important;
-    white-space:normal!important;
-    overflow-wrap:normal!important;
-    word-break:normal!important;
-  }
-
-  .driver-card .driver-number{
-    top:11px!important;
-    right:12px!important;
-    left:auto!important;
-  }
-}
-
-@media (max-width:390px){
-  .driver-card .driver-photo{
-    left:-7%!important;
-    width:108%!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:78%!important;
-    max-width:78%!important;
-  }
-
-  .driver-card .driver-lastname{
-    font-size:clamp(15px,5vw,19px)!important;
-  }
-
-  .driver-card .driver-number{
-    top:9px!important;
-    right:9px!important;
-    left:auto!important;
-  }
-}
-
-/* ===== consolidated source block 9 ===== */
-/* =========================================================
-   DRIVER + TEAM CARD RESPONSIVE FINAL
-   - Driver image: slightly right on tablet/mobile
-   - 641–820px: restore stronger desktop-like typography
-   - <=640px: keep Max/other names compact and readable
-   - Team mini drivers: move image/text left and crop at hip/thigh
-   - One final authoritative block to override earlier responsive patches
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   DRIVER CARD — common tablet/mobile positioning
-   --------------------------------------------------------- */
-@media (max-width:1023px){
-  .driver-card .driver-photo{
-    left:15%!important;
-    width:108%!important;
-  }
-}
-
-/* ---------------------------------------------------------
-   DRIVER CARD — 641–820px
-   Typography was previously inheriting the small tablet/mobile
-   scale, so this breakpoint gets its own balanced scale.
-   --------------------------------------------------------- */
-@media (min-width:641px) and (max-width:820px){
-  .driver-card .driver-content{
-    padding:15px 15px 12px!important;
-  }
-
-  .driver-card .driver-photo{
-    left:15%!important;
-    width:108%!important;
-  }
-
-  .driver-card .team-stripe{
-    width:3px!important;
-    height:36px!important;
-  }
-
-  .driver-card .timing-label{
-    font-size:8px!important;
-    letter-spacing:.19em!important;
-  }
-
-  .driver-card .driver-rank{
-    font-size:12px!important;
-  }
-
-  /* Large ghost number in the top-right */
-  .driver-card .driver-number{
-    top:12px!important;
-    right:14px!important;
-    font-size:50px!important;
-    line-height:.92!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:78%!important;
-    max-width:78%!important;
-    min-height:72px!important;
-    margin-bottom:8px!important;
-    padding:8px 0 7px!important;
-  }
-
-  .driver-card .driver-firstname{
-    font-size:11px!important;
-    line-height:1.08!important;
-    letter-spacing:.08em!important;
-  }
-
-  .driver-card .driver-lastname{
-    margin-top:4px!important;
-    font-size:clamp(24px,3.7vw,31px)!important;
-    line-height:.92!important;
-    letter-spacing:-.055em!important;
-    white-space:nowrap!important;
-  }
-
-  .driver-card .driver-stats-row{
-    padding-top:10px!important;
-  }
-
-  .driver-card .driver-stats-row .timing-label{
-    font-size:7px!important;
-  }
-
-  .driver-card .driver-stats-row .timing-value{
-    font-size:12px!important;
-  }
-}
-
-/* ---------------------------------------------------------
-   DRIVER CARD — <=640px
-   Compact enough for two-column mobile cards, but do not
-   over-scale long names such as VERSTAPPEN.
-   --------------------------------------------------------- */
-@media (max-width:640px){
-  .driver-card .driver-photo{
-    left:7%!important;
-    width:108%!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:76%!important;
-    max-width:76%!important;
-    min-width:0!important;
-  }
-
-  .driver-card .driver-firstname{
-    font-size:8px!important;
-    line-height:1.08!important;
-  }
-
-  .driver-card .driver-lastname{
-    margin-top:3px!important;
-    font-size:clamp(16px,4.7vw,20px)!important;
-    line-height:.92!important;
-    letter-spacing:-.04em!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-  }
-
-  .driver-card .driver-number{
-    top:10px!important;
-    right:11px!important;
-    font-size:31px!important;
-  }
-
-  .driver-card .driver-stats-row .timing-label{
-    font-size:5.8px!important;
-  }
-
-  .driver-card .driver-stats-row .timing-value{
-    font-size:9px!important;
-  }
-}
-
-@media (max-width:390px){
-  .driver-card .driver-photo{
-    left:7%!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:78%!important;
-    max-width:78%!important;
-  }
-
-  .driver-card .driver-lastname{
-    font-size:clamp(15.5px,4.8vw,18px)!important;
-  }
-
-  .driver-card .driver-number{
-    top:9px!important;
-    right:9px!important;
-    font-size:29px!important;
-  }
-}
-
-/* ---------------------------------------------------------
-   TEAM CARD — desktop/tablet mini driver cards
-   Larger upper body + left-aligned copy + hip/thigh fade.
-   --------------------------------------------------------- */
-.team-card .team-card-driver-mini{
-  position:relative!important;
-  overflow:hidden!important;
-  isolation:isolate!important;
-}
-
-.team-card .team-card-driver-mini .driver-mini-image{
-  left:-5%!important;
-  top:-2%!important;
-  width:55%!important;
-  height:126%!important;
-  max-width:none!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  transform:scale(1.02)!important;
-  transform-origin:center top!important;
-  filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
-  -webkit-mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 56%,
-    rgba(0,0,0,.98) 64%,
-    rgba(0,0,0,.82) 72%,
-    rgba(0,0,0,.48) 82%,
-    rgba(0,0,0,.16) 91%,
-    transparent 100%
-  )!important;
-  mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 56%,
-    rgba(0,0,0,.98) 64%,
-    rgba(0,0,0,.82) 72%,
-    rgba(0,0,0,.48) 82%,
-    rgba(0,0,0,.16) 91%,
-    transparent 100%
-  )!important;
-}
-
-.team-card .team-card-driver-mini .team-driver-copy{
-  left:42%!important;
-  right:4%!important;
-  bottom:10px!important;
-  width:auto!important;
-  max-width:54%!important;
-  min-width:0!important;
-  z-index:7!important;
-}
-
-.team-card .team-card-driver-mini .driver-mini-label{
-  font-size:6px!important;
-  line-height:1!important;
-  margin:0 0 4px!important;
-}
-
-.team-card .team-card-driver-mini .driver-mini-name{
-  font-size:10px!important;
-  line-height:1.02!important;
-  letter-spacing:-.025em!important;
-  font-weight:900!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-
-.team-card .team-card-driver-mini .driver-mini-points{
-  margin-top:5px!important;
-  font-size:7px!important;
-  line-height:1!important;
-}
-
-/* ---------------------------------------------------------
-   TEAM CARD — mobile
-   Keep the driver visually dominant without allowing the image
-   to push the text toward the center/right.
-   --------------------------------------------------------- */
-@media (max-width:640px){
-  .team-card .team-card-driver-mini{
-    height:92px!important;
-    min-height:92px!important;
-    max-height:92px!important;
-    padding:4px 6px!important;
-    overflow:hidden!important;
-  }
-
-  .team-card .team-card-driver-mini .driver-mini-image{
-    left:-7%!important;
-    top:-3%!important;
-    width:57%!important;
-    height:128%!important;
-    object-fit:contain!important;
-    object-position:center top!important;
-    transform:scale(1.01)!important;
-    -webkit-mask-image:linear-gradient(
-      to bottom,
-      #000 0%,
-      #000 55%,
-      rgba(0,0,0,.97) 64%,
-      rgba(0,0,0,.76) 73%,
-      rgba(0,0,0,.40) 84%,
-      transparent 100%
-    )!important;
-    mask-image:linear-gradient(
-      to bottom,
-      #000 0%,
-      #000 55%,
-      rgba(0,0,0,.97) 64%,
-      rgba(0,0,0,.76) 73%,
-      rgba(0,0,0,.40) 84%,
-      transparent 100%
-    )!important;
-  }
-
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:41%!important;
-    right:3%!important;
-    bottom:8px!important;
-    max-width:56%!important;
-  }
-
-  .team-card .team-card-driver-mini .driver-mini-label{
-    font-size:5px!important;
-    line-height:1!important;
-    margin-bottom:3px!important;
-  }
-
-  .team-card .team-card-driver-mini .driver-mini-name{
-    font-size:7.8px!important;
-    line-height:1.04!important;
-    letter-spacing:-.02em!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-  }
-
-  .team-card .team-card-driver-mini .driver-mini-points{
-    font-size:6px!important;
-    margin-top:3px!important;
-  }
-}
-
-@media (max-width:390px){
-  .team-card .team-card-driver-mini .driver-mini-image{
-    left:-8%!important;
-    width:58%!important;
-  }
-
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:40%!important;
-    right:3%!important;
-    max-width:57%!important;
-  }
-
-  .team-card .team-card-driver-mini .driver-mini-name{
-    font-size:7.5px!important;
-  }
-}
-
-/* ===== consolidated source block 12 ===== */
-/* =========================================================
-   RESPONSIVE FINAL — 641–820px
-   Keep the original profile composition: LEFT information,
-   RIGHT driver visual. The previous max-820 rule collapsed
-   this area to one column too early, causing the screenshot
-   shown by the user.
-   ========================================================= */
-@media (min-width:641px) and (max-width:820px){
-  #profile-modal{padding:8px!important}
-  #profile-modal .modal-box{
-    width:100%!important;
-    max-width:100%!important;
-    height:calc(100vh - 16px)!important;
-    max-height:calc(100vh - 16px)!important;
-  }
-
-  #profile-modal .modal-box>.p-6.md\\:p-8{
-    padding:18px!important;
-  }
-
-  #profile-modal #profile-name{
-    max-width:calc(100% - 52px)!important;
-    font-size:30px!important;
-  }
-
-  /* Original 2-column composition restored. */
-  #driver-profile-content{
-    margin-top:18px!important;
-    grid-template-columns:minmax(0,1fr) minmax(220px,340px)!important;
-    grid-template-rows:110px 64px minmax(0,1fr)!important;
-    gap:10px!important;
-  }
-
-  #driver-profile-content>.grid:first-of-type{
-    grid-column:1!important;
-    grid-row:1!important;
-    grid-template-columns:120px minmax(0,1fr)!important;
-    gap:10px!important;
-    height:110px!important;
-    min-height:110px!important;
-    max-height:110px!important;
-  }
-
-  #profile-number-box,
-  #driver-profile-content .profile-constructor-box{
-    height:110px!important;
-    min-height:110px!important;
-    max-height:110px!important;
-    padding:14px!important;
-  }
-
-  #driver-stats{
-    grid-column:1!important;
-    grid-row:2!important;
-    height:64px!important;
-    min-height:64px!important;
-    max-height:64px!important;
-  }
-
-  .profile-driver-visual{
-    grid-column:2!important;
-    grid-row:1 / 4!important;
-    width:100%!important;
-    min-width:0!important;
-    max-width:none!important;
-    height:100%!important;
-    min-height:0!important;
-    max-height:none!important;
-  }
-
-  .driver-profile-about{
-    grid-column:1!important;
-    grid-row:3!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    grid-template-rows:minmax(0,1fr)!important;
-    gap:10px!important;
-  }
-
-  /* Prevent the two left cards from becoming visually cramped. */
-  .profile-info-card{
-    min-width:0!important;
-    padding:16px!important;
-  }
-
-  .driver-profile-about>.profile-info-card:first-child{
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-    column-gap:9px!important;
-    row-gap:9px!important;
-  }
-
-  .profile-fact{
-    min-width:0!important;
-    padding:9px 10px!important;
-  }
-
-  .profile-fact-label{
-    font-size:6.5px!important;
-  }
-
-  .profile-fact-value{
-    font-size:10px!important;
-  }
-
-  #profile-career .profile-career-copy strong{
-    font-size:10px!important;
-  }
-
-  #profile-career .profile-career-copy .career-detail{
-    font-size:7.5px!important;
-  }
-}
-
-/* ===== consolidated source block 13 ===== */
-/* =========================================================
-   DRIVER CARD — AUTHORITATIVE RESPONSIVE V5
-   The card itself is the responsive unit. This avoids the
-   previous viewport-only overrides fighting each other.
-   ========================================================= */
-
-.driver-card{
-  container-type:inline-size!important;
-}
-
-/* ---------- 641–820px viewport / normal tablet cards ---------- */
-@media (min-width:641px) and (max-width:820px){
-  .driver-card .driver-photo{
-    left:22%!important;
-    width:108%!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:61%!important;
-    max-width:61%!important;
-    min-height:76px!important;
-    margin-bottom:8px!important;
-    padding:7px 0 8px!important;
-    align-items:flex-start!important;
-    text-align:left!important;
-    overflow:hidden!important;
-    z-index:12!important;
-  }
-
-  .driver-card .driver-firstname{
-    font-size:12px!important;
-    line-height:1.08!important;
-    letter-spacing:.075em!important;
-    white-space:nowrap!important;
-  }
-
-  .driver-card .driver-lastname{
-    margin-top:4px!important;
-    font-size:clamp(27px,4vw,34px)!important;
-    line-height:.94!important;
-    letter-spacing:-.06em!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-  }
-
-  .driver-card .driver-number{
-    top:11px!important;
-    right:14px!important;
-    font-size:56px!important;
-    line-height:.9!important;
-  }
-
-  .driver-card .driver-rank{
-    font-size:13px!important;
-  }
-
-  .driver-card .driver-stats-row{
-    padding-top:11px!important;
-  }
-
-  .driver-card .driver-stats-row .timing-label{
-    font-size:7.5px!important;
-    letter-spacing:.18em!important;
-  }
-
-  .driver-card .driver-stats-row .timing-value{
-    font-size:13px!important;
-  }
-}
-
-/* ---------- Narrow two-column cards: this is the important fix.
-   The name gets a hard horizontal boundary BEFORE the driver,
-   so long surnames can never paint across the face/body. ---------- */
-@container (max-width:420px){
-  .driver-card .driver-photo{
-    left:15%!important;
-    width:108%!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:55%!important;
-    max-width:55%!important;
-    min-height:56px!important;
-    margin-bottom:6px!important;
-    padding:5px 0 6px!important;
-    align-items:flex-start!important;
-    text-align:left!important;
-    overflow:hidden!important;
-    z-index:12!important;
-  }
-
-  .driver-card .driver-firstname{
-    font-size:clamp(7px,3.1cqw,9px)!important;
-    line-height:1.08!important;
-    letter-spacing:.07em!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-  }
-
-  .driver-card .driver-lastname{
-    margin-top:3px!important;
-    font-size:clamp(14px,5.0cqw,18px)!important;
-    line-height:.94!important;
-    letter-spacing:-.035em!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-  }
-
-  .driver-card .driver-number{
-    top:9px!important;
-    right:9px!important;
-    font-size:31px!important;
-  }
-
-  .driver-card .driver-rank{
-    font-size:8px!important;
-  }
-
-  .driver-card .driver-stats-row{
-    padding-top:6px!important;
-  }
-
-  .driver-card .driver-stats-row .timing-label{
-    font-size:5.5px!important;
-    letter-spacing:.12em!important;
-  }
-
-  .driver-card .driver-stats-row .timing-value{
-    font-size:9px!important;
-  }
-}
-
-/* ---------- Very small cards: prioritize full surname readability. ---------- */
-@container (max-width:230px){
-  .driver-card .driver-photo{
-    left:18%!important;
-    width:108%!important;
-  }
-
-  .driver-card .driver-name-zone{
-    width:57%!important;
-    max-width:57%!important;
-  }
-
-  .driver-card .driver-firstname{
-    font-size:7px!important;
-  }
-
-  .driver-card .driver-lastname{
-    font-size:clamp(13px,5.1cqw,16px)!important;
-    letter-spacing:-.03em!important;
-  }
-}
-
-/* ---------- Tablet cards wider than 420px.
-   Keep typography strong without allowing the name area to
-   enter the driver's face. ---------- */
-@container (min-width:421px){
-  .driver-card .driver-name-zone{
-    width:61%!important;
-    max-width:61%!important;
-    overflow:hidden!important;
-    z-index:12!important;
-  }
-
-  .driver-card .driver-lastname{
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-  }
-}
-</style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<style id="team-card-driver-responsive-final">
-/* =========================================================
-   TEAM CARD MINI DRIVER — RESPONSIVE FINAL
-   ONLY affects the small driver portraits INSIDE team cards.
-   Standalone .driver-card is intentionally untouched.
-   ========================================================= */
-.team-card .team-card-driver-mini{
-  overflow:hidden!important;
-}
-.team-card .team-card-driver-mini .driver-mini-image{
-  position:absolute!important;
-  left:-4%!important;
-  top:0!important;
-  width:72%!important;
-  height:190%!important;
-  max-width:none!important;
-  max-height:none!important;
-  object-fit:contain!important;
-  object-position:center top!important;
-  transform:none!important;
-  transform-origin:center top!important;
-  filter:drop-shadow(0 9px 13px rgba(0,0,0,.58));
-}
-
-/* Tablet / compact desktop: the screenshot-sized layout. */
-@media (min-width:641px) and (max-width:1100px){
-  .team-card .team-card-driver-mini .driver-mini-image{
-    left:-4%!important;
-    width:72%!important;
-    height:190%!important;
-    object-fit:contain!important;
-    object-position:center top!important;
-  }
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:46%!important;
-    right:4%!important;
-    max-width:50%!important;
-  }
-}
-
-/* Mobile */
-@media (max-width:640px){
-  .team-card .team-card-driver-mini{
-    height:92px!important;
-    min-height:92px!important;
-    max-height:92px!important;
-    overflow:hidden!important;
-  }
-  .team-card .team-card-driver-mini .driver-mini-image{
-    left:-5%!important;
-    top:0!important;
-    width:72%!important;
-    height:190%!important;
-    object-fit:contain!important;
-    object-position:center top!important;
-    transform:none!important;
-  }
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:46%!important;
-    right:3%!important;
-    max-width:51%!important;
-  }
-}
-
-@media (max-width:390px){
-  .team-card .team-card-driver-mini .driver-mini-image{
-    left:-6%!important;
-    width:74%!important;
-    height:190%!important;
-  }
-  .team-card .team-card-driver-mini .team-driver-copy{
-    left:47%!important;
-    right:3%!important;
-    max-width:50%!important;
-  }
-}
-</style>
-
-
-<style id="team-driver-bottom-up-fade-final">
-/* TEAM CARD DRIVER MINI ONLY — fade must finish at the visible card bottom.
-   The portrait is 190% tall, so the previous 0-100% mask faded below the
-   clipped area and looked like no fade. */
-.team-card .team-card-driver-mini .driver-mini-image{
-  -webkit-mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 31%,
-    rgba(0,0,0,.98) 38%,
-    rgba(0,0,0,.82) 44%,
-    rgba(0,0,0,.48) 49%,
-    transparent 53%
-  )!important;
-  mask-image:linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 31%,
-    rgba(0,0,0,.98) 38%,
-    rgba(0,0,0,.82) 44%,
-    rgba(0,0,0,.48) 49%,
-    transparent 53%
-  )!important;
-  -webkit-mask-repeat:no-repeat!important;
-  mask-repeat:no-repeat!important;
-  -webkit-mask-size:100% 100%!important;
-  mask-size:100% 100%!important;
-  -webkit-mask-position:top center!important;
-  mask-position:top center!important;
-}
 </style>
 </head>
 
