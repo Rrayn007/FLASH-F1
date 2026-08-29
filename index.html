@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#080808">
-<meta name="description" content="F1 HUB - Formula 1 news, race calendar, results, standings, drivers and teams for the 2026 season.">
-<meta property="og:title" content="F1 HUB | Formula 1 News & Race Control">
+<meta name="description" content="007 - Formula 1 news, race calendar, results, standings, drivers and teams for the 2026 season.">
+<meta property="og:title" content="007 | Formula 1 News & Race Control">
 <meta property="og:description" content="Formula 1 news, results, race calendar and 2026 season data.">
 <meta property="og:type" content="website">
-<title>F1 HUB | Formula 1 News & Race Control</title>
+<title>007 | Formula 1 News & Race Control</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -16,14 +16,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<style id="f1hub-responsive-refactor">
-:root{--red:#e10600;--bg:#080808;--panel:#0d0d0f;--panel2:#111114;--border:#222225;--ui-border:#272b31;--ui-cyan:#00d7c4;--ui-blue:#3f82ff;--ui-muted:#777d86;--ad-ease:cubic-bezier(.22,1,.36,1);--side-ad-width:150px;--side-ad-height:560px;--side-ad-edge:10px;--page-gap: clamp(16px, 1.4vw, 24px);--card-gap: clamp(6px, 1.1vw, 16px);--driver-text-safe: clamp(54%, 61%, 68%);}
+<style id="007-responsive-refactor">
+:root{--red:#e10600;--bg:#080808;--panel:#0d0d0f;--panel2:#111114;--border:#222225;--ui-border:#272b31;--ui-cyan:#00d7c4;--ui-blue:#3f82ff;--ui-muted:#777d86;--ad-ease:cubic-bezier(.22,1,.36,1);--page-gap:clamp(16px,1.4vw,24px);--card-gap:clamp(6px,1.1vw,16px);--driver-text-safe:clamp(54%,61%,68%);}
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{margin:0;background:var(--bg);color:#eee;font-family:Inter,sans-serif;overflow-x:hidden;}
 body.modal-open{overflow:hidden;}
 img{display:block;}
-#brand-logo.logo-failed,#footer-brand-logo.logo-failed{display:none !important;}
 button,a{outline:none;}
 button{font-family:inherit;}
 
@@ -56,25 +55,25 @@ button{font-family:inherit;}
 .news-card{overflow:hidden;}
 .news-featured-image{height:285px;}
 .news-feed-card img{height:145px;object-fit:cover;}
-.f1-sidebar{position:sticky;top:92px;align-self:start;max-height:none;overflow:visible;padding-right:0;scrollbar-width:none;}
-.f1-sidebar::-webkit-scrollbar{display:none;}
-.sidebar-standings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:stretch;}
-.sidebar-standings>.flex{grid-column:1/-1;}
-.sidebar-standings>#ad-container,.sidebar-standings>.card{grid-column:1/-1;}
-.sidebar-standing-card{background:#0b0b0d;border:1px solid #202023;border-radius:10px;overflow:hidden;height:560px;display:flex;flex-direction:column;}
-.sidebar-standing-card .standing-head{padding:13px 14px 10px;min-height:47px;flex:0 0 auto;}
-.sidebar-standing-card .standing-head h3{font-size:9px;}
-.sidebar-standing-card .standing-head span{font-size:7px;}
-.sidebar-standing-card .standings-scroll{height:auto;flex:1;min-height:0;overflow:auto;}
-.sidebar-standing-card .standing-row{grid-template-columns:22px minmax(0,1fr) auto;gap:6px;min-height:39px;padding:6px 8px;}
-.sidebar-standing-card .standing-name{font-size:10px;}
-.sidebar-standing-card .standing-sub{font-size:6px;margin-top:2px;}
-.sidebar-standing-card .standing-points{font-size:11px;min-width:28px;}
-.sidebar-standing-card .standing-rank{font-size:8px;}
 .news-card img{transition:transform .6s ease;}
 .news-card:hover img{transform:scale(1.04);}
 .hero-title{font-size:clamp(3.5rem,7vw,6.8rem);line-height:.84;letter-spacing:-.075em;}
 .card,.driver-card,.team-card,.team-driver-mini,.team-card-driver-mini{border:1px solid var(--ui-border,#272b31);box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);}
+
+/* --- Standings Base (Always 2 Columns) --- */
+.f1-sidebar{position:sticky;top:92px;align-self:start;}
+.sidebar-standing-card{background:#0b0b0d;border:1px solid #202023;border-radius:8px;overflow:hidden;height:540px;display:flex;flex-direction:column;min-width:0;}
+.sidebar-standing-card .standing-head{padding:10px 12px;min-height:40px;border-bottom:1px solid #202023;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.sidebar-standing-card .standing-head h3{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#aaa;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sidebar-standing-card .standing-head span{font-size:7px;color:#666;}
+.sidebar-standing-card .standings-scroll{height:auto;flex:1;min-height:0;overflow:auto;}
+.sidebar-standing-card .standing-row{display:grid;grid-template-columns:18px minmax(0,1fr) auto;align-items:center;gap:6px;min-height:38px;padding:6px 8px;border-bottom:1px solid #181a1e;transition:background 0.15s ease;}
+.sidebar-standing-card .standing-row:hover{background:#13161a;}
+.sidebar-standing-card .standing-rank{font:900 9px/1 ui-monospace,monospace;color:#555;text-align:center;}
+.sidebar-standing-card .standing-rank.top{color:var(--ui-cyan);}
+.sidebar-standing-card .standing-name{font-size:11px;font-weight:800;color:#f2f2f2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sidebar-standing-card .standing-sub{font-size:7px;color:#777;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+.sidebar-standing-card .standing-points{font:900 11px/1 ui-monospace,monospace;color:#fff;min-width:24px;text-align:right;}
 
 /* --- Driver Card Styles --- */
 .driver-card,.team-card{position:relative;overflow:hidden;cursor:pointer;isolation:isolate;min-width:0;border-radius:10px;border:1px solid #272b31;background:radial-gradient(circle at 100% 0%,rgba(255,255,255,.018),transparent 38%),linear-gradient(145deg,#0b0d10 0%,#101216 100%);box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.018);font-family:Inter,Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;}
@@ -133,7 +132,7 @@ button{font-family:inherit;}
 .team-driver-mini .driver-mini-points{margin-top:11px;font-size:16px;line-height:1;color:color-mix(in srgb,var(--team-color,#00d7c4) 68%,#888e97);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;}
 .team-driver-mini .driver-mini-number{position:absolute;right:8%;top:7%;z-index:5;font-size:52px;line-height:1;font-weight:900;color:rgba(255,255,255,.055);pointer-events:none;}
 
-/* --- Calendar & Miscellaneous --- */
+/* --- Calendar & Components --- */
 .timing-label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#555;}
 .timing-value{font-family:monospace;font-weight:700;}
 .driver-row{transition:.2s;}
@@ -261,27 +260,24 @@ button{font-family:inherit;}
 
 .standing-row{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:14px;min-height:52px;padding:10px 18px;border-bottom:1px solid #20242a;transition:.16s;}
 .standing-row:hover{background:#13161a;}
-.standing-rank{font:900 11px/1 ui-monospace,monospace;color:#555;text-align:center;}
-.standing-rank.top{color:var(--ui-cyan);}
-.standing-name{font-size:13px;font-weight:850;color:#f2f2f2;}
-.standing-sub{font-size:8px;text-transform:uppercase;letter-spacing:.08em;}
-.standing-points{font:900 14px/1 ui-monospace,monospace;color:#fff;text-align:right;}
 
 section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 #news{scroll-margin-top:96px;}
-
 .sidebar-standing-card, .standings-panel .card, .news-card, .calendar-card, .pole-chip, .result-podium-item{border-color:#25292f !important;background:#0d0f12 !important;}
-#side-ad-left,#side-ad-right{position:relative;display:none;opacity:0;visibility:hidden;pointer-events:none;border-radius:6px;background:#0d0f12;border:1px solid #25292f;overflow:hidden;}
-#side-ad-left.ad-ready,#side-ad-right.ad-ready{display:block;opacity:1;visibility:visible;pointer-events:auto;}
-#side-ad-left-link,#side-ad-right-link{display:block;width:100%;height:100%;z-index:1;}
-#side-ad-left-img,#side-ad-right-img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ad-ease),filter .45s ease;}
-#side-ad-left:hover img,#side-ad-right:hover img{transform:scale(1.012);filter:brightness(1.04);}
-#side-ad-left:after,#side-ad-right:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0;}
-#side-ad-left.is-shining:after,#side-ad-right.is-shining:after{opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both;}
+
+/* --- ZERO-GAP ADS SYSTEM --- */
+.side-banner-outer, #ad-container, #sponsor-slot {display:none;opacity:0;margin:0;padding:0;}
+.side-banner-outer.ad-ready {display:block;opacity:1;animation:fadeIn .3s ease-out forwards;}
+#ad-container.ad-ready {display:block;opacity:1;animation:adReveal .72s var(--ad-ease) both;}
+#sponsor-slot.ad-ready {display:block;opacity:1;animation:adReveal .72s var(--ad-ease) both;}
+
+.side-banner-outer a {display:block;width:100%;height:100%;position:relative;z-index:1;}
+.side-banner-outer img {display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ad-ease),filter .45s ease;}
+.side-banner-outer:hover img {transform:scale(1.012);filter:brightness(1.04);}
+.side-banner-outer:after, #ad-container:after, #sponsor-slot .card:after {content:"";position:absolute;inset:0;pointer-events:none;z-index:3;background:linear-gradient(105deg,transparent 34%,rgba(255,255,255,.2) 48%,rgba(255,255,255,.04) 53%,transparent 67%);transform:translateX(-125%);opacity:0;}
+.side-banner-outer.is-shining:after, #ad-container.is-shining:after, #sponsor-slot.is-shining .card:after {opacity:1;animation:adGlassSweep 1.45s var(--ad-ease) both;}
 
 @keyframes adGlassSweep{0%{transform:translateX(-120%);opacity:0}12%{opacity:.9}55%{opacity:.65}100%{transform:translateX(120%);opacity:0}}
-#ad-container, #sponsor-slot{opacity:0;visibility:hidden;}
-#ad-container.ad-ready, #sponsor-slot.ad-ready{opacity:1;visibility:visible;animation:adReveal .72s var(--ad-ease) both;}
 @keyframes adReveal { 0% { opacity: 0; transform: scale(.98); filter:blur(2px); } 100% { opacity: 1; transform: scale(1); filter:blur(0); } }
 #ad-banner{transition:filter .45s ease,transform .7s var(--ad-ease);}
 #ad-container:hover #ad-banner{transform:scale(1.008);filter:brightness(1.025);}
@@ -301,22 +297,37 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 #driver-profile-content .profile-constructor-info > .flex > .profile-team-logo { flex: 0 0 auto !important; width: 92px !important; height: 72px !important; }
 #driver-profile-content .profile-constructor-info > .flex > div:last-child { flex: 1 1 auto !important; min-width: 0 !important; max-width: none !important; text-align: left !important; }
 
+/* Desktop siêu rộng (>= 1450px): Side Ads cố định 2 bên lề */
 @media (min-width: 1450px) {
-  #side-ad-left, #side-ad-right { display: block !important; position: fixed !important; top: 50%; width: clamp(110px, 8.6vw, 190px) !important; height: clamp(400px, 31vw, 610px) !important; z-index: 30; transform: translateY(-50%); }
-  #side-ad-left { left: clamp(12px, calc((100vw - 1280px)/2 - 8.6vw - 8px), calc((100vw - 1280px)/2 - 8px)) !important; }
-  #side-ad-right { right: clamp(12px, calc((100vw - 1280px)/2 - 8.6vw - 8px), calc((100vw - 1280px)/2 - 8px)) !important; }
+  .side-banner-outer.ad-ready { 
+    display: block !important; 
+    position: fixed !important; 
+    top: 50%; 
+    width: clamp(120px, 8.5vw, 160px) !important; 
+    height: clamp(450px, 32vw, 600px) !important; 
+    z-index: 40; 
+    transform: translateY(-50%); 
+    border-radius: 6px;
+    background: #0d0f12;
+    border: 1px solid #25292f;
+  }
+  #side-ad-left.ad-ready { left: clamp(10px, calc((100vw - 1280px) / 2 - clamp(120px, 8.5vw, 160px) - 16px), calc((100vw - 1280px) / 2 - 16px)) !important; }
+  #side-ad-right.ad-ready { right: clamp(10px, calc((100vw - 1280px) / 2 - clamp(120px, 8.5vw, 160px) - 16px), calc((100vw - 1280px) / 2 - 16px)) !important; }
 }
-@media (min-width: 1024px) and (max-width: 1449px) { #side-ad-left, #side-ad-right { display: block !important; position: sticky !important; top: 92px !important; width: clamp(100px, 7.5vw, 150px) !important; height: clamp(400px, 38vw, 560px) !important; } }
-@media (max-width: 1023px) { 
-  #side-ad-left, #side-ad-right { display: none !important; } 
-  #ad-container, #sponsor-slot { width: 100%; } 
-  #drivers-grid, #calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  #teams-grid { grid-template-columns: 1fr; gap: 12px; }
+
+/* Ẩn hoàn toàn side ads trên màn hình < 1450px */
+@media (max-width: 1449px) { 
+  .side-banner-outer { display: none !important; } 
 }
+
 @media (min-width: 1024px) {
   #drivers-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
   #calendar-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   #teams-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+}
+@media (max-width: 1023px) { 
+  #drivers-grid, #calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  #teams-grid { grid-template-columns: 1fr; gap: 12px; }
 }
 @media (max-width: 900px) { #drivers-grid, #calendar-grid { gap: 9px; } }
 @media (max-width: 820px) {
@@ -337,6 +348,8 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
   .driver-card .driver-lastname { font-size: clamp(16px, 4.8vw, 22px); }
   .mobile-scroll{overflow-x:auto;scrollbar-width:none;}
   .mobile-scroll::-webkit-scrollbar{display:none;}
+  .sidebar-standing-card { height: 380px; }
+  .sidebar-standing-card .standing-head span { display: none; }
 }
 
 @media (max-width: 640px) {
@@ -369,6 +382,14 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 @media (max-width: 480px) {
   .driver-card .driver-name-zone { width: 71%; max-width: 71%; }
   .driver-card .driver-photo { width: min(100%, 73%); max-width: 73%; }
+  .sidebar-standing-card { height: 340px; border-radius: 6px; }
+  .sidebar-standing-card .standing-head { padding: 6px 8px; min-height: 32px; }
+  .sidebar-standing-card .standing-head h3 { font-size: 8px; }
+  .sidebar-standing-card .standing-row { grid-template-columns: 14px minmax(0, 1fr) auto; gap: 4px; padding: 5px 6px; min-height: 32px; }
+  .sidebar-standing-card .standing-rank { font-size: 8px; }
+  .sidebar-standing-card .standing-name { font-size: 9.5px; }
+  .sidebar-standing-card .standing-sub { font-size: 6px; }
+  .sidebar-standing-card .standing-points { font-size: 9.5px; min-width: 18px; }
 }
 @media (max-width: 390px) {
   #drivers-grid, #calendar-grid { gap: 6px; }
@@ -404,24 +425,37 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 
 <body>
 
-<!-- Reusable SVG Definitions -->
+<!-- Reusable 007 SVG Definition -->
 <svg class="hidden" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="icon-f1hub-logo" viewBox="0 0 199 62">
-    <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
-    <path class="cls-2" d="m123.4,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99h-34.28V13.71h34.28v34.27Z"/>
-    <path class="cls-1" d="m191.96,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-31.6,47.99h-9.53l18.86-27.42h-18.86v-6.85h34.28l-24.75,34.27Z"/>
+  <symbol id="icon-007-logo" viewBox="0 0 199 62">
+    <path class="fill-white" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
+    <path class="fill-white" d="m123.4,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99h-34.28V13.71h34.28v34.27Z"/>
+    <path class="fill-[#ed1c24]" d="m191.96,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-31.6,47.99h-9.53l18.86-27.42h-18.86v-6.85h34.28l-24.75,34.27Z"/>
   </symbol>
 </svg>
+
+<!-- Outer Side Banners (Rendered outside main layout to avoid gaps) -->
+<aside id="side-ad-left" class="side-banner-outer" aria-hidden="true">
+  <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
+    <img id="side-ad-left-img" alt="Advertisement">
+  </a>
+</aside>
+
+<aside id="side-ad-right" class="side-banner-outer" aria-hidden="true">
+  <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
+    <img id="side-ad-right-img" alt="Advertisement">
+  </a>
+</aside>
 
 <header class="sticky top-0 z-50 border-b border-[#19191b] glass">
 <div class="max-w-7xl mx-auto px-5 lg:px-8">
 <div class="h-20 flex items-center justify-between">
-<div class="flex items-center gap-5 min-w-0">
-  <a href="/" aria-label="F1HUB" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
-    <svg id="header-f1hub-logo" style="height: 32px; width: 103px; display: block;"><use href="#icon-f1hub-logo"></use></svg>
+<div class="flex items-center gap-3 sm:gap-5 min-w-0">
+  <a href="/" aria-label="007" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
+    <svg id="header-007-logo" style="height: 28px; width: 90px; display: block;" class="sm:h-[32px] sm:w-[103px]"><use href="#icon-007-logo"></use></svg>
   </a>
-  <span class="hidden sm:block w-[1px] h-[22px] bg-[#1f2937]" aria-hidden="true"></span>
-  <span class="hidden sm:block text-[11px] uppercase tracking-[0.32em] text-[#4b5563] font-normal select-none">Formula 1</span>
+  <span class="w-[1px] h-[18px] sm:h-[22px] bg-[#1f2937]" aria-hidden="true"></span>
+  <span class="text-[9px] sm:text-[11px] uppercase tracking-[0.22em] sm:tracking-[0.32em] text-[#4b5563] font-normal select-none whitespace-nowrap">Formula 1</span>
 </div>
 <nav class="hidden lg:flex items-center gap-8 text-[10px] font-bold tracking-wider text-gray-500">
 <a class="nav-link hover:text-white transition" href="#news">NEWS</a>
@@ -538,59 +572,46 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 </div>
 </section>
 
+<!-- Standings Sidebar (Always 2 Columns) -->
 <aside id="standings" class="lg:col-span-5 f1-sidebar">
   <div class="flex items-end justify-between px-1 mb-3">
     <div>
-      <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONampionship</p>
+      <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p>
       <h2 class="text-xl font-black mt-1">Standings</h2>
     </div>
     <span class="text-[8px] uppercase tracking-widest text-gray-600">LIVE DATA</span>
   </div>
 
-  <div class="flex items-start justify-center gap-3">
-    
-    <!-- Left Banner -->
-    <div id="side-ad-left" aria-hidden="true">
-      <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
-        <img id="side-ad-left-img" class="border border-[#202023]" alt="Advertisement">
-      </a>
-    </div>
-
-    <!-- Two Drivers & Teams standings panels -->
-    <div class="flex-1 w-full min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div class="sidebar-standing-card">
-        <div class="standing-head">
-          <h3>Drivers Championship</h3>
-          <span id="drivers-count">-- DRIVERS</span>
-        </div>
-        <div class="standings-scroll custom-scroll">
-          <div id="standings-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
-        </div>
+  <div class="w-full grid grid-cols-2 gap-2 sm:gap-3 items-stretch">
+    <!-- Drivers Card -->
+    <div class="sidebar-standing-card">
+      <div class="standing-head">
+        <h3>Drivers</h3>
+        <span id="drivers-count">-- DRIVERS</span>
       </div>
-
-      <div class="sidebar-standing-card constructors">
-        <div class="standing-head">
-          <h3>Constructors Championship</h3>
-          <span>11 TEAMS</span>
-        </div>
-        <div class="standings-scroll custom-scroll">
-          <div id="constructors-board"><div class="p-6 text-center text-gray-600 text-xs">Loading...</div></div>
-        </div>
+      <div class="standings-scroll custom-scroll">
+        <div id="standings-board"><div class="p-4 text-center text-gray-600 text-xs">Loading...</div></div>
       </div>
     </div>
 
-    <!-- Right Banner -->
-    <div id="side-ad-right" aria-hidden="true">
-      <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
-        <img id="side-ad-right-img" class="border border-[#202023]" alt="Advertisement">
-      </a>
+    <!-- Constructors Card -->
+    <div class="sidebar-standing-card constructors">
+      <div class="standing-head">
+        <h3>Teams</h3>
+        <span>11 TEAMS</span>
+      </div>
+      <div class="standings-scroll custom-scroll">
+        <div id="constructors-board"><div class="p-4 text-center text-gray-600 text-xs">Loading...</div></div>
+      </div>
     </div>
   </div>
 
-  <!-- Inline Banner -->
-  <div id="ad-container" class="hidden ad-shell mt-3" aria-hidden="true">
-    <div class="flex justify-between mb-2"><span class="sponsor-label">Sponsored</span></div>
-    <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
+  <!-- Inline Banner (Appears cleanly below Standings with zero initial gap) -->
+  <div id="ad-container" class="ad-shell mt-3" aria-hidden="true">
+    <div class="flex justify-between mb-1.5"><span class="sponsor-label">Sponsored</span></div>
+    <a id="ad-link" aria-label="Advertisement">
+      <img id="ad-banner" class="w-full rounded object-cover border border-[#25292f]" alt="Advertisement" loading="lazy">
+    </a>
   </div>
 </aside>
 </div>
@@ -606,14 +627,14 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 <div id="calendar-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4"></div>
 </section>
 
-<section id="sponsor-slot" class="mt-16 hidden ad-shell" aria-hidden="true">
+<section id="sponsor-slot" class="mt-16 ad-shell" aria-hidden="true">
 <div class="card rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 justify-between">
-<div>
+<div class="w-full md:w-auto text-left">
 <div id="sponsor-label" class="sponsor-label">Sponsored / Affiliate</div>
 <div id="sponsor-title" class="text-sm font-black mt-1">PICKS</div>
-<div id="sponsor-description" class="data-note mt-1">Area reserved for an advertising banner or affiliate link.</div>
+<div id="sponsor-description" class="data-note mt-1 text-xs text-gray-500">Area reserved for an advertising banner or affiliate link.</div>
 </div>
-<a id="inline-ad-link" class="hidden px-5 py-3 bg-white text-black text-[9px] font-black rounded" target="_blank" rel="sponsored noopener">VIEW OFFER →</a>
+<a id="inline-ad-link" class="hidden w-full text-center md:w-auto px-5 py-3 bg-white text-black text-[9px] font-black rounded" target="_blank" rel="sponsored noopener">VIEW OFFER →</a>
 </div>
 </section>
 
@@ -644,8 +665,8 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 <div class="max-w-7xl mx-auto px-5 lg:px-8 py-12">
 <div class="grid md:grid-cols-3 gap-10">
 <div>
-<a href="/" aria-label="F1HUB" class="footer-brand-logo inline-block" style="line-height: 0;">
-  <svg id="footer-f1hub-logo" style="height: 32px; width: 103px; display: block;"><use href="#icon-f1hub-logo"></use></svg>
+<a href="/" aria-label="007" class="footer-brand-logo inline-block" style="line-height: 0;">
+  <svg id="footer-007-logo" style="height: 32px; width: 103px; display: block;"><use href="#icon-007-logo"></use></svg>
 </a>
 <p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">A Formula 1 news and data hub with a broadcast-inspired interface.</p>
 </div>
@@ -888,6 +909,89 @@ async function getClientIp(){
   return '';
 }
 
+/* --- Ad Shine & Memory Leak Prevention --- */
+const adShineTimers=new WeakMap();
+
+function stopAdShine(el){
+  if(!el)return;
+  const timer=adShineTimers.get(el);
+  if(timer)clearTimeout(timer);
+  adShineTimers.delete(el);
+  el.classList.remove('is-shining');
+}
+
+function scheduleAdShine(el){
+  if(!el)return;
+  stopAdShine(el);
+  const run=()=>{
+    if(!el.classList.contains('ad-ready'))return;
+    el.classList.remove('is-shining');
+    void el.offsetWidth;
+    el.classList.add('is-shining');
+    setTimeout(()=>el.classList.remove('is-shining'),1500);
+    adShineTimers.set(el,setTimeout(run,9000+Math.random()*8000));
+  };
+  adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
+}
+
+document.addEventListener('visibilitychange', () => {
+  const isHidden = document.hidden;
+  const ads = [
+    document.getElementById('ad-container'),
+    document.getElementById('sponsor-slot'),
+    document.getElementById('side-ad-left'),
+    document.getElementById('side-ad-right')
+  ];
+  ads.forEach(ad => {
+    if (!ad) return;
+    if (isHidden) stopAdShine(ad);
+    else if (ad.classList.contains('ad-ready')) scheduleAdShine(ad);
+  });
+});
+
+function loadImageAd({ el, link, img }, enabled, imageValue, urlValue) {
+  if (!el || !img) return;
+
+  stopAdShine(el);
+  el.classList.remove('ad-ready');
+  el.style.display = 'none';
+  el.setAttribute('aria-hidden', 'true');
+
+  if (!enabled) return;
+
+  const imageUrl = safeUrl(imageValue);
+  if (imageUrl === '#') return;
+
+  const targetUrl = safeUrl(urlValue);
+  if (link) {
+    if (targetUrl !== '#') {
+      link.href = targetUrl;
+      link.target = '_blank';
+      link.rel = 'sponsored noopener noreferrer';
+      link.style.pointerEvents = 'auto';
+    } else {
+      link.removeAttribute('href');
+      link.style.pointerEvents = 'none';
+    }
+  }
+
+  const testImg = new Image();
+  testImg.onload = () => {
+    if (testImg.naturalWidth > 0 && testImg.naturalHeight > 0) {
+      img.src = imageUrl;
+      el.style.display = '';
+      el.classList.add('ad-ready');
+      el.setAttribute('aria-hidden', 'false');
+      scheduleAdShine(el);
+    }
+  };
+  testImg.onerror = () => {
+    el.style.display = 'none';
+    el.classList.remove('ad-ready');
+  };
+  testImg.src = imageUrl;
+}
+
 async function fetchConfigAndTrack(){
   const configRequest=(async()=>{
     try{
@@ -906,139 +1010,50 @@ async function fetchConfigAndTrack(){
         if(contactEmpty)contactEmpty.style.display='none';
       }
 
-      const logoEl=document.getElementById('header-f1hub-logo');
-      const footerLogoEl=document.getElementById('footer-f1hub-logo');
-      const sheetLogo=safeUrl(data.logoImg||data.logo||data.logoUrl);
+      const isConfigOn=value=>value===true||['ON','TRUE','YES','1','Y','ENABLE','ENABLED'].includes(String(value??'').trim().toUpperCase());
 
-      const applySheetLogoFallback=(el)=>{
-        if(!el || sheetLogo==='#')return;
-        const parent = el.parentElement;
-        if(parent) parent.innerHTML = `<img src="${sheetLogo}" alt="F1HUB" style="height:32px;width:auto;display:block;">`;
-      };
+      loadImageAd(
+        {el:document.getElementById('ad-container'), link:document.getElementById('ad-link'), img:document.getElementById('ad-banner')}, 
+        isConfigOn(data.adEnabled), 
+        data.bannerImg, 
+        data.adUrl
+      );
 
-      if(sheetLogo!=='#'){
-        applySheetLogoFallback(logoEl);
-        applySheetLogoFallback(footerLogoEl);
-      }
-
-      const adContainer=document.getElementById('ad-container');
-      const adBanner=document.getElementById('ad-banner');
-      const adLink=document.getElementById('ad-link');
       const sponsorSlot=document.getElementById('sponsor-slot');
       const inlineLink=document.getElementById('inline-ad-link');
-      const sponsorLabel=document.getElementById('sponsor-label');
-      const sponsorTitle=document.getElementById('sponsor-title');
-      const sponsorDescription=document.getElementById('sponsor-description');
-
-      const sideAds=[
-        {el:document.getElementById('side-ad-left'),link:document.getElementById('side-ad-left-link'),img:document.getElementById('side-ad-left-img')},
-        {el:document.getElementById('side-ad-right'),link:document.getElementById('side-ad-right-link'),img:document.getElementById('side-ad-right-img')}
-      ];
-
-      const isConfigOn=value=>value===true||['ON','TRUE','YES','1','Y','ENABLE','ENABLED'].includes(String(value??'').trim().toUpperCase());
-      const adShineTimers=new WeakMap();
-
-      function stopAdShine(el){
-        if(!el)return;
-        const timer=adShineTimers.get(el);
-        if(timer)clearTimeout(timer);
-        adShineTimers.delete(el);
-        el.classList.remove('is-shining');
-      }
-
-      function scheduleAdShine(el){
-        if(!el)return;
-        stopAdShine(el);
-        const run=()=>{
-          if(!el.classList.contains('ad-ready'))return;
-          el.classList.remove('is-shining');
-          void el.offsetWidth;
-          el.classList.add('is-shining');
-          setTimeout(()=>el.classList.remove('is-shining'),1500);
-          adShineTimers.set(el,setTimeout(run,9000+Math.random()*8000));
-        };
-        adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
-      }
-
-      function revealAd(el){
-        if(!el)return;
-        stopAdShine(el);
-        el.classList.remove('hidden','ad-ready');
-        el.setAttribute('aria-hidden','false');
-        void el.offsetWidth;
-        requestAnimationFrame(()=>{ el.classList.add('ad-ready'); scheduleAdShine(el); });
-      }
-
-      function hideAd(el){
-        if(!el)return;
-        stopAdShine(el);
-        el.classList.remove('ad-ready');
-        el.classList.add('hidden');
-        el.setAttribute('aria-hidden','true');
-      }
-
-      function resetLink(link){
-        if(!link)return;
-        link.removeAttribute('href'); link.removeAttribute('target'); link.removeAttribute('rel'); link.style.pointerEvents='none';
-      }
-
-      function resetImage(img){
-        if(!img)return;
-        img.onload=null; img.onerror=null; img.removeAttribute('src'); img.removeAttribute('srcset');
-      }
-
-      function prepareExternalLink(link,url){
-        const safe=safeUrl(url);
-        resetLink(link);
-        if(link&&safe!=='#'){
-          link.href=safe; link.target='_blank'; link.rel='sponsored noopener noreferrer'; link.style.pointerEvents='auto';
-          return true;
-        }
-        return false;
-      }
-
-      function loadImageAd({el,link,img},enabled,imageValue,urlValue){
-        hideAd(el); resetLink(link); resetImage(img);
-        if(!enabled||!el||!img)return;
-        const imageUrl=safeUrl(imageValue);
-        if(imageUrl==='#')return;
-        prepareExternalLink(link,urlValue);
-
-        const loadToken=String(Date.now())+Math.random().toString(36).slice(2);
-        img.dataset.adLoadToken=loadToken;
-        img.onload=()=>{
-          if(img.dataset.adLoadToken!==loadToken)return;
-          if(img.naturalWidth>0&&img.naturalHeight>0)revealAd(el);
-          else hideAd(el);
-        };
-        img.onerror=()=>{ if(img.dataset.adLoadToken===loadToken)hideAd(el); };
-        img.src=imageUrl;
-        if(img.complete&&img.naturalWidth>0&&img.dataset.adLoadToken===loadToken)revealAd(el);
-      }
-
-      loadImageAd({el:adContainer,link:adLink,img:adBanner}, isConfigOn(data.adEnabled), data.bannerImg, data.adUrl);
-
       if(sponsorSlot){
-        hideAd(sponsorSlot); resetLink(inlineLink); inlineLink?.classList.add('hidden');
+        sponsorSlot.classList.remove('ad-ready');
+        sponsorSlot.style.display='none';
+        inlineLink?.classList.add('hidden');
+
         const canShowInline = isConfigOn(data.inlineAdEnabled)&&safeUrl(data.affiliateUrl)!=='#';
         if(canShowInline){
-          if(sponsorLabel)sponsorLabel.textContent=data.adLabel||'Sponsored / Affiliate';
-          if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'PICKS';
-          if(sponsorDescription)sponsorDescription.textContent=data.adDescription||'Area reserved for an advertising banner or affiliate link.';
-          prepareExternalLink(inlineLink,data.affiliateUrl);
-          inlineLink?.classList.remove('hidden');
-          revealAd(sponsorSlot);
+          const sLabel=document.getElementById('sponsor-label');
+          const sTitle=document.getElementById('sponsor-title');
+          const sDesc=document.getElementById('sponsor-description');
+          if(sLabel) sLabel.textContent=data.adLabel||'Sponsored / Affiliate';
+          if(sTitle) sTitle.textContent=data.adTitle||'PICKS';
+          if(sDesc) sDesc.textContent=data.adDescription||'Area reserved for an advertising banner or affiliate link.';
+          
+          if(inlineLink){
+            inlineLink.href=safeUrl(data.affiliateUrl);
+            inlineLink.classList.remove('hidden');
+          }
+          sponsorSlot.style.display='';
+          sponsorSlot.classList.add('ad-ready');
+          sponsorSlot.setAttribute('aria-hidden','false');
+          scheduleAdShine(sponsorSlot);
         }
       }
 
       const sideEnabled = data.sideAdEnabled === undefined ? true : isConfigOn(data.sideAdEnabled);
-      loadImageAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
-      loadImageAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
+      loadImageAd({el:document.getElementById('side-ad-left'), link:document.getElementById('side-ad-left-link'), img:document.getElementById('side-ad-left-img')}, sideEnabled, data.sideAdLeftImg, data.sideAdLeftUrl);
+      loadImageAd({el:document.getElementById('side-ad-right'), link:document.getElementById('side-ad-right-link'), img:document.getElementById('side-ad-right-img')}, sideEnabled, data.sideAdRightImg, data.sideAdRightUrl);
     }catch(error){
-      hideAd(document.getElementById('ad-container'));
-      hideAd(document.getElementById('sponsor-slot'));
-      hideAd(document.getElementById('side-ad-left'));
-      hideAd(document.getElementById('side-ad-right'));
+      ['ad-container','sponsor-slot','side-ad-left','side-ad-right'].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el){ el.style.display='none'; el.classList.remove('ad-ready'); }
+      });
     }
   })();
 
@@ -1057,7 +1072,7 @@ async function fetchConfigAndTrack(){
 
 async function fetchNews(){
   try{
-    const data=await fetchJSON(F1_NEWS_API,'f1hub_news',120000);
+    const data=await fetchJSON(F1_NEWS_API,'007_news',120000);
     newsArticles=data.items?.slice(0,9)||[];
     renderNews();
   }catch(error){
@@ -1103,7 +1118,7 @@ function renderNews(){
 
 async function fetchSchedule(){
   try{
-    const data=await fetchJSON(`${F1_API}/${SEASON}.json?ts=${Date.now()}`,'f1hub_schedule',300000);
+    const data=await fetchJSON(`${F1_API}/${SEASON}.json?ts=${Date.now()}`,'007_schedule',300000);
     races=data.MRData.RaceTable.Races||[];
     document.getElementById('stat-races').textContent=races.length;
     findNextRace();
@@ -1147,8 +1162,8 @@ function updateCountdown(){
 async function fetchResults(){
   try{
     const [resultData,qualData]=await Promise.all([
-      fetchJSON(`${F1_API}/${SEASON}/results.json?limit=1000&ts=${Date.now()}`,'f1hub_results',300000),
-      fetchJSON(`${F1_API}/${SEASON}/qualifying.json?limit=1000&ts=${Date.now()}`,'f1hub_qualifying',300000)
+      fetchJSON(`${F1_API}/${SEASON}/results.json?limit=1000&ts=${Date.now()}`,'007_results',300000),
+      fetchJSON(`${F1_API}/${SEASON}/qualifying.json?limit=1000&ts=${Date.now()}`,'007_qualifying',300000)
     ]);
     seasonResults=resultData.MRData.RaceTable.Races||[];
     qualifyingResults=qualData.MRData.RaceTable.Races||[];
@@ -1211,8 +1226,8 @@ async function ensureRaceData(){
   const completed=races.filter(r=>raceStart(r)<=new Date());
   const jobs=[];
   for(const race of completed){
-    if(!getRaceResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/results.json?limit=100&ts=${Date.now()}`,'f1hub_r_'+race.round,120000).then(x=>{const rr=x.MRData.RaceTable.Races?.[0];if(rr)seasonResults.push(rr)}).catch(()=>{}));
-    if(!getQualifyingResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/qualifying.json?limit=100&ts=${Date.now()}`,'f1hub_q_'+race.round,120000).then(x=>{const qr=x.MRData.RaceTable.Races?.[0];if(qr)qualifyingResults.push(qr)}).catch(()=>{}));
+    if(!getRaceResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/results.json?limit=100&ts=${Date.now()}`,'007_r_'+race.round,120000).then(x=>{const rr=x.MRData.RaceTable.Races?.[0];if(rr)seasonResults.push(rr)}).catch(()=>{}));
+    if(!getQualifyingResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/qualifying.json?limit=100&ts=${Date.now()}`,'007_q_'+race.round,120000).then(x=>{const qr=x.MRData.RaceTable.Races?.[0];if(qr)qualifyingResults.push(qr)}).catch(()=>{}));
   }
   await Promise.all(jobs);
   renderCalendar();
@@ -1277,13 +1292,13 @@ async function ensureSingleRaceData(race){
   const round=String(race.round);
   const jobs=[];
   if(!getRaceResult(round)){
-    jobs.push(fetchJSON(`${F1_API}/${SEASON}/${round}/results.json?limit=100&ts=${Date.now()}`,`f1hub_modal_r_${round}`,30000).then(x=>{
+    jobs.push(fetchJSON(`${F1_API}/${SEASON}/${round}/results.json?limit=100&ts=${Date.now()}`,`007_modal_r_${round}`,30000).then(x=>{
       const rr=x.MRData?.RaceTable?.Races?.[0];
       if(rr)seasonResults.push(rr);
     }).catch(()=>{}));
   }
   if(!getQualifyingResult(round)){
-    jobs.push(fetchJSON(`${F1_API}/${SEASON}/${round}/qualifying.json?limit=100&ts=${Date.now()}`,`f1hub_modal_q_${round}`,30000).then(x=>{
+    jobs.push(fetchJSON(`${F1_API}/${SEASON}/${round}/qualifying.json?limit=100&ts=${Date.now()}`,`007_modal_q_${round}`,30000).then(x=>{
       const qr=x.MRData?.RaceTable?.Races?.[0];
       if(qr)qualifyingResults.push(qr);
     }).catch(()=>{}));
@@ -1372,8 +1387,8 @@ function closeRaceModal(){
 async function fetchStandings(){
   try{
     const [driverData,constructorData]=await Promise.all([
-      fetchJSON(`${F1_API}/${SEASON}/driverStandings.json`,'f1hub_driver_standings',60000),
-      fetchJSON(`${F1_API}/${SEASON}/constructorStandings.json`,'f1hub_constructor_standings',60000)
+      fetchJSON(`${F1_API}/${SEASON}/driverStandings.json`,'007_driver_standings',60000),
+      fetchJSON(`${F1_API}/${SEASON}/constructorStandings.json`,'007_constructor_standings',60000)
     ]);
     const rawDrivers=driverData.MRData.StandingsTable.StandingsLists?.[0]?.DriverStandings||[];
 
@@ -1396,7 +1411,7 @@ const F1_DRIVER_TEAM_2026={georuss:'mercedes',antkin:'mercedes',leclerc:'ferrari
 
 async function fetchWikipediaSummaryImage(page){
   try{
-    const key='f1hub_wiki_v2_'+page;
+    const key='007_wiki_v2_'+page;
     const cached=sessionStorage.getItem(key);
     if(cached && /^(https?:)?\/\//i.test(cached) && !/(silhouette|default|placeholder|no[_-]?image|blank)/i.test(cached))return cached;
     if(cached)try{sessionStorage.removeItem(key)}catch{}
@@ -1412,7 +1427,7 @@ async function fetchWikipediaSummaryImage(page){
 
 async function fetchWikipediaImageSearch(query){
   try{
-    const key='f1hub_wiki_search_'+query.toLowerCase().replace(/\W+/g,'_');
+    const key='007_wiki_search_'+query.toLowerCase().replace(/\W+/g,'_');
     const cached=sessionStorage.getItem(key); if(cached && /^(https?:)?\/\//i.test(cached))return cached; if(cached)try{sessionStorage.removeItem(key)}catch{}
     const u=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=3&prop=pageimages&piprop=original&format=json&origin=*`;
     const r=await fetch(u); if(!r.ok)throw 0; const d=await r.json();
@@ -1514,7 +1529,7 @@ function renderStandings(){
     const meta=getTeamMeta(constructor?.constructorId);
     return `<div class="standing-row cursor-pointer" onclick="openDriverProfile('${escapeHTML(d.Driver.driverId)}')">
     <div class="standing-rank ${index<3?'top':''}">${escapeHTML(d.position||index+1)}</div>
-    <div class="standing-main"><div class="standing-name">${escapeHTML(d.Driver.givenName)} ${escapeHTML(d.Driver.familyName)}</div><div class="standing-sub" style="color:${meta.color}">${escapeHTML(constructor?.name||meta.name)} · ${escapeHTML(d.Driver.nationality||'')}</div></div>
+    <div class="standing-main min-w-0"><div class="standing-name">${escapeHTML(d.Driver.givenName)} ${escapeHTML(d.Driver.familyName)}</div><div class="standing-sub" style="color:${meta.color}">${escapeHTML(constructor?.name||meta.name)} · ${escapeHTML(d.Driver.nationality||'')}</div></div>
     <div class="standing-points">${escapeHTML(d.points||0)}</div>
     </div>`;
   }).join('');
@@ -1547,7 +1562,7 @@ function renderConstructorsSidebar(){
     const meta=getTeamMeta(team.id);
     return `<div class="standing-row cursor-pointer" onclick="openTeamProfile('${escapeHTML(team.id)}')">
     <div class="standing-rank ${index<3?'top':''}">${index+1}</div>
-    <div class="standing-main"><div class="flex items-center gap-3 min-w-0"><img src="${escapeHTML(meta.logo)}" class="team-logo shrink-0" style="width:34px;height:24px" alt="" loading="lazy"><div class="standing-name">${escapeHTML(team.name)}</div></div><div class="standing-sub" style="color:${meta.color}">${team.drivers.map(d=>escapeHTML(d.Driver.familyName)).join(' / ')}</div></div>
+    <div class="standing-main min-w-0"><div class="flex items-center gap-2 min-w-0"><img src="${escapeHTML(meta.logo)}" class="team-logo shrink-0" style="width:24px;height:16px;object-fit:contain" alt="" loading="lazy"><div class="standing-name">${escapeHTML(team.name)}</div></div><div class="standing-sub" style="color:${meta.color}">${team.drivers.map(d=>escapeHTML(d.Driver.familyName)).join(' / ')}</div></div>
     <div class="standing-points">${team.points}</div>
     </div>`;
   }).join('');
@@ -1800,7 +1815,7 @@ async function enrichDriverProfile(driver){
   renderDriverCareer(driver);
   const extract=await fetchDriverWikiSummary(driver);
   if(bio){
-    bio.textContent=extract||`${driver.Driver?.givenName||''} ${driver.Driver?.familyName||''} races in Formula 1 for ${driver.Constructors?.[0]?.name||'current team'}, with a 2026 season profile updated from F1 HUB data.`;
+    bio.textContent=extract||`${driver.Driver?.givenName||''} ${driver.Driver?.familyName||''} races in Formula 1 for ${driver.Constructors?.[0]?.name||'current team'}, with a 2026 season profile updated from 007 data.`;
   }
 }
 
@@ -1971,7 +1986,7 @@ function toggleMobileMenu(){
 }
 
 async function sharePage(){
-  const shareData={title:'Formula 1 News & Race Control',text:'Follow Formula 1 news, race schedules and 2026 season data.',url:location.href};
+  const shareData={title:'007 | Formula 1 News & Race Control',text:'Follow Formula 1 news, race schedules and 2026 season data on 007.',url:location.href};
   try{
     if(navigator.share)await navigator.share(shareData);
     else{ await navigator.clipboard.writeText(location.href); alert('Link copied.'); }
