@@ -4,11 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#080808">
-<meta name="description" content="F1 HUB - Formula 1 news, race calendar, results, standings, drivers and teams for the 2026 season.">
-<meta property="og:title" content="F1 HUB | Formula 1 News & Race Control">
-<meta property="og:description" content="Formula 1 news, results, race calendar and 2026 season data.">
+<meta name="description" content="007 - Live Formula 1 news, 2026 race calendar, results, standings, drivers, and constructor data.">
+<meta name="keywords" content="007, 007 F1, Formula 1, F1 2026, race calendar, standings, F1 results, drivers">
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="007 | Formula 1 News & Race Control">
+<meta property="og:description" content="007 Formula 1 live data hub, 2026 race calendar, results, standings, and telemetry.">
 <meta property="og:type" content="website">
-<title>F1 HUB | Formula 1 News & Race Control</title>
+<meta property="og:site_name" content="007">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="007 | Formula 1 News & Race Control">
+<meta name="twitter:description" content="Follow live Formula 1 news, schedules, and 2026 season data on 007.">
+<title>007 | Formula 1 News & Race Control</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -808,7 +816,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <div class="max-w-7xl mx-auto px-5 lg:px-8">
 <div class="h-20 flex items-center justify-between">
 <div class="flex items-center gap-5 min-w-0">
-  <a href="/" aria-label="F1HUB" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
+  <a href="/" aria-label="007" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
     <svg id="header-f1hub-logo" data-name="Header F1HUB logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
       <defs></defs>
       <g id="header-f1hub-logo-shape" data-name="Header logo shape"><g>
@@ -1052,7 +1060,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <div class="max-w-7xl mx-auto px-5 lg:px-8 py-12">
 <div class="grid md:grid-cols-3 gap-10">
 <div>
-<a href="/" aria-label="F1HUB" class="footer-brand-logo" style="display: inline-block; line-height: 0;">
+<a href="/" aria-label="007" class="footer-brand-logo" style="display: inline-block; line-height: 0;">
   <svg id="footer-f1hub-logo" data-name="Footer F1HUB logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
     <defs></defs>
     <g id="footer-f1hub-logo-shape" data-name="Footer logo shape"><g>
@@ -1062,7 +1070,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     </g></g>
   </svg>
 </a>
-<p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">A Formula 1 news and data hub with a broadcast-inspired interface.</p>
+<p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">007 is a Formula 1 news and race data hub with a broadcast-inspired interface.</p>
 </div>
 <div>
 <div class="text-[9px] uppercase tracking-widest text-gray-600 mb-4">Navigation</div>
@@ -2506,7 +2514,7 @@ async function enrichDriverProfile(driver){
   renderDriverCareer(driver);
   const extract=await fetchDriverWikiSummary(driver);
   if(bio){
-    bio.textContent=extract||`${driver.Driver?.givenName||''} ${driver.Driver?.familyName||''} races in Formula 1 for ${driver.Constructors?.[0]?.name||'current team'}, with a 2026 season profile updated from F1 HUB data.`;
+    bio.textContent=extract||`${driver.Driver?.givenName||''} ${driver.Driver?.familyName||''} races in Formula 1 for ${driver.Constructors?.[0]?.name||'current team'}, with a 2026 season profile updated from 007 data.`;
   }
 }
 
@@ -2703,7 +2711,7 @@ document.querySelectorAll('#mobile-menu a').forEach(link=>{
 });
 
 async function sharePage(){
-const shareData={title:'Formula 1 News & Race Control',text:'Follow Formula 1 news, race schedules and 2026 season data.',url:location.href};
+const shareData={title:'007 | Formula 1 News & Race Control',text:'Follow Formula 1 news, race schedules and 2026 season data on 007.',url:location.href};
 try{
 if(navigator.share)await navigator.share(shareData);
 else{
