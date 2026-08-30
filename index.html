@@ -1020,6 +1020,42 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     background: var(--red);
   }
 }
+    @media (min-width: 1024px) {
+  #news, 
+  #standings {
+    height: 610px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+
+  .news-scroll-container {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+  .news-scroll-container::-webkit-scrollbar { width: 4px; }
+  .news-scroll-container::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+
+  #standings-content-wrap {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    gap: 12px;
+  }
+
+  #standings-content-wrap .sidebar-standing-card {
+    height: 100% !important;
+    max-height: 100% !important;
+  }
+
+  #ad-container {
+    flex: 0 0 auto;
+  }
+}
 </style>
 </head>
 
@@ -1143,27 +1179,27 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 <main class="max-w-7xl mx-auto px-5 lg:px-8 py-14">
 <div class="grid lg:grid-cols-12 gap-8 xl:gap-10">
 
+<!-- CỘT TRÁI: NEWS -->
 <section id="news" class="lg:col-span-7">
-  <div class="flex justify-between items-end mb-6 shrink-0">
+  <div class="flex justify-between items-end mb-3 shrink-0">
     <div>
       <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">LATEST</p>
-      <h2 class="text-3xl font-black tracking-tight mt-2">F1 News</h2>
+      <h2 class="text-3xl font-black tracking-tight mt-1">F1 News</h2>
     </div>
     <span class="text-[9px] text-gray-600 uppercase tracking-widest">Auto Updated</span>
   </div>
 
-  <!-- Container cuộn nội dung tin tức -->
   <div class="news-scroll-container">
     <div id="news-featured"></div>
     <div id="news-feed" class="grid md:grid-cols-2 gap-4 mt-4">
-      <div class="skeleton h-56 rounded"></div>
-      <div class="skeleton h-56 rounded"></div>
+      <div class="skeleton h-56 rounded"></div><div class="skeleton h-56 rounded"></div>
     </div>
   </div>
 </section>
 
+<!-- CỘT PHẢI: STANDINGS + AD -->
 <aside id="standings" class="lg:col-span-5 f1-sidebar">
-  <div class="flex items-end justify-between px-1 mb-3">
+  <div class="flex items-end justify-between px-1 mb-3 shrink-0">
     <div>
       <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">2026 CHAMPIONSHIP</p>
       <h2 class="text-xl font-black mt-1">Standings</h2>
@@ -1171,8 +1207,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     <span class="text-[8px] uppercase tracking-widest text-gray-600">LIVE DATA</span>
   </div>
 
-  <div class="flex items-start justify-center gap-3">
-    
+  <div id="standings-content-wrap" class="flex items-start justify-center gap-3">
     <!-- Left Banner -->
     <div id="side-ad-left" aria-hidden="true">
       <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
@@ -1181,7 +1216,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     </div>
 
     <!-- Two Drivers & Teams standings panels -->
-    <div class="flex-1 w-full min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div class="flex-1 w-full min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3 h-full">
       <div class="sidebar-standing-card">
         <div class="standing-head">
           <h3>Drivers Championship</h3>
@@ -1212,9 +1247,9 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
   </div>
 
   <!-- Inline Banner -->
-  <div id="ad-container" class="hidden ad-shell mt-3" aria-hidden="true">
-    <div class="flex justify-between mb-2"><span class="sponsor-label">Sponsored</span></div>
-    <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
+  <div id="ad-container" class="hidden ad-shell mt-3 shrink-0" aria-hidden="true">
+    <div class="flex justify-between mb-1"><span class="sponsor-label">Sponsored</span></div>
+    <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full h-[120px] rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
   </div>
 </aside>
 </div>
