@@ -145,11 +145,17 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 /* =========================================================
    4. NEW FIX: CALENDAR & METALLIC PODIUMS
    ========================================================= */
+/* 1. Đảm bảo toàn bộ thẻ lịch có cấu trúc khối chuẩn */
 .calendar-card {
-  position: relative; overflow: hidden; min-width: 0;
-  background: #0b0d10 !important; /* Đen phẳng chìm sâu */
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  background: #0b0d10 !important;
   border: 1px solid #1c2026 !important;
-  border-radius: 8px; padding: 20px;
+  border-radius: 8px;
+  padding: 20px;
   transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
 }
 .calendar-card:before {
@@ -161,13 +167,41 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .calendar-card:hover { transform: translateY(-3px); border-color: #2f3540 !important; box-shadow: 0 12px 30px rgba(0, 0, 0, .45); }
 .calendar-card > * { position: relative; z-index: 1; }
 
+/* 2. KHÓA VÙNG TIÊU ĐỀ: 1 dòng hay 2 dòng cũng chiếm đúng 50px */
 .calendar-race-title {
   color: var(--accent, #f4f5f6) !important;
-  letter-spacing: -.035em; min-width: 0; line-height: 1.2; font-size: 20px; font-weight: 900;
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 2.4em;
+  letter-spacing: -.035em;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1.25 !important;
+  margin-top: 16px !important;
+  margin-bottom: 0 !important;
+  
+  /* Cố định chiều cao vùng tên chặng */
+  height: 50px !important;
+  min-height: 50px !important;
+  max-height: 50px !important;
+  
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 .calendar-round { color: var(--accent, #e10600); font-weight: 900; font-size: 9px; }
-.calendar-circuit { color: #85858b; min-width: 0; line-height: 1.35; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 2.7em; }
+.calendar-circuit {
+  color: #85858b;
+  min-width: 0;
+  line-height: 1.35 !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
 .calendar-date { color: #d2d2d5; white-space: nowrap; font-size: 12px; font-weight: 900; }
 .status-badge {
   display: inline-flex;
