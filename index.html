@@ -673,12 +673,62 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 /* =========================================================
    8. RESPONSIVE CASCADE (MAIN LAYOUT)
    ========================================================= */
+/* =========================================================
+   SIDEBAR ADS: TỰ ĐỘNG BÁM DƯỚI HEADER, NẰM NGOÀI LỀ NỘI DUNG
+   ========================================================= */
+
+/* 1. Màn hình cực lớn (>= 1800px): Banner rộng rãi 2 bên lề ngoài */
 @media (min-width: 1800px) {
-  #side-ad-left, #side-ad-right { --side-ad-width: clamp(118px, 7vw, 150px); --side-ad-height: clamp(470px, 32vw, 620px); }
-  #side-ad-left { left: max(12px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 16px)); }
-  #side-ad-right { right: max(12px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 16px)); }
+  #side-ad-left, #side-ad-right {
+    --side-ad-width: 130px;
+    top: 96px !important; /* Luôn bắt đầu ngay dưới thanh Header (80px + 16px đệm) */
+    bottom: 24px !important;
+    height: auto !important;
+    max-height: calc(100vh - 120px) !important;
+    transform: none !important; /* Xóa bỏ translateY để không kéo ngược lên đè Header */
+  }
+  #side-ad-left { left: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
+  #side-ad-right { right: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
   #side-ad-left.ad-ready { animation: sideAdRevealLeft .7s var(--ad-ease) both; }
   #side-ad-right.ad-ready { animation: sideAdRevealRight .7s var(--ad-ease) both; }
+}
+
+/* 2. Màn hình lớn (1520px - 1799px): Tự thu gọn kích thước để vừa lề ngoài */
+@media (min-width: 1520px) and (max-width: 1799px) {
+  #side-ad-left, #side-ad-right {
+    --side-ad-width: 105px;
+    top: 96px !important;
+    bottom: 24px !important;
+    height: auto !important;
+    max-height: calc(100vh - 120px) !important;
+    transform: none !important;
+  }
+  #side-ad-left { left: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
+  #side-ad-right { right: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
+  #side-ad-left.ad-ready { animation: sideAdRevealLeft .65s var(--ad-ease) both; }
+  #side-ad-right.ad-ready { animation: sideAdRevealRight .65s var(--ad-ease) both; }
+}
+
+/* 3. Màn hình 1366px - 1519px: Banner mỏng ôm sát 2 mép viền ngoài */
+@media (min-width: 1366px) and (max-width: 1519px) {
+  #side-ad-left, #side-ad-right {
+    --side-ad-width: 75px;
+    top: 96px !important;
+    bottom: 24px !important;
+    height: auto !important;
+    max-height: calc(100vh - 120px) !important;
+    transform: none !important;
+  }
+  #side-ad-left { left: 8px !important; }
+  #side-ad-right { right: 8px !important; }
+}
+
+/* 4. Màn hình Laptop/Tablet (< 1366px): Tắt side ad để nhường trọn không gian cho 2 bảng xếp hạng */
+@media (max-width: 1365px) {
+  #side-ad-left, #side-ad-right {
+    display: none !important;
+    visibility: hidden !important;
+  }
 }
 @media (min-width: 1200px) and (max-width: 1799px) {
   #side-ad-left, #side-ad-right { 
