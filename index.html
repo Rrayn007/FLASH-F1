@@ -357,21 +357,48 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .driver-card .driver-stats-row .timing-label { font-size: 7px; color: var(--team-color, #00d7c4); letter-spacing: .16em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .driver-card .driver-stats-row .timing-value { font-size: 12px !important; color: #f4f5f6; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-@container (min-width: 421px) { .driver-card .driver-name-zone { width: fit-content !important; max-width: 85% !important;; } }
+@container (min-width: 421px) { 
+  .driver-card .driver-name-zone { 
+    width: fit-content !important; 
+    max-width: 85% !important; 
+  } 
+}
+
 @container (max-width: 420px) {
   .driver-card .driver-photo { left: 15% !important; width: 100% !important; }
-  .driver-card .driver-name-zone { width: 55% !important; max-width: 55% !important; min-height: 56px !important; margin-bottom: 6px !important; padding: 5px 0 6px !important; align-items: flex-start !important; }
-  .driver-card .driver-firstname { font-size: clamp(7px, 3.1cqw, 9px) !important; line-height: 1.08 !important; }
-  .driver-card .driver-lastname { margin-top: 3px !important; font-size: clamp(14px, 5.0cqw, 18px) !important; line-height: .94 !important; }
+  .driver-card .driver-name-zone { 
+    width: fit-content !important; 
+    max-width: 88% !important; 
+    min-height: auto !important; 
+    margin-bottom: 6px !important; 
+    padding: 5px 0 6px !important; 
+    align-items: flex-start !important; 
+  }
+  /* Tăng kích thước tên gọi ở giao diện 4 cột */
+  .driver-card .driver-firstname { 
+    font-size: clamp(11px, 3.8cqw, 13px) !important; 
+    line-height: 1.1 !important; 
+  }
+  /* Tăng kích thước HỌ in hoa ở giao diện 4 cột */
+  .driver-card .driver-lastname { 
+    margin-top: 3px !important; 
+    font-size: clamp(20px, 7.5cqw, 28px) !important; 
+    line-height: .9 !important; 
+  }
   .driver-card .driver-number { top: 9px !important; right: 9px !important; font-size: 31px !important; }
   .driver-card .driver-stats-row { padding-top: 6px !important; }
-  .driver-card .driver-stats-row .timing-label { font-size: 5.5px !important; }
-  .driver-card .driver-stats-row .timing-value { font-size: 9px !important; }
+  .driver-card .driver-stats-row .timing-label { font-size: 6px !important; }
+  .driver-card .driver-stats-row .timing-value { font-size: 10px !important; }
 }
+
 @container (max-width: 230px) {
   .driver-card .driver-photo { left: 18% !important; }
-  .driver-card .driver-name-zone { width: 57% !important; max-width: 57% !important; }
-  .driver-card .driver-lastname { font-size: clamp(13px, 5.1cqw, 16px) !important; }
+  .driver-card .driver-name-zone { 
+    width: fit-content !important; 
+    max-width: 90% !important; 
+  }
+  .driver-card .driver-firstname { font-size: 9px !important; }
+  .driver-card .driver-lastname { font-size: clamp(16px, 6.5cqw, 20px) !important; }
 }
 
 .team-card { aspect-ratio: auto !important; padding: 17px !important; min-height: 0 !important; position: relative; overflow: hidden; cursor: pointer; isolation: isolate; border-radius: 10px; background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, .018), transparent 38%), linear-gradient(145deg, #0b0d10 0%, #101216 100%); transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
