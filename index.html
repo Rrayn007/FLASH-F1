@@ -39,9 +39,6 @@
   --ui-blue: #3f82ff;
   --ui-muted: #777d86;
   --ad-ease: cubic-bezier(.22, 1, .36, 1);
-  --side-ad-width: 150px;
-  --side-ad-height: 560px;
-  --side-ad-edge: 10px;
   --page-gap: clamp(16px, 1.4vw, 24px);
   --card-gap: clamp(6px, 1.1vw, 16px);
 }
@@ -154,7 +151,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .sidebar-standing-card .standing-head h3 { margin: 0; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; color: #aaa; }
 .sidebar-standing-card .standing-head span { font-size: 7px; color: #555; }
 
-/* 1. Constructors: Tự động bung trọn 11 đội - đây là mốc đo chiều cao */
+/* Constructors: Tự động bung trọn 11 đội - đây là mốc đo chiều cao */
 .sidebar-standing-card.constructors {
   height: auto !important;
   max-height: none !important;
@@ -166,7 +163,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   overflow: visible !important;
 }
 
-/* 2. Drivers: Tự khóa bằng chiều cao Constructors và cuộn bên trong */
+/* Drivers: Tự khóa bằng chiều cao Constructors và cuộn bên trong */
 .sidebar-standing-card:not(.constructors) {
   height: 100% !important;
 }
@@ -262,77 +259,31 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 .calendar-date { color: #d2d2d5; white-space: nowrap; font-size: 12px; font-weight: 900; }
 .status-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 9px;
-  border-radius: 5px;
-  font-size: 8px;
-  font-weight: 850;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  flex: none;
-  line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center; padding: 4px 9px; border-radius: 5px;
+  font-size: 8px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; flex: none; line-height: 1;
 }
 
-.status-badge.status-complete {
-  color: #4ade80 !important;
-  background: radial-gradient(circle at 15% 50%, rgba(34, 197, 94, 0.15), rgba(15, 23, 18, 0.95)) !important;
-  border: 1px solid rgba(34, 197, 94, 0.32) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-}
-.status-badge.status-next {
-  color: #60a5fa !important;
-  background: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.18), rgba(15, 20, 28, 0.95)) !important;
-  border: 1px solid rgba(59, 130, 246, 0.35) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-}
-.status-badge.status-upcoming {
-  color: #f87171 !important;
-  background: radial-gradient(circle at 15% 50%, rgba(239, 68, 68, 0.14), rgba(24, 14, 15, 0.95)) !important;
-  border: 1px solid rgba(239, 68, 68, 0.3) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-}
+.status-badge.status-complete { color: #4ade80 !important; background: radial-gradient(circle at 15% 50%, rgba(34, 197, 94, 0.15), rgba(15, 23, 18, 0.95)) !important; border: 1px solid rgba(34, 197, 94, 0.32) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03); }
+.status-badge.status-next { color: #60a5fa !important; background: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.18), rgba(15, 20, 28, 0.95)) !important; border: 1px solid rgba(59, 130, 246, 0.35) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03); }
+.status-badge.status-upcoming { color: #f87171 !important; background: radial-gradient(circle at 15% 50%, rgba(239, 68, 68, 0.14), rgba(24, 14, 15, 0.95)) !important; border: 1px solid rgba(239, 68, 68, 0.3) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03); }
 .calendar-card .text-right { min-width: 82px; max-width: 46%; }
 .completed-card, .completed-card:hover { background: #0b0d10 !important; }
 
-.pole-chip {
-  display: flex; align-items: center; justify-content: space-between;
-  background: radial-gradient(circle at 15% 50%, rgba(168, 85, 247, 0.12), rgba(15, 17, 21, 0.95)) !important;
-  border: 1px solid rgba(168, 85, 247, 0.28) !important;
-  border-radius: 6px; padding: 9px 12px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-}
+.pole-chip { display: flex; align-items: center; justify-content: space-between; background: radial-gradient(circle at 15% 50%, rgba(168, 85, 247, 0.12), rgba(15, 17, 21, 0.95)) !important; border: 1px solid rgba(168, 85, 247, 0.28) !important; border-radius: 6px; padding: 9px 12px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03); }
 .pole-chip span:first-child { font-size: 7.5px; letter-spacing: .18em; text-transform: uppercase; color: #c084fc; font-weight: 800; }
 .pole-chip span:last-child { font-size: 11.5px; font-weight: 900; color: #ffffff; }
 
 .result-podium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
 .result-podium-item { border-radius: 6px; padding: 8px 6px; text-align: center; min-width: 0; transition: border-color .2s ease; }
-
-.result-podium-item.gold {
-  border: 1px solid rgba(234, 179, 8, 0.35) !important;
-  background: linear-gradient(160deg, rgba(234, 179, 8, 0.12) 0%, #101216 70%) !important;
-  box-shadow: inset 0 1px 0 rgba(234, 179, 8, 0.15);
-}
+.result-podium-item.gold { border: 1px solid rgba(234, 179, 8, 0.35) !important; background: linear-gradient(160deg, rgba(234, 179, 8, 0.12) 0%, #101216 70%) !important; box-shadow: inset 0 1px 0 rgba(234, 179, 8, 0.15); }
 .result-podium-item.gold .result-position { color: #facc15; }
 .result-podium-item.gold .result-driver { color: #fef08a; }
-
-.result-podium-item.silver {
-  border: 1px solid rgba(203, 213, 225, 0.25) !important;
-  background: linear-gradient(160deg, rgba(203, 213, 225, 0.08) 0%, #101216 70%) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
+.result-podium-item.silver { border: 1px solid rgba(203, 213, 225, 0.25) !important; background: linear-gradient(160deg, rgba(203, 213, 225, 0.08) 0%, #101216 70%) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08); }
 .result-podium-item.silver .result-position { color: #cbd5e1; }
 .result-podium-item.silver .result-driver { color: #f8fafc; }
-
-.result-podium-item.bronze {
-  border: 1px solid rgba(217, 119, 6, 0.3) !important;
-  background: linear-gradient(160deg, rgba(217, 119, 6, 0.1) 0%, #101216 70%) !important;
-  box-shadow: inset 0 1px 0 rgba(217, 119, 6, 0.12);
-}
+.result-podium-item.bronze { border: 1px solid rgba(217, 119, 6, 0.3) !important; background: linear-gradient(160deg, rgba(217, 119, 6, 0.1) 0%, #101216 70%) !important; box-shadow: inset 0 1px 0 rgba(217, 119, 6, 0.12); }
 .result-podium-item.bronze .result-position { color: #fb923c; }
 .result-podium-item.bronze .result-driver { color: #ffedd5; }
-
 .result-position { font-size: 8px; font-weight: 950; line-height: 1; }
 .result-driver { font-size: 10.5px; font-weight: 850; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #f2f2f2; }
 .result-team { font-size: 6px; color: #71717a; text-transform: uppercase; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -340,12 +291,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 /* =========================================================
    5. DRIVER & TEAM CARDS (Main Interface)
    ========================================================= */
-.driver-card {
-  container-type: inline-size !important; position: relative; aspect-ratio: 1/1; padding: 0 !important;
-  overflow: hidden; cursor: pointer; pointer-events: auto; isolation: isolate; border-radius: 10px;
-  background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, .018), transparent 38%), linear-gradient(145deg, #0b0d10 0%, #101216 100%);
-  font-family: Inter, sans-serif; transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
-}
+.driver-card { container-type: inline-size !important; position: relative; aspect-ratio: 1/1; padding: 0 !important; overflow: hidden; cursor: pointer; pointer-events: auto; isolation: isolate; border-radius: 10px; background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, .018), transparent 38%), linear-gradient(145deg, #0b0d10 0%, #101216 100%); font-family: Inter, sans-serif; transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
 .driver-card:hover { transform: translateY(-3px); border-color: #3a4048; box-shadow: 0 16px 38px rgba(0, 0, 0, .28); }
 .driver-card:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--team-color, #00d7c4); box-shadow: 0 0 12px color-mix(in srgb, var(--team-color, #00d7c4) 28%, transparent); z-index: 30; }
 .driver-card:before { content: ""; position: absolute; left: 0; bottom: 0; width: 62%; height: 46%; z-index: 0; pointer-events: none; opacity: .72; background-image: radial-gradient(color-mix(in srgb, var(--team-color, #00d7c4) 50%, transparent) 1px, transparent 1px); background-size: 8px 8px; -webkit-mask-image: linear-gradient(to right, black, transparent 92%); mask-image: linear-gradient(to right, black, transparent 92%); }
@@ -575,30 +521,14 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 #profile-career .profile-career-item:hover .profile-career-year, #profile-career .profile-career-item:hover .profile-career-copy strong { color: #fff; }
 
 .team-profile-shell { display: flex; flex-direction: column; gap: 14px; width: 100%; min-width: 0; }
-.team-profile-overview, .team-profile-info, .team-profile-car-section, .team-profile-lineup-section { width: 100%; min-width: 0; border: 1px solid #1c1e23; border-radius: 10px; background: linear-gradient(145deg, #111113, #0d0d0f); box-sizing: border-box; }
-.team-profile-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 20px; align-items: center; padding: 22px; }
-.team-profile-brand { display: flex; align-items: center; gap: 16px; min-width: 0; }
-.team-profile-logo-box { width: 88px; height: 66px; display: flex; align-items: center; justify-content: center; flex: 0 0 88px; border: 1px solid #24272c; border-radius: 8px; background: #0a0b0d; }
-.team-profile-logo-box img { width: 74px; height: 52px; object-fit: contain; flex-shrink: 0; }
-.team-profile-shortname { margin-top: 6px; font-size: 24px; line-height: 1; font-weight: 900; letter-spacing: -.045em; text-transform: uppercase; color: #f4f5f6; }
-.team-profile-official { display: inline-block; margin-top: 9px; font-size: 7px; line-height: 1; letter-spacing: .16em; color: #69717c; text-decoration: none; }
-.team-profile-official:hover { color: #fff; }
-.team-profile-champ { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: end; padding-left: 18px; border-left: 1px solid #24272c; }
-.team-profile-position { margin-top: 6px; font-size: 52px; line-height: .82; font-weight: 950; letter-spacing: -.065em; color: #f5f5f6; }
-.team-profile-points { margin-top: 6px; font-size: 30px; line-height: .9; font-weight: 900; letter-spacing: -.045em; color: #f5f5f6; }
-.team-profile-info { padding: 18px 20px; }
-.team-profile-info-head, .team-profile-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 13px; }
-.team-profile-info-head h3, .team-profile-section-head h3 { margin: 5px 0 0; font-size: 18px; line-height: 1; font-weight: 900; letter-spacing: -.035em; color: #f1f2f3; }
-.team-profile-info-head > span, .team-profile-section-head > span { font-size: 7px; letter-spacing: .18em; color: #505760; }
-.team-profile-info-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid #24272c; border-radius: 8px; overflow: hidden; }
-.team-profile-info-item { min-width: 0; min-height: 70px; padding: 13px 14px; background: rgba(255, 255, 255, .012); border-right: 1px solid #24272c; }
-.team-profile-info-item:last-child { border-right: 0; }
-.team-profile-info-item span { display: block; font-size: 6.5px; line-height: 1.2; letter-spacing: .18em; color: #626a75; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.team-profile-info-item strong { display: block; margin-top: 9px; font-size: 11px; line-height: 1.25; font-weight: 800; color: #eef0f2; overflow-wrap: normal; word-break: normal; }
+.team-profile-overview, .team-profile-info, .team-profile-lineup-section { width: 100%; min-width: 0; border: 1px solid #1c1e23; border-radius: 10px; background: linear-gradient(145deg, #111113, #0d0d0f); box-sizing: border-box; }
+
+/* FIX ẢNH XE MODAL TEAM */
 .team-profile-car-section { 
   overflow: hidden !important; 
   padding: 0 !important; 
   position: relative !important;
+  width: 100%; min-width: 0; border: 1px solid #1c1e23; border-radius: 10px; background: linear-gradient(145deg, #111113, #0d0d0f); box-sizing: border-box;
 }
 .team-profile-car-section .profile-car-card { width: 100%; padding: 18px 20px; box-sizing: border-box; }
 .team-profile-car-section .profile-car-head { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
@@ -627,7 +557,28 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   object-position: center !important;
   display: block !important;
   filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .55)) !important;
+  transform: none !important;
 }
+
+.team-profile-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 20px; align-items: center; padding: 22px; }
+.team-profile-brand { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.team-profile-logo-box { width: 88px; height: 66px; display: flex; align-items: center; justify-content: center; flex: 0 0 88px; border: 1px solid #24272c; border-radius: 8px; background: #0a0b0d; }
+.team-profile-logo-box img { width: 74px; height: 52px; object-fit: contain; flex-shrink: 0; }
+.team-profile-shortname { margin-top: 6px; font-size: 24px; line-height: 1; font-weight: 900; letter-spacing: -.045em; text-transform: uppercase; color: #f4f5f6; }
+.team-profile-official { display: inline-block; margin-top: 9px; font-size: 7px; line-height: 1; letter-spacing: .16em; color: #69717c; text-decoration: none; }
+.team-profile-official:hover { color: #fff; }
+.team-profile-champ { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: end; padding-left: 18px; border-left: 1px solid #24272c; }
+.team-profile-position { margin-top: 6px; font-size: 52px; line-height: .82; font-weight: 950; letter-spacing: -.065em; color: #f5f5f6; }
+.team-profile-points { margin-top: 6px; font-size: 30px; line-height: .9; font-weight: 900; letter-spacing: -.045em; color: #f5f5f6; }
+.team-profile-info { padding: 18px 20px; }
+.team-profile-info-head, .team-profile-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 13px; }
+.team-profile-info-head h3, .team-profile-section-head h3 { margin: 5px 0 0; font-size: 18px; line-height: 1; font-weight: 900; letter-spacing: -.035em; color: #f1f2f3; }
+.team-profile-info-head > span, .team-profile-section-head > span { font-size: 7px; letter-spacing: .18em; color: #505760; }
+.team-profile-info-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid #24272c; border-radius: 8px; overflow: hidden; }
+.team-profile-info-item { min-width: 0; min-height: 70px; padding: 13px 14px; background: rgba(255, 255, 255, .012); border-right: 1px solid #24272c; }
+.team-profile-info-item:last-child { border-right: 0; }
+.team-profile-info-item span { display: block; font-size: 6.5px; line-height: 1.2; letter-spacing: .18em; color: #626a75; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.team-profile-info-item strong { display: block; margin-top: 9px; font-size: 11px; line-height: 1.25; font-weight: 800; color: #eef0f2; overflow-wrap: normal; word-break: normal; }
 .team-profile-lineup-section { padding: 18px 20px 20px; }
 .team-profile-lineup-section #team-profile-drivers { min-width: 0; }
 .team-profile-lineup-section .team-driver-mini { min-height: 300px; height: 300px; }
@@ -662,37 +613,29 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
 #side-ad-left, #side-ad-right { 
   position: fixed !important; 
-  top: 80px !important; /* Bắt đầu ngay mép dưới của Header 80px */
+  top: 80px !important; 
   bottom: 16px !important;
   height: auto !important; 
   max-height: calc(100vh - 96px) !important;
   display: none; 
   width: var(--side-ad-width, 110px); 
-  z-index: 10 !important; /* Nhỏ hơn rất nhiều so với Header (z-50) */
+  z-index: 10 !important; 
   overflow: hidden; 
   opacity: 0; 
   visibility: hidden; 
   pointer-events: none; 
-  transform: none !important; /* Triệt tiêu hoàn toàn việc kéo ngược lên trên */
+  transform: none !important; 
   border: 1px solid #25292f; 
   border-radius: 5px; 
   background: #0d0f12; 
   isolation: isolate; 
 }
-
-#side-ad-left.ad-ready, #side-ad-right.ad-ready { 
-  display: block; 
-  opacity: 1; 
-  visibility: visible; 
-  pointer-events: auto; 
-}
-
+#side-ad-left.ad-ready, #side-ad-right.ad-ready { display: block; opacity: 1; visibility: visible; pointer-events: auto; }
 #side-ad-left-link, #side-ad-right-link { display: block; width: 100%; height: 100%; position: relative; z-index: 1; }
 #side-ad-left-img, #side-ad-right-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 #side-ad-left:after, #side-ad-right:after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, .2) 48%, rgba(255, 255, 255, .04) 53%, transparent 67%); transform: translateX(-125%); }
 #side-ad-left.is-shining:after, #side-ad-right.is-shining:after { opacity: 1; animation: adGlassSweep 1.45s var(--ad-ease) both; }
 
-/* Animation trượt ngang nhẹ nhàng từ 2 bên, không đụng tới trục dọc Y */
 @keyframes sideAdRevealLeft { 
   0% { opacity: 0; transform: translateX(-20px) scale(.98); filter: blur(2px); } 
   100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); } 
@@ -703,10 +646,9 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 /* =========================================================
-   SIDEBAR ADS: TỰ ĐỘNG BÁM DƯỚI HEADER, NẰM NGOÀI LỀ NỘI DUNG
+   8. RESPONSIVE CASCADE & LAYOUT SYNC
    ========================================================= */
 
-/* 1. Màn hình cực lớn (>= 1800px): Banner rộng 130px */
 @media (min-width: 1800px) {
   #side-ad-left, #side-ad-right {
     --side-ad-width: 130px;
@@ -722,7 +664,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #side-ad-right.ad-ready { animation: sideAdRevealRight .7s var(--ad-ease) both; }
 }
 
-/* 2. Màn hình lớn (1520px - 1799px): Banner vừa 105px */
 @media (min-width: 1520px) and (max-width: 1799px) {
   #side-ad-left, #side-ad-right {
     --side-ad-width: 105px;
@@ -738,7 +679,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #side-ad-right.ad-ready { animation: sideAdRevealRight .65s var(--ad-ease) both; }
 }
 
-/* 3. Màn hình chuẩn Desktop (1366px - 1519px): Banner mỏng 75px */
 @media (min-width: 1366px) and (max-width: 1519px) {
   #side-ad-left, #side-ad-right {
     --side-ad-width: 75px;
@@ -752,7 +692,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #side-ad-right { right: 8px !important; }
 }
 
-/* 4. Màn hình Laptop nhỏ (1280px - 1365px): Banner siêu mỏng 60px ôm sát viền */
 @media (min-width: 1280px) and (max-width: 1365px) {
   #side-ad-left, #side-ad-right {
     --side-ad-width: 60px;
@@ -766,21 +705,11 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #side-ad-right { right: 4px !important; }
 }
 
-/* 5. Màn hình dưới 1280px (Tablet/Mobile): Ẩn hoàn toàn tránh che nội dung */
 @media (max-width: 1279px) {
   #side-ad-left, #side-ad-right {
     display: none !important;
     visibility: hidden !important;
   }
-}
-@media (min-width: 1024px) and (max-width: 1199px) {
-  #side-ad-left, #side-ad-right { display: none !important; }
-  #standings > .flex.items-start.justify-center { gap: 10px; }
-  #standings > .flex.items-start.justify-center > .flex-1 { width: 100%; }
-  #standings .sidebar-standing-card .standing-row { grid-template-columns: 21px minmax(0, 1fr) auto; gap: 6px; min-height: 37px; padding: 6px 8px; }
-  #standings .sidebar-standing-card .standing-name { font-size: 9.5px; }
-  #standings .sidebar-standing-card .standing-sub { font-size: 5.8px; }
-  #standings .sidebar-standing-card .standing-points { font-size: 10.5px; min-width: 27px; }
 }
 
 @media (min-width: 1024px) {
@@ -790,43 +719,17 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     align-items: stretch !important;
   }
 
-  /* CỘT STANDINGS */
-  #standings {
-    display: flex !important;
-    flex-direction: column !important;
-    height: 100% !important;
-  }
-  
-  #standings-content-wrap {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-  }
-
-  /* SIDE AD: Ép chiều cao ăn theo Constructors, không được tự ý phình to */
-  #side-ad-left, #side-ad-right {
-    height: 0 !important;
-    min-height: 100% !important;
-    max-height: 100% !important;
-    align-self: stretch !important;
-  }
-  #side-ad-left-link, #side-ad-right-link,
-  #side-ad-left-img, #side-ad-right-img {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-  }
-
-  /* CỘT NEWS: Nhận đúng 100% chiều cao của Standings và cuộn nội dung bên trong */
+  /* CỘT NEWS: Nhận đúng chiều cao của Standings và cuộn bên trong */
   #news {
-    display: flex !important;
-    flex-direction: column !important;
     height: 100% !important;
     min-height: 0 !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
     position: relative;
     box-sizing: border-box;
   }
-  
+
   #news > div:first-child {
     flex: 0 0 auto !important;
     margin-bottom: 12px !important;
@@ -875,13 +778,24 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     pointer-events: none;
   }
 
+  /* CỘT STANDINGS */
+  #standings {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+
+  #standings-content-wrap {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+
   #ad-container {
     flex: 0 0 auto !important;
   }
 }
 
 @media (max-width: 1023px) {
-  #side-ad-left, #side-ad-right { display: none !important; }
   #standings > .flex.items-start.justify-center { display: flex; }
   #standings > .flex.items-start.justify-center > .flex-1 { width: 100%; }
   #standings .sidebar-standing-card { min-height: 0; }
@@ -947,14 +861,9 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start { min-height: 50px !important; height: auto !important; align-items: flex-start !important; gap: 8px !important; }
   #profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start > div:first-child { flex: 1 1 auto !important; min-width: 0 !important; width: auto !important; }
   #profile-modal #profile-name { width: 100% !important; max-width: 100% !important; min-width: 0 !important; display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 2 !important; overflow: hidden !important; text-overflow: clip !important; white-space: normal !important; overflow-wrap: normal !important; word-break: normal !important; font-size: clamp(24px, 3.8vw, 30px) !important; line-height: .96 !important; letter-spacing: -.04em !important; }
-  .team-profile-car-section .profile-car-visual { 
-    height: 150px !important; 
-  }
-   @media (max-width: 480px) {
-  .team-profile-car-section .profile-car-visual { 
-    height: 110px !important; 
-  }
-}
+  
+  .team-profile-car-section .profile-car-visual { height: 150px !important; }
+  
   #driver-profile-content { grid-template-columns: minmax(0, 1.18fr) minmax(140px, 38%) !important; grid-template-rows: 100px 60px minmax(0, 1fr) !important; gap: 9px !important; margin-top: 14px !important; }
   #driver-profile-content > .grid:first-of-type { grid-column: 1 / -1 !important; grid-row: 1 !important; grid-template-columns: 108px minmax(0, 1fr) !important; height: 100px !important; min-height: 100px !important; max-height: 100px !important; gap: 9px !important; }
   #profile-number-box, #driver-profile-content .profile-constructor-box { height: 100px !important; min-height: 100px !important; max-height: 100px !important; padding: 11px !important; overflow: hidden !important; }
@@ -964,32 +873,11 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #driver-stats > div { padding: 10px 12px !important; }
   #driver-stats .text-xl { font-size: 18px !important; }
   
-  #driver-profile-content .profile-constructor-info { 
-    justify-content: flex-start !important; 
-    padding-left: 16px !important; 
-  }
-  #driver-profile-content .profile-constructor-info > .flex { 
-    width: auto !important; 
-    justify-content: flex-start !important; 
-    gap: 12px !important; 
-  }
-  #profile-team-logo { 
-    flex: 0 0 auto !important; 
-    width: 52px !important; 
-    height: 38px !important; 
-    object-fit: contain !important; 
-    flex-shrink: 0 !important; 
-  }
-  #driver-profile-content #profile-team { 
-    font-size: 16px !important; 
-    line-height: 1.05 !important; 
-    white-space: nowrap !important; 
-  }
-  #driver-profile-content #profile-nationality { 
-    font-size: 9px !important; 
-    margin-top: 3px !important; 
-    white-space: nowrap !important; 
-  }
+  #driver-profile-content .profile-constructor-info { justify-content: flex-start !important; padding-left: 16px !important; }
+  #driver-profile-content .profile-constructor-info > .flex { width: auto !important; justify-content: flex-start !important; gap: 12px !important; }
+  #profile-team-logo { flex: 0 0 auto !important; width: 52px !important; height: 38px !important; object-fit: contain !important; flex-shrink: 0 !important; }
+  #driver-profile-content #profile-team { font-size: 16px !important; line-height: 1.05 !important; white-space: nowrap !important; }
+  #driver-profile-content #profile-nationality { font-size: 9px !important; margin-top: 3px !important; white-space: nowrap !important; }
 
   .profile-driver-visual { grid-column: 2 !important; grid-row: 3 !important; width: 100% !important; min-width: 0 !important; max-width: none !important; height: 100% !important; min-height: 0 !important; max-height: none !important; overflow: hidden !important; }
   .driver-profile-about { grid-column: 1 !important; grid-row: 3 !important; display: grid !important; grid-template-columns: 1fr !important; grid-template-rows: minmax(0, 1.05fr) minmax(0, .95fr) !important; gap: 9px !important; min-width: 0 !important; min-height: 0 !important; overflow: hidden !important; }
@@ -1033,6 +921,10 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   .team-profile-car-section .profile-car-visual { height: 170px; }
   .team-profile-lineup-section .team-driver-mini { min-height: 250px; height: 250px; }
   #calendar-grid { gap: 8px !important; }
+}
+
+@media (max-width: 480px) {
+  .team-profile-car-section .profile-car-visual { height: 110px !important; }
 }
 
 @media (max-width: 390px) {
