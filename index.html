@@ -1056,65 +1056,6 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     flex: 0 0 auto;
   }
 }
-    @media (min-width: 1024px) {
-  /* 1. MẶC ĐỊNH (CHƯA CÓ QUẢNG CÁO): Chiều cao vừa khít trọn vẹn 11 đội đua */
-  #news,
-  #standings {
-    height: 478px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    min-height: 0 !important;
-    transition: height 0.3s ease;
-  }
-
-  /* Khung cuộn nội dung News */
-  .news-scroll-container {
-    flex: 1 1 0;
-    min-height: 0;
-    overflow-y: auto;
-    padding-right: 6px;
-    scrollbar-width: thin;
-    scrollbar-color: #333 transparent;
-  }
-  .news-scroll-container::-webkit-scrollbar { width: 4px; }
-  .news-scroll-container::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-
-  /* Bọc cụm BXH chiếm 100% không gian */
-  #standings-content-wrap {
-    flex: 1 1 0;
-    min-height: 0;
-    display: flex;
-    gap: 12px;
-  }
-
-  /* Hai thẻ BXH co giãn theo container cha */
-  #standings-content-wrap .sidebar-standing-card {
-    height: 100% !important;
-    max-height: 100% !important;
-    min-height: 0 !important;
-  }
-
-  /* Bảng đội đua mặc định tắt thanh cuộn vì đã hiển thị đủ 11 đội */
-  #standings-content-wrap .sidebar-standing-card.constructors .standings-scroll {
-    overflow-y: hidden;
-  }
-
-  /* 2. KHI QUẢNG CÁO XUẤT HIỆN: */
-  /* - Cả 2 cột (News & Standings) chuyển sang chiều cao 610px */
-  main:has(#ad-container.ad-ready) #news,
-  #standings:has(#ad-container.ad-ready) {
-    height: 610px !important;
-  }
-
-  /* - Bảng đội đua tự động bật lại scrollbar để người dùng cuộn xem */
-  #standings:has(#ad-container.ad-ready) .sidebar-standing-card.constructors .standings-scroll {
-    overflow-y: auto;
-  }
-
-  #ad-container {
-    flex: 0 0 auto;
-  }
-}
 </style>
 </head>
 
