@@ -680,43 +680,10 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #side-ad-left.ad-ready { animation: sideAdRevealLeft .7s var(--ad-ease) both; }
   #side-ad-right.ad-ready { animation: sideAdRevealRight .7s var(--ad-ease) both; }
 }
-@media (min-width: 1520px) and (max-width: 1799px) {
-  #side-ad-left, #side-ad-right { --side-ad-width: clamp(92px, 6.2vw, 118px); --side-ad-height: clamp(400px, 31vw, 570px); }
-  #side-ad-left { left: max(8px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)); }
-  #side-ad-right { right: max(8px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)); }
-  #side-ad-left.ad-ready { animation: sideAdRevealLeft .65s var(--ad-ease) both; }
-  #side-ad-right.ad-ready { animation: sideAdRevealRight .65s var(--ad-ease) both; }
-}
-@media (min-width: 1366px) and (max-width: 1519px) {
-  #side-ad-left, #side-ad-right { --side-ad-width: clamp(68px, 5.2vw, 82px); --side-ad-height: clamp(360px, 35vw, 500px); }
-  #side-ad-left { left: max(8px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 8px)); }
-  #side-ad-right { right: max(8px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 8px)); }
-  #standings > .flex.items-start.justify-center { gap: 10px; }
-  #standings > .flex.items-start.justify-center > .flex-1 { flex: 1 1 auto; width: 100%; }
-  #standings .sidebar-standing-card .standing-head { padding: 11px 12px 9px; }
-  #standings .sidebar-standing-card .standing-head h3 { font-size: 8px; }
-  #standings .sidebar-standing-card .standing-head span { font-size: 6.5px; }
-  #standings .sidebar-standing-card .standing-row { grid-template-columns: 20px minmax(0, 1fr) auto; gap: 5px; min-height: 35px; padding: 5px 7px; }
-  #standings .sidebar-standing-card .standing-name { font-size: 9px; }
-  #standings .sidebar-standing-card .standing-sub { font-size: 5.5px; margin-top: 1px; }
-  #standings .sidebar-standing-card .standing-points { font-size: 10px; min-width: 25px; }
-  #standings .sidebar-standing-card .standing-rank { font-size: 7px; }
-}
-@media (min-width: 1200px) and (max-width: 1365px) {
-  main > .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: 28px !important; }
-  main > .grid > #news, main > .grid > #standings { grid-column: span 1 !important; }
-  #standings > .flex.items-start.justify-center { display: grid !important; grid-template-columns: minmax(0, 1fr) clamp(170px, 16vw, 205px); gap: 10px; align-items: stretch; }
-  #side-ad-left { display: none !important; }
-  #standings > .flex.items-start.justify-center > .flex-1 { grid-column: 1; grid-row: 1; width: 100%; flex: none; }
-  #side-ad-right { position: relative; top: auto; right: auto; left: auto; transform: none; width: 100% !important; height: auto !important; grid-column: 2; grid-row: 1; align-self: stretch; }
-  #standings .sidebar-standing-card .standing-head { padding: 12px 12px 9px; }
-  #standings .sidebar-standing-card .standing-head h3 { font-size: 8px; }
-  #standings .sidebar-standing-card .standing-head span { font-size: 6.5px; }
-  #standings .sidebar-standing-card .standing-row { grid-template-columns: 20px minmax(0, 1fr) auto; gap: 5px; min-height: 34px; padding: 5px 7px; }
-  #standings .sidebar-standing-card .standing-name { font-size: 9px; }
-  #standings .sidebar-standing-card .standing-sub { font-size: 5.5px; }
-  #standings .sidebar-standing-card .standing-points { font-size: 10px; min-width: 24px; }
-  #standings .sidebar-standing-card .standing-rank { font-size: 7px; }
+@media (min-width: 1200px) and (max-width: 1799px) {
+  #side-ad-left, #side-ad-right { 
+    display: none !important; 
+  }
 }
 @media (min-width: 1024px) and (max-width: 1199px) {
   #side-ad-left, #side-ad-right { display: none !important; }
