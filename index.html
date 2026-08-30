@@ -662,12 +662,12 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #news { position: relative; }
   #news::after { content: ""; position: absolute; bottom: 0; left: 0; right: 6px; height: 70px; background: linear-gradient(to bottom, transparent, #080808); pointer-events: none; z-index: 10; }
   .news-scroll-hint { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 12; display: flex; align-items: center; gap: 5px; font-size: 8px; letter-spacing: 0.18em; font-weight: 800; color: #888; background: rgba(13, 13, 15, 0.75); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(4px); pointer-events: none; }
-  #standings-content-wrap { display: flex; gap: 12px; align-items: stretch; }
-  #standings-content-wrap > .flex-1 { display: flex !important; gap: 12px; }
-  .sidebar-standing-card.constructors { height: auto !important; flex: 1 1 50% !important; }
+  #standings-content-wrap { display: flex; gap: 12px; align-items: stretch !important; }
+  #standings-content-wrap > .flex-1 { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: 12px; align-items: stretch !important; }
+  .sidebar-standing-card.constructors { height: auto !important; }
   .sidebar-standing-card.constructors .standings-scroll { overflow: visible !important; height: auto !important; }
-  .sidebar-standing-card:not(.constructors) { height: 100% !important; display: flex !important; flex-direction: column !important; flex: 1 1 50% !important; }
-  .sidebar-standing-card:not(.constructors) .standings-scroll { flex: 1 1 0 !important; min-height: 0 !important; overflow-y: auto !important; scrollbar-width: thin; scrollbar-color: #333 transparent; }
+  .sidebar-standing-card:not(.constructors) { height: 100% !important; display: flex !important; flex-direction: column !important; }
+  .sidebar-standing-card:not(.constructors) .standings-scroll { flex: 1 1 0 !important; min-height: 0 !important; height: 0 !important; overflow-y: auto !important; scrollbar-width: thin; scrollbar-color: #333 transparent; }
   .news-scroll-container { flex: 1 1 0; min-height: 0; overflow-y: auto !important; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #333 transparent; }
   #ad-container { flex: 0 0 auto; }
 }
@@ -825,7 +825,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 @media (max-width: 390px) {
   #calendar-grid, #drivers-grid { gap: 6px !important; }
   .calendar-card { padding: 11px !important; }
-  .calendar-race-title { font-size: 15px !important; line-height: 1.22 !important; min-height: 2.44em !important; }
+  .calendar-race-title { font-size: 15px !important; line-height: 1.22 !important; height: 38px !important; min-height: 38px !important; max-height: 38px !important; }
   .calendar-card .text-right { min-width: 67px; max-width: 45%; }
   .calendar-card .calendar-circuit { font-size: 9px !important; }
   .calendar-card .calendar-date { font-size: 9px !important; }
@@ -875,38 +875,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #ad-banner, #side-ad-left-img, #side-ad-right-img { transition: none !important; }
 }
 
-/* --- KHÓA ĐỒNG BỘ CHIỀU CAO & THANH CUỘN BXH --- */
-#standings-content {
-  align-items: stretch !important;
-}
 
-#standings-content .card {
-  height: 100% !important;
-  min-height: 0 !important;
-}
-
-#driver-standings-list {
-  min-height: 0 !important;
-  max-height: 100% !important;
-  overflow-y: auto !important;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-}
-
-/* Tùy chỉnh thanh cuộn đẹp mắt cho Chrome / Edge / Safari */
-#driver-standings-list::-webkit-scrollbar {
-  width: 4px;
-}
-#driver-standings-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-#driver-standings-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
-}
-#driver-standings-list::-webkit-scrollbar-thumb:hover {
-  background: var(--accent, #e10600);
-}
 
    /* --- LOGO BRANDING SVG --- */
 .cls-1 { fill: #ed1c24 !important; stroke-width: 0px; }
