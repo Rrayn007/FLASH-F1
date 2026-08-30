@@ -1631,267 +1631,201 @@ clearTimeout(timer);
 }
 }
 
-async function getClientIp(){
-const endpoints=[
-'https://api64.ipify.org?format=json',
-'https://api.ipify.org?format=json'
-];
-for(const endpoint of endpoints){
-try{
-const response=await fetch(endpoint,{cache:'no-store'});
-if(!response.ok)continue;
-const data=await response.json();
-if(data?.ip)return String(data.ip).trim();
-}catch{}
+async function getClientIp() {
+  const endpoints = [
+    'https://api64.ipify.org?format=json',
+    'https://api.ipify.org?format=json'
+  ];
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint, { cache: 'no-store' });
+      if (!response.ok) continue;
+      const data = await response.json();
+      if (data?.ip) return String(data.ip).trim();
+    } catch {}
+  }
+  return '';
 }
-return '';
-}
 
-async function fetchConfigAndTrack(){
-  const configRequest=(async()=>{
-    try{
-      const response=await fetch(GAS_WEB_APP_URL,{cache:'no-store'});
-      if(!response.ok)throw new Error(`GAS CONFIG HTTP ${response.status}`);
-      const data=await response.json();
-      siteConfig=data||{};
+async function fetchConfigAndTrack() {
+  // 1. Tải Config ưu tiên hiển thị UI
+  const configRequest = (async () => {
+    try {
+      const response = await fetch(GAS_WEB_APP_URL, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`GAS CONFIG HTTP ${response.status}`);
+      const data = await response.json();
+      siteConfig = data || {};
 
-      // Contact email: read directly from the Sheet config JSON.
-      const contactEmail=String(data.email||data.contactEmail||data.contact_email||data.mail||'').trim();
-      const contactEl=document.getElementById('contact-email');
-      const contactEmpty=document.getElementById('contact-email-empty');
-      if(contactEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)){
-        contactEl.textContent=contactEmail;
-        contactEl.href=`mailto:${contactEmail}`;
-        contactEl.style.display='inline-block';
-        if(contactEmpty)contactEmpty.style.display='none';
+      // Contact email
+      const contactEmail = String(data.email || data.contactEmail || data.contact_email || data.mail || '').trim();
+      const contactEl = document.getElementById('contact-email');
+      const contactEmpty = document.getElementById('contact-email-empty');
+      if (contactEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail)) {
+        contactEl.textContent = contactEmail;
+        contactEl.href = `mailto:${contactEmail}`;
+        contactEl.style.display = 'inline-block';
+        if (contactEmpty) contactEmpty.style.display = 'none';
       }
 
-      const logoEl=document.getElementById('brand-logo');
-      const footerLogoEl=document.getElementById('footer-brand-logo');
-      const sheetLogo=safeUrl(data.logoImg||data.logo||data.logoUrl);
+      // Ad Containers & Banners
+      const adContainer = document.getElementById('ad-container');
+      const adBanner = document.getElementById('ad-banner');
+      const adLink = document.getElementById('ad-link');
+      const sponsorSlot = document.getElementById('sponsor-slot');
+      const inlineLink = document.getElementById('inline-ad-link');
+      const sponsorLabel = document.getElementById('sponsor-label');
+      const sponsorTitle = document.getElementById('sponsor-title');
+      const sponsorDescription = document.getElementById('sponsor-description');
 
-      const applySheetLogoFallback=(el)=>{
-        if(!el || sheetLogo==='#')return;
-        el.classList.remove('logo-failed','hidden');
-        el.style.display='block';
-        if(el.src!==sheetLogo)el.src=sheetLogo;
-      };
-
-      if(logoEl){
-        logoEl.onerror=()=>{
-          logoEl.classList.add('logo-failed');
-          applySheetLogoFallback(logoEl);
-        };
-        if(logoEl.complete && logoEl.naturalWidth>0){
-          logoEl.classList.remove('logo-failed','hidden');
-          logoEl.style.display='block';
-        }
-      }
-
-      if(footerLogoEl){
-        footerLogoEl.onerror=()=>{
-          footerLogoEl.classList.add('logo-failed');
-          applySheetLogoFallback(footerLogoEl);
-        };
-        if(footerLogoEl.complete && footerLogoEl.naturalWidth>0){
-          footerLogoEl.classList.remove('logo-failed','hidden');
-          footerLogoEl.style.display='block';
-        }
-      }
-
-      if(sheetLogo!=='#'){
-        if(logoEl && logoEl.classList.contains('logo-failed'))applySheetLogoFallback(logoEl);
-        if(footerLogoEl && footerLogoEl.classList.contains('logo-failed'))applySheetLogoFallback(footerLogoEl);
-      }
-
-      const adContainer=document.getElementById('ad-container');
-      const adBanner=document.getElementById('ad-banner');
-      const adLink=document.getElementById('ad-link');
-      const sponsorSlot=document.getElementById('sponsor-slot');
-      const inlineLink=document.getElementById('inline-ad-link');
-      const sponsorLabel=document.getElementById('sponsor-label');
-      const sponsorTitle=document.getElementById('sponsor-title');
-      const sponsorDescription=document.getElementById('sponsor-description');
-
-      const sideAds=[
-        {el:document.getElementById('side-ad-left'),link:document.getElementById('side-ad-left-link'),img:document.getElementById('side-ad-left-img')},
-        {el:document.getElementById('side-ad-right'),link:document.getElementById('side-ad-right-link'),img:document.getElementById('side-ad-right-img')}
+      const sideAds = [
+        { el: document.getElementById('side-ad-left'), link: document.getElementById('side-ad-left-link'), img: document.getElementById('side-ad-left-img') },
+        { el: document.getElementById('side-ad-right'), link: document.getElementById('side-ad-right-link'), img: document.getElementById('side-ad-right-img') }
       ];
 
-      const isConfigOn=value=>value===true||['ON','TRUE','YES','1','Y','ENABLE','ENABLED'].includes(String(value??'').trim().toUpperCase());
-      const adShineTimers=new WeakMap();
-      const adShineEndTimers=new WeakMap();
+      const isConfigOn = val => val === true || ['ON', 'TRUE', 'YES', '1', 'Y', 'ENABLE', 'ENABLED'].includes(String(val ?? '').trim().toUpperCase());
+      const adShineTimers = new WeakMap();
+      const adShineEndTimers = new WeakMap();
 
-      function stopAdShine(el){
-        if(!el)return;
-        const timer=adShineTimers.get(el);
-        const endTimer=adShineEndTimers.get(el);
-        if(timer)clearTimeout(timer);
-        if(endTimer)clearTimeout(endTimer);
+      function stopAdShine(el) {
+        if (!el) return;
+        const timer = adShineTimers.get(el);
+        const endTimer = adShineEndTimers.get(el);
+        if (timer) clearTimeout(timer);
+        if (endTimer) clearTimeout(endTimer);
         adShineTimers.delete(el);
         adShineEndTimers.delete(el);
         el.classList.remove('is-shining');
       }
 
-      function scheduleAdShine(el){
-        if(!el)return;
+      function scheduleAdShine(el) {
+        if (!el) return;
         stopAdShine(el);
-        const run=()=>{
-          if(document.hidden||!el.classList.contains('ad-ready'))return;
+        const run = () => {
+          if (document.hidden || !el.classList.contains('ad-ready')) return;
           el.classList.remove('is-shining');
           void el.offsetWidth;
           el.classList.add('is-shining');
-          adShineEndTimers.set(el,setTimeout(()=>{
+          adShineEndTimers.set(el, setTimeout(() => {
             el.classList.remove('is-shining');
             adShineEndTimers.delete(el);
-          },1500));
-          adShineTimers.set(el,setTimeout(run,9000+Math.random()*8000));
+          }, 1500));
+          adShineTimers.set(el, setTimeout(run, 9000 + Math.random() * 8000));
         };
-        adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
+        adShineTimers.set(el, setTimeout(run, 8500 + Math.random() * 5000));
       }
 
-      function stopAllAdShine(){
-        sideAds.forEach(({el})=>stopAdShine(el));
-      }
-
-      document.addEventListener('visibilitychange',()=>{
-        if(document.hidden){
-          stopAllAdShine();
-        }else{
-          sideAds.forEach(({el})=>{
-            if(el?.classList.contains('ad-ready')) scheduleAdShine(el);
-          });
-        }
-      });
-
-      function revealAd(el){
-        if(!el)return;
+      function revealAd(el) {
+        if (!el) return;
         stopAdShine(el);
-        el.classList.remove('hidden','ad-ready');
-        el.setAttribute('aria-hidden','false');
+        el.classList.remove('hidden', 'ad-ready');
+        el.setAttribute('aria-hidden', 'false');
         void el.offsetWidth;
-        requestAnimationFrame(()=>{
+        requestAnimationFrame(() => {
           el.classList.add('ad-ready');
           scheduleAdShine(el);
         });
       }
 
-      function hideAd(el){
-        if(!el)return;
+      function hideAd(el) {
+        if (!el) return;
         stopAdShine(el);
         el.classList.remove('ad-ready');
         el.classList.add('hidden');
-        el.setAttribute('aria-hidden','true');
+        el.setAttribute('aria-hidden', 'true');
       }
 
-      function resetLink(link){
-        if(!link)return;
-        link.removeAttribute('href');
-        link.removeAttribute('target');
-        link.removeAttribute('rel');
-        link.style.pointerEvents='none';
-      }
-
-      function resetImage(img){
-        if(!img)return;
-        img.onload=null;
-        img.onerror=null;
-        img.removeAttribute('src');
-        img.removeAttribute('srcset');
-      }
-
-      function prepareExternalLink(link,url){
-        const safe=safeUrl(url);
-        resetLink(link);
-        if(link&&safe!=='#'){
-          link.href=safe;
-          link.target='_blank';
-          link.rel='sponsored noopener noreferrer';
-          link.style.pointerEvents='auto';
+      function prepareExternalLink(link, url) {
+        const safe = safeUrl(url);
+        if (link && safe !== '#') {
+          link.href = safe;
+          link.target = '_blank';
+          link.rel = 'sponsored noopener noreferrer';
+          link.style.pointerEvents = 'auto';
           return true;
+        }
+        if (link) {
+          link.removeAttribute('href');
+          link.style.pointerEvents = 'none';
         }
         return false;
       }
 
-      function loadImageAd({el,link,img},enabled,imageValue,urlValue){
+      function loadImageAd({ el, link, img }, enabled, imageValue, urlValue) {
         hideAd(el);
-        resetLink(link);
-        resetImage(img);
+        if (link) { link.removeAttribute('href'); link.style.pointerEvents = 'none'; }
+        if (img) { img.removeAttribute('src'); }
 
-        if(!enabled||!el||!img)return;
+        if (!enabled || !el || !img) return;
 
-        const imageUrl=safeUrl(imageValue);
-        if(imageUrl==='#')return;
+        const imageUrl = safeUrl(imageValue);
+        if (imageUrl === '#') return;
 
-        prepareExternalLink(link,urlValue);
+        prepareExternalLink(link, urlValue);
 
-        const loadToken=String(Date.now())+Math.random().toString(36).slice(2);
-        img.dataset.adLoadToken=loadToken;
+        const loadToken = String(Date.now()) + Math.random().toString(36).slice(2);
+        img.dataset.adLoadToken = loadToken;
 
-        img.onload=()=>{
-          if(img.dataset.adLoadToken!==loadToken)return;
-          if(img.naturalWidth>0&&img.naturalHeight>0)revealAd(el);
+        img.onload = () => {
+          if (img.dataset.adLoadToken !== loadToken) return;
+          if (img.naturalWidth > 0 && img.naturalHeight > 0) revealAd(el);
           else hideAd(el);
         };
-        img.onerror=()=>{
-          if(img.dataset.adLoadToken===loadToken)hideAd(el);
+        img.onerror = () => {
+          if (img.dataset.adLoadToken === loadToken) hideAd(el);
         };
-        img.src=imageUrl;
-
-        if(img.complete&&img.naturalWidth>0&&img.dataset.adLoadToken===loadToken)revealAd(el);
+        img.src = imageUrl;
+        if (img.complete && img.naturalWidth > 0 && img.dataset.adLoadToken === loadToken) revealAd(el);
       }
 
-      loadImageAd(
-        {el:adContainer,link:adLink,img:adBanner},
-        isConfigOn(data.adEnabled),
-        data.bannerImg,
-        data.adUrl
-      );
+      loadImageAd({ el: adContainer, link: adLink, img: adBanner }, isConfigOn(data.adEnabled), data.bannerImg, data.adUrl);
 
-      if(sponsorSlot){
+      if (sponsorSlot) {
         hideAd(sponsorSlot);
-        resetLink(inlineLink);
-        inlineLink?.classList.add('hidden');
-
-        const canShowInline=
-          isConfigOn(data.inlineAdEnabled)&&
-          safeUrl(data.affiliateUrl)!=='#';
-
-        if(canShowInline){
-          if(sponsorLabel)sponsorLabel.textContent=data.adLabel||'Sponsored / Affiliate';
-          if(sponsorTitle)sponsorTitle.textContent=data.adTitle||'PICKS';
-          if(sponsorDescription)sponsorDescription.textContent=data.adDescription||'Area reserved for an advertising banner or affiliate link.';
-          prepareExternalLink(inlineLink,data.affiliateUrl);
+        if (inlineLink) { inlineLink.removeAttribute('href'); inlineLink.classList.add('hidden'); }
+        const canShowInline = isConfigOn(data.inlineAdEnabled) && safeUrl(data.affiliateUrl) !== '#';
+        if (canShowInline) {
+          if (sponsorLabel) sponsorLabel.textContent = data.adLabel || 'Sponsored / Affiliate';
+          if (sponsorTitle) sponsorTitle.textContent = data.adTitle || 'PICKS';
+          if (sponsorDescription) sponsorDescription.textContent = data.adDescription || 'Area reserved for an advertising banner or affiliate link.';
+          prepareExternalLink(inlineLink, data.affiliateUrl);
           inlineLink?.classList.remove('hidden');
           revealAd(sponsorSlot);
         }
       }
 
       const sideEnabled = data.sideAdEnabled === undefined ? true : isConfigOn(data.sideAdEnabled);
-      loadImageAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
-      loadImageAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
-    }catch(error){
-      console.warn('GAS config unavailable',error);
-      hideAd(document.getElementById('ad-container'));
-      hideAd(document.getElementById('sponsor-slot'));
-      hideAd(document.getElementById('side-ad-left'));
-      hideAd(document.getElementById('side-ad-right'));
+      loadImageAd(sideAds[0], sideEnabled, data.sideAdLeftImg, data.sideAdLeftUrl);
+      loadImageAd(sideAds[1], sideEnabled, data.sideAdRightImg, data.sideAdRightUrl);
+    } catch (error) {
+      console.warn('GAS config unavailable', error);
+      ['ad-container', 'sponsor-slot', 'side-ad-left', 'side-ad-right'].forEach(id => {
+        document.getElementById(id)?.classList.add('hidden');
+      });
     }
   })();
 
-  const trackingRequest=(async()=>{
-    try{
-      const ip=await getClientIp();
-      const url=new URL(GAS_WEB_APP_URL);
-      url.searchParams.set('track','1');
-      if(ip)url.searchParams.set('ip',ip);
-      await fetch(url.toString(),{cache:'no-store',keepalive:true});
-    }catch(error){
-      console.warn('Visitor tracking unavailable',error);
+  // 2. Gửi IP sau khi web đã load mượt mà (chống nghẽn đơn luồng GAS)
+  const trackingRequest = (async () => {
+    try {
+      await new Promise(res => setTimeout(res, 1200));
+      const ip = await getClientIp();
+      if (!ip) return;
+
+      const url = new URL(GAS_WEB_APP_URL);
+      url.searchParams.set('track', '1');
+      url.searchParams.set('ip', ip);
+
+      await fetch(url.toString(), {
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'no-store'
+      });
+    } catch (error) {
+      console.warn('Visitor tracking unavailable', error);
     }
   })();
 
-  await Promise.allSettled([configRequest,trackingRequest]);
+  await Promise.allSettled([configRequest, trackingRequest]);
 }
 
 async function fetchNews(){
