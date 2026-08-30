@@ -169,7 +169,44 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .calendar-round { color: var(--accent, #e10600); font-weight: 900; font-size: 9px; }
 .calendar-circuit { color: #85858b; min-width: 0; line-height: 1.35; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 2.7em; }
 .calendar-date { color: #d2d2d5; white-space: nowrap; font-size: 12px; font-weight: 900; }
-.calendar-status { border-color: #25292f; color: #888; flex: none; white-space: nowrap; }
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 9px;
+  border-radius: 5px;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex: none;
+  line-height: 1;
+}
+
+/* 1. COMPLETED: Xanh lá mờ */
+.status-badge.status-complete {
+  color: #4ade80 !important;
+  background: radial-gradient(circle at 15% 50%, rgba(34, 197, 94, 0.15), rgba(15, 23, 18, 0.95)) !important;
+  border: 1px solid rgba(34, 197, 94, 0.32) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* 2. NEXT: Xanh dương mờ */
+.status-badge.status-next {
+  color: #60a5fa !important;
+  background: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.18), rgba(15, 20, 28, 0.95)) !important;
+  border: 1px solid rgba(59, 130, 246, 0.35) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* 3. UPCOMING: Đỏ mờ F1 */
+.status-badge.status-upcoming {
+  color: #f87171 !important;
+  background: radial-gradient(circle at 15% 50%, rgba(239, 68, 68, 0.14), rgba(24, 14, 15, 0.95)) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
 .calendar-card .text-right { min-width: 82px; max-width: 46%; }
 .completed-card, .completed-card:hover { background: #0b0d10 !important; }
 
