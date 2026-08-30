@@ -307,18 +307,57 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .driver-card .driver-rank { font-size: 11px; font-weight: 800; color: #858b95; }
 .driver-card .driver-number { position: absolute; top: 14px !important; right: 15px !important; z-index: 5; font-size: 42px !important; line-height: 1; font-weight: 900; color: rgba(255, 255, 255, .055); letter-spacing: -.07em; pointer-events: none; }
 
-.driver-card .driver-name-zone { position: relative; z-index: 12; width: auto; max-width: 100%; min-width: 0; margin-top: auto; margin-bottom: 8px !important; padding: 8px 0 7px; min-height: 72px !important; display: flex; flex-direction: column; justify-content: flex-end; text-align: left; overflow: hidden; }
+.driver-card .driver-name-zone { 
+  position: relative; 
+  z-index: 12; 
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;       /* Tự động co/bao bọc theo độ dài chữ */
+  max-width: 85% !important;           /* Giới hạn trần để không đè vào cạnh card */
+  align-self: flex-start !important;   /* Giữ khối neo sát lề trái */
+  min-width: 0; 
+  margin-top: auto; 
+  margin-bottom: 8px !important; 
+  padding: 8px 0 7px; 
+  min-height: auto !important;         /* Cho phép chiều cao co giãn linh hoạt */
+  display: flex; 
+  flex-direction: column; 
+  justify-content: flex-end; 
+  text-align: left; 
+  overflow: hidden; 
+}
 .driver-card .driver-name-zone:before { content: ""; position: absolute; z-index: -1; left: -20px; right: -12px; top: -5px; bottom: -5px; background: radial-gradient(ellipse at 18% 72%, color-mix(in srgb, var(--team-color, #00d7c4) 22%, transparent), transparent 66%), linear-gradient(90deg, color-mix(in srgb, var(--team-color, #00d7c4) 9%, transparent), transparent 86%); filter: blur(9px); pointer-events: none; }
 .driver-card .driver-firstname, .driver-card .driver-lastname { position: relative; z-index: 2; text-shadow: 0 2px 12px rgba(0, 0, 0, .8); width: 100%; max-width: 100%; min-width: 0; overflow: hidden; }
-.driver-card .driver-firstname { font-size: 10px !important; line-height: 1.1 !important; color: #a6abb3 !important; letter-spacing: .08em !important; font-weight: 500 !important; white-space: nowrap; text-overflow: ellipsis; }
-.driver-card .driver-lastname { margin-top: 3px; font-size: clamp(21px, 2.05vw, 29px) !important; line-height: .88 !important; color: #f5f5f6; font-weight: 900 !important; letter-spacing: -.055em !important; text-transform: uppercase; white-space: nowrap; text-overflow: ellipsis; }
+/* Tên đệm/gọi (ví dụ: Andrea Kimi, George, Max) */
+.driver-card .driver-firstname { 
+  font-size: 14px !important; /* Mặc định cũ là 10px -> Tăng lên 12px - 14px */
+  line-height: 1.1 !important; 
+  color: #a6abb3 !important; 
+  letter-spacing: .08em !important; 
+  font-weight: 500 !important; 
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
+
+/* Họ chính in hoa (ví dụ: ANTONELLI, RUSSELL, VERSTAPPEN) */
+.driver-card .driver-lastname { 
+  margin-top: 3px; 
+  font-size: clamp(26px, 2.4vw, 36px) !important; /* Mặc định cũ là clamp(21px, 2.05vw, 29px) -> Tăng min, tỷ lệ vw và max */
+  line-height: .88 !important; 
+  color: #f5f5f6; 
+  font-weight: 900 !important; 
+  letter-spacing: -.055em !important; 
+  text-transform: uppercase; 
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
 
 .driver-card .driver-stats-row { position: relative; z-index: 8; margin-top: 0 !important; padding-top: 9px !important; border-top: 1px solid #25292f; min-width: 0; }
 .driver-card .driver-stats-row > div { min-width: 0; }
 .driver-card .driver-stats-row .timing-label { font-size: 7px; color: var(--team-color, #00d7c4); letter-spacing: .16em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .driver-card .driver-stats-row .timing-value { font-size: 12px !important; color: #f4f5f6; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-@container (min-width: 421px) { .driver-card .driver-name-zone { width: 61% !important; max-width: 61% !important; } }
+@container (min-width: 421px) { .driver-card .driver-name-zone { width: fit-content !important; max-width: 85% !important;; } }
 @container (max-width: 420px) {
   .driver-card .driver-photo { left: 15% !important; width: 100% !important; }
   .driver-card .driver-name-zone { width: 55% !important; max-width: 55% !important; min-height: 56px !important; margin-bottom: 6px !important; padding: 5px 0 6px !important; align-items: flex-start !important; }
