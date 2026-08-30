@@ -662,12 +662,19 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #news { position: relative; }
   #news::after { content: ""; position: absolute; bottom: 0; left: 0; right: 6px; height: 70px; background: linear-gradient(to bottom, transparent, #080808); pointer-events: none; z-index: 10; }
   .news-scroll-hint { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 12; display: flex; align-items: center; gap: 5px; font-size: 8px; letter-spacing: 0.18em; font-weight: 800; color: #888; background: rgba(13, 13, 15, 0.75); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(4px); pointer-events: none; }
+  
+  /* Cố định chiều cao tổng thể của cả 2 khung Standings bằng nhau tuyệt đối */
   #standings-content-wrap { display: flex; gap: 12px; align-items: stretch !important; }
-  #standings-content-wrap > .flex-1 { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: 12px; align-items: stretch !important; }
-  .sidebar-standing-card.constructors { height: auto !important; }
-  .sidebar-standing-card.constructors .standings-scroll { overflow: visible !important; height: auto !important; }
-  .sidebar-standing-card:not(.constructors) { height: 100% !important; display: flex !important; flex-direction: column !important; }
+  #standings-content-wrap > .flex-1 { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: 12px; align-items: stretch !important; height: 560px !important; }
+  
+  /* Khóa cứng chiều cao khung thẻ bên phải và cho phép cuộn nội bộ nếu danh sách dài */
+  .sidebar-standing-card.constructors { height: 100% !important; display: flex !important; flex-direction: column !important; min-height: 0 !important; }
+  .sidebar-standing-card.constructors .standings-scroll { flex: 1 1 0 !important; min-height: 0 !important; height: 0 !important; overflow-y: auto !important; scrollbar-width: thin; scrollbar-color: #333 transparent; }
+  
+  /* Khóa cứng chiều cao khung thẻ bên trái và bật thanh cuộn */
+  .sidebar-standing-card:not(.constructors) { height: 100% !important; display: flex !important; flex-direction: column !important; min-height: 0 !important; }
   .sidebar-standing-card:not(.constructors) .standings-scroll { flex: 1 1 0 !important; min-height: 0 !important; height: 0 !important; overflow-y: auto !important; scrollbar-width: thin; scrollbar-color: #333 transparent; }
+
   .news-scroll-container { flex: 1 1 0; min-height: 0; overflow-y: auto !important; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #333 transparent; }
   #ad-container { flex: 0 0 auto; }
 }
