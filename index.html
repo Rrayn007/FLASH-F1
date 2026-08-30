@@ -875,6 +875,39 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #ad-banner, #side-ad-left-img, #side-ad-right-img { transition: none !important; }
 }
 
+/* --- KHÓA ĐỒNG BỘ CHIỀU CAO & THANH CUỘN BXH --- */
+#standings-content {
+  align-items: stretch !important;
+}
+
+#standings-content .card {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+#driver-standings-list {
+  min-height: 0 !important;
+  max-height: 100% !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Tùy chỉnh thanh cuộn đẹp mắt cho Chrome / Edge / Safari */
+#driver-standings-list::-webkit-scrollbar {
+  width: 4px;
+}
+#driver-standings-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+#driver-standings-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+#driver-standings-list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent, #e10600);
+}
+
    /* --- LOGO BRANDING SVG --- */
 .cls-1 { fill: #ed1c24 !important; stroke-width: 0px; }
 .cls-2 { fill: #ffffff !important; stroke-width: 0px; }
