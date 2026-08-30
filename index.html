@@ -120,11 +120,12 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .news-card img { transition: transform .6s ease; }
 .news-card:hover img { transform: scale(1.04); }
 
-/* --- KHUNG STANDINGS: Constructors bung tự nhiên 11 đội, Drivers khớp chiều cao --- */
+/* --- QUY TẮC CỐ ĐỊNH CHIỀU CAO THEO CONSTRUCTORS --- */
 #standings-content-wrap > .flex-1 {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-  align-items: stretch !important;
+  gap: 10px !important;
+  align-items: start !important; /* Ngăn Grid tự ý kéo giãn chiều cao */
   height: auto !important;
 }
 
@@ -147,9 +148,10 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .sidebar-standing-card .standing-head h3 { margin: 0; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; color: #aaa; }
 .sidebar-standing-card .standing-head span { font-size: 7px; color: #555; }
 
-/* 1. Constructors: Tự động dàn đủ 11 đội, tuyệt đối không scroll */
+/* 1. Constructors: Tự động bung trọn vẹn 11 đội */
 .sidebar-standing-card.constructors {
-  height: fit-content !important;
+  height: auto !important;
+  max-height: none !important;
   overflow: visible !important;
 }
 .sidebar-standing-card.constructors .standings-scroll {
@@ -159,10 +161,11 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   overflow: visible !important;
 }
 
-/* 2. Drivers: Luôn khớp 100% chiều cao của Constructors và cuộn bên trong */
+/* 2. Drivers: Tự động ép chiều cao bằng Constructors và cuộn bên trong */
 .sidebar-standing-card:not(.constructors) {
+  align-self: stretch !important; /* Nhận chiều cao chính xác từ hàng grid */
   height: 100% !important;
-  max-height: 100% !important;
+  min-height: 0 !important;
 }
 .sidebar-standing-card:not(.constructors) .standings-scroll {
   flex: 1 1 0 !important;
@@ -688,87 +691,76 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 @media (min-width: 1024px) {
-  /* Khóa chiều cao 2 cột chính của main grid bằng nhau */
   main > .grid {
-    align-items: stretch !important;
+    align-items: start !important; /* Giữ layout cân đối, không kéo dãn đáy */
   }
 
-  /* Cột Standings lấy kích thước chuẩn từ nội dung tự nhiên */
-  #standings {
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
+  #news, #standings { 
+    display: flex !important; 
+    flex-direction: column !important; 
   }
   
-  #standings-content-wrap {
-    display: flex;
-    gap: 12px;
-    align-items: stretch !important;
-    flex: 1 1 auto;
-  }
-  
-  #standings-content-wrap > .flex-1 {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-    gap: 12px;
-    align-items: stretch !important;
-  }
-
-  /* Cột News nhận đúng chiều cao của Standings và cuộn bên trong */
-  #news {
-    height: 100% !important;
-    max-height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
+  #news { 
     position: relative;
-    min-height: 0 !important;
+    /* Cố định chiều cao cột tin tức khớp với tổng chiều cao bảng xếp hạng */
+    height: 520px !important; 
+    max-height: 520px !important;
   }
-  #news::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 6px;
-    height: 70px;
-    background: linear-gradient(to bottom, transparent, #080808);
-    pointer-events: none;
-    z-index: 10;
+  #news::after { 
+    content: ""; 
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    right: 6px; 
+    height: 70px; 
+    background: linear-gradient(to bottom, transparent, #080808); 
+    pointer-events: none; 
+    z-index: 10; 
   }
-  .news-scroll-hint {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 12;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 8px;
-    letter-spacing: 0.18em;
-    font-weight: 800;
-    color: #888;
-    background: rgba(13, 13, 15, 0.75);
-    padding: 4px 10px;
-    border-radius: 99px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(4px);
-    pointer-events: none;
+  .news-scroll-hint { 
+    position: absolute; 
+    bottom: 10px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 12; 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: 8px; 
+    letter-spacing: 0.18em; 
+    font-weight: 800; 
+    color: #888; 
+    background: rgba(13, 13, 15, 0.75); 
+    padding: 4px 10px; 
+    border-radius: 99px; 
+    border: 1px solid rgba(255, 255, 255, 0.08); 
+    backdrop-filter: blur(4px); 
+    pointer-events: none; 
+  }
+  
+  #standings-content-wrap { 
+    display: flex; 
+    gap: 12px; 
+    align-items: start !important; 
+  }
+  #standings-content-wrap > .flex-1 { 
+    display: grid !important; 
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; 
+    gap: 12px; 
+    align-items: start !important; 
+    height: auto !important; 
   }
 
-  .news-scroll-container {
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-    height: 0 !important;
-    overflow-y: auto !important;
-    padding-right: 6px;
-    scrollbar-width: thin;
-    scrollbar-color: #333 transparent;
+  .news-scroll-container { 
+    flex: 1 1 0 !important; 
+    min-height: 0 !important; 
+    height: 0 !important; 
+    overflow-y: auto !important; 
+    padding-right: 6px; 
+    scrollbar-width: thin; 
+    scrollbar-color: #333 transparent; 
   }
-
-  #ad-container {
-    flex: 0 0 auto;
-  }
+  #ad-container { flex: 0 0 auto; }
 }
 
 @media (max-width: 1023px) {
