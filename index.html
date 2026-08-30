@@ -988,64 +988,64 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; } }
 
-    /* Đồng bộ chiều cao News theo Standings trên màn hình lớn (>= 1024px) */
 @media (min-width: 1024px) {
-  #news {
-    height: 600px;              /* Chiều cao khớp với cụm bảng xếp hạng bên phải */
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
+  /* Khung lớn tự động giãn chiều cao bằng đúng phần cao nhất (11 đội đua) */
+  #news, 
+  #standings {
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
+  /* Khung bọc 2 bảng xếp hạng */
+  #standings-content-wrap {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  #standings-content-wrap > .flex-1 {
+    display: flex !important;
+    gap: 12px;
+  }
+
+  /* Thẻ Constructors: giãn tự nhiên để ôm trọn vẹn 11 đội */
+  .sidebar-standing-card.constructors {
+    height: auto !important;
+    flex: 1 1 50% !important;
+  }
+  .sidebar-standing-card.constructors .standings-scroll {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Thẻ Drivers: cao bằng đúng thẻ Constructors, phần thừa 22 tay đua sẽ scrollbar */
+  .sidebar-standing-card:not(.constructors) {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 50% !important;
+  }
+  .sidebar-standing-card:not(.constructors) .standings-scroll {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+
+  /* Cột News bên trái: cao bằng đúng chân của BXH bên phải và có scrollbar */
   .news-scroll-container {
     flex: 1 1 0;
     min-height: 0;
-    overflow-y: auto;
+    overflow-y: auto !important;
     padding-right: 6px;
     scrollbar-width: thin;
     scrollbar-color: #333 transparent;
   }
 
-  .news-scroll-container::-webkit-scrollbar {
-    width: 4px;
-  }
-  .news-scroll-container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .news-scroll-container::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 4px;
-  }
-  .news-scroll-container::-webkit-scrollbar-thumb:hover {
-    background: var(--red);
-  }
-}
-@media (min-width: 1024px) {
-  /* Cho phép cả 2 cột tự giãn chiều cao theo nội dung thực tế */
-  #news, 
-  #standings {
-    height: auto !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  /* Khung thẻ BXH tự ôm trọn 11 đội, không bị trần cố định đè */
-  .sidebar-standing-card {
-    height: auto !important;
-    max-height: none !important;
-  }
-
-  #standings-content-wrap {
-    display: flex;
-    gap: 12px;
-    height: auto !important;
-  }
-
-  /* Cột News bên trái tự kéo dãn để khớp đáy với cột BXH bên phải */
-  .news-scroll-container {
-    height: 100%;
-    overflow-y: visible; /* hoặc auto nếu muốn giới hạn */
+  #ad-container {
+    flex: 0 0 auto;
   }
 }
 
