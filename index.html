@@ -996,6 +996,18 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     display: flex !important;
     flex-direction: column !important;
   }
+    /* Lớp mờ ở đáy News */
+  #news::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 6px;
+    height: 70px;
+    background: linear-gradient(to bottom, transparent, #080808);
+    pointer-events: none;
+    z-index: 10;
+  }
 
   /* Khung bọc 2 bảng xếp hạng */
   #standings-content-wrap {
@@ -1173,7 +1185,7 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 <div class="grid lg:grid-cols-12 gap-8 xl:gap-10">
 
 <!-- CỘT TRÁI: NEWS -->
-<section id="news" class="lg:col-span-7">
+<section id="news" class="lg:col-span-7 relative">
   <div class="flex justify-between items-end mb-3 shrink-0">
     <div>
       <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">LATEST</p>
