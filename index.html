@@ -1020,166 +1020,35 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
     background: var(--red);
   }
 }
-    @media (min-width: 1024px) {
+@media (min-width: 1024px) {
+  /* Cho phép cả 2 cột tự giãn chiều cao theo nội dung thực tế */
   #news, 
   #standings {
-    height: 610px !important;
+    height: auto !important;
+    min-height: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    min-height: 0 !important;
   }
 
-  .news-scroll-container {
-    flex: 1 1 0;
-    min-height: 0;
-    overflow-y: auto;
-    padding-right: 6px;
-    scrollbar-width: thin;
-    scrollbar-color: #333 transparent;
+  /* Khung thẻ BXH tự ôm trọn 11 đội, không bị trần cố định đè */
+  .sidebar-standing-card {
+    height: auto !important;
+    max-height: none !important;
   }
-  .news-scroll-container::-webkit-scrollbar { width: 4px; }
-  .news-scroll-container::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 
   #standings-content-wrap {
-    flex: 1 1 0;
-    min-height: 0;
     display: flex;
     gap: 12px;
-  }
-
-  #standings-content-wrap .sidebar-standing-card {
-    height: 100% !important;
-    max-height: 100% !important;
-  }
-
-  #ad-container {
-    flex: 0 0 auto;
-  }
-}
-    /* =========================================================
-   F1 HUB — TỰ ĐỘNG ĐIỀU CHỈNH CHIỀU CAO NEWS & STANDINGS
-   ========================================================= */
-
-/* Thanh cuộn cho bảng tin tức & bảng xếp hạng */
-.news-scroll-container,
-.sidebar-standing-card .standings-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: #333 transparent;
-}
-.news-scroll-container::-webkit-scrollbar,
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar {
-  width: 4px;
-}
-.news-scroll-container::-webkit-scrollbar-track,
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-.news-scroll-container::-webkit-scrollbar-thumb,
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-.news-scroll-container::-webkit-scrollbar-thumb:hover,
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--red, #e10600);
-}
-
-@media (min-width: 1024px) {
-  /* Cho phép cột chính căn theo chiều cao linh hoạt */
-  main > .grid {
-    align-items: stretch;
-  }
-
-@media (min-width: 1024px) {
-  /* Khung bao ngoài Standings */
-  #standings {
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  /* Khung chứa 2 cột bảng */
-  #standings-content-wrap {
-    display: flex !important;
-    gap: 12px !important;
-    align-items: stretch !important;
-  }
-
-  #standings-content-wrap > .grid {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-    gap: 12px !important;
-    width: 100% !important;
-    align-items: stretch !important;
-  }
-
-  /* 1. MẶC ĐỊNH (Không có QC): Bảng đội đua mở trọn vẹn 11 đội */
-  #standings .sidebar-standing-card.constructors {
-    height: auto !important;
-    min-height: fit-content !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  #standings .sidebar-standing-card.constructors .standings-scroll {
-    overflow: visible !important;
     height: auto !important;
   }
 
-  /* Bảng tay đua tự bám theo chiều cao của bảng đội đua */
-  #standings .sidebar-standing-card:not(.constructors) {
-    height: 100% !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  #standings .sidebar-standing-card:not(.constructors) .standings-scroll {
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-    overflow-y: auto !important;
-  }
-
-  /* Cột News bám sát chiều cao Standings */
-  #news {
-    display: flex !important;
-    flex-direction: column !important;
-    height: 100% !important;
-    min-height: 0 !important;
-  }
-  #news .news-scroll-container {
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-    overflow-y: auto !important;
-    padding-right: 6px !important;
-  }
-
-  /* 2. KHI CÓ QUẢNG CÁO: Khóa chiều cao 610px và bật scrollbar cả 2 bên */
-  #standings:has(#ad-container.ad-ready),
-  #standings.has-ad {
-    height: 610px !important;
-  }
-
-  #standings:has(#ad-container.ad-ready) #standings-content-wrap,
-  #standings.has-ad #standings-content-wrap {
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-  }
-
-  #standings:has(#ad-container.ad-ready) .sidebar-standing-card,
-  #standings.has-ad .sidebar-standing-card {
-    height: 100% !important;
-  }
-
-  #standings:has(#ad-container.ad-ready) .sidebar-standing-card .standings-scroll,
-  #standings.has-ad .sidebar-standing-card .standings-scroll {
-    overflow-y: auto !important;
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
-  }
-
-  main:has(#standings #ad-container.ad-ready) #news,
-  main.has-ad #news {
-    height: 610px !important;
+  /* Cột News bên trái tự kéo dãn để khớp đáy với cột BXH bên phải */
+  .news-scroll-container {
+    height: 100%;
+    overflow-y: visible; /* hoặc auto nếu muốn giới hạn */
   }
 }
+
 </style>
 </head>
 
