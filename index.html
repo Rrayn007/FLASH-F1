@@ -89,7 +89,6 @@ button { font-family: inherit; }
 
 section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
-/* FIX MOBILE MENU: Ẩn hoàn toàn khi đóng, hiển thị mượt mà khi mở */
 #mobile-menu { max-height: 0; visibility: hidden; opacity: 0; overflow: hidden; border-top-color: transparent; transition: all 0.35s cubic-bezier(.22, 1, .36, 1); }
 #mobile-menu.is-open { max-height: 350px; visibility: visible; opacity: 1; border-top-color: #1f1f22; padding-bottom: 20px; pointer-events: auto; }
 #mobile-menu > div { transform: translateY(-10px); opacity: 0; transition: all 0.3s ease 0.05s; }
@@ -107,7 +106,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .card { background: #0b0b0d; transition: .25s ease; }
 .card:hover { border-color: #3b3b40; }
 
-/* Dùng chung màu nền cho Standings & News (Đã loại bỏ Calendar/Podium khỏi đây) */
 .sidebar-standing-card, .standings-panel .card, .news-card {
   border-color: #25292f !important;
   background: #0d0f12 !important;
@@ -122,15 +120,55 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .news-card img { transition: transform .6s ease; }
 .news-card:hover img { transform: scale(1.04); }
 
-.sidebar-standing-card { border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+/* --- QUY TẮC CỘT BẢNG XẾP HẠNG TỰ ĐỘNG KHỚP CHIỀU CAO CHO MỌI SCREEN --- */
+#standings-content-wrap > .flex-1 {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  height: auto !important;
+}
+
+.sidebar-standing-card { 
+  border-radius: 10px; 
+  overflow: hidden; 
+  display: flex !important; 
+  flex-direction: column !important; 
+  min-width: 0; 
+  height: 100% !important;
+}
 .sidebar-standing-card .standing-head { padding: 13px 14px 10px; min-height: 47px; flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #252529; }
 .sidebar-standing-card .standing-head h3 { margin: 0; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; color: #aaa; }
 .sidebar-standing-card .standing-head span { font-size: 7px; color: #555; }
-.sidebar-standing-card .standings-scroll { height: auto; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.2) transparent; }
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar { width: 4px; }
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar-track { background: transparent; }
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 4px; }
-.sidebar-standing-card .standings-scroll::-webkit-scrollbar-thumb:hover { background: var(--red, #e10600); }
+
+/* 1. Constructors: Tự động bung đủ 11 đội */
+.sidebar-standing-card.constructors {
+  height: auto !important;
+}
+.sidebar-standing-card.constructors .standings-scroll {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* 2. Drivers: Tự động theo chiều cao Constructors và cuộn bên trong */
+.sidebar-standing-card:not(.constructors) {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+.sidebar-standing-card:not(.constructors) .standings-scroll {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.sidebar-standing-card:not(.constructors) .standings-scroll::-webkit-scrollbar { width: 4px; }
+.sidebar-standing-card:not(.constructors) .standings-scroll::-webkit-scrollbar-track { background: transparent; }
+.sidebar-standing-card:not(.constructors) .standings-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 4px; }
+.sidebar-standing-card:not(.constructors) .standings-scroll::-webkit-scrollbar-thumb:hover { background: var(--red, #e10600); }
 
 .standing-row { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; gap: 6px; min-height: 39px; padding: 6px 8px; border-bottom: 1px solid #20242a; transition: .16s; cursor: pointer; }
 .standing-row:hover { background: #13161a; }
@@ -145,9 +183,8 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .team-logo { width: 38px !important; height: 26px !important; object-fit: contain !important; object-position: center !important; flex-shrink: 0 !important; }
 
 /* =========================================================
-   4. NEW FIX: CALENDAR & METALLIC PODIUMS
+   4. CALENDAR & PODIUMS
    ========================================================= */
-/* 1. Đảm bảo toàn bộ thẻ lịch có cấu trúc khối chuẩn */
 .calendar-card {
   display: flex !important;
   flex-direction: column !important;
@@ -165,11 +202,10 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   background: var(--accent, #e10600);
   box-shadow: 0 0 10px color-mix(in srgb, var(--accent, #e10600) 40%, transparent);
 }
-.calendar-card:after { display: none !important; } /* Loại bỏ vệt sáng thừa */
+.calendar-card:after { display: none !important; }
 .calendar-card:hover { transform: translateY(-3px); border-color: #2f3540 !important; box-shadow: 0 12px 30px rgba(0, 0, 0, .45); }
 .calendar-card > * { position: relative; z-index: 1; }
 
-/* 2. KHÓA VÙNG TIÊU ĐỀ: 1 dòng hay 2 dòng cũng chiếm đúng 50px */
 .calendar-race-title {
   color: var(--accent, #f4f5f6) !important;
   letter-spacing: -.035em;
@@ -178,12 +214,9 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   line-height: 1.25 !important;
   margin-top: 16px !important;
   margin-bottom: 0 !important;
-  
-  /* Cố định chiều cao vùng tên chặng */
   height: 50px !important;
   min-height: 50px !important;
   max-height: 50px !important;
-  
   display: -webkit-box !important;
   -webkit-box-orient: vertical !important;
   -webkit-line-clamp: 2 !important;
@@ -220,23 +253,18 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   line-height: 1;
 }
 
-/* 1. COMPLETED: Xanh lá mờ */
 .status-badge.status-complete {
   color: #4ade80 !important;
   background: radial-gradient(circle at 15% 50%, rgba(34, 197, 94, 0.15), rgba(15, 23, 18, 0.95)) !important;
   border: 1px solid rgba(34, 197, 94, 0.32) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
-
-/* 2. NEXT: Xanh dương mờ */
 .status-badge.status-next {
   color: #60a5fa !important;
   background: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.18), rgba(15, 20, 28, 0.95)) !important;
   border: 1px solid rgba(59, 130, 246, 0.35) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
-
-/* 3. UPCOMING: Đỏ mờ F1 */
 .status-badge.status-upcoming {
   color: #f87171 !important;
   background: radial-gradient(circle at 15% 50%, rgba(239, 68, 68, 0.14), rgba(24, 14, 15, 0.95)) !important;
@@ -246,7 +274,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .calendar-card .text-right { min-width: 82px; max-width: 46%; }
 .completed-card, .completed-card:hover { background: #0b0d10 !important; }
 
-/* Ánh tím mờ tinh tế cho Pole */
 .pole-chip {
   display: flex; align-items: center; justify-content: space-between;
   background: radial-gradient(circle at 15% 50%, rgba(168, 85, 247, 0.12), rgba(15, 17, 21, 0.95)) !important;
@@ -256,7 +283,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .pole-chip span:first-child { font-size: 7.5px; letter-spacing: .18em; text-transform: uppercase; color: #c084fc; font-weight: 800; }
 .pole-chip span:last-child { font-size: 11.5px; font-weight: 900; color: #ffffff; }
 
-/* Ánh kim loại chìm cao cấp cho Podium */
 .result-podium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
 .result-podium-item { border-radius: 6px; padding: 8px 6px; text-align: center; min-width: 0; transition: border-color .2s ease; }
 
@@ -362,7 +388,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .team-card .team-card-driver-mini .driver-mini-name { font-size: 10px !important; line-height: 1.02 !important; letter-spacing: -.025em !important; font-weight: 900 !important; min-width: 0 !important; max-width: 100% !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
 .team-card .team-card-driver-mini .driver-mini-points { margin-top: 5px !important; font-size: 7px !important; color: color-mix(in srgb, var(--team-color, #00d7c4) 72%, #8b9098) !important; font-weight: 700; line-height: 1 !important; }
 
-/* Large Standalone Team Driver Mini (Profile Modal) */
 .team-driver-mini { position: relative; min-height: 350px; height: 350px; overflow: hidden; cursor: pointer; pointer-events: auto; isolation: isolate; border-radius: 10px; border-color: #272c32; background: radial-gradient(circle at 10% 78%, color-mix(in srgb, var(--team-color, #00d7c4) 13%, transparent), transparent 44%), linear-gradient(145deg, #111317, #0d0f12) !important; transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease; }
 .team-driver-mini:hover { transform: translateY(-3px); border-color: #3a3f46; }
 .team-driver-mini:before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(to bottom, transparent 36%, rgba(12, 12, 14, .05) 48%, rgba(12, 12, 14, .18) 63%, rgba(12, 12, 14, .52) 80%, #0c0c0e 100%); }
@@ -399,7 +424,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
 #driver-profile-content.hidden, #team-profile-content.hidden { display: none !important; }
 
-/* DRIVER PROFILE DESKTOP STRICT GRID */
 #driver-profile-content { position: relative; display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(260px, 34%) !important; grid-template-rows: 154px 76px minmax(0, 1fr) !important; gap: 14px !important; width: 100% !important; min-width: 0 !important; min-height: 0 !important; overflow: hidden !important; isolation: isolate; height: auto !important; flex: 1 1 auto !important; margin: 22px 0 0 !important; box-sizing: border-box !important; }
 #driver-profile-content > * { min-width: 0 !important; box-sizing: border-box !important; }
 
@@ -418,9 +442,9 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   min-height: 0 !important; 
   display: flex !important; 
   align-items: center !important; 
-  justify-content: flex-start !important; /* Đẩy sang lề trái */
+  justify-content: flex-start !important; 
   box-sizing: border-box !important; 
-  padding-left: clamp(20px, 2.5vw, 36px) !important; /* Khoảng cách cách lề trái */
+  padding-left: clamp(20px, 2.5vw, 36px) !important; 
   padding-right: 16px !important;
 }
 #driver-profile-content .profile-constructor-info > .flex { 
@@ -527,7 +551,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 #profile-career .profile-career-copy .career-detail { display: block; margin-top: 4px; max-width: 100% !important; color: #747d88; font-size: 9px; font-weight: 500; line-height: 1.45; overflow-wrap: anywhere !important; }
 #profile-career .profile-career-item:hover .profile-career-year, #profile-career .profile-career-item:hover .profile-career-copy strong { color: #fff; }
 
-/* TEAM PROFILE */
 .team-profile-shell { display: flex; flex-direction: column; gap: 14px; width: 100%; min-width: 0; }
 .team-profile-overview, .team-profile-info, .team-profile-car-section, .team-profile-lineup-section { width: 100%; min-width: 0; border: 1px solid #1c1e23; border-radius: 10px; background: linear-gradient(145deg, #111113, #0d0d0f); box-sizing: border-box; }
 .team-profile-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 20px; align-items: center; padding: 22px; }
@@ -621,7 +644,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #side-ad-right { right: max(8px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 8px)); }
   #standings > .flex.items-start.justify-center { gap: 10px; }
   #standings > .flex.items-start.justify-center > .flex-1 { flex: 1 1 auto; width: 100%; }
-  #standings .sidebar-standing-card { height: 500px; }
   #standings .sidebar-standing-card .standing-head { padding: 11px 12px 9px; }
   #standings .sidebar-standing-card .standing-head h3 { font-size: 8px; }
   #standings .sidebar-standing-card .standing-head span { font-size: 6.5px; }
@@ -637,8 +659,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #standings > .flex.items-start.justify-center { display: grid !important; grid-template-columns: minmax(0, 1fr) clamp(170px, 16vw, 205px); gap: 10px; align-items: stretch; }
   #side-ad-left { display: none !important; }
   #standings > .flex.items-start.justify-center > .flex-1 { grid-column: 1; grid-row: 1; width: 100%; flex: none; }
-  #side-ad-right { position: relative; top: auto; right: auto; left: auto; transform: none; width: 100% !important; height: clamp(430px, 42vw, 520px) !important; grid-column: 2; grid-row: 1; align-self: stretch; }
-  #standings .sidebar-standing-card { height: clamp(430px, 42vw, 520px); }
+  #side-ad-right { position: relative; top: auto; right: auto; left: auto; transform: none; width: 100% !important; height: auto !important; grid-column: 2; grid-row: 1; align-self: stretch; }
   #standings .sidebar-standing-card .standing-head { padding: 12px 12px 9px; }
   #standings .sidebar-standing-card .standing-head h3 { font-size: 8px; }
   #standings .sidebar-standing-card .standing-head span { font-size: 6.5px; }
@@ -652,7 +673,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #side-ad-left, #side-ad-right { display: none !important; }
   #standings > .flex.items-start.justify-center { gap: 10px; }
   #standings > .flex.items-start.justify-center > .flex-1 { width: 100%; }
-  #standings .sidebar-standing-card { height: 500px; }
   #standings .sidebar-standing-card .standing-row { grid-template-columns: 21px minmax(0, 1fr) auto; gap: 6px; min-height: 37px; padding: 6px 8px; }
   #standings .sidebar-standing-card .standing-name { font-size: 9.5px; }
   #standings .sidebar-standing-card .standing-sub { font-size: 5.8px; }
@@ -665,43 +685,8 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #news::after { content: ""; position: absolute; bottom: 0; left: 0; right: 6px; height: 70px; background: linear-gradient(to bottom, transparent, #080808); pointer-events: none; z-index: 10; }
   .news-scroll-hint { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 12; display: flex; align-items: center; gap: 5px; font-size: 8px; letter-spacing: 0.18em; font-weight: 800; color: #888; background: rgba(13, 13, 15, 0.75); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(4px); pointer-events: none; }
   
-  /* Bố cục Grid 2 cột: Tự co giãn theo bảng cao nhất */
   #standings-content-wrap { display: flex; gap: 12px; align-items: stretch !important; }
-  #standings-content-wrap > .flex-1 { 
-    display: grid !important; 
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; 
-    gap: 12px; 
-    align-items: stretch !important; 
-    height: auto !important; /* Xóa bỏ cố định 540px */
-  }
-  
-  /* 1. BẢNG ĐỘI ĐUA: Chiều cao tự nhiên, bung đủ 11 đội, không cuộn */
-  .sidebar-standing-card.constructors { 
-    height: auto !important; 
-    display: flex !important; 
-    flex-direction: column !important; 
-  }
-  .sidebar-standing-card.constructors .standings-scroll { 
-    flex: 1 1 auto !important; 
-    overflow: visible !important; 
-    height: auto !important; 
-  }
-  
-  /* 2. BẢNG TAY ĐUA: Bằng chiều cao bảng Đội đua, cuộn bên trong */
-  .sidebar-standing-card:not(.constructors) { 
-    height: 100% !important; 
-    display: flex !important; 
-    flex-direction: column !important; 
-    min-height: 0 !important; 
-  }
-  .sidebar-standing-card:not(.constructors) .standings-scroll { 
-    flex: 1 1 0 !important; 
-    min-height: 0 !important; 
-    height: 0 !important; 
-    overflow-y: auto !important; 
-    scrollbar-width: thin; 
-    scrollbar-color: #333 transparent; 
-  }
+  #standings-content-wrap > .flex-1 { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; gap: 12px; align-items: stretch !important; height: auto !important; }
 
   .news-scroll-container { flex: 1 1 0; min-height: 0; overflow-y: auto !important; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #333 transparent; }
   #ad-container { flex: 0 0 auto; }
@@ -709,10 +694,9 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
 @media (max-width: 1023px) {
   #side-ad-left, #side-ad-right { display: none !important; }
-  #standings > .flex.items-start.justify-center { display: block; }
+  #standings > .flex.items-start.justify-center { display: flex; }
   #standings > .flex.items-start.justify-center > .flex-1 { width: 100%; }
-  #standings .sidebar-standing-card { height: auto; min-height: 0; }
-  #standings .sidebar-standing-card .standings-scroll { max-height: 360px; overflow: auto; }
+  #standings .sidebar-standing-card { min-height: 0; }
   #ad-container { margin-top: 12px; }
   .news-scroll-hint { display: none; }
   #drivers-grid, #calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
@@ -728,7 +712,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  #standings > .flex.items-start.justify-center > .flex-1 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+  #standings > .flex.items-start.justify-center > .flex-1 { gap: 8px; }
   #standings .sidebar-standing-card .standing-row { grid-template-columns: 22px minmax(0, 1fr) auto; gap: 6px; min-height: 38px; padding: 6px 8px; }
   #standings .sidebar-standing-card .standing-name { font-size: 10px; }
   #standings .sidebar-standing-card .standing-sub { font-size: 6px; }
@@ -742,7 +726,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 @media (min-width: 480px) and (max-width: 767px) {
-  #standings > .flex.items-start.justify-center > .flex-1 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+  #standings > .flex.items-start.justify-center > .flex-1 { gap: 8px; }
   #standings .sidebar-standing-card .standing-head { padding: 11px 10px 8px; }
   #standings .sidebar-standing-card .standing-head h3 { font-size: 8px; }
   #standings .sidebar-standing-card .standing-head span { font-size: 6px; }
@@ -754,7 +738,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 @media (max-width: 479px) {
-  #standings > .flex.items-start.justify-center > .flex-1 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
+  #standings > .flex.items-start.justify-center > .flex-1 { gap: 6px; }
   #standings .sidebar-standing-card .standing-head { padding: 9px 7px 7px; }
   #standings .sidebar-standing-card .standing-head h3 { font-size: 7px; letter-spacing: .1em; }
   #standings .sidebar-standing-card .standing-head span { font-size: 5.5px; }
@@ -776,7 +760,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start > div:first-child { flex: 1 1 auto !important; min-width: 0 !important; width: auto !important; }
   #profile-modal #profile-name { width: 100% !important; max-width: 100% !important; min-width: 0 !important; display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 2 !important; overflow: hidden !important; text-overflow: clip !important; white-space: normal !important; overflow-wrap: normal !important; word-break: normal !important; font-size: clamp(24px, 3.8vw, 30px) !important; line-height: .96 !important; letter-spacing: -.04em !important; }
 
-  /* Driver Modal Strict 2-column Grid Setup */
   #driver-profile-content { grid-template-columns: minmax(0, 1.18fr) minmax(140px, 38%) !important; grid-template-rows: 100px 60px minmax(0, 1fr) !important; gap: 9px !important; margin-top: 14px !important; }
   #driver-profile-content > .grid:first-of-type { grid-column: 1 / -1 !important; grid-row: 1 !important; grid-template-columns: 108px minmax(0, 1fr) !important; height: 100px !important; min-height: 100px !important; max-height: 100px !important; gap: 9px !important; }
   #profile-number-box, #driver-profile-content .profile-constructor-box { height: 100px !important; min-height: 100px !important; max-height: 100px !important; padding: 11px !important; overflow: hidden !important; }
@@ -786,9 +769,9 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #driver-stats > div { padding: 10px 12px !important; }
   #driver-stats .text-xl { font-size: 18px !important; }
   
- #driver-profile-content .profile-constructor-info { 
+  #driver-profile-content .profile-constructor-info { 
     justify-content: flex-start !important; 
-    padding-left: 16px !important; /* Lề trái trên mobile */
+    padding-left: 16px !important; 
   }
   #driver-profile-content .profile-constructor-info > .flex { 
     width: auto !important; 
@@ -910,9 +893,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #ad-banner, #side-ad-left-img, #side-ad-right-img { transition: none !important; }
 }
 
-
-
-   /* --- LOGO BRANDING SVG --- */
 .cls-1 { fill: #ed1c24 !important; stroke-width: 0px; }
 .cls-2 { fill: #ffffff !important; stroke-width: 0px; }
 </style>
