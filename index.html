@@ -330,12 +330,65 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .profile-number { font-size: 110px; line-height: .75; font-weight: 900; color: rgba(255, 255, 255, .045); position: absolute; right: 10px; bottom: 7px; z-index: 1; font-family: Inter, sans-serif; letter-spacing: -.08em; white-space: nowrap; pointer-events: none; }
 #profile-number-box > .text-\[8px\] { width: 100% !important; margin: 0 !important; line-height: 1.15 !important; text-align: left !important; }
 
-#driver-profile-content .profile-constructor-info { width: 100% !important; height: 100% !important; min-width: 0 !important; min-height: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important; box-sizing: border-box !important; padding: 14px 18px !important; }
-#driver-profile-content .profile-constructor-info > .flex { width: auto !important; min-width: 0 !important; margin: 0 !important; display: flex !important; align-items: center !important; justify-content: center !important; box-sizing: border-box !important; gap: 14px !important; }
-#profile-team-logo { display: block !important; flex: 0 0 auto !important; width: clamp(52px, 6vw, 76px) !important; height: clamp(38px, 4.5vw, 56px) !important; object-fit: contain !important; object-position: center !important; margin: 0 !important; filter: brightness(1.08) drop-shadow(0 4px 8px rgba(0,0,0,.35)); flex-shrink: 0 !important; }
-#driver-profile-content .profile-constructor-info > .flex > div:last-child { flex: 0 1 auto !important; min-width: 0 !important; text-align: left !important; }
-#driver-profile-content #profile-team { display: block !important; width: auto !important; margin-top: 4px !important; line-height: 1.05 !important; text-align: left !important; white-space: nowrap !important; font-size: clamp(15px, 1.8vw, 22px) !important; font-weight: 900 !important; text-transform: uppercase; }
-#driver-profile-content #profile-nationality { display: block !important; width: auto !important; margin-top: 3px !important; line-height: 1.15 !important; text-align: left !important; white-space: nowrap !important; font-size: 11px !important; color: #777 !important; }
+#driver-profile-content .profile-constructor-info { 
+  width: 100% !important; 
+  height: 100% !important; 
+  min-width: 0 !important; 
+  min-height: 0 !important; 
+  display: flex !important; 
+  align-items: center !important; 
+  justify-content: flex-start !important; /* Đẩy sang lề trái */
+  box-sizing: border-box !important; 
+  padding-left: clamp(20px, 2.5vw, 36px) !important; /* Khoảng cách cách lề trái */
+  padding-right: 16px !important;
+}
+#driver-profile-content .profile-constructor-info > .flex { 
+  width: auto !important; 
+  min-width: 0 !important; 
+  margin: 0 !important; 
+  display: flex !important; 
+  align-items: center !important; 
+  justify-content: flex-start !important; 
+  box-sizing: border-box !important; 
+  gap: 16px !important; 
+}
+#profile-team-logo { 
+  display: block !important; 
+  flex: 0 0 auto !important; 
+  width: clamp(52px, 6vw, 76px) !important; 
+  height: clamp(38px, 4.5vw, 56px) !important; 
+  object-fit: contain !important; 
+  object-position: center !important; 
+  margin: 0 !important; 
+  filter: brightness(1.08) drop-shadow(0 4px 8px rgba(0,0,0,.35)); 
+  flex-shrink: 0 !important; 
+}
+#driver-profile-content .profile-constructor-info > .flex > div:last-child { 
+  flex: 0 1 auto !important; 
+  min-width: 0 !important; 
+  text-align: left !important; 
+}
+#driver-profile-content #profile-team { 
+  display: block !important; 
+  width: auto !important; 
+  margin-top: 4px !important; 
+  line-height: 1.05 !important; 
+  text-align: left !important; 
+  white-space: nowrap !important; 
+  font-size: clamp(15px, 1.8vw, 22px) !important; 
+  font-weight: 900 !important; 
+  text-transform: uppercase; 
+}
+#driver-profile-content #profile-nationality { 
+  display: block !important; 
+  width: auto !important; 
+  margin-top: 3px !important; 
+  line-height: 1.15 !important; 
+  text-align: left !important; 
+  white-space: nowrap !important; 
+  font-size: 11px !important; 
+  color: #777 !important; 
+}
 
 #driver-stats { grid-column: 1 !important; grid-row: 2 !important; display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 1px; width: 100% !important; min-width: 0 !important; margin: 0 !important; background: #202020; border: 1px solid #202020; border-radius: 8px; overflow: hidden !important; height: 76px !important; min-height: 76px !important; max-height: 76px !important; box-sizing: border-box !important; }
 #driver-stats > div { background: #101010; min-height: 0 !important; padding: 14px 16px !important; width: 100% !important; height: 100% !important; min-width: 0 !important; overflow: hidden !important; box-sizing: border-box !important; display: flex !important; flex-direction: column !important; align-items: flex-start !important; justify-content: center !important; text-align: left !important; }
@@ -619,11 +672,32 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   #driver-stats > div { padding: 10px 12px !important; }
   #driver-stats .text-xl { font-size: 18px !important; }
   
-  #driver-profile-content .profile-constructor-info { justify-content: center !important; }
-  #driver-profile-content .profile-constructor-info > .flex { width: auto !important; justify-content: center !important; gap: 10px !important; }
-  #profile-team-logo { flex: 0 0 auto !important; width: 52px !important; height: 38px !important; object-fit: contain !important; flex-shrink: 0 !important; }
-  #driver-profile-content #profile-team { font-size: 16px !important; line-height: 1.05 !important; white-space: nowrap !important; }
-  #driver-profile-content #profile-nationality { font-size: 9px !important; margin-top: 3px !important; white-space: nowrap !important; }
+ #driver-profile-content .profile-constructor-info { 
+    justify-content: flex-start !important; 
+    padding-left: 16px !important; /* Lề trái trên mobile */
+  }
+  #driver-profile-content .profile-constructor-info > .flex { 
+    width: auto !important; 
+    justify-content: flex-start !important; 
+    gap: 12px !important; 
+  }
+  #profile-team-logo { 
+    flex: 0 0 auto !important; 
+    width: 52px !important; 
+    height: 38px !important; 
+    object-fit: contain !important; 
+    flex-shrink: 0 !important; 
+  }
+  #driver-profile-content #profile-team { 
+    font-size: 16px !important; 
+    line-height: 1.05 !important; 
+    white-space: nowrap !important; 
+  }
+  #driver-profile-content #profile-nationality { 
+    font-size: 9px !important; 
+    margin-top: 3px !important; 
+    white-space: nowrap !important; 
+  }
 
   .profile-driver-visual { grid-column: 2 !important; grid-row: 3 !important; width: 100% !important; min-width: 0 !important; max-width: none !important; height: 100% !important; min-height: 0 !important; max-height: none !important; overflow: hidden !important; }
   .driver-profile-about { grid-column: 1 !important; grid-row: 3 !important; display: grid !important; grid-template-columns: 1fr !important; grid-template-rows: minmax(0, 1.05fr) minmax(0, .95fr) !important; gap: 9px !important; min-width: 0 !important; min-height: 0 !important; overflow: hidden !important; }
