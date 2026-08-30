@@ -987,6 +987,39 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 @keyframes sideAdRevealRight{0%{opacity:0;transform:translate3d(20px,-50%,0) scale(.98);filter:blur(2px)}100%{opacity:1;transform:translate3d(0,-50%,0) scale(1);filter:blur(0)}}
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; } }
+
+    /* Đồng bộ chiều cao News theo Standings trên màn hình lớn (>= 1024px) */
+@media (min-width: 1024px) {
+  #news {
+    height: 600px;              /* Chiều cao khớp với cụm bảng xếp hạng bên phải */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .news-scroll-container {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+
+  .news-scroll-container::-webkit-scrollbar {
+    width: 4px;
+  }
+  .news-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .news-scroll-container::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+  }
+  .news-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: var(--red);
+  }
+}
 </style>
 </head>
 
@@ -1111,17 +1144,22 @@ section[id],div[id="standings"],aside[id]{scroll-margin-top:96px;}
 <div class="grid lg:grid-cols-12 gap-8 xl:gap-10">
 
 <section id="news" class="lg:col-span-7">
-<div class="flex justify-between items-end mb-6">
-<div>
-<p class="text-[9px] tracking-[.3em] uppercase text-gray-600">LATEST</p>
-<h2 class="text-3xl font-black tracking-tight mt-2">F1 News</h2>
-</div>
-<span class="text-[9px] text-gray-600 uppercase tracking-widest">Auto Updated</span>
-</div>
-<div id="news-featured"></div>
-<div id="news-feed" class="grid md:grid-cols-2 gap-4 mt-4">
-<div class="skeleton h-56 rounded"></div><div class="skeleton h-56 rounded"></div>
-</div>
+  <div class="flex justify-between items-end mb-6 shrink-0">
+    <div>
+      <p class="text-[9px] tracking-[.3em] uppercase text-gray-600">LATEST</p>
+      <h2 class="text-3xl font-black tracking-tight mt-2">F1 News</h2>
+    </div>
+    <span class="text-[9px] text-gray-600 uppercase tracking-widest">Auto Updated</span>
+  </div>
+
+  <!-- Container cuộn nội dung tin tức -->
+  <div class="news-scroll-container">
+    <div id="news-featured"></div>
+    <div id="news-feed" class="grid md:grid-cols-2 gap-4 mt-4">
+      <div class="skeleton h-56 rounded"></div>
+      <div class="skeleton h-56 rounded"></div>
+    </div>
+  </div>
 </section>
 
 <aside id="standings" class="lg:col-span-5 f1-sidebar">
