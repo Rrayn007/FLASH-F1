@@ -120,13 +120,18 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .news-card img { transition: transform .6s ease; }
 .news-card:hover img { transform: scale(1.04); }
 
-/* --- QUY TẮC CỐ ĐỊNH CHIỀU CAO THEO CONSTRUCTORS --- */
+/* --- QUY TẮC CỘT BẢNG XẾP HẠNG THUẦN CSS --- */
+#standings-content-wrap {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
 #standings-content-wrap > .flex-1 {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
   gap: 10px !important;
-  align-items: start !important; /* Ngăn Grid tự ý kéo giãn chiều cao */
-  height: auto !important;
+  align-items: stretch !important;
+  min-height: 0 !important;
 }
 
 .sidebar-standing-card { 
@@ -135,6 +140,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   display: flex !important; 
   flex-direction: column !important; 
   min-width: 0; 
+  min-height: 0 !important;
 }
 .sidebar-standing-card .standing-head { 
   padding: 13px 14px 10px; 
@@ -148,11 +154,10 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .sidebar-standing-card .standing-head h3 { margin: 0; font-size: 9px; text-transform: uppercase; letter-spacing: .14em; color: #aaa; }
 .sidebar-standing-card .standing-head span { font-size: 7px; color: #555; }
 
-/* 1. Constructors: Tự động bung trọn vẹn 11 đội */
+/* 1. Constructors: Tự động bung trọn 11 đội - đây là mốc đo chiều cao */
 .sidebar-standing-card.constructors {
   height: auto !important;
   max-height: none !important;
-  overflow: visible !important;
 }
 .sidebar-standing-card.constructors .standings-scroll {
   flex: 1 1 auto !important;
@@ -161,17 +166,14 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   overflow: visible !important;
 }
 
-/* 2. Drivers: Tự động ép chiều cao bằng Constructors và cuộn bên trong */
+/* 2. Drivers: Tự khóa bằng chiều cao Constructors và cuộn bên trong */
 .sidebar-standing-card:not(.constructors) {
-  align-self: stretch !important; /* Nhận chiều cao chính xác từ hàng grid */
   height: 100% !important;
-  min-height: 0 !important;
 }
 .sidebar-standing-card:not(.constructors) .standings-scroll {
   flex: 1 1 0 !important;
   min-height: 0 !important;
   height: 0 !important;
-  max-height: none !important;
   overflow-y: auto !important;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
@@ -181,7 +183,17 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .sidebar-standing-card:not(.constructors) .standings-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 4px; }
 .sidebar-standing-card:not(.constructors) .standings-scroll::-webkit-scrollbar-thumb:hover { background: var(--red, #e10600); }
 
-.standing-row { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; align-items: center; gap: 6px; min-height: 39px; padding: 6px 8px; border-bottom: 1px solid #20242a; transition: .16s; cursor: pointer; }
+.standing-row { 
+  display: grid; 
+  grid-template-columns: 22px minmax(0, 1fr) auto; 
+  align-items: center; 
+  gap: 6px; 
+  min-height: 39px; 
+  padding: 6px 8px; 
+  border-bottom: 1px solid #20242a; 
+  transition: .16s; 
+  cursor: pointer; 
+}
 .standing-row:hover { background: #13161a; }
 .standing-row:last-child { border-bottom: 0; }
 .standing-rank { font: 900 11px/1 ui-monospace, SFMono-Regular, monospace; color: #555; text-align: center; }
@@ -691,23 +703,49 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 @media (min-width: 1024px) {
-  /* 1. Lưới tổng kéo giãn đồng đều 2 cột theo chiều cao bảng Constructors */
+  /* Grid cha kéo giãn đều 2 cột News & Standings */
   main > .grid {
     display: grid !important;
     align-items: stretch !important;
   }
 
-  /* 2. CỘT NEWS (Bên trái) */
-  #news {
-    height: 100% !important;
-    min-height: 0 !important;
-    max-height: none !important;
+  /* CỘT STANDINGS */
+  #standings {
     display: flex !important;
     flex-direction: column !important;
+    height: 100% !important;
+  }
+  
+  #standings-content-wrap {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+
+  /* SIDE AD: Ép chiều cao ăn theo Constructors, không được tự ý phình to */
+  #side-ad-left, #side-ad-right {
+    height: 0 !important;
+    min-height: 100% !important;
+    max-height: 100% !important;
+    align-self: stretch !important;
+  }
+  #side-ad-left-link, #side-ad-right-link,
+  #side-ad-left-img, #side-ad-right-img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* CỘT NEWS: Nhận đúng 100% chiều cao của Standings và cuộn nội dung bên trong */
+  #news {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
     position: relative;
     box-sizing: border-box;
   }
-
+  
   #news > div:first-child {
     flex: 0 0 auto !important;
     margin-bottom: 12px !important;
@@ -754,48 +792,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     border: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(4px);
     pointer-events: none;
-  }
-
-  /* 3. KHUNG STANDINGS & SIDE AD */
-  #standings {
-    display: flex !important;
-    flex-direction: column !important;
-    height: 100% !important;
-  }
-
-  #standings-content-wrap {
-    display: flex !important;
-    gap: 12px;
-    align-items: stretch !important;
-    flex: 1 1 auto;
-    min-height: 0;
-  }
-
-  #standings-content-wrap > .flex-1 {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-    gap: 12px;
-    align-items: stretch !important;
-    height: 100% !important;
-    min-height: 0;
-  }
-
-  #side-ad-left, 
-  #side-ad-right {
-    height: 100% !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    align-self: stretch !important;
-  }
-
-  #side-ad-left-link, 
-  #side-ad-right-link,
-  #side-ad-left-img, 
-  #side-ad-right-img {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-    display: block;
   }
 
   #ad-container {
