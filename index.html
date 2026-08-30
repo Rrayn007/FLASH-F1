@@ -691,76 +691,116 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 @media (min-width: 1024px) {
+  /* 1. Lưới tổng kéo giãn đồng đều 2 cột theo chiều cao bảng Constructors */
   main > .grid {
-    align-items: start !important; /* Giữ layout cân đối, không kéo dãn đáy */
+    display: grid !important;
+    align-items: stretch !important;
   }
 
-  #news, #standings { 
-    display: flex !important; 
-    flex-direction: column !important; 
-  }
-  
-  #news { 
+  /* 2. CỘT NEWS (Bên trái) */
+  #news {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
     position: relative;
-    /* Cố định chiều cao cột tin tức khớp với tổng chiều cao bảng xếp hạng */
-    height: 520px !important; 
-    max-height: 520px !important;
-  }
-  #news::after { 
-    content: ""; 
-    position: absolute; 
-    bottom: 0; 
-    left: 0; 
-    right: 6px; 
-    height: 70px; 
-    background: linear-gradient(to bottom, transparent, #080808); 
-    pointer-events: none; 
-    z-index: 10; 
-  }
-  .news-scroll-hint { 
-    position: absolute; 
-    bottom: 10px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    z-index: 12; 
-    display: flex; 
-    align-items: center; 
-    gap: 5px; 
-    font-size: 8px; 
-    letter-spacing: 0.18em; 
-    font-weight: 800; 
-    color: #888; 
-    background: rgba(13, 13, 15, 0.75); 
-    padding: 4px 10px; 
-    border-radius: 99px; 
-    border: 1px solid rgba(255, 255, 255, 0.08); 
-    backdrop-filter: blur(4px); 
-    pointer-events: none; 
-  }
-  
-  #standings-content-wrap { 
-    display: flex; 
-    gap: 12px; 
-    align-items: start !important; 
-  }
-  #standings-content-wrap > .flex-1 { 
-    display: grid !important; 
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; 
-    gap: 12px; 
-    align-items: start !important; 
-    height: auto !important; 
+    box-sizing: border-box;
   }
 
-  .news-scroll-container { 
-    flex: 1 1 0 !important; 
-    min-height: 0 !important; 
-    height: 0 !important; 
-    overflow-y: auto !important; 
-    padding-right: 6px; 
-    scrollbar-width: thin; 
-    scrollbar-color: #333 transparent; 
+  #news > div:first-child {
+    flex: 0 0 auto !important;
+    margin-bottom: 12px !important;
   }
-  #ad-container { flex: 0 0 auto; }
+
+  .news-scroll-container {
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    height: 0 !important;
+    overflow-y: auto !important;
+    padding-right: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+
+  #news::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 6px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, #080808);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .news-scroll-hint {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 12;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    font-weight: 800;
+    color: #888;
+    background: rgba(13, 13, 15, 0.75);
+    padding: 4px 10px;
+    border-radius: 99px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+  }
+
+  /* 3. KHUNG STANDINGS & SIDE AD */
+  #standings {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+  }
+
+  #standings-content-wrap {
+    display: flex !important;
+    gap: 12px;
+    align-items: stretch !important;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  #standings-content-wrap > .flex-1 {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 12px;
+    align-items: stretch !important;
+    height: 100% !important;
+    min-height: 0;
+  }
+
+  #side-ad-left, 
+  #side-ad-right {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    align-self: stretch !important;
+  }
+
+  #side-ad-left-link, 
+  #side-ad-right-link,
+  #side-ad-left-img, 
+  #side-ad-right-img {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    display: block;
+  }
+
+  #ad-container {
+    flex: 0 0 auto !important;
+  }
 }
 
 @media (max-width: 1023px) {
