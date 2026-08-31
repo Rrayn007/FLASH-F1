@@ -1049,6 +1049,213 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .cls-1 { fill: #ed1c24 !important; stroke-width: 0px; }
 .cls-2 { fill: #ffffff !important; stroke-width: 0px; }
 
+   /* =========================================================
+   LANDSCAPE RESPONSIVE FIXES (TẤT CẢ THIẾT BỊ)
+   ========================================================= */
+
+/* 1. Thiết bị di động & Tablet nhỏ khi xoay ngang (Chiều cao < 600px) */
+@media (orientation: landscape) and (max-height: 600px) {
+  #profile-modal {
+    padding: 6px !important;
+    align-items: center !important;
+  }
+
+  #profile-modal .modal-box {
+    height: calc(100vh - 12px) !important;
+    max-height: calc(100vh - 12px) !important;
+    border-radius: 8px !important;
+  }
+
+  #profile-modal .modal-box > .p-6.md\:p-8,
+  #profile-modal .modal-box > .modal-inner-padding {
+    padding: 10px 16px !important;
+  }
+
+  /* Header Modal */
+  #profile-modal .modal-box > div:nth-child(2) > .flex.justify-between {
+    min-height: 38px !important;
+  }
+  #profile-modal #profile-name {
+    font-size: 22px !important;
+    line-height: 1 !important;
+  }
+
+  /* Layout 3 cột trong Landscape */
+  #driver-profile-content {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.85fr) minmax(0, 0.85fr) !important;
+    grid-template-rows: 1fr !important;
+    gap: 8px !important;
+    margin-top: 8px !important;
+    height: calc(100% - 46px) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Cột 1: Thông tin, Số xe & Stats */
+  .driver-col-left,
+  #driver-profile-content > .grid:first-of-type {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    height: 100% !important;
+  }
+
+  .driver-top-row,
+  #driver-profile-content > .grid:first-of-type > div:first-child {
+    display: grid !important;
+    grid-template-columns: 85px minmax(0, 1fr) !important;
+    gap: 6px !important;
+    height: 72px !important;
+    min-height: 72px !important;
+    max-height: 72px !important;
+  }
+
+  #profile-number-box, 
+  #driver-profile-content .profile-constructor-box {
+    height: 72px !important;
+    min-height: 72px !important;
+    padding: 6px 10px !important;
+  }
+
+  #profile-number {
+    font-size: 38px !important;
+    margin-top: 2px !important;
+  }
+
+  #profile-team-logo {
+    width: 36px !important;
+    height: 26px !important;
+  }
+
+  #profile-team {
+    font-size: 13px !important;
+  }
+
+  /* Thanh 4 chỉ số (Wins, Podiums,...) */
+  #driver-stats {
+    height: 46px !important;
+    min-height: 46px !important;
+    max-height: 46px !important;
+    flex: 0 0 46px !important;
+    gap: 1px !important;
+  }
+  #driver-stats > div {
+    padding: 4px 6px !important;
+  }
+  #driver-stats .text-xl {
+    font-size: 15px !important;
+    margin-top: 2px !important;
+  }
+
+  /* Box Overview Dossier */
+  .profile-overview-card,
+  .driver-profile-about > .profile-info-card:first-child {
+    padding: 8px 10px !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+  .profile-section-title {
+    font-size: 15px !important;
+    margin-top: 2px !important;
+    margin-bottom: 4px !important;
+  }
+  .profile-facts-grid,
+  .profile-facts-compact {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 4px !important;
+  }
+  .profile-fact-pill,
+  .profile-fact {
+    padding: 4px 6px !important;
+  }
+  .profile-fact-value {
+    font-size: 9.5px !important;
+    margin-top: 2px !important;
+  }
+
+  /* Cột 2: Career Timeline */
+  .driver-col-career,
+  .driver-profile-about > .profile-info-card:nth-child(2) {
+    height: 100% !important;
+    min-height: 0 !important;
+    padding: 8px 10px !important;
+  }
+  #profile-career.profile-career-list {
+    margin-top: 4px !important;
+    height: calc(100% - 32px) !important;
+  }
+  #profile-career .profile-career-item {
+    min-height: 48px !important;
+    padding-bottom: 6px !important;
+  }
+  #profile-career .profile-career-copy strong {
+    font-size: 10px !important;
+  }
+  #profile-career .profile-career-copy .career-detail {
+    font-size: 7.5px !important;
+  }
+
+  /* Cột 3: Portrait Tay đua */
+  .driver-col-visual,
+  .profile-driver-visual {
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+  #profile-driver-image {
+    height: 108% !important;
+  }
+}
+
+/* 2. Tablet Landscape & Màn hình trung bình (Chiều cao từ 601px đến 820px) */
+@media (orientation: landscape) and (min-height: 601px) and (max-height: 820px) {
+  #profile-modal .modal-box {
+    height: min(680px, calc(100vh - 24px)) !important;
+    max-height: calc(100vh - 24px) !important;
+  }
+
+  #profile-modal .modal-box > .p-6.md\:p-8,
+  #profile-modal .modal-box > .modal-inner-padding {
+    padding: 16px 20px !important;
+  }
+
+  #driver-profile-content {
+    margin-top: 12px !important;
+    gap: 10px !important;
+  }
+
+  .driver-top-row,
+  #driver-profile-content > .grid:first-of-type > div:first-child {
+    height: 96px !important;
+  }
+
+  #profile-number-box, 
+  #driver-profile-content .profile-constructor-box {
+    height: 96px !important;
+  }
+
+  #profile-number {
+    font-size: 52px !important;
+  }
+
+  #driver-stats {
+    height: 56px !important;
+    flex: 0 0 56px !important;
+  }
+  #driver-stats .text-xl {
+    font-size: 18px !important;
+  }
+
+  .profile-section-title {
+    font-size: 18px !important;
+    margin-bottom: 6px !important;
+  }
+}
+
 </style>
 </head>
 
