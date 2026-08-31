@@ -1048,6 +1048,121 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
 .cls-1 { fill: #ed1c24 !important; stroke-width: 0px; }
 .cls-2 { fill: #ffffff !important; stroke-width: 0px; }
+
+/* =========================================================
+   10. FIX CO GIÃN MODAL KHI CHIỀU CAO VIEWPORT THẤP (LAPTOP / DESKTOP)
+   ========================================================= */
+@media (max-height: 820px) and (min-width: 821px) {
+  #profile-modal .modal-box {
+    height: calc(100vh - 24px) !important;
+    max-height: calc(100vh - 24px) !important;
+  }
+  #profile-modal .modal-box > .p-6.md\:p-8 {
+    padding: 16px 20px !important;
+  }
+  #profile-modal #profile-name {
+    font-size: clamp(26px, 3.2vw, 36px) !important;
+  }
+
+  /* Thu gọn chiều cao 2 hàng trên để nhường không gian cho Overview & Career */
+  #driver-profile-content {
+    grid-template-rows: 108px 56px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    margin-top: 12px !important;
+  }
+  #driver-profile-content > .grid:first-of-type {
+    gap: 10px !important;
+  }
+  #profile-number-box, 
+  #driver-profile-content .profile-constructor-box {
+    height: 108px !important;
+    min-height: 108px !important;
+    max-height: 108px !important;
+    padding: 12px 16px !important;
+  }
+  #profile-number {
+    font-size: 52px !important;
+    margin-top: 2px !important;
+  }
+  .profile-number {
+    font-size: 80px !important;
+  }
+  #profile-team-logo {
+    width: 48px !important;
+    height: 36px !important;
+  }
+  #driver-profile-content #profile-team {
+    font-size: 16px !important;
+  }
+
+  /* Hàng thống kê Stats */
+  #driver-stats {
+    height: 56px !important;
+    min-height: 56px !important;
+    max-height: 56px !important;
+  }
+  #driver-stats > div {
+    padding: 8px 12px !important;
+  }
+  #driver-stats > div .text-xl {
+    font-size: 17px !important;
+    margin-top: 3px !important;
+  }
+
+  /* Khối Overview & Career timeline */
+  .driver-profile-about {
+    gap: 10px !important;
+  }
+  .profile-info-card {
+    padding: 12px 14px !important;
+  }
+  .profile-section-title {
+    font-size: 17px !important;
+    margin-top: 2px !important;
+  }
+  .driver-profile-about > .profile-info-card:first-child {
+    row-gap: 6px !important;
+    column-gap: 8px !important;
+  }
+  .profile-fact {
+    padding: 6px 8px !important;
+  }
+  .profile-fact-label {
+    font-size: 6px !important;
+  }
+  .profile-fact-value {
+    font-size: 10px !important;
+    margin-top: 2px !important;
+    max-height: 20px !important;
+  }
+
+  /* Career timeline */
+  #profile-career.profile-career-list {
+    margin-top: 6px !important;
+  }
+  #profile-career .profile-career-item {
+    min-height: 48px !important;
+    padding-bottom: 8px !important;
+  }
+  #profile-career .profile-career-copy strong {
+    font-size: 11px !important;
+  }
+  #profile-career .profile-career-copy .career-detail {
+    font-size: 8px !important;
+    margin-top: 1px !important;
+  }
+}
+
+/* Fallback an toàn cho màn hình cực ngắn (< 620px): cho phép cuộn nội dung */
+@media (max-height: 620px) {
+  #profile-modal .modal-box {
+    overflow-y: auto !important;
+    height: calc(100vh - 16px) !important;
+  }
+  #driver-profile-content {
+    min-height: 520px !important;
+  }
+}
 </style>
 </head>
 
