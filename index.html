@@ -58,7 +58,7 @@ button { font-family: inherit; }
 #brand-logo.logo-failed, #footer-brand-logo.logo-failed { display: none !important; }
 
 /* =========================================================
-   2. UTILITIES & ANIMATIONS
+   2. UTILITIES, ANIMATIONS & MOBILE MENU
    ========================================================= */
 .f1-red { color: var(--red); }
 .glass { background: rgba(8, 8, 8, .88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
@@ -307,7 +307,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .driver-card .driver-name-zone { 
   position: relative; 
   z-index: 12; 
-  width: fit-content !important; 
+  width: fit-content !important;
   max-width: 85% !important; 
   align-self: flex-start !important; 
   min-width: 0; 
@@ -323,8 +323,26 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 .driver-card .driver-name-zone:before { content: ""; position: absolute; z-index: -1; left: -20px; right: -12px; top: -5px; bottom: -5px; background: radial-gradient(ellipse at 18% 72%, color-mix(in srgb, var(--team-color, #00d7c4) 22%, transparent), transparent 66%), linear-gradient(90deg, color-mix(in srgb, var(--team-color, #00d7c4) 9%, transparent), transparent 86%); filter: blur(9px); pointer-events: none; }
 .driver-card .driver-firstname, .driver-card .driver-lastname { position: relative; z-index: 2; text-shadow: 0 2px 12px rgba(0, 0, 0, .8); width: 100%; max-width: 100%; min-width: 0; overflow: hidden; }
-.driver-card .driver-firstname { font-size: 14px !important; line-height: 1.1 !important; color: #a6abb3 !important; letter-spacing: .08em !important; font-weight: 500 !important; white-space: nowrap; text-overflow: ellipsis; }
-.driver-card .driver-lastname { margin-top: 3px; font-size: clamp(30px, 2.4vw, 39px) !important; line-height: .88 !important; color: #f5f5f6; font-weight: 900 !important; letter-spacing: -.055em !important; text-transform: uppercase; white-space: nowrap; text-overflow: ellipsis; }
+.driver-card .driver-firstname { 
+  font-size: 14px !important;
+  line-height: 1.1 !important; 
+  color: #a6abb3 !important; 
+  letter-spacing: .08em !important; 
+  font-weight: 500 !important; 
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
+.driver-card .driver-lastname { 
+  margin-top: 3px; 
+  font-size: clamp(30px, 2.4vw, 39px) !important;
+  line-height: .88 !important; 
+  color: #f5f5f6; 
+  font-weight: 900 !important; 
+  letter-spacing: -.055em !important; 
+  text-transform: uppercase; 
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
 
 .driver-card .driver-stats-row { position: relative; z-index: 8; margin-top: 0 !important; padding-top: 9px !important; border-top: 1px solid #25292f; min-width: 0; }
 .driver-card .driver-stats-row > div { min-width: 0; }
@@ -333,7 +351,14 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
 @container (max-width: 420px) {
   .driver-card .driver-photo { left: 15% !important; width: 100% !important; }
-  .driver-card .driver-name-zone { width: fit-content !important; max-width: 88% !important; min-height: auto !important; margin-bottom: 6px !important; padding: 5px 0 6px !important; align-items: flex-start !important; }
+  .driver-card .driver-name-zone { 
+    width: fit-content !important; 
+    max-width: 88% !important; 
+    min-height: auto !important; 
+    margin-bottom: 6px !important; 
+    padding: 5px 0 6px !important; 
+    align-items: flex-start !important; 
+  }
   .driver-card .driver-firstname { font-size: clamp(11px, 3.8cqw, 13px) !important; line-height: 1.1 !important; }
   .driver-card .driver-lastname { margin-top: 3px !important; font-size: clamp(20px, 7.5cqw, 28px) !important; line-height: .9 !important; }
   .driver-card .driver-number { top: 9px !important; right: 9px !important; font-size: 31px !important; }
@@ -365,7 +390,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .team-card .team-card-driver-mini .driver-mini-points { margin-top: 5px !important; font-size: 7px !important; color: color-mix(in srgb, var(--team-color, #00d7c4) 72%, #8b9098) !important; font-weight: 700; line-height: 1 !important; }
 
 /* =========================================================
-   6. MODAL PROFILES BASE
+   6. MODAL PROFILES BASE STRUCTURE
    ========================================================= */
 .modal-backdrop { animation: fadeIn .18s ease; }
 .modal-box { animation: modalIn .22s ease; }
@@ -376,32 +401,32 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 #profile-modal:not(.hidden) { display: flex !important; }
 #profile-modal.hidden { display: none !important; }
 
-#profile-modal .modal-box { width: min(1200px, 96vw) !important; height: min(840px, calc(100vh - 36px)) !important; min-height: 0 !important; max-height: calc(100vh - 36px) !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; box-sizing: border-box !important; background: #090909; border: 1px solid #252525; border-radius: 12px; }
+#profile-modal .modal-box { width: min(1100px, 100%) !important; height: min(820px, calc(100vh - 40px)) !important; min-height: 0 !important; max-width: 1100px !important; max-height: calc(100vh - 40px) !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; box-sizing: border-box !important; background: #090909; border: 1px solid #252525; border-radius: 12px; }
 #profile-modal .modal-box > #profile-color-bar { flex: 0 0 4px !important; width: 100% !important; height: 4px !important; min-height: 4px !important; max-height: 4px !important; }
-#profile-modal .modal-box > .p-6.md\:p-8 { width: 100% !important; height: auto !important; min-height: 0 !important; flex: 1 1 auto !important; margin: 0 !important; padding: 22px 24px !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; box-sizing: border-box !important; }
-#profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start { width: 100% !important; min-width: 0 !important; min-height: 52px !important; gap: 20px !important; flex: 0 0 auto !important; align-items: flex-start !important; box-sizing: border-box !important; }
+#profile-modal .modal-box > .p-6.md\:p-8 { width: 100% !important; height: auto !important; min-height: 0 !important; flex: 1 1 auto !important; margin: 0 !important; padding: 24px !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; box-sizing: border-box !important; }
+#profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start { width: 100% !important; min-width: 0 !important; min-height: 58px !important; gap: 20px !important; flex: 0 0 auto !important; align-items: flex-start !important; box-sizing: border-box !important; }
 #profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start > div:first-child { flex: 1 1 auto !important; min-width: 0 !important; width: auto !important; }
-#profile-modal #profile-name { display: block !important; width: 100% !important; max-width: calc(100% - 56px) !important; min-width: 0 !important; margin-right: 0 !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; line-height: .92 !important; font-size: clamp(30px, 4.5vw, 54px) !important; letter-spacing: -.045em !important; }
-#profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start > button { flex: 0 0 40px !important; width: 40px !important; height: 40px !important; margin-top: 0 !important; }
+#profile-modal #profile-name { display: block !important; width: 100% !important; max-width: calc(100% - 56px) !important; min-width: 0 !important; margin-right: 0 !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; line-height: .92 !important; font-size: clamp(34px, 5vw, 60px) !important; letter-spacing: -.045em !important; }
+#profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start > button { flex: 0 0 44px !important; width: 44px !important; height: 44px !important; margin-top: 0 !important; }
 
 #driver-profile-content.hidden, #team-profile-content.hidden { display: none !important; }
 
 /* Timeline Base */
-#profile-career.profile-career-list { --career-year-col: 48px; --career-rail-col: 20px; --career-gap: 8px; position: relative; flex: 1 1 auto; width: 100% !important; height: 0 !important; min-width: 0 !important; min-height: 0 !important; max-height: none !important; margin-top: 12px !important; padding: 2px 6px 2px 0 !important; overflow-y: auto !important; overflow-x: hidden !important; overscroll-behavior: contain !important; box-sizing: border-box !important; scrollbar-width: thin !important; scrollbar-color: #3a4049 transparent !important; }
+#profile-career.profile-career-list { --career-year-col: 54px; --career-rail-col: 22px; --career-gap: 10px; position: relative; flex: 1 1 auto; width: 100% !important; height: 0 !important; min-width: 0 !important; min-height: 0 !important; max-height: none !important; margin-top: 14px !important; padding: 2px 6px 2px 0 !important; overflow-y: auto !important; overflow-x: hidden !important; overscroll-behavior: contain !important; box-sizing: border-box !important; scrollbar-width: thin !important; scrollbar-color: #3a4049 transparent !important; }
 #profile-career.profile-career-list::-webkit-scrollbar { width: 5px; }
 #profile-career.profile-career-list::-webkit-scrollbar-track { background: transparent; }
 #profile-career.profile-career-list::-webkit-scrollbar-thumb { background: #3a4049; border-radius: 999px; }
 #profile-career.profile-career-list::-webkit-scrollbar-thumb:hover { background: #505762; }
-#profile-career .profile-career-item { --event-color: #00d7b6; position: relative; display: grid; grid-template-columns: var(--career-year-col) var(--career-rail-col) minmax(0, 1fr); column-gap: var(--career-gap); align-items: start; justify-items: start; min-height: 68px; width: 100%; padding: 0 0 12px; margin: 0; box-sizing: border-box; min-width: 0 !important; max-width: 100% !important; }
-#profile-career .profile-career-year { grid-column: 1; grid-row: 1; justify-self: start; align-self: start; width: var(--career-year-col); padding-top: 2px; margin: 0; text-align: left; font: 900 10px/1.15 Inter, sans-serif; letter-spacing: -.02em; color: #edf0f3; white-space: nowrap; position: relative; z-index: 2; box-sizing: border-box; }
-#profile-career .profile-career-marker { grid-column: 2; grid-row: 1; justify-self: start; width: var(--career-rail-col); height: 18px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 3; box-sizing: border-box; }
-#profile-career .profile-career-copy { grid-column: 3; grid-row: 1; justify-self: stretch; min-width: 0 !important; width: 100%; padding: 0 2px 0 0; margin: 0; position: relative; z-index: 2; box-sizing: border-box; overflow: hidden !important; max-width: 100% !important; transform: translateY(1px); }
-#profile-career .profile-career-item::after { content: ""; position: absolute; z-index: 0; top: 9px; bottom: -9px; left: calc(var(--career-year-col) + var(--career-gap) + (var(--career-rail-col) / 2)); width: 2px; transform: translateX(-1px); background: var(--event-color); opacity: .52; border-radius: 99px; pointer-events: none; }
+#profile-career .profile-career-item { --event-color: #00d7b6; position: relative; display: grid; grid-template-columns: 54px 22px minmax(0, 1fr); column-gap: 10px; align-items: start; justify-items: start; min-height: 76px; width: 100%; padding: 0 0 14px; margin: 0; box-sizing: border-box; min-width: 0 !important; max-width: 100% !important; }
+#profile-career .profile-career-year { grid-column: 1; grid-row: 1; justify-self: start; align-self: start; width: 54px; padding-top: 3px; margin: 0; text-align: left; font: 900 10px/1.15 Inter, sans-serif; letter-spacing: -.02em; color: #edf0f3; white-space: nowrap; position: relative; z-index: 2; box-sizing: border-box; }
+#profile-career .profile-career-marker { grid-column: 2; grid-row: 1; justify-self: start; width: 22px; height: 20px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 3; box-sizing: border-box; }
+#profile-career .profile-career-copy { grid-column: 3; grid-row: 1; justify-self: stretch; min-width: 0 !important; width: 100%; padding: 1px 2px 0 0; margin: 0; position: relative; z-index: 2; box-sizing: border-box; overflow: hidden !important; max-width: 100% !important; transform: translateY(2px); }
+#profile-career .profile-career-item::after { content: ""; position: absolute; z-index: 0; top: 10px; bottom: -10px; left: calc(var(--career-year-col) + var(--career-gap) + (var(--career-rail-col) / 2)); width: 2px; transform: translateX(-1px); background: var(--event-color); opacity: .52; border-radius: 99px; pointer-events: none; }
 #profile-career .profile-career-item:last-child::after { display: none; }
-#profile-career .profile-career-marker span { width: 9px; height: 9px; flex: 0 0 9px; border-radius: 50%; background: var(--event-color); border: 2px solid #0d0f12; box-shadow: 0 0 0 1px color-mix(in srgb, var(--event-color) 45%, transparent), 0 0 12px color-mix(in srgb, var(--event-color) 38%, transparent); box-sizing: border-box; }
-#profile-career .profile-career-item:last-child .profile-career-marker span { width: 10px; height: 10px; flex-basis: 10px; box-shadow: 0 0 0 3px color-mix(in srgb, var(--event-color) 12%, transparent), 0 0 16px color-mix(in srgb, var(--event-color) 45%, transparent); }
-#profile-career .profile-career-copy strong { display: block; margin: 0; font-size: 11.5px; line-height: 1.2; font-weight: 850; letter-spacing: -.015em; color: #f5f6f7; max-width: 100% !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
-#profile-career .profile-career-copy .career-detail { display: block; margin-top: 3px; max-width: 100% !important; color: #747d88; font-size: 8.5px; font-weight: 500; line-height: 1.4; overflow-wrap: anywhere !important; }
+#profile-career .profile-career-marker span { width: 10px; height: 10px; flex: 0 0 10px; border-radius: 50%; background: var(--event-color); border: 2px solid #0d0f12; box-shadow: 0 0 0 1px color-mix(in srgb, var(--event-color) 45%, transparent), 0 0 12px color-mix(in srgb, var(--event-color) 38%, transparent); box-sizing: border-box; }
+#profile-career .profile-career-item:last-child .profile-career-marker span { width: 11px; height: 11px; flex-basis: 11px; box-shadow: 0 0 0 3px color-mix(in srgb, var(--event-color) 12%, transparent), 0 0 16px color-mix(in srgb, var(--event-color) 45%, transparent); }
+#profile-career .profile-career-copy strong { display: block; margin: 0; font-size: 12px; line-height: 1.2; font-weight: 850; letter-spacing: -.015em; color: #f5f6f7; max-width: 100% !important; }
+#profile-career .profile-career-copy .career-detail { display: block; margin-top: 4px; max-width: 100% !important; color: #747d88; font-size: 9px; font-weight: 500; line-height: 1.45; }
 
 /* Team Profile Base */
 .team-profile-shell { display: flex; flex-direction: column; gap: 14px; width: 100%; min-width: 0; }
@@ -412,62 +437,159 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .team-profile-car-section .profile-car-name { font-size: 25px; line-height: .95; font-weight: 900; letter-spacing: -.045em; color: #f4f5f6; }
 .team-profile-car-section .profile-car-link { font-size: 7px; letter-spacing: .16em; color: #646b74; text-decoration: none; }
 .team-profile-car-section .profile-car-link:hover { color: #fff; }
-.team-profile-car-section .profile-car-visual { position: relative !important; width: 100% !important; height: 180px !important; margin-top: 8px !important; overflow: hidden !important; display: flex !important; align-items: center !important; justify-content: center !important; }
-.team-profile-car-section .team-car-image { position: relative !important; width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .55)) !important; }
-.team-profile-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 20px; align-items: center; padding: 20px; }
+.team-profile-car-section .profile-car-visual { position: relative !important; width: 100% !important; height: 200px !important; margin-top: 8px !important; overflow: hidden !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+.team-profile-car-section .team-car-image { position: relative !important; left: auto !important; top: auto !important; width: 100% !important; max-width: 100% !important; height: 100% !important; max-height: 100% !important; object-fit: contain !important; object-position: center !important; display: block !important; filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .55)) !important; transform: none !important; }
+.team-profile-overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 20px; align-items: center; padding: 22px; }
 .team-profile-brand { display: flex; align-items: center; gap: 16px; min-width: 0; }
-.team-profile-logo-box { width: 84px; height: 62px; display: flex; align-items: center; justify-content: center; flex: 0 0 84px; border: 1px solid #24272c; border-radius: 8px; background: #0a0b0d; }
-.team-profile-logo-box img { width: 70px; height: 48px; object-fit: contain; flex-shrink: 0; }
-.team-profile-shortname { margin-top: 6px; font-size: 22px; line-height: 1; font-weight: 900; letter-spacing: -.045em; text-transform: uppercase; color: #f4f5f6; }
-.team-profile-official { display: inline-block; margin-top: 8px; font-size: 7px; line-height: 1; letter-spacing: .16em; color: #69717c; text-decoration: none; }
+.team-profile-logo-box { width: 88px; height: 66px; display: flex; align-items: center; justify-content: center; flex: 0 0 88px; border: 1px solid #24272c; border-radius: 8px; background: #0a0b0d; }
+.team-profile-logo-box img { width: 74px; height: 52px; object-fit: contain; flex-shrink: 0; }
+.team-profile-shortname { margin-top: 6px; font-size: 24px; line-height: 1; font-weight: 900; letter-spacing: -.045em; text-transform: uppercase; color: #f4f5f6; }
+.team-profile-official { display: inline-block; margin-top: 9px; font-size: 7px; line-height: 1; letter-spacing: .16em; color: #69717c; text-decoration: none; }
 .team-profile-official:hover { color: #fff; }
 .team-profile-champ { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: end; padding-left: 18px; border-left: 1px solid #24272c; }
-.team-profile-position { margin-top: 6px; font-size: 48px; line-height: .82; font-weight: 950; letter-spacing: -.065em; color: #f5f5f6; }
-.team-profile-points { margin-top: 6px; font-size: 28px; line-height: .9; font-weight: 900; letter-spacing: -.045em; color: #f5f5f6; }
+.team-profile-position { margin-top: 6px; font-size: 52px; line-height: .82; font-weight: 950; letter-spacing: -.065em; color: #f5f5f6; }
+.team-profile-points { margin-top: 6px; font-size: 30px; line-height: .9; font-weight: 900; letter-spacing: -.045em; color: #f5f5f6; }
 .team-profile-info { padding: 18px 20px; }
-.team-profile-info-head, .team-profile-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
-.team-profile-info-head h3, .team-profile-section-head h3 { margin: 4px 0 0; font-size: 17px; line-height: 1; font-weight: 900; letter-spacing: -.035em; color: #f1f2f3; }
+.team-profile-info-head, .team-profile-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 13px; }
+.team-profile-info-head h3, .team-profile-section-head h3 { margin: 5px 0 0; font-size: 18px; line-height: 1; font-weight: 900; letter-spacing: -.035em; color: #f1f2f3; }
+.team-profile-info-head > span, .team-profile-section-head > span { font-size: 7px; letter-spacing: .18em; color: #505760; }
 .team-profile-info-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid #24272c; border-radius: 8px; overflow: hidden; }
-.team-profile-info-item { min-width: 0; min-height: 68px; padding: 12px 14px; background: rgba(255, 255, 255, .012); border-right: 1px solid #24272c; }
+.team-profile-info-item { min-width: 0; min-height: 70px; padding: 13px 14px; background: rgba(255, 255, 255, .012); border-right: 1px solid #24272c; }
 .team-profile-info-item:last-child { border-right: 0; }
 .team-profile-info-item span { display: block; font-size: 6.5px; line-height: 1.2; letter-spacing: .18em; color: #626a75; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.team-profile-info-item strong { display: block; margin-top: 8px; font-size: 11px; line-height: 1.25; font-weight: 800; color: #eef0f2; }
+.team-profile-info-item strong { display: block; margin-top: 9px; font-size: 11px; line-height: 1.25; font-weight: 800; color: #eef0f2; }
 .team-profile-lineup-section { padding: 18px 20px 20px; }
-.team-profile-lineup-section .team-driver-mini { min-height: 280px; height: 280px; }
-#team-profile-content { position: relative !important; flex: 1 1 0 !important; height: 0 !important; min-height: 0 !important; max-height: none !important; width: 100% !important; min-width: 0 !important; overflow-y: auto !important; overflow-x: hidden !important; scrollbar-width: thin !important; scrollbar-color: #3a4049 transparent !important; box-sizing: border-box !important; margin: 20px 0 0 !important; padding: 0 6px 4px 0 !important; display: block !important; }
+.team-profile-lineup-section #team-profile-drivers { min-width: 0; }
+.team-profile-lineup-section .team-driver-mini { min-height: 300px; height: 300px; }
+#team-profile-content { position: relative !important; flex: 1 1 0 !important; height: 0 !important; min-height: 0 !important; max-height: none !important; width: 100% !important; min-width: 0 !important; overflow-y: auto !important; overflow-x: hidden !important; scrollbar-width: thin !important; scrollbar-color: #3a4049 transparent !important; box-sizing: border-box !important; margin: 22px 0 0 !important; padding: 0 6px 4px 0 !important; display: block !important; }
 
-/* Visual Components */
-.profile-driver-visual { position: relative !important; width: 100% !important; height: 100% !important; min-width: 0 !important; min-height: 0 !important; overflow: hidden !important; pointer-events: none; isolation: isolate; border: 1px solid #1c1e23; border-radius: 10px; background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.02), transparent 70%), linear-gradient(180deg, #0d0e11 0%, #090a0c 100%); box-sizing: border-box !important; }
-.profile-driver-visual:before { content: ""; position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse at 28% 78%, color-mix(in srgb, var(--team-color, #00d7c4) 22%, transparent), transparent 58%), linear-gradient(90deg, rgba(9, 9, 10, .82), rgba(9, 9, 10, .16) 48%, transparent 82%); }
-.profile-driver-grid { position: absolute; inset: 0; z-index: 1; opacity: .22; background-image: linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(90deg, black, transparent 82%); }
-.profile-driver-dots { position: absolute; z-index: 2; left: 0; bottom: 7%; width: 70%; height: 45%; opacity: .62; background-image: radial-gradient(color-mix(in srgb, var(--team-color, #00d7c4) 78%, transparent) 1px, transparent 1.6px); background-size: 8px 8px; mask-image: linear-gradient(90deg, black, transparent 92%); }
-.profile-driver-glow { position: absolute; z-index: 1; left: 2%; bottom: 3%; width: 84%; height: 58%; background: radial-gradient(ellipse, color-mix(in srgb, var(--team-color, #00d7c4) 24%, transparent), transparent 70%); filter: blur(24px); opacity: .68; }
-.profile-driver-ghost { position: absolute; z-index: 2; right: 4%; top: 2%; font: 950 clamp(80px, 16vh, 160px)/.8 Inter, sans-serif; letter-spacing: -.08em; color: rgba(255, 255, 255, .035); white-space: nowrap; pointer-events: none; }
-#profile-driver-image { position: absolute !important; left: 50% !important; bottom: 0 !important; top: auto !important; transform: translateX(-50%) !important; width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center bottom !important; z-index: 5; display: block; pointer-events: none; filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .75)); }
+/* =========================================================
+   7. ADS, SPONSORS & SIDERAILS
+   ========================================================= */
+#ad-container, #sponsor-slot { opacity: 0; visibility: hidden; pointer-events: none; }
+#ad-container.ad-ready, #sponsor-slot.ad-ready { opacity: 1; visibility: visible; pointer-events: auto; animation: adReveal .72s var(--ad-ease) both; }
+@keyframes adReveal { 0% { opacity: 0; transform: scale(.98); filter: blur(2px); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
+#ad-container { position: relative; will-change: opacity, transform; }
+#ad-container:after, #sponsor-slot .card:after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .16) 48%, rgba(255, 255, 255, .035) 52%, transparent 66%); transform: translateX(-120%); z-index: 5; }
+#ad-container.is-shining:after, #sponsor-slot.is-shining .card:after { opacity: 1; animation: adGlassSweep 1.35s var(--ad-ease) both; }
+@keyframes adGlassSweep { 0% { transform: translateX(-120%); opacity: 0; } 12% { opacity: .9; } 55% { opacity: .65; } 100% { transform: translateX(120%); opacity: 0; } }
+#ad-banner { transition: filter .45s ease, transform .7s var(--ad-ease); }
+#ad-container:hover #ad-banner { transform: scale(1.008); filter: brightness(1.025); }
 
-.profile-info-card { min-width: 0 !important; min-height: 0 !important; width: 100% !important; height: 100% !important; padding: 18px 20px !important; border: 1px solid #1c1e23; border-radius: 10px; background: linear-gradient(145deg, #111113, #0e0e10); overflow: hidden !important; box-sizing: border-box !important; }
-.profile-section-kicker { font-size: 8px; text-transform: uppercase; letter-spacing: .25em; color: #58709b; flex: 0 0 auto !important; }
-.profile-section-title { font-size: 22px; font-weight: 950; line-height: 1.08 !important; margin-top: 6px !important; color: #f4f4f5; flex: 0 0 auto !important; margin-bottom: 0 !important; }
-#profile-bio { display: none !important; }
+#side-ad-left, #side-ad-right { 
+  position: fixed !important; 
+  top: 80px !important; 
+  bottom: 16px !important;
+  height: auto !important; 
+  max-height: calc(100vh - 96px) !important;
+  display: none; 
+  width: var(--side-ad-width, 110px); 
+  z-index: 10 !important; 
+  overflow: hidden; 
+  opacity: 0; 
+  visibility: hidden; 
+  pointer-events: none; 
+  transform: none !important; 
+  border: 1px solid #25292f; 
+  border-radius: 5px; 
+  background: #0d0f12; 
+  isolation: isolate; 
+}
+#side-ad-left.ad-ready, #side-ad-right.ad-ready { display: block; opacity: 1; visibility: visible; pointer-events: auto; }
+#side-ad-left-link, #side-ad-right-link { display: block; width: 100%; height: 100%; position: relative; z-index: 1; }
+#side-ad-left-img, #side-ad-right-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+#side-ad-left:after, #side-ad-right:after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, .2) 48%, rgba(255, 255, 255, .04) 53%, transparent 67%); transform: translateX(-125%); }
+#side-ad-left.is-shining:after, #side-ad-right.is-shining:after { opacity: 1; animation: adGlassSweep 1.45s var(--ad-ease) both; }
 
-.profile-fact { padding: 10px 12px !important; border: 1px solid #24262b !important; border-radius: 8px !important; background: rgba(255, 255, 255, .012) !important; display: flex !important; flex-direction: column !important; justify-content: center !important; overflow: hidden !important; box-sizing: border-box !important; min-width: 0 !important; width: 100% !important; height: 100% !important; }
-.profile-fact-label { font-size: 6.5px !important; text-transform: uppercase !important; letter-spacing: .18em !important; color: #5d6674 !important; flex: 0 0 auto !important; line-height: 1.2 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
-.profile-fact-value { margin-top: 5px !important; font-size: 11px !important; font-weight: 800 !important; color: #f2f2f4 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; display: block !important; width: 100% !important; line-height: 1.2 !important; }
+@media (min-width: 1800px) {
+  #side-ad-left, #side-ad-right { --side-ad-width: 130px; top: 96px !important; bottom: 24px !important; max-height: calc(100vh - 120px) !important; }
+  #side-ad-left { left: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
+  #side-ad-right { right: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
+}
+
+@media (min-width: 1520px) and (max-width: 1799px) {
+  #side-ad-left, #side-ad-right { --side-ad-width: 105px; top: 96px !important; bottom: 24px !important; max-height: calc(100vh - 120px) !important; }
+  #side-ad-left { left: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
+  #side-ad-right { right: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
+}
+
+/* FIX: Tắt Side Ads trên màn hình laptop <= 1440px để tránh đè nội dung */
+@media (max-width: 1519px) {
+  #side-ad-left, #side-ad-right { display: none !important; visibility: hidden !important; }
+}
+
+/* =========================================================
+   8. RESPONSIVE CASCADE & NEWS/STANDINGS COLUMNS
+   ========================================================= */
+@media (min-width: 1024px) {
+  main > .grid { display: grid !important; align-items: stretch !important; }
+  #news { height: 100% !important; min-height: 0 !important; max-height: none !important; display: flex !important; flex-direction: column !important; position: relative; box-sizing: border-box; }
+  #news > div:first-child { flex: 0 0 auto !important; margin-bottom: 12px !important; }
+  .news-scroll-container { flex: 1 1 0 !important; min-height: 0 !important; height: 0 !important; overflow-y: auto !important; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #333 transparent; }
+  #news::after { content: ""; position: absolute; bottom: 0; left: 0; right: 6px; height: 60px; background: linear-gradient(to bottom, transparent, #080808); pointer-events: none; z-index: 10; }
+  .news-scroll-hint { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 12; display: flex; align-items: center; gap: 5px; font-size: 8px; letter-spacing: 0.18em; font-weight: 800; color: #888; background: rgba(13, 13, 15, 0.75); padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(4px); pointer-events: none; }
+  #standings { display: flex !important; flex-direction: column !important; height: 100% !important; }
+  #standings-content-wrap { flex: 1 1 auto !important; min-height: 0 !important; }
+  #ad-container { flex: 0 0 auto !important; }
+}
+
+@media (max-width: 1023px) {
+  #standings > .flex.items-start.justify-center { display: flex; }
+  #standings > .flex.items-start.justify-center > .flex-1 { width: 100%; }
+  #standings .sidebar-standing-card { min-height: 0; }
+  #ad-container { margin-top: 12px; }
+  .news-scroll-hint { display: none; }
+  #drivers-grid, #calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .driver-card { border-radius: 9px; }
+  .driver-card .driver-content { padding: 13px 13px 11px !important; }
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 3.8rem; line-height: .86; }
+  .mobile-scroll { overflow-x: auto; scrollbar-width: none; }
+  .mobile-scroll::-webkit-scrollbar { display: none; }
+}
 
 /* ==========================================================================
-   7. CHẾ ĐỘ MẶC ĐỊNH / DESKTOP / LANDSCAPE (CHUẨN 3 CỘT NHƯ ẢNH LEWIS HAMILTON)
-   Áp dụng khi màn hình rộng hoặc đang ở tỷ lệ xoay ngang (Landscape)
+   9. CHẾ ĐỘ LANDSCAPE CHUẨN 3 CỘT ĐỘC LẬP (NHƯ ẢNH VALTTERI BOTTAS)
+   Áp dụng khi màn hình có tỷ lệ chiều ngang lớn hơn chiều dọc
    ========================================================================== */
-@media (min-width: 851px) and (min-aspect-ratio: 1.08/1), (orientation: landscape) and (min-width: 600px) {
+@media (orientation: landscape) and (min-width: 640px) {
+  #profile-modal {
+    padding: clamp(8px, 2vh, 20px) !important;
+  }
+  #profile-modal .modal-box {
+    width: min(1320px, 96vw) !important;
+    height: min(840px, calc(100vh - 28px)) !important;
+    max-height: calc(100vh - 28px) !important;
+    overflow: hidden !important;
+  }
+  #profile-modal .modal-box > .p-6.md\:p-8 {
+    padding: clamp(12px, 2.2vh, 24px) !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+  #profile-modal .modal-box > .p-6.md\:p-8 > .flex.justify-between.items-start {
+    flex: 0 0 auto !important;
+    margin-bottom: clamp(6px, 1.2vh, 14px) !important;
+  }
+  #profile-name {
+    font-size: clamp(24px, 4.2vh, 42px) !important;
+  }
+
+  /* Grid chính 3 cột */
   #driver-profile-content {
     display: grid !important;
-    grid-template-columns: minmax(0, 1.8fr) minmax(220px, 0.95fr) minmax(180px, 0.85fr) !important;
-    grid-template-rows: minmax(0, 1.35fr) minmax(0, 0.72fr) minmax(0, 1.35fr) !important;
-    gap: clamp(8px, 1.3vh, 14px) !important;
-    flex: 1 1 0 !important;
-    min-height: 0 !important;
+    grid-template-columns: minmax(0, 1.8fr) minmax(210px, 0.95fr) minmax(170px, 0.8fr) !important;
+    grid-template-rows: minmax(0, 1.35fr) minmax(0, 0.7fr) minmax(0, 1.35fr) !important;
+    gap: clamp(8px, 1.2vh, 14px) !important;
     height: 100% !important;
-    margin: 16px 0 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    flex: 1 1 0 !important;
   }
 
   /* CỘT 1 - HÀNG 1: Car Number & Constructor Box */
@@ -475,55 +597,45 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     grid-column: 1 !important;
     grid-row: 1 !important;
     display: grid !important;
-    grid-template-columns: clamp(105px, 12vw, 150px) minmax(0, 1fr) !important;
+    grid-template-columns: clamp(105px, 12vw, 145px) minmax(0, 1fr) !important;
     gap: clamp(8px, 1vh, 12px) !important;
     height: 100% !important;
     min-height: 0 !important;
+    max-height: none !important;
   }
   #profile-number-box, #driver-profile-content .profile-constructor-box {
     height: 100% !important;
     min-height: 0 !important;
-    padding: clamp(10px, 1.6vh, 16px) clamp(12px, 1.5vw, 18px) !important;
-    background: linear-gradient(145deg, #111113, #0d0d0f) !important;
-    border: 1px solid #1c1e23;
-    border-radius: 9px !important;
-    position: relative;
-    overflow: hidden !important;
+    padding: clamp(8px, 1.5vh, 16px) !important;
   }
-  #profile-number-box { border-bottom: 3px solid var(--team-color, #00d7c4) !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
-  #profile-number { font-size: clamp(38px, 7vh, 66px) !important; line-height: .88 !important; font-weight: 900; margin-top: clamp(2px, 0.5vh, 6px) !important; color: #fff; }
-  #profile-number-box .profile-number { font-size: clamp(65px, 13vh, 105px) !important; line-height: .75; right: 8px; bottom: 4px; opacity: .045; position: absolute; pointer-events: none; }
-  
-  #driver-profile-content .profile-constructor-info { width: 100% !important; height: 100% !important; display: flex !important; align-items: center !important; }
-  #driver-profile-content .profile-constructor-info > .flex { gap: clamp(10px, 1.4vw, 16px) !important; align-items: center !important; }
-  #profile-team-logo { width: clamp(48px, 5.5vw, 70px) !important; height: clamp(34px, 4.5vh, 52px) !important; object-fit: contain !important; }
-  #driver-profile-content #profile-team { font-size: clamp(14px, 2.2vh, 20px) !important; font-weight: 900 !important; text-transform: uppercase; line-height: 1.1 !important; margin-top: 3px !important; }
-  #driver-profile-content #profile-nationality { font-size: clamp(8.5px, 1.2vh, 11px) !important; color: #777 !important; margin-top: 2px !important; }
+  #profile-number {
+    font-size: clamp(38px, 7vh, 64px) !important;
+  }
 
   /* CỘT 1 - HÀNG 2: 4 Ô thống kê */
   #driver-stats {
     grid-column: 1 !important;
     grid-row: 2 !important;
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 1px;
     height: 100% !important;
     min-height: 0 !important;
-    background: #202020;
-    border: 1px solid #202020;
-    border-radius: 8px;
-    overflow: hidden !important;
+    max-height: none !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1px !important;
   }
-  #driver-stats > div { background: #101010; padding: clamp(4px, 1vh, 10px) clamp(8px, 1.2vw, 14px) !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
-  #driver-stats > div .timing-label { font-size: clamp(6px, 0.9vh, 7.5px) !important; }
-  #driver-stats > div .text-xl { font-size: clamp(15px, 2.8vh, 22px) !important; font-weight: 900; margin-top: clamp(1px, 0.4vh, 4px) !important; color: #fff; }
+  #driver-stats > div {
+    padding: clamp(4px, 1vh, 10px) clamp(6px, 1vw, 12px) !important;
+  }
+  #driver-stats > div .text-xl {
+    font-size: clamp(15px, 2.8vh, 22px) !important;
+  }
 
-  /* Giải phóng cha để 2 card con tự xếp thành 2 cột độc lập */
+  /* Bung khối cha để 2 card con tự động thành 2 cột độc lập */
   .driver-profile-about {
     display: contents !important;
   }
 
-  /* CỘT 1 - HÀNG 3: Driver Dossier với 4 ô ngang */
+  /* CỘT 1 - HÀNG 3: Driver Dossier với 4 ô dàn ngang */
   .driver-profile-about > .profile-info-card:first-child {
     grid-column: 1 !important;
     grid-row: 3 !important;
@@ -536,19 +648,13 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
       "kicker kicker kicker kicker"
       "title title title title"
       "fact1 fact2 fact3 fact4" !important;
-    column-gap: clamp(6px, 0.8vw, 10px) !important;
-    row-gap: clamp(4px, 0.8vh, 8px) !important;
-    padding: clamp(10px, 1.6vh, 16px) clamp(12px, 1.5vw, 18px) !important;
-    align-content: stretch !important;
+    column-gap: 8px !important;
+    row-gap: 6px !important;
+    padding: clamp(8px, 1.5vh, 16px) !important;
   }
-  .driver-profile-about > .profile-info-card:first-child > .profile-section-kicker { grid-area: kicker !important; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-section-title { grid-area: title !important; margin-bottom: clamp(2px, 0.5vh, 6px) !important; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-facts,
-  .driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra { display: contents !important; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-facts-compact .profile-fact:nth-child(1) { grid-area: fact1; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-facts-compact .profile-fact:nth-child(2) { grid-area: fact2; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra .profile-fact:nth-child(1) { grid-area: fact3; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra .profile-fact:nth-child(2) { grid-area: fact4; }
+  .profile-fact {
+    padding: clamp(6px, 1vh, 10px) 8px !important;
+  }
 
   /* CỘT 2: Career Timeline độc lập từ trên xuống dưới */
   .driver-profile-about > .profile-info-card:nth-child(2) {
@@ -558,34 +664,49 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     min-height: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    padding: clamp(12px, 1.8vh, 20px) clamp(12px, 1.4vw, 18px) !important;
+    padding: clamp(10px, 1.6vh, 18px) !important;
   }
   #profile-career.profile-career-list {
-    margin-top: clamp(8px, 1.2vh, 14px) !important;
     flex: 1 1 0 !important;
     min-height: 0 !important;
     height: 0 !important;
     overflow-y: auto !important;
   }
 
-  /* CỘT 3: Driver Portrait Visual chiếm trọn cột phải */
+  /* CỘT 3: Driver Visual chiếm trọn cột phải */
   .profile-driver-visual {
     grid-column: 3 !important;
     grid-row: 1 / 4 !important;
     height: 100% !important;
     min-height: 0 !important;
     width: 100% !important;
+    border-radius: 9px !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  #profile-driver-image {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 0 !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center bottom !important;
   }
 }
 
 /* ==========================================================================
-   8. CHẾ ĐỘ DỌC / CỬA SỔ CHIA ĐÔI HẸP (CHUẨN GIAO DIỆN NHƯ ẢNH GEORGE RUSSELL)
-   Cột ảnh bên phải linh hoạt thu gọn, nhường không gian cho cột chữ không bị cắt
+   10. CHẾ ĐỘ PORTRAIT & CỬA SỔ HẸP DỌC (FIX LỖI CHÈN CHỮ GEORGE RUSSELL)
+   Reset triệt để các thuộc tính từ Landscape để bảo toàn giao diện
    ========================================================================== */
-@media (max-width: 850px), (orientation: portrait) and (max-aspect-ratio: 1.08/1) {
+@media (orientation: portrait), (max-width: 850px) {
+
+  /* Lưới 2 cột: Cột trái (1fr) nở tối đa, Cột ảnh phải chỉ ôm vừa dáng người */
   #driver-profile-content {
     display: grid !important;
-    grid-template-columns: minmax(0, 1fr) clamp(85px, 24vw, 125px) !important;
+    grid-template-columns: minmax(0, 1fr) clamp(85px, 24vw, 135px) !important;
     grid-template-rows: 92px 56px minmax(0, 1fr) !important;
     gap: 10px !important;
     height: 100% !important;
@@ -593,7 +714,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     margin-top: 10px !important;
   }
 
-  /* Hàng 1 & 2 trải dài 100% bề ngang */
+  /* Hàng 1 & 2: Phủ trọn bề ngang */
   #driver-profile-content > .grid:first-of-type {
     grid-column: 1 / -1 !important;
     grid-row: 1 !important;
@@ -609,19 +730,11 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     min-height: 92px !important;
     max-height: 92px !important;
     padding: 8px 12px !important;
-    border-radius: 8px !important;
-    background: linear-gradient(145deg, #111113, #0d0d0f);
-    border: 1px solid #1c1e23;
   }
-  #profile-number-box { border-bottom: 3px solid var(--team-color, #00d7c4) !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
-  #profile-number { font-size: 48px !important; margin-top: 2px !important; line-height: .88 !important; font-weight: 900; }
-  #profile-number-box .profile-number { font-size: 70px !important; position: absolute; right: 6px; bottom: 2px; opacity: .04; }
-
-  #driver-profile-content .profile-constructor-info { height: 100% !important; display: flex !important; align-items: center !important; }
-  #driver-profile-content .profile-constructor-info > .flex { gap: 10px !important; align-items: center !important; }
-  #profile-team-logo { width: 42px !important; height: 32px !important; object-fit: contain !important; }
-  #driver-profile-content #profile-team { font-size: 15px !important; font-weight: 900 !important; }
-  #driver-profile-content #profile-nationality { font-size: 9px !important; color: #777; margin-top: 1px !important; }
+  #profile-number {
+    font-size: 48px !important;
+    margin-top: 2px !important;
+  }
 
   #driver-stats {
     grid-column: 1 / -1 !important;
@@ -631,16 +744,16 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     max-height: 56px !important;
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
-    gap: 1px;
-    background: #202020;
-    border: 1px solid #202020;
-    border-radius: 8px;
-    overflow: hidden;
   }
-  #driver-stats > div { background: #101010; padding: 6px 8px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
-  #driver-stats > div .text-xl { font-size: 17px !important; font-weight: 900; margin-top: 2px !important; }
+  #driver-stats > div {
+    padding: 6px 8px !important;
+  }
+  #driver-stats > div .text-xl {
+    font-size: 17px !important;
+    margin-top: 2px !important;
+  }
 
-  /* Hàng 3 Cột 1: Cột thông tin chữ nới rộng tối đa */
+  /* RESET: Khôi phục .driver-profile-about thành cột bên trái ở Hàng 3 */
   .driver-profile-about {
     display: flex !important;
     flex-direction: column !important;
@@ -652,7 +765,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     overflow: hidden !important;
   }
 
-  /* Card 1: Overview 2x2 gọn gàng */
+  /* RESET Card Overview: Dạng lưới 2x2 gọn gàng */
   .driver-profile-about > .profile-info-card:first-child {
     grid-column: auto !important;
     grid-row: auto !important;
@@ -669,19 +782,26 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     flex: 0 0 auto !important;
     height: auto !important;
   }
-  .driver-profile-about > .profile-info-card:first-child > .profile-section-kicker { grid-area: kicker !important; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-section-title { grid-area: title !important; font-size: 16px !important; margin-top: 1px !important; margin-bottom: 2px !important; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-facts,
-  .driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra { display: contents !important; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-facts-compact .profile-fact:nth-child(1) { grid-area: fact1; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-facts-compact .profile-fact:nth-child(2) { grid-area: fact2; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra .profile-fact:nth-child(1) { grid-area: fact3; }
-  .driver-profile-about > .profile-info-card:first-child > .profile-dossier-extra .profile-fact:nth-child(2) { grid-area: fact4; }
-  .profile-fact { padding: 6px 8px !important; }
-  .profile-fact-label { font-size: 6px !important; }
-  .profile-fact-value { font-size: 10.5px !important; margin-top: 2px !important; }
+  .profile-section-title {
+    font-size: 16px !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+  }
+  .profile-fact {
+    padding: 6px 8px !important;
+  }
+  .profile-fact-label {
+    font-size: 6px !important;
+  }
+  .profile-fact-value {
+    font-size: 10.5px !important;
+    margin-top: 2px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
 
-  /* Card 2: Career xếp phía dưới với mốc thời gian thu gọn */
+  /* RESET Card Career: Nằm bên dưới Overview và tối ưu các cột mốc thời gian */
   .driver-profile-about > .profile-info-card:nth-child(2) {
     grid-column: auto !important;
     grid-row: auto !important;
@@ -692,10 +812,9 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     height: auto !important;
     padding: 10px 12px !important;
   }
-  .driver-profile-about > .profile-info-card:nth-child(2) .profile-section-title { font-size: 16px !important; margin-top: 1px !important; }
   #profile-career.profile-career-list {
-    --career-year-col: 36px !important;
-    --career-rail-col: 14px !important;
+    --career-year-col: 36px !important;  /* Thu gọn cột năm từ 54px xuống 36px */
+    --career-rail-col: 14px !important;  /* Thu gọn cột chấm từ 22px xuống 14px */
     --career-gap: 6px !important;
     margin-top: 6px !important;
     flex: 1 1 0 !important;
@@ -703,13 +822,29 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     height: 0 !important;
     overflow-y: auto !important;
   }
-  #profile-career .profile-career-year { width: 36px !important; font-size: 9px !important; }
-  #profile-career .profile-career-marker { width: 14px !important; }
-  #profile-career .profile-career-marker span { width: 7px !important; height: 7px !important; }
-  #profile-career .profile-career-copy strong { font-size: 11px !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
-  #profile-career .profile-career-copy .career-detail { font-size: 8px !important; line-height: 1.3 !important; }
+  #profile-career .profile-career-year {
+    width: 36px !important;
+    font-size: 9px !important;
+  }
+  #profile-career .profile-career-marker {
+    width: 14px !important;
+  }
+  #profile-career .profile-career-marker span {
+    width: 7px !important;
+    height: 7px !important;
+  }
+  #profile-career .profile-career-copy strong {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  #profile-career .profile-career-copy .career-detail {
+    font-size: 8px !important;
+    line-height: 1.3 !important;
+  }
 
-  /* Hàng 3 Cột 2: Khung ảnh tay đua thu gọn vừa vặn */
+  /* RESET Khung Visual: Nằm gọn ở Cột 2 Hàng 3 */
   .profile-driver-visual {
     grid-column: 2 !important;
     grid-row: 3 !important;
@@ -729,26 +864,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     object-fit: contain !important;
     object-position: center bottom !important;
   }
-  .profile-driver-ghost { font-size: 70px !important; }
-}
-
-/* ==========================================================================
-   9. TỐI ƯU LANDSCAPE CHIỀU CAO THẤP (MOBILE XOAY NGANG HEIGHT <= 480px)
-   ========================================================================== */
-@media (orientation: landscape) and (max-height: 480px) {
-  #profile-modal { padding: 6px !important; }
-  #profile-modal .modal-box { height: calc(100vh - 12px) !important; max-height: calc(100vh - 12px) !important; overflow-y: auto !important; }
-  #profile-modal .modal-box > .p-6.md\:p-8 { padding: 10px 14px !important; }
-  #driver-profile-content { grid-template-rows: 84px 48px minmax(100px, 1fr) !important; gap: 8px !important; margin-top: 8px !important; }
-  #driver-profile-content > .grid:first-of-type { height: 84px !important; }
-  #profile-number-box, #driver-profile-content .profile-constructor-box { height: 84px !important; padding: 6px 10px !important; }
-  #profile-number { font-size: 34px !important; }
-  #driver-stats { height: 48px !important; }
-  #driver-stats > div .text-xl { font-size: 13px !important; }
-}
-
-@media (max-width: 1519px) {
-  #side-ad-left, #side-ad-right { display: none !important; visibility: hidden !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -916,12 +1031,14 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   </div>
 
   <div id="standings-content-wrap" class="flex items-start justify-center gap-3">
+    <!-- Left Banner -->
     <div id="side-ad-left" aria-hidden="true">
       <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
         <img id="side-ad-left-img" class="border border-[#202023]" alt="Advertisement">
       </a>
     </div>
 
+    <!-- Standings Boards -->
     <div class="flex-1 w-full min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3 h-full">
       <div class="sidebar-standing-card">
         <div class="standing-head">
@@ -944,6 +1061,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
       </div>
     </div>
 
+    <!-- Right Banner -->
     <div id="side-ad-right" aria-hidden="true">
       <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
         <img id="side-ad-right-img" class="border border-[#202023]" alt="Advertisement">
@@ -951,6 +1069,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     </div>
   </div>
 
+  <!-- Inline Banner -->
   <div id="ad-container" class="hidden ad-shell mt-3 shrink-0" aria-hidden="true">
     <div class="flex justify-between mb-1"><span class="sponsor-label">Sponsored</span></div>
     <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full h-[120px] rounded object-cover" alt="Advertisement" loading="eager" decoding="async"></a>
@@ -2418,4 +2537,132 @@ html+=`
 </a>`;
 });
 
-result.innerHTML=html||'<divTôi không thể trợ giúp về điều đó, vì tôi chỉ là một mô hình ngôn ngữ nên không có thông tin hoặc khả năng cần thiết.
+result.innerHTML=html||'<div class="text-gray-600 text-sm">No results found.</div>';
+}
+
+function toggleMobileMenu(){
+  const menu=document.getElementById('mobile-menu');
+  const toggle=document.getElementById('mobile-menu-toggle');
+  if(!menu)return;
+  menu.classList.remove('hidden');
+  const isOpen=menu.classList.toggle('is-open');
+  if(toggle){
+    toggle.setAttribute('aria-expanded',String(isOpen));
+    toggle.setAttribute('aria-label',isOpen?'Close menu':'Open menu');
+  }
+}
+
+document.querySelectorAll('#mobile-menu a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    const menu=document.getElementById('mobile-menu');
+    const toggle=document.getElementById('mobile-menu-toggle');
+    if(!menu)return;
+    menu.classList.remove('is-open');
+    if(toggle){
+      toggle.setAttribute('aria-expanded','false');
+      toggle.setAttribute('aria-label','Open menu');
+    }
+  });
+});
+
+async function sharePage(){
+const shareData={title:'007 | Formula 1 News & Race Control',text:'Follow Formula 1 news, race schedules and 2026 season data on 007.',url:location.href};
+try{
+if(navigator.share)await navigator.share(shareData);
+else{
+await navigator.clipboard.writeText(location.href);
+alert('Link copied.');
+}
+}catch{}
+}
+
+document.getElementById('race-modal').addEventListener('click',function(e){
+if(e.target===this)closeRaceModal();
+});
+
+document.getElementById('profile-modal').addEventListener('click',function(e){
+if(e.target===this)closeProfile();
+});
+
+document.addEventListener('keydown',function(e){
+  const key=String(e.key||'').toLowerCase();
+  const ctrl=e.ctrlKey;
+
+  if(e.key==='F12'||(ctrl&&key==='u')||(ctrl&&e.shiftKey&&(key==='i'||key==='j'||key==='c'))){
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+
+  if(e.key==='Escape'){
+    const raceModal=document.getElementById('race-modal');
+    const profileModal=document.getElementById('profile-modal');
+    if(raceModal && !raceModal.classList.contains('hidden')) closeRaceModal();
+    if(profileModal && !profileModal.classList.contains('hidden')) closeProfile();
+    document.getElementById('search-panel')?.classList.add('hidden');
+    return;
+  }
+
+  if(e.key==='Enter'||e.key===' '){
+    const card=e.target.closest('.driver-card[data-driver-id], .team-card-driver-mini[data-driver-id], .team-driver-mini[data-driver-id]');
+    if(!card)return;
+    e.preventDefault();
+    const id=card.dataset.driverId;
+    if(id)openDriverProfile(id);
+  }
+},true);
+
+document.addEventListener('contextmenu',function(e){
+e.preventDefault();
+});
+
+function setupAnchorNavigation(){
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',function(e){
+      const id=this.getAttribute('href');
+      if(!id||id==='#')return;
+      const target=document.querySelector(id);
+      if(!target)return;
+      e.preventDefault();
+      const header=document.querySelector('header');
+      const offset=(header?.getBoundingClientRect().height||80)+10;
+      const y=target.getBoundingClientRect().top+window.scrollY-offset;
+      window.history.replaceState(null,'',id);
+      window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+      
+      const menu=document.getElementById('mobile-menu');
+      const toggle=document.getElementById('mobile-menu-toggle');
+      if(menu){
+        menu.classList.remove('is-open');
+        if(toggle){
+          toggle.setAttribute('aria-expanded','false');
+          toggle.setAttribute('aria-label','Open menu');
+        }
+      }
+    });
+  });
+}
+
+document.addEventListener('click',function(e){
+  const card=e.target.closest('.driver-card[data-driver-id], .team-card-driver-mini[data-driver-id], .team-driver-mini[data-driver-id]');
+  if(!card || e.target.closest('a,button')) return;
+  const id=card.dataset.driverId;
+  if(id) openDriverProfile(id);
+},true);
+
+document.addEventListener('DOMContentLoaded',async()=>{
+  setupAnchorNavigation();
+  await Promise.allSettled([
+    fetchConfigAndTrack(),
+    fetchNews(),
+    fetchSchedule(),
+    fetchResults(),
+    fetchStandings()
+  ]);
+  renderDrivers();
+  renderTeams();
+});
+</script>
+
+</body>
+</html>
