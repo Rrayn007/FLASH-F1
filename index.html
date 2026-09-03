@@ -476,12 +476,10 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
   container-type: inline-size;
   width: min(1380px, calc(100vw - 16px));
-  height: min(820px, calc(100vh - 16px));
   height: min(820px, calc(100dvh - 16px));
   min-width: 0;
   min-height: 0;
   max-width: 1380px;
-  max-height: calc(100vh - 16px);
   max-height: calc(100dvh - 16px);
   margin: 0;
   padding: 0;
@@ -1479,7 +1477,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 /* JS already toggles these classes; avoid :has() for cleaner state control. */
 #profile-modal.team-profile-active .modal-box {
   height: auto;
-  max-height: calc(100vh - 16px);
   max-height: calc(100dvh - 16px);
 }
 
@@ -1493,7 +1490,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 #profile-modal.team-profile-active #team-profile-content {
   height: auto;
   flex: 0 1 auto;
-  max-height: calc(100vh - 150px);
   max-height: calc(100dvh - 150px);
   overflow-y: auto;
 }
