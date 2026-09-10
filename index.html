@@ -133,6 +133,11 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   min-height: 0 !important;
 }
 
+#standings-content-wrap > .flex-1 > .sidebar-standing-card {
+  min-height: 0 !important;
+  height: 100%;
+}
+
 .sidebar-standing-card { 
   border-radius: 10px; 
   overflow: hidden; 
@@ -725,7 +730,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   visibility: hidden;
   pointer-events: none;
   transform: translateX(0) scale(1);
-  transition: opacity .58s var(--ad-ease), transform .58s var(--ad-ease), visibility 0s linear .58s;
+  transition: opacity var(--motion-slow) var(--motion-ease), transform var(--motion-slow) var(--motion-ease), visibility 0s linear var(--motion-slow);
   border: 1px solid #25292f;
   border-radius: 5px;
   background: #0d0f12;
@@ -805,16 +810,15 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 @media (min-width: 1024px) {
-  /* News chỉ đồng bộ với vùng BXH, không bị kéo dài theo banner quảng cáo bên dưới. */
+  /* Desktop: both columns share the same row height. The right column
+     defines its natural height; News fills that height and scrolls internally. */
   main > .grid {
-    display: grid !important;
-    align-items: start !important;
+    align-items: stretch !important;
   }
 
   #news {
     min-height: 0 !important;
-    height: auto !important;
-    max-height: none !important;
+    height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
     position: relative;
@@ -829,52 +833,17 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   .news-scroll-container {
     flex: 1 1 0 !important;
     min-height: 0 !important;
-    height: 0 !important;
     overflow-y: auto !important;
     padding-right: 6px;
     scrollbar-width: thin;
     scrollbar-color: #333 transparent;
   }
 
-  #news::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 6px;
-    height: 60px;
-    background: linear-gradient(to bottom, transparent, #080808);
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  .news-scroll-hint {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 12;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 8px;
-    letter-spacing: 0.18em;
-    font-weight: 800;
-    color: #888;
-    background: rgba(13, 13, 15, 0.75);
-    padding: 4px 10px;
-    border-radius: 99px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(4px);
-    pointer-events: none;
-  }
-
-  /* BXH giữ chiều cao độc lập; banner inline nằm ngay bên dưới. */
   #standings {
+    height: 100% !important;
+    min-height: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    height: auto !important;
-    min-height: 0 !important;
   }
 
   #standings-content-wrap {
@@ -1138,15 +1107,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .ad-shell.ad-visible { opacity: 1; transform: translateY(0) scale(1); }
 .ad-shell.ad-entering { opacity: 0; transform: translateY(8px) scale(.985); }
 .ad-shell.ad-closing { opacity: 0; transform: translateY(5px) scale(.985); pointer-events: none; }
-
-#side-ad-left, #side-ad-right {
-  transition: opacity var(--motion-slow) var(--motion-ease), transform var(--motion-slow) var(--motion-ease), visibility 0s linear var(--motion-slow);
-  will-change: opacity, transform;
-}
-#side-ad-left.ad-visible, #side-ad-right.ad-visible { opacity: 1; visibility: visible; transform: translateX(0) scale(1); }
-#side-ad-left.ad-entering { opacity: 0; visibility: visible; transform: translateX(-18px) scale(.985); }
-#side-ad-right.ad-entering { opacity: 0; visibility: visible; transform: translateX(18px) scale(.985); }
-#side-ad-left.ad-closing, #side-ad-right.ad-closing { opacity: 0; visibility: visible; pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .ui-overlay, .ui-modal, .ui-modal .modal-box, .ad-shell, #side-ad-left, #side-ad-right { transition: none !important; }
@@ -1856,21 +1816,6 @@ function scheduleAdShine(el) {
   adShineTimers.set(el, setTimeout(run, 8500 + Math.random() * 5000));
 }
 
-function syncNewsToStandings() {
-  if (window.innerWidth < 1024) return;
-  const news = document.getElementById('news');
-  const wrap = document.getElementById('standings-content-wrap');
-  if (!news || !wrap) return;
-  const height = Math.ceil(wrap.getBoundingClientRect().height);
-  if (height > 0) news.style.height = `${height}px`;
-}
-
-let standingsSyncFrame = 0;
-function requestStandingsLayoutSync() {
-  cancelAnimationFrame(standingsSyncFrame);
-  standingsSyncFrame = requestAnimationFrame(syncNewsToStandings);
-}
-
 async function fetchConfigAndTrack() {
   // 1. Tải Config ưu tiên hiển thị UI
   const configRequest = (async () => {
@@ -2378,7 +2323,7 @@ renderStandings();
 renderDrivers();
 renderConstructorsSidebar();
 renderTeams();
-requestStandingsLayoutSync();
+
 }catch(error){
 console.error('Standings API:',error);
 document.getElementById('standings-board').innerHTML='<div class="p-6 text-center text-red-700 text-xs">API CONNECTION ERROR</div>';
