@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#080808">
 
-<!-- Primary SEO Meta Tags: Grid 007 Entity Optimization -->
-<title>Grid 007 | Formula 1 News, 2026 Race Calendar, Live Standings & Telemetry</title>
-<meta name="title" content="Grid 007 | Formula 1 News, 2026 Race Calendar, Live Standings & Telemetry">
+<!-- Primary SEO Meta Tags -->
+<title>Grid 007 | Formula 1 News, 2026 Race Calendar, Standings & Telemetry</title>
+<meta name="title" content="Grid 007 | Formula 1 News, 2026 Race Calendar, Standings & Telemetry">
 <meta name="description" content="Grid 007 is your tactical Formula 1 live hub. Real-time 2026 season data, race calendar, decoded driver dossiers, telemetry analytics, and constructor standings.">
 <meta name="keywords" content="Grid 007, Grid 007 F1, Formula 1, F1 2026, race calendar, standings, F1 results, driver dossier, constructors, telemetry">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -42,7 +42,7 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Schema.org Structured Data (JSON-LD) for Search Rich Snippets -->
+<!-- Schema.org Structured Data (JSON-LD) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1032,7 +1032,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     </svg>
   </a>
   <span class="w-[1px] h-[18px] sm:h-[22px] bg-[#1f2937]" aria-hidden="true"></span>
-  <span class="text-[9px] sm:text-[11px] uppercase tracking-[0.22em] sm:tracking-[0.32em] text-[#4b5563] font-normal select-none">Grid 007 · Formula 1</span>
+  <span class="text-[9px] sm:text-[11px] uppercase tracking-[0.22em] sm:tracking-[0.32em] text-[#4b5563] font-normal select-none">Formula 1</span>
 </div>
 
 <nav class="hidden lg:flex items-center gap-8 text-[10px] font-bold tracking-wider text-gray-500" aria-label="Main Navigation">
@@ -1856,12 +1856,15 @@ const OFFICIAL_RACE_SUMMARY={
 '9':{pole:'antonelli',podium:['leclerc','russell','hamilton']},
 '10':{pole:'antonelli',podium:['antonelli','leclerc','max_verstappen']},
 '11':{pole:'norris',podium:['norris','max_verstappen','antonelli']},
-'12':{pole:'norris',podium:['norris','antonelli','russell']}
+'12':{pole:'norris',podium:['norris','antonelli','russell']},
+'13':{pole:'norris',podium:['leclerc','piastri','norris']}
 };
 
 const OFFICIAL_RACE_SUMMARY_BY_NAME={
 'dutch grand prix':{pole:'norris',podium:['norris','antonelli','russell']},
-'netherlands':{pole:'norris',podium:['norris','antonelli','russell']}
+'netherlands':{pole:'norris',podium:['norris','antonelli','russell']},
+'italian grand prix':{pole:'norris',podium:['leclerc','piastri','norris']},
+'monza':{pole:'norris',podium:['leclerc','piastri','norris']}
 };
 
 function getOfficialRaceSummary(raceOrRound){
@@ -1943,50 +1946,55 @@ return key?RACE_BRAND_COLORS[key]:'#e10600';
 }
 
 function renderCalendar(){
-if(!races.length)return;
-document.getElementById('calendar-grid').innerHTML=races.map((race,index)=>{
-const result=getRaceResult(race.round);
-const pole=getPole(race);
-const podium=getPodium(race);
-const officialSummary=getOfficialRaceSummary(race);
-const completed=!!result||!!officialSummary;
-const isNext=nextRace&&String(race.round)===String(nextRace.round);
-const accent=getRaceBrandColor(race);
-return`
-<article class="calendar-card card ${completed?'completed-card':''} rounded-lg p-5 cursor-pointer" style="--accent:${accent}" onclick="openRaceModal(${index})">
-<div class="flex justify-between items-start">
-<span class="calendar-round text-[9px] font-black">ROUND ${race.round}</span>
-${completed?'<span class="status-badge calendar-status status-complete">COMPLETED</span>':isNext?'<span class="status-badge calendar-status status-next">NEXT</span>':'<span class="status-badge calendar-status status-upcoming">UPCOMING</span>'}
-</div>
-<h3 class="calendar-race-title font-black text-lg mt-5">${escapeHTML(race.raceName)}</h3>
-<div class="mt-6 flex justify-between items-end">
-<div>
-<div class="text-[8px] uppercase tracking-widest text-gray-600">Circuit</div>
-<div class="calendar-circuit text-xs mt-2">${escapeHTML(race.Circuit.circuitName)}</div>
-</div>
-<div class="text-right">
-<div class="calendar-date text-xs font-black">${formatDate(race.date)}</div>
-<div class="text-[8px] text-gray-600 mt-1">${escapeHTML(race.Circuit.Location.locality)}, ${escapeHTML(race.Circuit.Location.country)}</div>
-</div>
-</div>
-${completed&&pole?`
-<div class="mt-5">
-<div class="pole-chip">
-<span>POLE</span>
-<span>${escapeHTML(pole.Driver.familyName)}</span>
-</div>
-</div>`:''}
-${completed&&podium.length?`
-<div class="mt-4">
-<div class="text-[7px] uppercase tracking-widest text-gray-600 mb-2">PODIUM</div>
-${renderPodium(podium)}
-</div>`:''}
-<div class="mt-5 pt-3 border-t border-gray-900 flex justify-between">
-<span class="text-[8px] uppercase tracking-widest text-gray-700">${completed?'RACE RESULT':'RACE WEEKEND'}</span>
-<span class="text-[8px] text-gray-500">VIEW →</span>
-</div>
-</article>`;
-}).join('');
+  if(!races.length)return;
+  const now = new Date();
+
+  document.getElementById('calendar-grid').innerHTML=races.map((race,index)=>{
+    const result=getRaceResult(race.round);
+    const pole=getPole(race);
+    const podium=getPodium(race);
+    const officialSummary=getOfficialRaceSummary(race);
+    
+    // Đồng bộ kiểm tra: có kết quả API, hoặc có summary, hoặc thời gian chặng đua đã qua
+    const completed=!!result || !!officialSummary || (raceStart(race) <= now);
+    const isNext=!completed && nextRace && String(race.round)===String(nextRace.round);
+    const accent=getRaceBrandColor(race);
+
+    return`
+    <article class="calendar-card card ${completed?'completed-card':''} rounded-lg p-5 cursor-pointer" style="--accent:${accent}" onclick="openRaceModal(${index})">
+      <div class="flex justify-between items-start">
+        <span class="calendar-round text-[9px] font-black">ROUND ${race.round}</span>
+        ${completed?'<span class="status-badge calendar-status status-complete">COMPLETED</span>':isNext?'<span class="status-badge calendar-status status-next">NEXT</span>':'<span class="status-badge calendar-status status-upcoming">UPCOMING</span>'}
+      </div>
+      <h3 class="calendar-race-title font-black text-lg mt-5">${escapeHTML(race.raceName)}</h3>
+      <div class="mt-6 flex justify-between items-end">
+        <div>
+          <div class="text-[8px] uppercase tracking-widest text-gray-600">Circuit</div>
+          <div class="calendar-circuit text-xs mt-2">${escapeHTML(race.Circuit.circuitName)}</div>
+        </div>
+        <div class="text-right">
+          <div class="calendar-date text-xs font-black">${formatDate(race.date)}</div>
+          <div class="text-[8px] text-gray-600 mt-1">${escapeHTML(race.Circuit.Location.locality)}, ${escapeHTML(race.Circuit.Location.country)}</div>
+        </div>
+      </div>
+      ${completed&&pole?`
+      <div class="mt-5">
+        <div class="pole-chip">
+          <span>POLE</span>
+          <span>${escapeHTML(pole.Driver?.familyName || pole.Driver?.code || '')}</span>
+        </div>
+      </div>`:''}
+      ${completed&&podium.length?`
+      <div class="mt-4">
+        <div class="text-[7px] uppercase tracking-widest text-gray-600 mb-2">PODIUM</div>
+        ${renderPodium(podium)}
+      </div>`:''}
+      <div class="mt-5 pt-3 border-t border-gray-900 flex justify-between">
+        <span class="text-[8px] uppercase tracking-widest text-gray-700">${completed?'RACE RESULT':'RACE WEEKEND'}</span>
+        <span class="text-[8px] text-gray-500">VIEW →</span>
+      </div>
+    </article>`;
+  }).join('');
 }
 
 async function ensureSingleRaceData(race){
