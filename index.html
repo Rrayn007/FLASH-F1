@@ -686,22 +686,22 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 #profile-modal:has(#team-profile-content:not(.hidden)) .team-profile-shell { height: auto !important; min-height: 0 !important; }
 
 /* =========================================================
-   7. ADS, SPONSORS & SIDERAILS
+   7. PARTNER PROMOS & SIDERAILS (Optimized Anti-AdBlock Names)
    ========================================================= */
-#ad-container, #sponsor-slot { opacity: 0; visibility: hidden; pointer-events: none; }
-#ad-container.ad-ready, #sponsor-slot.ad-ready { opacity: 1; visibility: visible; pointer-events: auto; animation: adReveal .72s var(--ad-ease) both; }
-@keyframes adReveal { 0% { opacity: 0; transform: scale(.98); filter: blur(2px); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
-#ad-container { position: relative; will-change: opacity, transform; }
-#ad-container:after, #sponsor-slot .card:after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .16) 48%, rgba(255, 255, 255, .035) 52%, transparent 66%); transform: translateX(-120%); z-index: 5; }
-#ad-container.is-shining:after, #sponsor-slot.is-shining .card:after { opacity: 1; animation: adGlassSweep 1.35s var(--ad-ease) both; }
-@keyframes adGlassSweep { 0% { transform: translateX(-120%); opacity: 0; } 12% { opacity: .9; } 55% { opacity: .65; } 100% { transform: translateX(120%); opacity: 0; } }
-#ad-banner { transition: filter .45s ease, transform .7s var(--ad-ease); }
-#ad-container:hover #ad-banner { transform: scale(1.008); filter: brightness(1.025); }
+#partner-box, #promo-slot { opacity: 0; visibility: hidden; pointer-events: none; }
+#partner-box.promo-ready, #promo-slot.promo-ready { opacity: 1; visibility: visible; pointer-events: auto; animation: promoReveal .72s var(--ad-ease) both; }
+@keyframes promoReveal { 0% { opacity: 0; transform: scale(.98); filter: blur(2px); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
+#partner-box { position: relative; will-change: opacity, transform; }
+#partner-box:after, #promo-slot .card:after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .16) 48%, rgba(255, 255, 255, .035) 52%, transparent 66%); transform: translateX(-120%); z-index: 5; }
+#partner-box.is-shining:after, #promo-slot.is-shining .card:after { opacity: 1; animation: promoGlassSweep 1.35s var(--ad-ease) both; }
+@keyframes promoGlassSweep { 0% { transform: translateX(-120%); opacity: 0; } 12% { opacity: .9; } 55% { opacity: .65; } 100% { transform: translateX(120%); opacity: 0; } }
+#partner-banner { transition: filter .45s ease, transform .7s var(--ad-ease); }
+#partner-box:hover #partner-banner { transform: scale(1.008); filter: brightness(1.025); }
 
-#side-ad-left, #side-ad-right { 
+#side-promo-left, #side-promo-right { 
   position: fixed !important; 
   top: 80px !important; 
-  bottom: 16px !important;
+  bottom: 16px !important; 
   height: auto !important; 
   max-height: calc(100vh - 96px) !important;
   display: none; 
@@ -717,20 +717,20 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   background: #0d0f12; 
   isolation: isolate; 
 }
-#side-ad-left.ad-ready, #side-ad-right.ad-ready { display: block; opacity: 1; visibility: visible; pointer-events: auto; }
-#side-ad-left-link, #side-ad-right-link { display: block; width: 100%; height: 100%; position: relative; z-index: 1; }
-#side-ad-left-img, #side-ad-right-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-#side-ad-left:after, #side-ad-right:after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, .2) 48%, rgba(255, 255, 255, .04) 53%, transparent 67%); transform: translateX(-125%); }
-#side-ad-left.is-shining:after, #side-ad-right.is-shining:after { opacity: 1; animation: adGlassSweep 1.45s var(--ad-ease) both; }
+#side-promo-left.promo-ready, #side-promo-right.promo-ready { display: block; opacity: 1; visibility: visible; pointer-events: auto; }
+#side-promo-left-link, #side-promo-right-link { display: block; width: 100%; height: 100%; position: relative; z-index: 1; }
+#side-promo-left-img, #side-promo-right-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+#side-promo-left:after, #side-promo-right:after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, .2) 48%, rgba(255, 255, 255, .04) 53%, transparent 67%); transform: translateX(-125%); }
+#side-promo-left.is-shining:after, #side-promo-right.is-shining:after { opacity: 1; animation: promoGlassSweep 1.45s var(--ad-ease) both; }
 
-@keyframes sideAdRevealLeft { 0% { opacity: 0; transform: translateX(-20px) scale(.98); filter: blur(2px); } 100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); } }
-@keyframes sideAdRevealRight { 0% { opacity: 0; transform: translateX(20px) scale(.98); filter: blur(2px); } 100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); } }
+@keyframes sidePromoRevealLeft { 0% { opacity: 0; transform: translateX(-20px) scale(.98); filter: blur(2px); } 100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); } }
+@keyframes sidePromoRevealRight { 0% { opacity: 0; transform: translateX(20px) scale(.98); filter: blur(2px); } 100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); } }
 
 /* =========================================================
    8. RESPONSIVE CASCADE & LAYOUT SYNC
    ========================================================= */
 @media (min-width: 1800px) {
-  #side-ad-left, #side-ad-right {
+  #side-promo-left, #side-promo-right {
     --side-ad-width: 130px;
     top: 96px !important;
     bottom: 24px !important;
@@ -738,14 +738,14 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     max-height: calc(100vh - 120px) !important;
     transform: none !important;
   }
-  #side-ad-left { left: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
-  #side-ad-right { right: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
-  #side-ad-left.ad-ready { animation: sideAdRevealLeft .7s var(--ad-ease) both; }
-  #side-ad-right.ad-ready { animation: sideAdRevealRight .7s var(--ad-ease) both; }
+  #side-promo-left { left: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
+  #side-promo-right { right: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
+  #side-promo-left.promo-ready { animation: sidePromoRevealLeft .7s var(--ad-ease) both; }
+  #side-promo-right.promo-ready { animation: sidePromoRevealRight .7s var(--ad-ease) both; }
 }
 
 @media (min-width: 1520px) and (max-width: 1799px) {
-  #side-ad-left, #side-ad-right {
+  #side-promo-left, #side-promo-right {
     --side-ad-width: 105px;
     top: 96px !important;
     bottom: 24px !important;
@@ -753,14 +753,14 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     max-height: calc(100vh - 120px) !important;
     transform: none !important;
   }
-  #side-ad-left { left: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
-  #side-ad-right { right: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
-  #side-ad-left.ad-ready { animation: sideAdRevealLeft .65s var(--ad-ease) both; }
-  #side-ad-right.ad-ready { animation: sideAdRevealRight .65s var(--ad-ease) both; }
+  #side-promo-left { left: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
+  #side-promo-right { right: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
+  #side-promo-left.promo-ready { animation: sidePromoRevealLeft .65s var(--ad-ease) both; }
+  #side-promo-right.promo-ready { animation: sidePromoRevealRight .65s var(--ad-ease) both; }
 }
 
 @media (min-width: 1366px) and (max-width: 1519px) {
-  #side-ad-left, #side-ad-right {
+  #side-promo-left, #side-promo-right {
     --side-ad-width: 75px;
     top: 96px !important;
     bottom: 24px !important;
@@ -768,12 +768,12 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     max-height: calc(100vh - 120px) !important;
     transform: none !important;
   }
-  #side-ad-left { left: 8px !important; }
-  #side-ad-right { right: 8px !important; }
+  #side-promo-left { left: 8px !important; }
+  #side-promo-right { right: 8px !important; }
 }
 
 @media (min-width: 1280px) and (max-width: 1365px) {
-  #side-ad-left, #side-ad-right {
+  #side-promo-left, #side-promo-right {
     --side-ad-width: 60px;
     top: 96px !important;
     bottom: 24px !important;
@@ -781,12 +781,12 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     max-height: calc(100vh - 120px) !important;
     transform: none !important;
   }
-  #side-ad-left { left: 4px !important; }
-  #side-ad-right { right: 4px !important; }
+  #side-promo-left { left: 4px !important; }
+  #side-promo-right { right: 4px !important; }
 }
 
 @media (max-width: 1279px) {
-  #side-ad-left, #side-ad-right { display: none !important; visibility: hidden !important; }
+  #side-promo-left, #side-promo-right { display: none !important; visibility: hidden !important; }
 }
 
 @media (min-width: 1024px) {
@@ -822,14 +822,14 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   }
   #standings { display: flex !important; flex-direction: column !important; height: 100% !important; }
   #standings-content-wrap { flex: 1 1 auto !important; min-height: 0 !important; }
-  #ad-container { flex: 0 0 auto !important; }
+  #partner-box { flex: 0 0 auto !important; }
 }
 
 @media (max-width: 1023px) {
   #standings > .flex.items-start.justify-center { display: flex; }
   #standings > .flex.items-start.justify-center > .flex-1 { width: 100%; }
   #standings .sidebar-standing-card { min-height: 0; }
-  #ad-container { margin-top: 12px; }
+  #partner-box { margin-top: 12px; }
   .news-scroll-hint { display: none; }
   #drivers-grid, #calendar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
   .driver-card { border-radius: 9px; }
@@ -1006,8 +1006,8 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
-  #ad-container.is-shining:after, #sponsor-slot.is-shining .card:after, #side-ad-left.is-shining:after, #side-ad-right.is-shining:after { animation: none !important; }
-  #ad-banner, #side-ad-left-img, #side-ad-right-img { transition: none !important; }
+  #partner-box.is-shining:after, #promo-slot.is-shining .card:after, #side-promo-left.is-shining:after, #side-promo-right.is-shining:after { animation: none !important; }
+  #partner-banner, #side-promo-left-img, #side-promo-right-img { transition: none !important; }
 }
 
 .cls-1 { fill: #ed1c24 !important; stroke-width: 0px; }
@@ -1017,7 +1017,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
 <body>
 
-<!-- Header Navigation Landmark -->
+<!-- Header Landmark -->
 <header class="sticky top-0 z-50 border-b border-[#19191b] glass" role="banner">
 <div class="max-w-7xl mx-auto px-5 lg:px-8">
 <div class="h-20 flex items-center justify-between">
@@ -1075,7 +1075,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 </div>
 </div>
 
-<!-- Hero Section with Structured H1 Heading -->
+<!-- Hero Section with Structured H1 -->
 <section class="relative overflow-hidden border-b border-[#151515] hero-grid" aria-labelledby="hero-primary-title">
 <div class="hero-glow right-0 top-0"></div>
 <div class="max-w-7xl mx-auto px-5 lg:px-8 py-16 lg:py-24">
@@ -1126,7 +1126,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 </div>
 </section>
 
-<!-- Season Metrics Ribbon -->
+<!-- Season Ribbon -->
 <section class="border-b border-[#151515]" aria-label="2026 Season Grid Numbers">
 <div class="max-w-7xl mx-auto px-5 lg:px-8">
 <div class="grid grid-cols-2 md:grid-cols-4">
@@ -1138,7 +1138,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 </div>
 </section>
 
-<!-- Main Grid Core -->
+<!-- Main Hub Core -->
 <main class="max-w-7xl mx-auto px-5 lg:px-8 py-14">
 <div class="grid lg:grid-cols-12 gap-8 xl:gap-10">
 
@@ -1165,7 +1165,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   </div>
 </section>
 
-<!-- CỘT PHẢI: STANDINGS + AD -->
+<!-- CỘT PHẢI: STANDINGS + PARTNER BANNER -->
 <aside id="standings" class="lg:col-span-5 f1-sidebar" aria-labelledby="standings-main-heading">
   <div class="flex items-end justify-between px-1 mb-3 shrink-0">
     <div>
@@ -1177,13 +1177,13 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 
   <div id="standings-content-wrap" class="flex items-start justify-center gap-3">
     <!-- Left Banner -->
-    <div id="side-ad-left" aria-hidden="true">
-      <a id="side-ad-left-link" target="_blank" rel="sponsored noopener">
-        <img id="side-ad-left-img" class="border border-[#202023]" alt="Grid 007 Partner" width="110" height="600">
+    <div id="side-promo-left" aria-hidden="true">
+      <a id="side-promo-left-link" target="_blank" rel="sponsored noopener">
+        <img id="side-promo-left-img" class="border border-[#202023]" alt="Grid 007 Partner" width="110" height="600">
       </a>
     </div>
 
-    <!-- Drivers & Teams Standings Panels -->
+    <!-- Drivers & Constructors Standings Panels -->
     <div class="flex-1 w-full min-w-0 grid grid-cols-1 sm:grid-cols-2 gap-3 h-full">
       <div class="sidebar-standing-card">
         <div class="standing-head">
@@ -1207,17 +1207,17 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     </div>
 
     <!-- Right Banner -->
-    <div id="side-ad-right" aria-hidden="true">
-      <a id="side-ad-right-link" target="_blank" rel="sponsored noopener">
-        <img id="side-ad-right-img" class="border border-[#202023]" alt="Grid 007 Partner" width="110" height="600">
+    <div id="side-promo-right" aria-hidden="true">
+      <a id="side-promo-right-link" target="_blank" rel="sponsored noopener">
+        <img id="side-promo-right-img" class="border border-[#202023]" alt="Grid 007 Partner" width="110" height="600">
       </a>
     </div>
   </div>
 
-  <!-- Inline Banner -->
-  <div id="ad-container" class="hidden ad-shell mt-3 shrink-0" aria-hidden="true">
-    <div class="flex justify-between mb-1"><span class="sponsor-label">Sponsored</span></div>
-    <a id="ad-link" aria-label="Advertisement"><img id="ad-banner" class="w-full h-[120px] rounded object-cover" alt="Sponsored Content" loading="eager" decoding="async"></a>
+  <!-- Inline Banner (Anti-block selector) -->
+  <div id="partner-box" class="promo-shell mt-3 shrink-0" aria-hidden="true">
+    <div class="flex justify-between mb-1"><span class="sponsor-label text-[7px] text-gray-500 uppercase tracking-widest">Sponsored Partner</span></div>
+    <a id="partner-link" aria-label="Official Partner Showcase"><img id="partner-banner" class="w-full h-[120px] rounded object-cover" alt="Official Partner" loading="eager" decoding="async"></a>
   </div>
 </aside>
 </div>
@@ -1234,19 +1234,19 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <div id="calendar-grid" class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4"></div>
 </section>
 
-<!-- Sponsor Slot -->
-<section id="sponsor-slot" class="mt-16 hidden ad-shell" aria-hidden="true">
+<!-- Promo Slot -->
+<section id="promo-slot" class="mt-16 promo-shell" aria-hidden="true">
 <div class="card rounded-xl p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 justify-between">
 <div>
-<div id="sponsor-label" class="sponsor-label">Sponsored / Affiliate</div>
-<div id="sponsor-title" class="text-sm font-black mt-1">PICKS</div>
-<div id="sponsor-description" class="data-note mt-1">Area reserved for an advertising banner or affiliate link.</div>
+<div id="promo-label" class="sponsor-label text-[8px] text-gray-500 uppercase tracking-widest">Featured Partner / Affiliate</div>
+<div id="promo-title" class="text-sm font-black mt-1">GRID 007 PICKS</div>
+<div id="promo-description" class="data-note mt-1 text-xs text-gray-500">Official technical equipment and verified motorsport partner programs.</div>
 </div>
-<a id="inline-ad-link" class="hidden px-5 py-3 bg-white text-black text-[9px] font-black rounded" target="_blank" rel="sponsored noopener">VIEW OFFER →</a>
+<a id="inline-promo-link" class="px-5 py-3 bg-white text-black text-[9px] font-black rounded" target="_blank" rel="sponsored noopener">EXPLORE SELECTION →</a>
 </div>
 </section>
 
-<!-- Drivers Grid Section -->
+<!-- Drivers Section -->
 <section id="drivers" class="mt-24" aria-labelledby="drivers-main-heading">
 <div class="flex justify-between items-end mb-8">
 <div>
@@ -1258,7 +1258,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <div id="drivers-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4"></div>
 </section>
 
-<!-- Teams Grid Section -->
+<!-- Teams Section -->
 <section id="teams" class="mt-24" aria-labelledby="teams-main-heading">
 <div class="flex justify-between items-end mb-8">
 <div>
@@ -1569,9 +1569,123 @@ async function getClientIp() {
 
 async function fetchConfigAndTrack() {
   const configRequest=(async () => {
+    const partnerBox=document.getElementById('partner-box');
+    const partnerBanner=document.getElementById('partner-banner');
+    const partnerLink=document.getElementById('partner-link');
+    const promoSlot=document.getElementById('promo-slot');
+    const inlineLink=document.getElementById('inline-promo-link');
+    const promoLabel=document.getElementById('promo-label');
+    const promoTitle=document.getElementById('promo-title');
+    const promoDescription=document.getElementById('promo-description');
+
+    const sidePromos=[
+      {el:document.getElementById('side-promo-left'),link:document.getElementById('side-promo-left-link'),img:document.getElementById('side-promo-left-img')},
+      {el:document.getElementById('side-promo-right'),link:document.getElementById('side-promo-right-link'),img:document.getElementById('side-promo-right-img')}
+    ];
+
+    const isConfigOn=val=>val===true||['ON','TRUE','YES','1','Y','ENABLE','ENABLED'].includes(String(val??'').trim().toUpperCase());
+    const promoShineTimers=new WeakMap();
+    const promoShineEndTimers=new WeakMap();
+
+    function stopPromoShine(el) {
+      if (!el) return;
+      const timer=promoShineTimers.get(el);
+      const endTimer=promoShineEndTimers.get(el);
+      if (timer) clearTimeout(timer);
+      if (endTimer) clearTimeout(endTimer);
+      promoShineTimers.delete(el);
+      promoShineEndTimers.delete(el);
+      el.classList.remove('is-shining');
+    }
+
+    function schedulePromoShine(el) {
+      if (!el) return;
+      stopPromoShine(el);
+      const run=() => {
+        if (document.hidden||!el.classList.contains('promo-ready')) return;
+        el.classList.remove('is-shining');
+        void el.offsetWidth;
+        el.classList.add('is-shining');
+        promoShineEndTimers.set(el,setTimeout(() => {
+          el.classList.remove('is-shining');
+          promoShineEndTimers.delete(el);
+        },1500));
+        promoShineTimers.set(el,setTimeout(run,9000+Math.random()*8000));
+      };
+      promoShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
+    }
+
+    function revealPromo(el) {
+      if (!el) return;
+      stopPromoShine(el);
+      el.classList.remove('hidden','promo-ready');
+      el.setAttribute('aria-hidden','false');
+      void el.offsetWidth;
+      requestAnimationFrame(() => {
+        el.classList.add('promo-ready');
+        schedulePromoShine(el);
+      });
+    }
+
+    function hidePromo(el) {
+      if (!el) return;
+      stopPromoShine(el);
+      el.classList.remove('promo-ready');
+      el.classList.add('hidden');
+      el.setAttribute('aria-hidden','true');
+    }
+
+    function prepareExternalLink(link,url) {
+      const safe=safeUrl(url);
+      if (link && safe!=='#') {
+        link.href=safe;
+        link.target='_blank';
+        link.rel='sponsored noopener noreferrer';
+        link.style.pointerEvents='auto';
+        return true;
+      }
+      if (link) {
+        link.removeAttribute('href');
+        link.style.pointerEvents='none';
+      }
+      return false;
+    }
+
+    function loadPartnerMedia({el,link,img},enabled,imageValue,urlValue,fallbackImage) {
+      hidePromo(el);
+      if (link) { link.removeAttribute('href'); link.style.pointerEvents='none'; }
+      if (img) { img.removeAttribute('src'); }
+      if (!enabled||!el||!img) return;
+
+      let imageUrl=safeUrl(imageValue);
+      if (imageUrl==='#' && fallbackImage) imageUrl=fallbackImage;
+      if (imageUrl==='#') return;
+
+      prepareExternalLink(link,urlValue);
+      const loadToken=String(Date.now())+Math.random().toString(36).slice(2);
+      img.dataset.promoLoadToken=loadToken;
+
+      img.onload=() => {
+        if (img.dataset.promoLoadToken!==loadToken) return;
+        if (img.naturalWidth>0 && img.naturalHeight>0) revealPromo(el);
+        else hidePromo(el);
+      };
+      img.onerror=() => {
+        if (img.dataset.promoLoadToken===loadToken) {
+          if (fallbackImage && img.src !== fallbackImage) {
+            img.src = fallbackImage;
+          } else {
+            hidePromo(el);
+          }
+        }
+      };
+      img.src=imageUrl;
+      if (img.complete && img.naturalWidth>0 && img.dataset.promoLoadToken===loadToken) revealPromo(el);
+    }
+
     try {
       const response=await fetch(GAS_WEB_APP_URL,{cache:'no-store'});
-      if (!response.ok) throw new Error(`GAS CONFIG HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`GAS HTTP ${response.status}`);
       const data=await response.json();
       siteConfig=data||{};
 
@@ -1585,137 +1699,44 @@ async function fetchConfigAndTrack() {
         if (contactEmpty) contactEmpty.style.display='none';
       }
 
-      const adContainer=document.getElementById('ad-container');
-      const adBanner=document.getElementById('ad-banner');
-      const adLink=document.getElementById('ad-link');
-      const sponsorSlot=document.getElementById('sponsor-slot');
-      const inlineLink=document.getElementById('inline-ad-link');
-      const sponsorLabel=document.getElementById('sponsor-label');
-      const sponsorTitle=document.getElementById('sponsor-title');
-      const sponsorDescription=document.getElementById('sponsor-description');
+      const bannerActive = data.adEnabled !== undefined ? isConfigOn(data.adEnabled) : true;
+      loadPartnerMedia(
+        {el:partnerBox, link:partnerLink, img:partnerBanner},
+        bannerActive,
+        data.bannerImg,
+        data.adUrl,
+        'https://placehold.co/728x120/111114/00d7c4?text=Grid+007+Official+Telemetry+Partner'
+      );
 
-      const sideAds=[
-        {el:document.getElementById('side-ad-left'),link:document.getElementById('side-ad-left-link'),img:document.getElementById('side-ad-left-img')},
-        {el:document.getElementById('side-ad-right'),link:document.getElementById('side-ad-right-link'),img:document.getElementById('side-ad-right-img')}
-      ];
-
-      const isConfigOn=val=>val===true||['ON','TRUE','YES','1','Y','ENABLE','ENABLED'].includes(String(val??'').trim().toUpperCase());
-      const adShineTimers=new WeakMap();
-      const adShineEndTimers=new WeakMap();
-
-      function stopAdShine(el) {
-        if (!el) return;
-        const timer=adShineTimers.get(el);
-        const endTimer=adShineEndTimers.get(el);
-        if (timer) clearTimeout(timer);
-        if (endTimer) clearTimeout(endTimer);
-        adShineTimers.delete(el);
-        adShineEndTimers.delete(el);
-        el.classList.remove('is-shining');
-      }
-
-      function scheduleAdShine(el) {
-        if (!el) return;
-        stopAdShine(el);
-        const run=() => {
-          if (document.hidden||!el.classList.contains('ad-ready')) return;
-          el.classList.remove('is-shining');
-          void el.offsetWidth;
-          el.classList.add('is-shining');
-          adShineEndTimers.set(el,setTimeout(() => {
-            el.classList.remove('is-shining');
-            adShineEndTimers.delete(el);
-          },1500));
-          adShineTimers.set(el,setTimeout(run,9000+Math.random()*8000));
-        };
-        adShineTimers.set(el,setTimeout(run,8500+Math.random()*5000));
-      }
-
-      function revealAd(el) {
-        if (!el) return;
-        stopAdShine(el);
-        el.classList.remove('hidden','ad-ready');
-        el.setAttribute('aria-hidden','false');
-        void el.offsetWidth;
-        requestAnimationFrame(() => {
-          el.classList.add('ad-ready');
-          scheduleAdShine(el);
-        });
-      }
-
-      function hideAd(el) {
-        if (!el) return;
-        stopAdShine(el);
-        el.classList.remove('ad-ready');
-        el.classList.add('hidden');
-        el.setAttribute('aria-hidden','true');
-      }
-
-      function prepareExternalLink(link,url) {
-        const safe=safeUrl(url);
-        if (link && safe!=='#') {
-          link.href=safe;
-          link.target='_blank';
-          link.rel='sponsored noopener noreferrer';
-          link.style.pointerEvents='auto';
-          return true;
-        }
-        if (link) {
-          link.removeAttribute('href');
-          link.style.pointerEvents='none';
-        }
-        return false;
-      }
-
-      function loadImageAd({el,link,img},enabled,imageValue,urlValue) {
-        hideAd(el);
-        if (link) { link.removeAttribute('href'); link.style.pointerEvents='none'; }
-        if (img) { img.removeAttribute('src'); }
-        if (!enabled||!el||!img) return;
-
-        const imageUrl=safeUrl(imageValue);
-        if (imageUrl==='#') return;
-
-        prepareExternalLink(link,urlValue);
-        const loadToken=String(Date.now())+Math.random().toString(36).slice(2);
-        img.dataset.adLoadToken=loadToken;
-
-        img.onload=() => {
-          if (img.dataset.adLoadToken!==loadToken) return;
-          if (img.naturalWidth>0 && img.naturalHeight>0) revealAd(el);
-          else hideAd(el);
-        };
-        img.onerror=() => {
-          if (img.dataset.adLoadToken===loadToken) hideAd(el);
-        };
-        img.src=imageUrl;
-        if (img.complete && img.naturalWidth>0 && img.dataset.adLoadToken===loadToken) revealAd(el);
-      }
-
-      loadImageAd({el:adContainer,link:adLink,img:adBanner},isConfigOn(data.adEnabled),data.bannerImg,data.adUrl);
-
-      if (sponsorSlot) {
-        hideAd(sponsorSlot);
+      if (promoSlot) {
+        hidePromo(promoSlot);
         if (inlineLink) { inlineLink.removeAttribute('href'); inlineLink.classList.add('hidden'); }
         const canShowInline=isConfigOn(data.inlineAdEnabled) && safeUrl(data.affiliateUrl)!=='#';
         if (canShowInline) {
-          if (sponsorLabel) sponsorLabel.textContent=data.adLabel||'Sponsored / Affiliate';
-          if (sponsorTitle) sponsorTitle.textContent=data.adTitle||'PICKS';
-          if (sponsorDescription) sponsorDescription.textContent=data.adDescription||'Area reserved for an advertising banner or affiliate link.';
+          if (promoLabel) promoLabel.textContent=data.adLabel||'Featured Partner / Affiliate';
+          if (promoTitle) promoTitle.textContent=data.adTitle||'GRID 007 PICKS';
+          if (promoDescription) promoDescription.textContent=data.adDescription||'Area reserved for partner sponsorship.';
           prepareExternalLink(inlineLink,data.affiliateUrl);
           inlineLink?.classList.remove('hidden');
-          revealAd(sponsorSlot);
+          revealPromo(promoSlot);
         }
       }
 
-      const sideEnabled=data.sideAdEnabled===undefined?true:isConfigOn(data.sideAdEnabled);
-      loadImageAd(sideAds[0],sideEnabled,data.sideAdLeftImg,data.sideAdLeftUrl);
-      loadImageAd(sideAds[1],sideEnabled,data.sideAdRightImg,data.sideAdRightUrl);
+      const sideEnabled = data.sideAdEnabled !== undefined ? isConfigOn(data.sideAdEnabled) : true;
+      loadPartnerMedia(sidePromos[0], sideEnabled, data.sideAdLeftImg, data.sideAdLeftUrl, 'https://placehold.co/110x600/111114/white?text=Grid+007');
+      loadPartnerMedia(sidePromos[1], sideEnabled, data.sideAdRightImg, data.sideAdRightUrl, 'https://placehold.co/110x600/111114/white?text=Grid+007');
     } catch (error) {
-      console.warn('Config unavailable',error);
-      ['ad-container','sponsor-slot','side-ad-left','side-ad-right'].forEach(id => {
-        document.getElementById(id)?.classList.add('hidden');
-      });
+      console.warn('GAS live config unavailable, switching to local fallbacks.', error);
+      // Fallback khi API chưa cấu hình xong hoặc mạng lỗi
+      loadPartnerMedia(
+        {el:partnerBox, link:partnerLink, img:partnerBanner},
+        true,
+        '',
+        '#',
+        'https://placehold.co/728x120/111114/00d7c4?text=Grid+007+Official+Telemetry+Partner'
+      );
+      loadPartnerMedia(sidePromos[0], true, '', '#', 'https://placehold.co/110x600/111114/white?text=Grid+007');
+      loadPartnerMedia(sidePromos[1], true, '', '#', 'https://placehold.co/110x600/111114/white?text=Grid+007');
     }
   })();
 
@@ -1728,9 +1749,7 @@ async function fetchConfigAndTrack() {
       url.searchParams.set('track','1');
       url.searchParams.set('ip',ip);
       await fetch(url.toString(),{method:'GET',mode:'no-cors',cache:'no-store'});
-    } catch (error) {
-      console.warn('Tracking metric bypass',error);
-    }
+    } catch (error) {}
   })();
 
   await Promise.allSettled([configRequest,trackingRequest]);
