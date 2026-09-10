@@ -666,40 +666,88 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 /* =========================================================
    7. ADS, SPONSORS & SIDERAILS
    ========================================================= */
-#ad-container, #sponsor-slot { opacity: 0; visibility: hidden; pointer-events: none; }
-#ad-container { position: relative; will-change: opacity, transform; }
-#ad-container:after, #sponsor-slot .card:after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .16) 48%, rgba(255, 255, 255, .035) 52%, transparent 66%); transform: translateX(-120%); z-index: 5; }
+:root {
+  --ad-ease: cubic-bezier(.22, 1, .36, 1);
+  --ad-duration: .62s;
+}
+
+#ad-container, #sponsor-slot {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px) scale(.985);
+  transition: opacity var(--ad-duration) var(--ad-ease),
+              transform var(--ad-duration) var(--ad-ease),
+              visibility 0s linear var(--ad-duration);
+  will-change: opacity, transform;
+}
+#ad-container.ad-visible, #sponsor-slot.ad-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  transition-delay: 0s;
+}
+#ad-container.ad-closing, #sponsor-slot.ad-closing {
+  opacity: 0;
+  visibility: visible;
+  pointer-events: none;
+  transform: translateY(6px) scale(.99);
+  transition-delay: 0s;
+}
+#ad-container { position: relative; }
+#ad-container:after, #sponsor-slot .card:after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.16) 48%, rgba(255,255,255,.035) 52%, transparent 66%);
+  transform: translateX(-120%); z-index: 5;
+}
 #ad-container.is-shining:after, #sponsor-slot.is-shining .card:after { opacity: 1; animation: adGlassSweep 1.35s var(--ad-ease) both; }
-@keyframes adGlassSweep { 0% { transform: translateX(-120%); opacity: 0; } 12% { opacity: .9; } 55% { opacity: .65; } 100% { transform: translateX(120%); opacity: 0; } }
+@keyframes adGlassSweep {
+  0% { transform: translateX(-120%); opacity: 0; }
+  12% { opacity: .9; }
+  55% { opacity: .65; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
 #ad-banner { transition: filter .45s ease, transform .7s var(--ad-ease); }
 #ad-container:hover #ad-banner { transform: scale(1.008); filter: brightness(1.025); }
 
-#side-ad-left, #side-ad-right { 
-  position: fixed !important; 
-  top: 80px !important; 
+#side-ad-left, #side-ad-right {
+  position: fixed !important;
+  top: 80px !important;
   bottom: 16px !important;
-  height: auto !important; 
+  height: auto !important;
   max-height: calc(100vh - 96px) !important;
-  display: none; 
-  width: var(--side-ad-width, 110px); 
-  z-index: 10 !important; 
-  overflow: hidden; 
-  opacity: 0; 
-  visibility: hidden; 
-  pointer-events: none; 
-  transform: none !important; 
-  border: 1px solid #25292f; 
-  border-radius: 5px; 
-  background: #0d0f12; 
-  isolation: isolate; 
+  display: block;
+  width: var(--side-ad-width, 110px);
+  z-index: 10 !important;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(0) scale(1);
+  transition: opacity .58s var(--ad-ease), transform .58s var(--ad-ease), visibility 0s linear .58s;
+  border: 1px solid #25292f;
+  border-radius: 5px;
+  background: #0d0f12;
+  isolation: isolate;
+  will-change: opacity, transform;
 }
-#side-ad-left.ad-visible, #side-ad-right.ad-visible { display: block; opacity: 1; visibility: visible; pointer-events: auto; }
-#side-ad-left.ad-visible, #side-ad-right.ad-visible { display: block !important; }
+#side-ad-left.ad-entering { transform: translateX(-18px) scale(.985); }
+#side-ad-right.ad-entering { transform: translateX(18px) scale(.985); }
+#side-ad-left.ad-visible, #side-ad-right.ad-visible {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(0) scale(1); transition-delay: 0s;
+}
+#side-ad-left.ad-closing, #side-ad-right.ad-closing {
+  opacity: 0; visibility: visible; pointer-events: none; transform: translateX(0) scale(.995); transition-delay: 0s;
+}
 #side-ad-left-link, #side-ad-right-link { display: block; width: 100%; height: 100%; position: relative; z-index: 1; }
 #side-ad-left-img, #side-ad-right-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-#side-ad-left:after, #side-ad-right:after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, .2) 48%, rgba(255, 255, 255, .04) 53%, transparent 67%); transform: translateX(-125%); }
+#side-ad-left:after, #side-ad-right:after {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 34%, rgba(255,255,255,.2) 48%, rgba(255,255,255,.04) 53%, transparent 67%);
+  transform: translateX(-125%);
+}
 #side-ad-left.is-shining:after, #side-ad-right.is-shining:after { opacity: 1; animation: adGlassSweep 1.45s var(--ad-ease) both; }
-
 
 /* =========================================================
    8. RESPONSIVE CASCADE & LAYOUT SYNC
@@ -710,9 +758,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     --side-ad-width: 130px;
     top: 96px !important;
     bottom: 24px !important;
-    height: auto !important;
     max-height: calc(100vh - 120px) !important;
-    transform: none !important;
   }
   #side-ad-left { left: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
   #side-ad-right { right: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
@@ -723,9 +769,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     --side-ad-width: 105px;
     top: 96px !important;
     bottom: 24px !important;
-    height: auto !important;
     max-height: calc(100vh - 120px) !important;
-    transform: none !important;
   }
   #side-ad-left { left: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
   #side-ad-right { right: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
@@ -736,9 +780,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     --side-ad-width: 75px;
     top: 96px !important;
     bottom: 24px !important;
-    height: auto !important;
     max-height: calc(100vh - 120px) !important;
-    transform: none !important;
   }
   #side-ad-left { left: 8px !important; }
   #side-ad-right { right: 8px !important; }
@@ -749,9 +791,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     --side-ad-width: 60px;
     top: 96px !important;
     bottom: 24px !important;
-    height: auto !important;
     max-height: calc(100vh - 120px) !important;
-    transform: none !important;
   }
   #side-ad-left { left: 4px !important; }
   #side-ad-right { right: 4px !important; }
@@ -765,16 +805,15 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 }
 
 @media (min-width: 1024px) {
-  /* Grid cha kéo giãn đều 2 cột News & Standings */
+  /* News chỉ đồng bộ với vùng BXH, không bị kéo dài theo banner quảng cáo bên dưới. */
   main > .grid {
     display: grid !important;
-    align-items: stretch !important;
+    align-items: start !important;
   }
 
-  /* CỘT NEWS: Nhận đúng chiều cao của Standings và cuộn bên trong */
   #news {
-    height: 100% !important;
     min-height: 0 !important;
+    height: auto !important;
     max-height: none !important;
     display: flex !important;
     flex-direction: column !important;
@@ -830,20 +869,22 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     pointer-events: none;
   }
 
-  /* CỘT STANDINGS */
+  /* BXH giữ chiều cao độc lập; banner inline nằm ngay bên dưới. */
   #standings {
     display: flex !important;
     flex-direction: column !important;
-    height: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
   }
 
   #standings-content-wrap {
-    flex: 1 1 auto !important;
+    flex: 0 0 auto !important;
     min-height: 0 !important;
   }
 
   #ad-container {
     flex: 0 0 auto !important;
+    width: 100% !important;
   }
 }
 
@@ -1029,7 +1070,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
   #ad-container.is-shining:after, #sponsor-slot.is-shining .card:after, #side-ad-left.is-shining:after, #side-ad-right.is-shining:after { animation: none !important; }
-  #ad-banner, #side-ad-left-img, #side-ad-right-img { transition: none !important; }
+  #ad-container, #sponsor-slot, #side-ad-left, #side-ad-right, #ad-banner, #side-ad-left-img, #side-ad-right-img { transition: none !important; }
 }
 
 .cls-1 { fill: #ed1c24 !important; stroke-width: 0px; }
@@ -1757,20 +1798,28 @@ function closeAnimated(el, { after = null } = {}) {
 function showAdAnimated(el) {
   if (!el) return;
   clearUiTimer(el);
-  el.classList.remove('hidden', 'ad-closing', 'ad-visible');
+  stopAdShine(el);
+  el.classList.remove('hidden', 'ad-closing');
   el.classList.add('ad-entering');
   el.setAttribute('aria-hidden', 'false');
-  void el.offsetWidth;
   requestAnimationFrame(() => {
-    el.classList.remove('ad-entering');
-    el.classList.add('ad-visible');
-    scheduleAdShine(el);
+    requestAnimationFrame(() => {
+      el.classList.remove('ad-entering');
+      el.classList.add('ad-visible');
+      scheduleAdShine(el);
+    });
   });
 }
 
 function hideAdAnimated(el) {
   if (!el) return;
   clearUiTimer(el);
+  stopAdShine(el);
+  if (el.classList.contains('hidden')) {
+    el.classList.remove('ad-visible', 'ad-entering', 'ad-closing');
+    el.setAttribute('aria-hidden', 'true');
+    return;
+  }
   el.classList.remove('ad-visible', 'ad-entering');
   el.classList.add('ad-closing');
   el.setAttribute('aria-hidden', 'true');
@@ -1779,7 +1828,6 @@ function hideAdAnimated(el) {
     el.classList.add('hidden');
   }, MOTION_MS));
 }
-
 
 const adShineTimers = new WeakMap();
 const adShineEndTimers = new WeakMap();
@@ -1806,6 +1854,21 @@ function scheduleAdShine(el) {
     adShineTimers.set(el, setTimeout(run, 9000 + Math.random() * 8000));
   };
   adShineTimers.set(el, setTimeout(run, 8500 + Math.random() * 5000));
+}
+
+function syncNewsToStandings() {
+  if (window.innerWidth < 1024) return;
+  const news = document.getElementById('news');
+  const wrap = document.getElementById('standings-content-wrap');
+  if (!news || !wrap) return;
+  const height = Math.ceil(wrap.getBoundingClientRect().height);
+  if (height > 0) news.style.height = `${height}px`;
+}
+
+let standingsSyncFrame = 0;
+function requestStandingsLayoutSync() {
+  cancelAnimationFrame(standingsSyncFrame);
+  standingsSyncFrame = requestAnimationFrame(syncNewsToStandings);
 }
 
 async function fetchConfigAndTrack() {
@@ -2315,6 +2378,7 @@ renderStandings();
 renderDrivers();
 renderConstructorsSidebar();
 renderTeams();
+requestStandingsLayoutSync();
 }catch(error){
 console.error('Standings API:',error);
 document.getElementById('standings-board').innerHTML='<div class="p-6 text-center text-red-700 text-xs">API CONNECTION ERROR</div>';
