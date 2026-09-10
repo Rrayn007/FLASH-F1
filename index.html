@@ -1890,7 +1890,7 @@ async function fetchConfigAndTrack() {
       loadImageAd({ el: adContainer, link: adLink, img: adBanner }, isConfigOn(data.adEnabled), data.bannerImg, data.adUrl);
 
       if (sponsorSlot) {
-        hideAd(sponsorSlot);
+        hideAdAnimated(sponsorSlot);
         if (inlineLink) { inlineLink.removeAttribute('href'); inlineLink.classList.add('hidden'); }
         const canShowInline = isConfigOn(data.inlineAdEnabled) && safeUrl(data.affiliateUrl) !== '#';
         if (canShowInline) {
