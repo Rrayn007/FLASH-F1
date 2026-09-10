@@ -3,21 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="author" content="Grid 007">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<link rel="canonical" href="">
-<script>
-(function(){
-  var canonical = document.querySelector('link[rel="canonical"]');
-  if (canonical) canonical.href = location.origin + location.pathname;
-})();
-</script>
 <meta name="theme-color" content="#080808">
 <meta name="description" content="Grid 007 — Formula 1 news, 2026 race calendar, results, standings, drivers and teams, continuously updated.">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="Grid 007">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 
 <meta property="og:title" content="Grid 007 | Formula 1 News, Results & 2026 Standings">
-<meta property="og:description" content="Grid 007 Formula 1 hub for news, race calendar, results, standings, drivers and teams.">
+<meta property="og:description" content="Grid 007 — Formula 1 news, race calendar, results, standings, drivers and teams for the 2026 season.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grid 007">
 
@@ -27,12 +20,13 @@
 <title>Grid 007 | Formula 1 News, Results & 2026 Standings</title>
 
 <script src="https://cdn.tailwindcss.com" defer></script>
+<link rel="canonical" href="">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<style id="grid007-responsive-refactor">
+<style id="Grid 007-responsive-refactor">
 /* =========================================================
    1. ROOT VARIABLES & GLOBAL RESETS
    ========================================================= */
@@ -448,10 +442,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 /* =========================================================
    6. MODAL PROFILES
    ========================================================= */
-.modal-backdrop { animation: fadeIn .18s ease; }
-.modal-box { animation: modalIn .22s ease; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes modalIn { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: none; } }
+/* Modal motion is handled by the shared motion system below. */
 
 #profile-modal { position: fixed !important; inset: 0 !important; padding: 20px !important; display: flex !important; align-items: center !important; justify-content: center !important; overflow: hidden !important; box-sizing: border-box !important; z-index: 400; }
 #profile-modal:not(.hidden) { display: flex !important; }
@@ -676,8 +667,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
    7. ADS, SPONSORS & SIDERAILS
    ========================================================= */
 #ad-container, #sponsor-slot { opacity: 0; visibility: hidden; pointer-events: none; }
-#ad-container.ad-ready, #sponsor-slot.ad-ready { opacity: 1; visibility: visible; pointer-events: auto; animation: adReveal .72s var(--ad-ease) both; }
-@keyframes adReveal { 0% { opacity: 0; transform: scale(.98); filter: blur(2px); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
 #ad-container { position: relative; will-change: opacity, transform; }
 #ad-container:after, #sponsor-slot .card:after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .16) 48%, rgba(255, 255, 255, .035) 52%, transparent 66%); transform: translateX(-120%); z-index: 5; }
 #ad-container.is-shining:after, #sponsor-slot.is-shining .card:after { opacity: 1; animation: adGlassSweep 1.35s var(--ad-ease) both; }
@@ -704,20 +693,12 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   background: #0d0f12; 
   isolation: isolate; 
 }
-#side-ad-left.ad-ready, #side-ad-right.ad-ready { display: block; opacity: 1; visibility: visible; pointer-events: auto; }
+#side-ad-left.ad-visible, #side-ad-right.ad-visible { display: block; opacity: 1; visibility: visible; pointer-events: auto; }
 #side-ad-left-link, #side-ad-right-link { display: block; width: 100%; height: 100%; position: relative; z-index: 1; }
 #side-ad-left-img, #side-ad-right-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 #side-ad-left:after, #side-ad-right:after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: linear-gradient(105deg, transparent 34%, rgba(255, 255, 255, .2) 48%, rgba(255, 255, 255, .04) 53%, transparent 67%); transform: translateX(-125%); }
 #side-ad-left.is-shining:after, #side-ad-right.is-shining:after { opacity: 1; animation: adGlassSweep 1.45s var(--ad-ease) both; }
 
-@keyframes sideAdRevealLeft { 
-  0% { opacity: 0; transform: translateX(-20px) scale(.98); filter: blur(2px); } 
-  100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); } 
-}
-@keyframes sideAdRevealRight { 
-  0% { opacity: 0; transform: translateX(20px) scale(.98); filter: blur(2px); } 
-  100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); } 
-}
 
 /* =========================================================
    8. RESPONSIVE CASCADE & LAYOUT SYNC
@@ -734,8 +715,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   }
   #side-ad-left { left: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
   #side-ad-right { right: max(16px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 20px)) !important; }
-  #side-ad-left.ad-ready { animation: sideAdRevealLeft .7s var(--ad-ease) both; }
-  #side-ad-right.ad-ready { animation: sideAdRevealRight .7s var(--ad-ease) both; }
 }
 
 @media (min-width: 1520px) and (max-width: 1799px) {
@@ -749,8 +728,6 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
   }
   #side-ad-left { left: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
   #side-ad-right { right: max(10px, calc((100vw - 1280px)/2 - var(--side-ad-width) - 12px)) !important; }
-  #side-ad-left.ad-ready { animation: sideAdRevealLeft .65s var(--ad-ease) both; }
-  #side-ad-right.ad-ready { animation: sideAdRevealRight .65s var(--ad-ease) both; }
 }
 
 @media (min-width: 1366px) and (max-width: 1519px) {
@@ -1057,10 +1034,83 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 .cls-1 { fill: #ed1c24 !important; stroke-width: 0px; }
 .cls-2 { fill: #ffffff !important; stroke-width: 0px; }
 
-</style>
 
-<link rel="preconnect" href="https://api.jolpi.ca">
-<link rel="preconnect" href="https://api.rss2json.com">
+/* =========================================================
+   10. MOTION SYSTEM — shared, interruptible transitions
+   ========================================================= */
+:root {
+  --motion-fast: 180ms;
+  --motion-base: 260ms;
+  --motion-slow: 420ms;
+  --motion-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+.ui-overlay,
+.ui-modal {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.ui-overlay.is-open,
+.ui-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.ui-overlay.is-closing,
+.ui-modal.is-closing {
+  opacity: 0;
+  visibility: visible;
+  pointer-events: none;
+}
+.ui-overlay {
+  transition: opacity var(--motion-base) var(--motion-ease), visibility 0s linear var(--motion-base);
+}
+.ui-overlay.is-open { transition: opacity var(--motion-base) var(--motion-ease), visibility 0s; }
+.ui-overlay > div {
+  opacity: 0;
+  transform: translateY(-10px) scale(.985);
+  transition: opacity var(--motion-base) var(--motion-ease), transform var(--motion-base) var(--motion-ease);
+}
+.ui-overlay.is-open > div { opacity: 1; transform: none; }
+.ui-overlay.is-closing > div { opacity: 0; transform: translateY(-8px) scale(.985); }
+
+.ui-modal {
+  transition: opacity var(--motion-slow) var(--motion-ease), visibility 0s linear var(--motion-slow);
+}
+.ui-modal.is-open { transition: opacity var(--motion-base) var(--motion-ease), visibility 0s; }
+.ui-modal .modal-box {
+  opacity: 0;
+  transform: translateY(18px) scale(.985);
+  transition: opacity var(--motion-slow) var(--motion-ease), transform var(--motion-slow) var(--motion-ease);
+  will-change: opacity, transform;
+}
+.ui-modal.is-open .modal-box { opacity: 1; transform: translateY(0) scale(1); }
+.ui-modal.is-closing .modal-box { opacity: 0; transform: translateY(12px) scale(.985); }
+
+.ad-shell {
+  transition: opacity var(--motion-slow) var(--motion-ease), transform var(--motion-slow) var(--motion-ease),
+              max-height var(--motion-slow) var(--motion-ease), margin var(--motion-slow) var(--motion-ease);
+  will-change: opacity, transform;
+}
+.ad-shell.ad-visible { opacity: 1; transform: translateY(0) scale(1); }
+.ad-shell.ad-entering { opacity: 0; transform: translateY(8px) scale(.985); }
+.ad-shell.ad-closing { opacity: 0; transform: translateY(5px) scale(.985); pointer-events: none; }
+
+#side-ad-left, #side-ad-right {
+  transition: opacity var(--motion-slow) var(--motion-ease), transform var(--motion-slow) var(--motion-ease), visibility 0s linear var(--motion-slow);
+  will-change: opacity, transform;
+}
+#side-ad-left.ad-visible, #side-ad-right.ad-visible { opacity: 1; visibility: visible; transform: translateX(0) scale(1); }
+#side-ad-left.ad-entering { opacity: 0; visibility: visible; transform: translateX(-18px) scale(.985); }
+#side-ad-right.ad-entering { opacity: 0; visibility: visible; transform: translateX(18px) scale(.985); }
+#side-ad-left.ad-closing, #side-ad-right.ad-closing { opacity: 0; visibility: visible; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-overlay, .ui-modal, .ui-modal .modal-box, .ad-shell, #side-ad-left, #side-ad-right { transition: none !important; }
+}
+
+</style>
 </head>
 
 <body>
@@ -1069,7 +1119,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <div class="max-w-7xl mx-auto px-5 lg:px-8">
 <div class="h-20 flex items-center justify-between">
 <div class="flex items-center gap-5 min-w-0">
-  <a href="/" aria-label="Grid 007" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
+  <a href="/" aria-label="007" class="header-brand-logo flex items-center shrink-0" style="line-height: 0;">
     <svg id="header-Grid 007-logo" data-name="Header Grid 007 logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
       <defs></defs>
       <g id="header-Grid 007-logo-shape" data-name="Header logo shape"><g>
@@ -1108,7 +1158,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 </div>
 </header>
 
-<div id="search-panel" class="hidden fixed inset-0 z-[200] bg-black/90 backdrop-blur-xl">
+<div id="search-panel" class="ui-overlay hidden fixed inset-0 z-[200] bg-black/90 backdrop-blur-xl">
 <div class="max-w-3xl mx-auto px-6 pt-32">
 <div class="flex justify-between items-center mb-8">
 <span class="text-[9px] uppercase tracking-[.3em] text-gray-500">Search F1</span>
@@ -1128,7 +1178,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <span class="px-3 py-1 bg-red-600 text-[9px] font-black tracking-widest rounded-sm">2026 SEASON</span>
 <span class="text-[9px] uppercase tracking-[.25em] text-gray-600">Formula 1 Championship</span>
 </div>
-<h1 aria-label="Grid 007 — Formula 1 News, Results and 2026 Standings" class="hero-title font-black">THE <span class="f1-red">RACE</span><br>NEVER<br>STOPS.</h1>
+<h1 class="hero-title font-black">THE <span class="f1-red">RACE</span><br>NEVER<br>STOPS.</h1>
 <p class="mt-7 max-w-xl text-gray-500 text-sm leading-relaxed">Continuously updated Formula 1 news, race schedules, results, standings and data in a broadcast-inspired interface.</p>
 <div class="flex flex-wrap gap-3 mt-7">
 <a href="#news" class="px-6 py-3 bg-white text-black text-[10px] font-black rounded hover:bg-gray-200 transition">LATEST NEWS</a>
@@ -1173,7 +1223,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <div class="max-w-7xl mx-auto px-5 lg:px-8">
 <div class="grid grid-cols-2 md:grid-cols-4">
 <div class="p-6 border-r border-[#151515]"><div class="text-[8px] uppercase tracking-widest text-gray-600">Races</div><div id="stat-races" class="text-3xl font-black mt-2">--</div></div>
-<div class="p-6 md:border-r border-[#151515]"><div class="text-[8px] uppercase tracking-widest text-gray-600">Drivers</div><div class="text-3xl font-black mt-2">22</div></div>
+<div class="p-6 md:border-r border-[#151515]"><div class="text-[8px] uppercase tracking-widest text-gray-600">Drivers</div><div id="stat-drivers" class="text-3xl font-black mt-2">--</div></div>
 <div class="p-6 border-r border-[#151515]"><div class="text-[8px] uppercase tracking-widest text-gray-600">Teams</div><div class="text-3xl font-black mt-2">11</div></div>
 <div class="p-6"><div class="text-[8px] uppercase tracking-widest text-gray-600">Season</div><div class="text-3xl font-black mt-2">2026</div></div>
 </div>
@@ -1313,17 +1363,17 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <div class="max-w-7xl mx-auto px-5 lg:px-8 py-12">
 <div class="grid md:grid-cols-3 gap-10">
 <div>
-<a href="/" aria-label="Grid 007" class="footer-brand-logo" style="display: inline-block; line-height: 0;">
-  <svg id="footer-grid007-logo" data-name="Footer Grid 007 logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
+<a href="/" aria-label="007" class="footer-brand-logo" style="display: inline-block; line-height: 0;">
+  <svg id="footer-Grid 007-logo" data-name="Footer Grid 007 logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199 62" style="height: 32px; width: auto; display: block;">
     <defs></defs>
-    <g id="footer-grid007-logo-shape" data-name="Footer logo shape"><g>
+    <g id="footer-Grid 007-logo-shape" data-name="Footer logo shape"><g>
       <path class="cls-2" d="m54.85,0H6.86C2.29,0,0,2.29,0,6.85v47.99c0,4.57,2.29,6.86,6.86,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99H13.71V13.71h34.28v34.27Z"/>
       <path class="cls-2" d="m123.4,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-6.85,47.99h-34.28V13.71h34.28v34.27Z"/>
       <path class="cls-1" d="m191.96,0h-47.99c-4.57,0-6.85,2.29-6.85,6.85v47.99c0,4.57,2.28,6.86,6.85,6.86h47.99c4.57,0,6.85-2.29,6.85-6.86V6.85c0-4.57-2.29-6.85-6.85-6.85Zm-31.6,47.99h-9.53l18.86-27.42h-18.86v-6.85h34.28l-24.75,34.27Z"/>
     </g></g>
   </svg>
 </a>
-<p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">Grid 007 is a Formula 1 news and race data hub covering 2026 news, results, standings, drivers, teams and the race calendar.</p>
+<p class="text-xs text-gray-600 mt-4 leading-relaxed max-w-sm">007 is a Formula 1 news and race data hub with a broadcast-inspired interface.</p>
 </div>
 <div>
 <div class="text-[9px] uppercase tracking-widest text-gray-600 mb-4">Navigation</div>
@@ -1352,7 +1402,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 </div>
 </footer>
 
-<div id="race-modal" aria-hidden="true" class="hidden fixed inset-0 z-[300] bg-black/85 backdrop-blur-md p-5 flex items-center justify-center modal-backdrop">
+<div id="race-modal" aria-hidden="true" class="ui-modal hidden fixed inset-0 z-[300] bg-black/85 backdrop-blur-md p-5 flex items-center justify-center modal-backdrop">
 <div class="modal-box max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-[#0b0b0b] border border-gray-800 rounded-xl overflow-hidden">
 <div class="h-1 bg-red-600"></div>
 <div class="p-6 border-b border-gray-900 flex justify-between items-start">
@@ -1386,7 +1436,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 </div>
 </div>
 
-<div id="profile-modal" class="hidden fixed inset-0 z-[400] bg-black/90 backdrop-blur-md p-5 flex items-center justify-center modal-backdrop">
+<div id="profile-modal" aria-hidden="true" class="ui-modal hidden fixed inset-0 z-[400] bg-black/90 backdrop-blur-md p-5 flex items-center justify-center modal-backdrop">
 <div class="modal-box w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-[#090909] border border-[#252525] rounded-xl shadow-2xl">
 <div id="profile-color-bar" class="h-1 bg-red-600"></div>
 <div class="p-6 md:p-8">
@@ -1408,7 +1458,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     <div class="bg-[#101010] rounded-lg p-6 profile-constructor-box">
       <div class="profile-constructor-info">
         <div class="flex items-center gap-4">
-          <img id="profile-team-logo" class="profile-team-logo" alt="Formula 1 news" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <img id="profile-team-logo" class="profile-team-logo" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
           <div class="min-w-0">
             <div class="text-[8px] uppercase tracking-widest text-gray-600">Constructor</div>
             <div id="profile-team" class="text-xl font-black uppercase mt-2 truncate">--</div>
@@ -1426,7 +1476,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
     <div class="profile-driver-dots"></div>
     <div class="profile-driver-glow"></div>
     <div id="profile-driver-ghost" class="profile-driver-ghost"></div>
-    <img id="profile-driver-image" alt="Formula 1 news" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+    <img id="profile-driver-image" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">
   </div>
 
   <div class="driver-profile-about">
@@ -1455,7 +1505,7 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 <div id="team-profile-content" class="hidden mt-8">
   <div class="team-profile-shell">
     <section class="team-profile-overview">
-      <div class="team-profile-brand"><div class="team-profile-logo-box"><img id="team-profile-logo" alt="Formula 1 news" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="min-w-0"><div class="text-[8px] uppercase tracking-[.28em] text-gray-600">2026 CONSTRUCTOR</div><div id="team-profile-shortname" class="team-profile-shortname">--</div><a id="team-profile-link" class="team-profile-official" target="_blank" rel="noopener noreferrer">OFFICIAL TEAM PAGE →</a></div></div>
+      <div class="team-profile-brand"><div class="team-profile-logo-box"><img id="team-profile-logo" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="min-w-0"><div class="text-[8px] uppercase tracking-[.28em] text-gray-600">2026 CONSTRUCTOR</div><div id="team-profile-shortname" class="team-profile-shortname">--</div><a id="team-profile-link" class="team-profile-official" target="_blank" rel="noopener noreferrer">OFFICIAL TEAM PAGE →</a></div></div>
       <div class="team-profile-champ"><div><div class="text-[8px] uppercase tracking-widest text-gray-600">Championship</div><div id="team-profile-position" class="team-profile-position">--</div></div><div class="text-right"><div class="text-[8px] uppercase tracking-widest text-gray-600">Points</div><div id="team-profile-points" class="team-profile-points">--</div></div></div>
     </section>
     <section class="team-profile-info"><div class="team-profile-info-head"><div><div class="text-[8px] uppercase tracking-[.25em] text-gray-600">TEAM INFORMATION</div><h3>Constructor Details</h3></div><span>2026</span></div><div class="team-profile-info-grid"><div class="team-profile-info-item"><span>HEADQUARTERS</span><strong id="team-profile-base">--</strong></div><div class="team-profile-info-item"><span>TEAM PRINCIPAL</span><strong id="team-profile-principal">--</strong></div><div class="team-profile-info-item"><span>POWER UNIT</span><strong id="team-profile-power">--</strong></div><div class="team-profile-info-item"><span>FOUNDED</span><strong id="team-profile-founded">--</strong></div></div></section>
@@ -1465,6 +1515,11 @@ section[id], div[id="standings"], aside[id], #news { scroll-margin-top: 96px; }
 </div>
 
 <script>
+(() => {
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = location.origin + location.pathname;
+})();
+
 const GAS_WEB_APP_URL='https://script.google.com/macros/s/AKfycbwGJfMLmxZ9KO-9wIqfqBUMAa7ZNXSaw30aTAtAvW1YQQ5TRSJQh6jZXyzmo6k3OyVN/exec';
 const F1_API='https://api.jolpi.ca/ergast/f1';
 const F1_NEWS_API='https://api.rss2json.com/v1/api.json?rss_url=https://www.motorsport.com/rss/f1/news/';
@@ -1659,6 +1714,99 @@ async function getClientIp() {
   return '';
 }
 
+
+/* =========================================================
+   UI STATE HELPERS — one source of truth for open/close motion
+   ========================================================= */
+const MOTION_MS = 420;
+const uiTimers = new WeakMap();
+
+function clearUiTimer(el) {
+  const timer = uiTimers.get(el);
+  if (timer) clearTimeout(timer);
+  uiTimers.delete(el);
+}
+
+function setBodyModalLock(locked) {
+  document.body.classList.toggle('modal-open', locked);
+}
+
+function openAnimated(el, { focus = null } = {}) {
+  if (!el) return;
+  clearUiTimer(el);
+  el.classList.remove('is-closing', 'hidden');
+  void el.offsetWidth;
+  requestAnimationFrame(() => el.classList.add('is-open'));
+  if (focus) setTimeout(() => document.querySelector(focus)?.focus(), 120);
+}
+
+function closeAnimated(el, { after = null } = {}) {
+  if (!el || el.classList.contains('hidden')) return;
+  clearUiTimer(el);
+  el.classList.remove('is-open');
+  el.classList.add('is-closing');
+  const finish = () => {
+    el.classList.remove('is-closing');
+    el.classList.add('hidden');
+    if (typeof after === 'function') after();
+  };
+  uiTimers.set(el, setTimeout(finish, MOTION_MS));
+}
+
+function showAdAnimated(el) {
+  if (!el) return;
+  clearUiTimer(el);
+  el.classList.remove('hidden', 'ad-closing', 'ad-visible');
+  el.classList.add('ad-entering');
+  el.setAttribute('aria-hidden', 'false');
+  void el.offsetWidth;
+  requestAnimationFrame(() => {
+    el.classList.remove('ad-entering');
+    el.classList.add('ad-visible');
+    scheduleAdShine(el);
+  });
+}
+
+function hideAdAnimated(el) {
+  if (!el) return;
+  clearUiTimer(el);
+  el.classList.remove('ad-visible', 'ad-entering', 'ad-ready');
+  el.classList.add('ad-closing');
+  el.setAttribute('aria-hidden', 'true');
+  uiTimers.set(el, setTimeout(() => {
+    el.classList.remove('ad-closing');
+    el.classList.add('hidden');
+  }, MOTION_MS));
+}
+
+
+const adShineTimers = new WeakMap();
+const adShineEndTimers = new WeakMap();
+function stopAdShine(el) {
+  if (!el) return;
+  const t = adShineTimers.get(el), e = adShineEndTimers.get(el);
+  if (t) clearTimeout(t);
+  if (e) clearTimeout(e);
+  adShineTimers.delete(el); adShineEndTimers.delete(el);
+  el.classList.remove('is-shining');
+}
+function scheduleAdShine(el) {
+  if (!el) return;
+  stopAdShine(el);
+  const run = () => {
+    if (document.hidden || !el.classList.contains('ad-visible')) return;
+    el.classList.remove('is-shining');
+    void el.offsetWidth;
+    el.classList.add('is-shining');
+    adShineEndTimers.set(el, setTimeout(() => {
+      el.classList.remove('is-shining');
+      adShineEndTimers.delete(el);
+    }, 1500));
+    adShineTimers.set(el, setTimeout(run, 9000 + Math.random() * 8000));
+  };
+  adShineTimers.set(el, setTimeout(run, 8500 + Math.random() * 5000));
+}
+
 async function fetchConfigAndTrack() {
   // 1. Tải Config ưu tiên hiển thị UI
   const configRequest = (async () => {
@@ -1695,57 +1843,6 @@ async function fetchConfigAndTrack() {
       ];
 
       const isConfigOn = val => val === true || ['ON', 'TRUE', 'YES', '1', 'Y', 'ENABLE', 'ENABLED'].includes(String(val ?? '').trim().toUpperCase());
-      const adShineTimers = new WeakMap();
-      const adShineEndTimers = new WeakMap();
-
-      function stopAdShine(el) {
-        if (!el) return;
-        const timer = adShineTimers.get(el);
-        const endTimer = adShineEndTimers.get(el);
-        if (timer) clearTimeout(timer);
-        if (endTimer) clearTimeout(endTimer);
-        adShineTimers.delete(el);
-        adShineEndTimers.delete(el);
-        el.classList.remove('is-shining');
-      }
-
-      function scheduleAdShine(el) {
-        if (!el) return;
-        stopAdShine(el);
-        const run = () => {
-          if (document.hidden || !el.classList.contains('ad-ready')) return;
-          el.classList.remove('is-shining');
-          void el.offsetWidth;
-          el.classList.add('is-shining');
-          adShineEndTimers.set(el, setTimeout(() => {
-            el.classList.remove('is-shining');
-            adShineEndTimers.delete(el);
-          }, 1500));
-          adShineTimers.set(el, setTimeout(run, 9000 + Math.random() * 8000));
-        };
-        adShineTimers.set(el, setTimeout(run, 8500 + Math.random() * 5000));
-      }
-
-      function revealAd(el) {
-        if (!el) return;
-        stopAdShine(el);
-        el.classList.remove('hidden', 'ad-ready');
-        el.setAttribute('aria-hidden', 'false');
-        void el.offsetWidth;
-        requestAnimationFrame(() => {
-          el.classList.add('ad-ready');
-          scheduleAdShine(el);
-        });
-      }
-
-      function hideAd(el) {
-        if (!el) return;
-        stopAdShine(el);
-        el.classList.remove('ad-ready');
-        el.classList.add('hidden');
-        el.setAttribute('aria-hidden', 'true');
-      }
-
       function prepareExternalLink(link, url) {
         const safe = safeUrl(url);
         if (link && safe !== '#') {
@@ -1763,7 +1860,7 @@ async function fetchConfigAndTrack() {
       }
 
       function loadImageAd({ el, link, img }, enabled, imageValue, urlValue) {
-        hideAd(el);
+        hideAdAnimated(el);
         if (link) { link.removeAttribute('href'); link.style.pointerEvents = 'none'; }
         if (img) { img.removeAttribute('src'); }
 
@@ -1779,14 +1876,14 @@ async function fetchConfigAndTrack() {
 
         img.onload = () => {
           if (img.dataset.adLoadToken !== loadToken) return;
-          if (img.naturalWidth > 0 && img.naturalHeight > 0) revealAd(el);
-          else hideAd(el);
+          if (img.naturalWidth > 0 && img.naturalHeight > 0) showAdAnimated(el);
+          else hideAdAnimated(el);
         };
         img.onerror = () => {
-          if (img.dataset.adLoadToken === loadToken) hideAd(el);
+          if (img.dataset.adLoadToken === loadToken) hideAdAnimated(el);
         };
         img.src = imageUrl;
-        if (img.complete && img.naturalWidth > 0 && img.dataset.adLoadToken === loadToken) revealAd(el);
+        if (img.complete && img.naturalWidth > 0 && img.dataset.adLoadToken === loadToken) showAdAnimated(el);
       }
 
       loadImageAd({ el: adContainer, link: adLink, img: adBanner }, isConfigOn(data.adEnabled), data.bannerImg, data.adUrl);
@@ -1811,7 +1908,7 @@ async function fetchConfigAndTrack() {
     } catch (error) {
       console.warn('GAS config unavailable', error);
       ['ad-container', 'sponsor-slot', 'side-ad-left', 'side-ad-right'].forEach(id => {
-        document.getElementById(id)?.classList.add('hidden');
+        hideAdAnimated(document.getElementById(id));
       });
     }
   })();
@@ -1842,7 +1939,7 @@ async function fetchConfigAndTrack() {
 
 async function fetchNews(){
 try{
-const data=await fetchJSON(F1_NEWS_API,'grid007_news',120000);
+const data=await fetchJSON(F1_NEWS_API,'Grid 007_news',120000);
 newsArticles=data.items?.slice(0,9)||[];
 renderNews();
 }catch(error){
@@ -1861,7 +1958,7 @@ const featured=newsArticles[0];
 const featuredImage=featured.enclosure?.link||featured.thumbnail||'';
 document.getElementById('news-featured').innerHTML=`
 <article class="news-card card rounded-xl overflow-hidden group cursor-pointer" onclick='openExternal(${JSON.stringify(featured.link||"#")})'>
-${featuredImage?`<div class="overflow-hidden h-64 md:h-[380px]"><img src="${escapeHTML(safeUrl(featuredImage))}" class="w-full h-full object-cover" alt="Formula 1 news" loading="lazy" referrerpolicy="no-referrer"></div>`:''}
+${featuredImage?`<div class="overflow-hidden h-64 md:h-[380px]"><img src="${escapeHTML(safeUrl(featuredImage))}" class="w-full h-full object-cover" alt="" loading="lazy" referrerpolicy="no-referrer"></div>`:''}
 <div class="p-6">
 <div class="flex items-center gap-3 mb-3">
 <span class="text-[9px] uppercase tracking-widest text-red-600 font-bold">FEATURED</span>
@@ -1876,7 +1973,7 @@ document.getElementById('news-feed').innerHTML=newsArticles.slice(1).map(article
 const image=article.enclosure?.link||article.thumbnail||'';
 return`
 <article class="news-card news-feed-card card rounded-lg overflow-hidden group cursor-pointer" onclick='openExternal(${JSON.stringify(article.link||"#")})'>
-${image?`<div class="overflow-hidden h-44"><img src="${escapeHTML(safeUrl(image))}" class="w-full h-full object-cover" alt="Formula 1 news" loading="lazy" referrerpolicy="no-referrer"></div>`:''}
+${image?`<div class="overflow-hidden h-44"><img src="${escapeHTML(safeUrl(image))}" class="w-full h-full object-cover" alt="" loading="lazy" referrerpolicy="no-referrer"></div>`:''}
 <div class="p-5">
 <div class="text-[9px] uppercase tracking-widest text-gray-600 mb-3">${formatDate(article.pubDate)}</div>
 <h3 class="font-bold leading-snug group-hover:text-red-500 transition">${escapeHTML(article.title)}</h3>
@@ -1888,7 +1985,7 @@ ${image?`<div class="overflow-hidden h-44"><img src="${escapeHTML(safeUrl(image)
 
 async function fetchSchedule(){
 try{
-const data=await fetchJSON(`${F1_API}/${SEASON}.json?ts=${Date.now()}`,'grid007_schedule',300000);
+const data=await fetchJSON(`${F1_API}/${SEASON}.json?ts=${Date.now()}`,'Grid 007_schedule',300000);
 races=data.MRData.RaceTable.Races||[];
 document.getElementById('stat-races').textContent=races.length;
 findNextRace();
@@ -1936,8 +2033,8 @@ document.getElementById('seconds').textContent=String(seconds).padStart(2,'0');
 async function fetchResults(){
 try{
 const [resultData,qualData]=await Promise.all([
-fetchJSON(`${F1_API}/${SEASON}/results.json?limit=1000&ts=${Date.now()}`,'grid007_results',300000),
-fetchJSON(`${F1_API}/${SEASON}/qualifying.json?limit=1000&ts=${Date.now()}`,'grid007_qualifying',300000)
+fetchJSON(`${F1_API}/${SEASON}/results.json?limit=1000&ts=${Date.now()}`,'Grid 007_results',300000),
+fetchJSON(`${F1_API}/${SEASON}/qualifying.json?limit=1000&ts=${Date.now()}`,'Grid 007_qualifying',300000)
 ]);
 seasonResults=resultData.MRData.RaceTable.Races||[];
 qualifyingResults=qualData.MRData.RaceTable.Races||[];
@@ -2029,8 +2126,8 @@ if(!races.length)return;
 const completed=races.filter(r=>raceStart(r)<=new Date());
 const jobs=[];
 for(const race of completed){
-if(!getRaceResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/results.json?limit=100&ts=${Date.now()}`,'grid007_r_'+race.round,120000).then(x=>{const rr=x.MRData.RaceTable.Races?.[0];if(rr)seasonResults.push(rr)}).catch(()=>{}));
-if(!getQualifyingResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/qualifying.json?limit=100&ts=${Date.now()}`,'grid007_q_'+race.round,120000).then(x=>{const qr=x.MRData.RaceTable.Races?.[0];if(qr)qualifyingResults.push(qr)}).catch(()=>{}));
+if(!getRaceResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/results.json?limit=100&ts=${Date.now()}`,'Grid 007_r_'+race.round,120000).then(x=>{const rr=x.MRData.RaceTable.Races?.[0];if(rr)seasonResults.push(rr)}).catch(()=>{}));
+if(!getQualifyingResult(race.round))jobs.push(fetchJSON(`${F1_API}/${SEASON}/${race.round}/qualifying.json?limit=100&ts=${Date.now()}`,'Grid 007_q_'+race.round,120000).then(x=>{const qr=x.MRData.RaceTable.Races?.[0];if(qr)qualifyingResults.push(qr)}).catch(()=>{}));
 }
 await Promise.all(jobs);
 renderCalendar();
@@ -2096,7 +2193,7 @@ const round=String(race.round);
 const jobs=[];
 if(!getRaceResult(round)){
 jobs.push(
-fetchJSON(`${F1_API}/${SEASON}/${round}/results.json?limit=100&ts=${Date.now()}`,`grid007_modal_r_${round}`,30000)
+fetchJSON(`${F1_API}/${SEASON}/${round}/results.json?limit=100&ts=${Date.now()}`,`Grid 007_modal_r_${round}`,30000)
 .then(x=>{
 const rr=x.MRData?.RaceTable?.Races?.[0];
 if(rr)seasonResults.push(rr);
@@ -2105,7 +2202,7 @@ if(rr)seasonResults.push(rr);
 }
 if(!getQualifyingResult(round)){
 jobs.push(
-fetchJSON(`${F1_API}/${SEASON}/${round}/qualifying.json?limit=100&ts=${Date.now()}`,`grid007_modal_q_${round}`,30000)
+fetchJSON(`${F1_API}/${SEASON}/${round}/qualifying.json?limit=100&ts=${Date.now()}`,`Grid 007_modal_q_${round}`,30000)
 .then(x=>{
 const qr=x.MRData?.RaceTable?.Races?.[0];
 if(qr)qualifyingResults.push(qr);
@@ -2182,24 +2279,23 @@ document.getElementById('modal-top10').innerHTML='<div class="race-result-empty"
 }
 
 const raceModal=document.getElementById('race-modal');
-raceModal.classList.remove('hidden');
+openAnimated(raceModal);
 raceModal.setAttribute('aria-hidden','false');
-document.body.classList.add('modal-open');
+setBodyModalLock(true);
 }
 
-function closeRaceModal(){
-const modal=document.getElementById('race-modal');
-if(!modal)return;
-modal.classList.add('hidden');
-modal.setAttribute('aria-hidden','true');
-document.body.classList.remove('modal-open');
+function closeRaceModal() {
+  const modal = document.getElementById('race-modal');
+  if (!modal) return;
+  closeAnimated(modal, { after: () => modal.setAttribute('aria-hidden','true') });
+  if (!document.getElementById('profile-modal')?.classList.contains('is-open')) setBodyModalLock(false);
 }
 
 async function fetchStandings(){
 try{
 const [driverData,constructorData]=await Promise.all([
-fetchJSON(`${F1_API}/${SEASON}/driverStandings.json`,'grid007_driver_standings',60000),
-fetchJSON(`${F1_API}/${SEASON}/constructorStandings.json`,'grid007_constructor_standings',60000)
+fetchJSON(`${F1_API}/${SEASON}/driverStandings.json`,'Grid 007_driver_standings',60000),
+fetchJSON(`${F1_API}/${SEASON}/constructorStandings.json`,'Grid 007_constructor_standings',60000)
 ]);
 const rawDrivers=driverData.MRData.StandingsTable.StandingsLists?.[0]?.DriverStandings||[];
 
@@ -2247,7 +2343,7 @@ alonso:'alonso',stroll:'stroll',perez:'perez',bottas:'bottas'
 };
 async function fetchWikipediaSummaryImage(page){
 try{
-const key='grid007_wiki_v2_'+page;
+const key='Grid 007_wiki_v2_'+page;
 const cached=sessionStorage.getItem(key);
 if(cached && /^(https?:)?\/\//i.test(cached) && !/(silhouette|default|placeholder|no[_-]?image|blank)/i.test(cached))return cached;
 if(cached)try{sessionStorage.removeItem(key)}catch{}
@@ -2262,7 +2358,7 @@ return img;
 }
 async function fetchWikipediaImageSearch(query){
 try{
-const key='grid007_wiki_search_'+query.toLowerCase().replace(/\W+/g,'_');
+const key='Grid 007_wiki_search_'+query.toLowerCase().replace(/\W+/g,'_');
 const cached=sessionStorage.getItem(key); if(cached && /^(https?:)?\/\//i.test(cached))return cached; if(cached)try{sessionStorage.removeItem(key)}catch{}
 const u=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=3&prop=pageimages&piprop=original&format=json&origin=*`;
 const r=await fetch(u); if(!r.ok)throw 0; const d=await r.json();
@@ -2382,6 +2478,8 @@ function renderStandings(){
 const board=document.getElementById('standings-board');
 const count=document.getElementById('drivers-count');
 if(count)count.textContent=`${standings.length} DRIVERS`;
+const heroCount=document.getElementById('stat-drivers');
+if(heroCount)heroCount.textContent=standings.length;
 board.innerHTML=standings.map((d,index)=>{
 const constructor=d.Constructors?.[0];
 const meta=getTeamMeta(constructor?.constructorId);
@@ -2426,7 +2524,7 @@ board.innerHTML=teams.map((team,index)=>{
 const meta=getTeamMeta(team.id);
 return `<div class="standing-row cursor-pointer" onclick="openTeamProfile('${escapeHTML(team.id)}')">
 <div class="standing-rank ${index<3?'top':''}">${index+1}</div>
-<div class="standing-main"><div class="flex items-center gap-3 min-w-0"><img src="${escapeHTML(meta.logo)}" class="team-logo shrink-0" style="width:34px;height:24px" alt="Formula 1 news" loading="lazy"><div class="standing-name">${escapeHTML(team.name)}</div></div><div class="standing-sub" style="color:${meta.color}">${team.drivers.map(d=>escapeHTML(d.Driver.familyName)).join(' / ')}</div></div>
+<div class="standing-main"><div class="flex items-center gap-3 min-w-0"><img src="${escapeHTML(meta.logo)}" class="team-logo shrink-0" style="width:34px;height:24px" alt="" loading="lazy"><div class="standing-name">${escapeHTML(team.name)}</div></div><div class="standing-sub" style="color:${meta.color}">${team.drivers.map(d=>escapeHTML(d.Driver.familyName)).join(' / ')}</div></div>
 <div class="standing-points">${team.points}</div>
 </div>`;
 }).join('');
@@ -2739,9 +2837,9 @@ document.getElementById('driver-stats').innerHTML=`
 <div class="bg-[#101010] p-4"><div class="timing-label">Position</div><div class="text-xl font-black mt-2">P${driver.position||'--'}</div></div>`;
 
 setProfilePanel('driver');
-profileModal.classList.remove('hidden');
+openAnimated(profileModal);
 profileModal.setAttribute('aria-hidden','false');
-document.body.classList.add('modal-open');
+setBodyModalLock(true);
 Promise.resolve(enrichDriverProfile(driver)).catch(error=>console.warn('[Grid 007] Profile enrichment failed:',error));
 }
 
@@ -2800,28 +2898,35 @@ return`
 }).join('');
 
 setProfilePanel('team');
-document.getElementById('profile-modal').classList.remove('hidden');
-document.getElementById('profile-modal').setAttribute('aria-hidden','false');
-document.body.classList.add('modal-open');
+const profileModal = document.getElementById('profile-modal');
+openAnimated(profileModal);
+profileModal.setAttribute('aria-hidden','false');
+setBodyModalLock(true);
 }
 
-function closeProfile(){
-const modal=document.getElementById('profile-modal');
-if(!modal)return;
-modal.classList.add('hidden');
-modal.setAttribute('aria-hidden','true');
-document.body.classList.remove('modal-open');
-setProfilePanel('driver');
+function closeProfile() {
+  const modal = document.getElementById('profile-modal');
+  if (!modal) return;
+  closeAnimated(modal, { after: () => {
+    modal.setAttribute('aria-hidden','true');
+    setProfilePanel('driver');
+  }});
+  if (!document.getElementById('race-modal')?.classList.contains('is-open')) setBodyModalLock(false);
 }
 
 window.openDriverProfile=openDriverProfile;
 window.openTeamProfile=openTeamProfile;
 window.closeProfile=closeProfile;
 
-function toggleSearch(){
-const panel=document.getElementById('search-panel');
-panel.classList.toggle('hidden');
-if(!panel.classList.contains('hidden'))setTimeout(()=>document.getElementById('search-input').focus(),100);
+function toggleSearch(force) {
+  const panel = document.getElementById('search-panel');
+  if (!panel) return;
+  const shouldOpen = typeof force === 'boolean' ? force : !panel.classList.contains('is-open');
+  if (shouldOpen) {
+    openAnimated(panel, { focus: '#search-input' });
+  } else {
+    closeAnimated(panel);
+  }
 }
 
 function searchEverything(){
@@ -2838,7 +2943,7 @@ let html='';
 
 driverMatches.forEach(d=>{
 html+=`
-<button onclick="toggleSearch();openDriverProfile('${escapeHTML(d.Driver.driverId)}')" class="w-full text-left p-4 bg-[#0d0d0f] border border-gray-900 rounded hover:border-gray-700">
+<button onclick="toggleSearch(false);openDriverProfile('${escapeHTML(d.Driver.driverId)}')" class="w-full text-left p-4 bg-[#0d0d0f] border border-gray-900 rounded hover:border-gray-700">
 <div class="text-[8px] uppercase tracking-widest text-red-600">DRIVER</div>
 <div class="text-sm font-bold mt-1">${escapeHTML(d.Driver.givenName)} ${escapeHTML(d.Driver.familyName)}</div>
 </button>`;
@@ -2846,7 +2951,7 @@ html+=`
 
 teamMatches.forEach(t=>{
 html+=`
-<button onclick="toggleSearch();openTeamProfile('${escapeHTML(t.id)}')" class="w-full text-left p-4 bg-[#0d0d0f] border border-gray-900 rounded hover:border-gray-700">
+<button onclick="toggleSearch(false);openTeamProfile('${escapeHTML(t.id)}')" class="w-full text-left p-4 bg-[#0d0d0f] border border-gray-900 rounded hover:border-gray-700">
 <div class="text-[8px] uppercase tracking-widest text-red-600">TEAM</div>
 <div class="text-sm font-bold mt-1">${escapeHTML(t.name)}</div>
 </button>`;
@@ -2855,7 +2960,7 @@ html+=`
 raceMatches.forEach(r=>{
 const index=races.indexOf(r);
 html+=`
-<button onclick="toggleSearch();openRaceModal(${index})" class="w-full text-left p-4 bg-[#0d0d0f] border border-gray-900 rounded hover:border-gray-700">
+<button onclick="toggleSearch(false);openRaceModal(${index})" class="w-full text-left p-4 bg-[#0d0d0f] border border-gray-900 rounded hover:border-gray-700">
 <div class="text-[8px] uppercase tracking-widest text-red-600">RACE</div>
 <div class="text-sm font-bold mt-1">${escapeHTML(r.raceName)}</div>
 </button>`;
@@ -2872,15 +2977,15 @@ html+=`
 result.innerHTML=html||'<div class="text-gray-600 text-sm">No results found.</div>';
 }
 
-function toggleMobileMenu(){
-  const menu=document.getElementById('mobile-menu');
-  const toggle=document.getElementById('mobile-menu-toggle');
-  if(!menu)return;
-  menu.classList.remove('hidden');
-  const isOpen=menu.classList.toggle('is-open');
-  if(toggle){
-    toggle.setAttribute('aria-expanded',String(isOpen));
-    toggle.setAttribute('aria-label',isOpen?'Close menu':'Open menu');
+function toggleMobileMenu(force) {
+  const menu = document.getElementById('mobile-menu');
+  const toggle = document.getElementById('mobile-menu-toggle');
+  if (!menu) return;
+  const isOpen = typeof force === 'boolean' ? force : !menu.classList.contains('is-open');
+  menu.classList.toggle('is-open', isOpen);
+  if (toggle) {
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
   }
 }
 
@@ -2889,7 +2994,7 @@ document.querySelectorAll('#mobile-menu a').forEach(link=>{
     const menu=document.getElementById('mobile-menu');
     const toggle=document.getElementById('mobile-menu-toggle');
     if(!menu)return;
-    menu.classList.remove('is-open');
+    toggleMobileMenu(false);
     if(toggle){
       toggle.setAttribute('aria-expanded','false');
       toggle.setAttribute('aria-label','Open menu');
@@ -2933,7 +3038,7 @@ document.addEventListener('keydown',function(e){
     const profileModal=document.getElementById('profile-modal');
     if(raceModal && !raceModal.classList.contains('hidden')) closeRaceModal();
     if(profileModal && !profileModal.classList.contains('hidden')) closeProfile();
-    document.getElementById('search-panel')?.classList.add('hidden');
+    toggleSearch(false);
     return;
   }
 
@@ -2968,7 +3073,7 @@ function setupAnchorNavigation(){
       const menu=document.getElementById('mobile-menu');
       const toggle=document.getElementById('mobile-menu-toggle');
       if(menu){
-        menu.classList.remove('is-open');
+        toggleMobileMenu(false);
         if(toggle){
           toggle.setAttribute('aria-expanded','false');
           toggle.setAttribute('aria-label','Open menu');
@@ -2985,6 +3090,12 @@ document.addEventListener('click',function(e){
   const id=card.dataset.driverId;
   if(id) openDriverProfile(id);
 },true);
+
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){
+    document.querySelectorAll('.is-shining').forEach(stopAdShine);
+  }
+});
 
 document.addEventListener('DOMContentLoaded',async()=>{
   setupAnchorNavigation();
@@ -3004,12 +3115,5 @@ document.addEventListener('DOMContentLoaded',async()=>{
 });
 </script>
 
-
-<noscript>
-  <section id="seo-noscript" aria-label="Grid 007 Formula 1 overview">
-    <h2>Grid 007 — Formula 1 News, Results &amp; 2026 Standings</h2>
-    <p>Grid 007 covers Formula 1 news, the 2026 race calendar, race results, driver standings, constructor standings, drivers and teams.</p>
-  </section>
-</noscript>
 </body>
 </html>
